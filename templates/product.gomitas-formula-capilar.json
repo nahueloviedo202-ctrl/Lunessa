@@ -30,7 +30,7 @@
         "title_Mm9FwJ": {
           "type": "title",
           "settings": {
-            "title": "",
+            "title": "{{ product.title }}",
             "heading_tag": "h1",
             "text_size": 32,
             "text_size_mobile": 25,
