@@ -1,0 +1,349 @@
+.comparison-tabs {
+  background-color: var(--ctb-bg-mobile);
+  padding: var(--ctb-pt-mobile) 0 var(--ctb-pb-mobile);
+}
+
+.comparison-tabs__inner {
+  max-width: var(--ctb-max-width);
+  margin: 0 auto;
+  padding: var(--ctb-inner-p-mobile) var(--ctb-inner-p-mobile) var(--ctb-inner-pb-mobile);
+}
+
+.comparison-tabs__title {
+  margin: var(--ctb-title-mt-mobile) 0 0;
+  padding: 0 var(--ctb-title-px-mobile);
+  font-family: var(--ctb-heading-ff);
+  font-style: var(--ctb-heading-fs);
+  font-weight: var(--ctb-heading-fw);
+  font-size: var(--ctb-title-size-mobile);
+  line-height: var(--ctb-title-lh-mobile);
+  letter-spacing: var(--ctb-title-ls);
+  color: var(--ctb-title-color);
+  text-align: var(--ctb-title-align);
+  word-break: break-word;
+}
+
+/* Tabs navigation */
+.comparison-tabs__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: var(--ctb-nav-align);
+  gap: var(--ctb-nav-gap);
+  margin-top: var(--ctb-nav-mt-mobile);
+}
+
+.comparison-tabs__label {
+  display: flex;
+  padding: var(--ctb-tab-py) var(--ctb-tab-px);
+  border-radius: var(--ctb-tab-radius);
+  background-color: var(--ctb-tab-bg);
+  color: var(--ctb-tab-color);
+  font-family: var(--ctb-body-ff);
+  font-style: var(--ctb-body-fs);
+  font-weight: var(--ctb-tab-weight);
+  font-size: var(--ctb-tab-size-mobile);
+  line-height: var(--ctb-tab-lh-mobile);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Panels */
+.comparison-tabs__panels {
+  padding: var(--ctb-panel-p);
+}
+
+.comparison-tabs__panel {
+  display: none;
+}
+
+.comparison-tabs__panel--static {
+  display: block;
+}
+
+/* Comparison table */
+.comparison-tabs__table {
+  max-width: var(--ctb-table-width);
+  margin: var(--ctb-table-mt) auto var(--ctb-table-mb-mobile);
+}
+
+.comparison-tabs__row {
+  display: grid;
+  grid-template-columns: minmax(0, var(--ctb-label-fr-mobile)) minmax(0, var(--ctb-value-fr-mobile)) minmax(0, var(--ctb-value-fr-mobile));
+  border-bottom: var(--ctb-border-width) solid var(--ctb-border-color);
+}
+
+.comparison-tabs__row:last-child {
+  border-bottom: 0;
+}
+
+.comparison-tabs__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.comparison-tabs__cell--label {
+  align-items: stretch;
+  padding: 0 var(--ctb-label-pr-mobile) 0 var(--ctb-label-pl-mobile);
+  text-align: left;
+}
+
+.comparison-tabs__cell--ours {
+  padding: var(--ctb-cell-py-mobile) 0;
+  background-color: var(--ctb-ours-bg-mobile);
+  color: var(--ctb-ours-color);
+}
+
+.comparison-tabs__cell--others {
+  color: var(--ctb-others-color);
+}
+
+.comparison-tabs__row--header .comparison-tabs__cell--ours {
+  padding: var(--ctb-header-pt-mobile) 0 var(--ctb-header-pb-mobile);
+}
+
+.comparison-tabs__row:first-child .comparison-tabs__cell--ours {
+  border-top-left-radius: var(--ctb-ours-radius);
+  border-top-right-radius: var(--ctb-ours-radius);
+}
+
+.comparison-tabs__row:last-child .comparison-tabs__cell--ours {
+  border-bottom-left-radius: var(--ctb-ours-radius);
+  border-bottom-right-radius: var(--ctb-ours-radius);
+}
+
+.comparison-tabs__row-label {
+  font-family: var(--ctb-body-ff);
+  font-style: var(--ctb-body-fs);
+  font-weight: var(--ctb-body-fw);
+  font-size: var(--ctb-label-size-mobile);
+  line-height: var(--ctb-label-lh);
+  letter-spacing: var(--ctb-label-ls-mobile);
+  color: var(--ctb-label-color);
+  word-break: break-word;
+}
+
+.comparison-tabs__header-label {
+  font-family: var(--ctb-body-ff);
+  font-style: var(--ctb-body-fs);
+  font-weight: var(--ctb-header-weight);
+  font-size: var(--ctb-header-size-mobile);
+  line-height: var(--ctb-header-lh);
+  color: var(--ctb-header-color);
+  word-break: break-word;
+}
+
+.comparison-tabs__cell--ours .comparison-tabs__header-label {
+  color: inherit;
+}
+
+.comparison-tabs__logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: var(--ctb-logo-h-mobile);
+  object-fit: contain;
+}
+
+.comparison-tabs__logo--desktop {
+  display: none;
+}
+
+.comparison-tabs__icon {
+  display: inline-flex;
+  width: var(--ctb-icon-size-mobile);
+  height: var(--ctb-icon-size-mobile);
+}
+
+.comparison-tabs__icon .svg-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.comparison-tabs__icon svg {
+  fill: currentColor;
+}
+
+.comparison-tabs__value-text {
+  font-family: var(--ctb-body-ff);
+  font-weight: var(--ctb-header-weight);
+  font-size: var(--ctb-label-size-mobile);
+  line-height: var(--ctb-label-lh);
+}
+
+/* Free content blocks */
+.comparison-tabs__block {
+  margin-top: var(--mt-mobile, 0);
+}
+
+.comparison-tabs__block-heading {
+  margin: 0;
+  font-family: var(--ctb-body-ff);
+  font-style: var(--ctb-body-fs);
+  font-weight: var(--weight);
+  font-size: var(--size-mobile);
+  line-height: var(--lh-mobile);
+  color: var(--color);
+  text-align: var(--align);
+  word-break: break-word;
+}
+
+.comparison-tabs__block-text {
+  font-family: var(--ctb-body-ff);
+  font-style: var(--fs);
+  font-weight: var(--ctb-body-fw);
+  font-size: var(--size-mobile);
+  line-height: var(--lh-mobile);
+  color: var(--color);
+  text-align: var(--align);
+  word-break: break-word;
+}
+
+.comparison-tabs__block-text > * {
+  margin: 0;
+}
+
+.comparison-tabs__block-text > * + * {
+  margin-top: 1em;
+}
+
+.comparison-tabs__block-text a {
+  color: inherit;
+}
+
+/* Tablet + desktop */
+@media screen and (min-width: 768px) {
+  .comparison-tabs {
+    background-color: var(--ctb-bg);
+    padding: var(--ctb-pt) 0 var(--ctb-pb);
+  }
+
+  .comparison-tabs__inner {
+    padding: var(--ctb-inner-p);
+  }
+
+  .comparison-tabs__title {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .comparison-tabs__nav {
+    margin-top: var(--ctb-nav-mt);
+  }
+
+  .comparison-tabs__table {
+    margin-bottom: var(--ctb-table-mb);
+  }
+
+  .comparison-tabs__row {
+    grid-template-columns: minmax(0, var(--ctb-label-fr)) minmax(0, var(--ctb-value-fr)) minmax(0, var(--ctb-value-fr));
+  }
+
+  .comparison-tabs__cell--label {
+    padding: 0 var(--ctb-label-px);
+  }
+
+  .comparison-tabs__cell--ours {
+    padding: var(--ctb-cell-py) 0;
+    background-color: var(--ctb-ours-bg);
+  }
+
+  .comparison-tabs__row--header .comparison-tabs__cell--ours {
+    padding: var(--ctb-header-pt) 0 var(--ctb-header-pb);
+  }
+
+  .comparison-tabs__row-label {
+    letter-spacing: normal;
+  }
+
+  .comparison-tabs__logo {
+    width: var(--ctb-logo-w);
+    height: auto;
+  }
+
+  .comparison-tabs__logo--desktop {
+    display: block;
+  }
+
+  .comparison-tabs__logo--mobile {
+    display: none;
+  }
+}
+
+/* Tablet only */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .comparison-tabs__title {
+    font-size: var(--ctb-title-size-tablet);
+    line-height: var(--ctb-title-lh-tablet);
+  }
+
+  .comparison-tabs__label {
+    font-size: var(--ctb-tab-size-tablet);
+    line-height: var(--ctb-tab-lh);
+  }
+
+  .comparison-tabs__row-label,
+  .comparison-tabs__value-text {
+    font-size: var(--ctb-label-size-tablet);
+  }
+
+  .comparison-tabs__header-label {
+    font-size: var(--ctb-header-size-tablet);
+  }
+
+  .comparison-tabs__icon {
+    width: var(--ctb-icon-size-tablet);
+    height: var(--ctb-icon-size-tablet);
+  }
+
+  .comparison-tabs__block {
+    margin-top: var(--mt-tablet, 0);
+  }
+
+  .comparison-tabs__block-heading,
+  .comparison-tabs__block-text {
+    font-size: var(--size-tablet);
+    line-height: var(--lh-tablet);
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1025px) {
+  .comparison-tabs__title {
+    font-size: var(--ctb-title-size);
+    line-height: var(--ctb-title-lh);
+  }
+
+  .comparison-tabs__label {
+    font-size: var(--ctb-tab-size);
+    line-height: var(--ctb-tab-lh);
+  }
+
+  .comparison-tabs__row-label,
+  .comparison-tabs__value-text {
+    font-size: var(--ctb-label-size);
+  }
+
+  .comparison-tabs__header-label {
+    font-size: var(--ctb-header-size);
+  }
+
+  .comparison-tabs__icon {
+    width: var(--ctb-icon-size);
+    height: var(--ctb-icon-size);
+  }
+
+  .comparison-tabs__block {
+    margin-top: var(--mt, 0);
+  }
+
+  .comparison-tabs__block-heading,
+  .comparison-tabs__block-text {
+    font-size: var(--size);
+    line-height: var(--lh);
+  }
+}

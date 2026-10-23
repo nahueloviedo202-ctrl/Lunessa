@@ -1,0 +1,631 @@
+{{ 'section-footer-brand.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign column_count = 0
+  for block in section.blocks
+    if block.type == 'link_list'
+      assign column_count = column_count | plus: 1
+    endif
+  endfor
+
+  assign legal_menu = section.settings.legal_menu
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .ftr--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --ftr-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --ftr-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --ftr-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --ftr-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --ftr-bg: {{ section.settings.background }};
+    --ftr-color: {{ section.settings.text_color }};
+    --ftr-muted: {{ section.settings.disclaimer_color }};
+    --ftr-border: {{ section.settings.border_color }};
+    --ftr-pt: {{ section.settings.padding_top }}px;
+    --ftr-pb: {{ section.settings.padding_bottom }}px;
+    --ftr-px: {{ section.settings.padding_horizontal }}px;
+    --ftr-px-tablet: {{ section.settings.padding_horizontal_tablet }}px;
+    --ftr-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ftr-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ftr-px-mobile: {{ section.settings.padding_horizontal_mobile }}px;
+    --ftr-brand-ratio: {{ section.settings.brand_column_width | divided_by: 100.0 }};
+    --ftr-columns: {{ column_count | at_least: 1 }};
+    --ftr-gap: {{ section.settings.column_gap }}px;
+    --ftr-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+    --ftr-top-mb: {{ section.settings.top_margin_bottom }}px;
+    --ftr-top-mb-mobile: {{ section.settings.top_margin_bottom_mobile }}px;
+    --ftr-heading-size: {{ section.settings.heading_size }}px;
+    --ftr-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ftr-heading-mb: {{ section.settings.heading_margin_bottom }}px;
+    --ftr-heading-mb-mobile: {{ section.settings.heading_margin_bottom_mobile }}px;
+    --ftr-link-size: {{ section.settings.link_size }}px;
+    --ftr-link-size-mobile: {{ section.settings.link_size_mobile }}px;
+    --ftr-link-gap: {{ section.settings.link_spacing }}px;
+    --ftr-copyright-size: {{ section.settings.copyright_size }}px;
+    --ftr-copyright-size-mobile: {{ section.settings.copyright_size_mobile }}px;
+    --ftr-legal-size: {{ section.settings.legal_size }}px;
+    --ftr-legal-size-mobile: {{ section.settings.legal_size_mobile }}px;
+    --ftr-legal-columns: {{ legal_menu.links.size | at_least: 1 }};
+    --ftr-legal-columns-mobile: {{ section.settings.legal_columns_mobile }};
+    --ftr-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+  }
+{%- endstyle -%}
+
+<footer class="ftr ftr--{{ section.id }}">
+  <div class="ftr__inner">
+    {%- if section.blocks.size > 0 -%}
+      <div class="ftr__top">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'brand' -%}
+              <div
+                class="ftr__brand"
+                style="--ftr-logo-width: {{ block.settings.logo_width }}%; --ftr-logo-width-mobile: {{ block.settings.logo_width_mobile }}%; --ftr-tagline-size: {{ block.settings.tagline_size }}px; --ftr-tagline-size-mobile: {{ block.settings.tagline_size_mobile }}px; --ftr-tagline-mb: {{ block.settings.tagline_margin_bottom }}px; --ftr-tagline-mb-mobile: {{ block.settings.tagline_margin_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- liquid
+                  assign logo = block.settings.logo | default: settings.logo
+                -%}
+                <a href="{{ routes.root_url }}" class="ftr__logo-link">
+                  {%- if logo != blank -%}
+                    {{
+                      logo
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '200, 300, 400, 600, 800',
+                        sizes: '(min-width: 990px) 300px, 30vw',
+                        class: 'ftr__logo',
+                        alt: shop.name
+                    }}
+                  {%- else -%}
+                    <span class="ftr__logo-text">{{ shop.name | escape }}</span>
+                  {%- endif -%}
+                </a>
+                {%- if block.settings.tagline != blank -%}
+                  <div class="ftr__tagline">{{ block.settings.tagline }}</div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'link_list' -%}
+              <nav
+                class="ftr__column"
+                {% if block.settings.heading != blank %}
+                  aria-label="{{ block.settings.heading | escape }}"
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="ftr__heading">{{ block.settings.heading | escape }}</h2>
+                {%- endif -%}
+                {%- if block.settings.menu != blank and block.settings.menu.links.size > 0 -%}
+                  <ul class="ftr__links list-unstyled" role="list">
+                    {%- for link in block.settings.menu.links -%}
+                      <li>
+                        <a
+                          href="{{ link.url }}"
+                          class="ftr__link"
+                          {% if link.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{- link.title | escape -}}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </nav>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="ftr__bottom{% if section.settings.show_border %} ftr__bottom--border{% endif %}">
+      <p class="ftr__copyright">
+        {%- if section.settings.copyright != blank -%}
+          {{ section.settings.copyright | escape }}
+        {%- else -%}
+          &copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }}
+        {%- endif -%}
+      </p>
+
+      {%- if legal_menu != blank and legal_menu.links.size > 0 -%}
+        <ul class="ftr__legal list-unstyled" role="list">
+          {%- for link in legal_menu.links -%}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="ftr__legal-link"
+                {% if link.current %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{- link.title | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <div class="ftr__disclaimer">{{ section.settings.disclaimer }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer de marca",
+  "tag": "div",
+  "class": "section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#7F1525"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "brand_column_width",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "label": "Ancho de la columna de marca",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Separación entre columnas",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación entre columnas (móvil)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "top_margin_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación columnas / barra inferior",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "top_margin_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación columnas / barra inferior (móvil)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno lateral (escritorio)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_tablet",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno lateral (tablet)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno lateral (móvil)",
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Columnas de enlaces"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de títulos",
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de títulos (móvil)",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen bajo títulos",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen bajo títulos (móvil)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de enlaces",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "link_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de enlaces (móvil)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_spacing",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre enlaces",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Barra inferior"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Texto de copyright",
+      "info": "Si se deja vacío se muestra © año y nombre de la tienda.",
+      "default": "Copyright © GUJOY"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Menú legal",
+      "info": "Políticas, términos, accesibilidad…"
+    },
+    {
+      "type": "range",
+      "id": "legal_columns_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas del menú legal (móvil)",
+      "default": 2
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Aviso legal",
+      "default": "<p>*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Mostrar línea superior",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color de la línea",
+      "default": "#ECECEC"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color del aviso legal",
+      "default": "#CB9D9D"
+    },
+    {
+      "type": "range",
+      "id": "copyright_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del copyright",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "copyright_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del copyright (móvil)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "legal_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del menú legal",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "legal_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del menú legal (móvil)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del aviso legal",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en títulos y lema",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de títulos y lema",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en enlaces y textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de enlaces y textos",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Marca",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "Si se deja vacío se usa el logo del tema."
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Ancho del logo",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "logo_width_mobile",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Ancho del logo (móvil)",
+          "default": 28
+        },
+        {
+          "type": "richtext",
+          "id": "tagline",
+          "label": "Lema",
+          "default": "<p>Fórmula Clinicamente Estudiada Para<br>Frenar La Caída del Pelo Desde Dentro</p>"
+        },
+        {
+          "type": "range",
+          "id": "tagline_size",
+          "min": 12,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño del lema",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "tagline_size_mobile",
+          "min": 12,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño del lema (móvil)",
+          "default": 17
+        },
+        {
+          "type": "range",
+          "id": "tagline_margin_bottom",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "label": "Margen inferior del lema",
+          "default": 48
+        },
+        {
+          "type": "range",
+          "id": "tagline_margin_bottom_mobile",
+          "min": 0,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "label": "Margen inferior del lema (móvil)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "link_list",
+      "name": "Columna de enlaces",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Enlaces"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú",
+          "info": "Crea el menú en Tienda online > Navegación."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer de marca",
+      "blocks": [
+        { "type": "brand" },
+        { "type": "link_list", "settings": { "heading": "Comprar" } },
+        { "type": "link_list", "settings": { "heading": "Aprender" } },
+        { "type": "link_list", "settings": { "heading": "Ayuda" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

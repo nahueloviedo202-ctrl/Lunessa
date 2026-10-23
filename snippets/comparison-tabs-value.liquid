@@ -1,0 +1,17 @@
+{%- doc -%}
+  Renders a comparison table value: custom text or an icon with an accessible label.
+
+  @param {string} icon - Icon setting value (check_circle_fill, check_bold, x or none).
+  @param {string} [text] - Optional text that replaces the icon.
+
+  @example
+  {% render 'comparison-tabs-value', icon: block.settings.ours_icon, text: block.settings.ours_text %}
+{%- enddoc -%}
+{%- if text != blank -%}
+  <span class="comparison-tabs__value-text">{{ text | escape }}</span>
+{%- elsif icon != 'none' -%}
+  <span class="comparison-tabs__icon" aria-hidden="true">
+    {%- render 'icon-accordion', icon: icon -%}
+  </span>
+  <span class="visually-hidden">{% if icon == 'x' %}No{% else %}Sí{% endif %}</span>
+{%- endif -%}

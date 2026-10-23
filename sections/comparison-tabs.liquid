@@ -1,0 +1,1570 @@
+{{ 'section-comparison-tabs.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+      assign heading_fw = 'var(--font-heading-weight)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+      assign heading_fw = 'var(--font-body-weight)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+      assign heading_fw = heading_font.weight
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+      assign body_fw = 'var(--font-heading-weight)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+      assign body_fw = 'var(--font-body-weight)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+      assign body_fw = body_font.weight
+  endcase
+
+  assign tab_count = 0
+  assign body_weights = section.settings.tab_weight | append: ',' | append: section.settings.header_weight
+  for block in section.blocks
+    case block.type
+      when 'tab'
+        assign tab_count = tab_count | plus: 1
+      when 'heading'
+        assign body_weights = body_weights | append: ',' | append: block.settings.font_weight
+    endcase
+  endfor
+  assign body_weights = body_weights | split: ',' | uniq
+
+  assign value_columns = 12 | minus: section.settings.label_columns | divided_by: 2.0
+  assign value_columns_mobile = 12 | minus: section.settings.label_columns_mobile | divided_by: 2.0
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {{ heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+    {%- for weight in body_weights -%}
+      {%- assign weighted_font = body_font | font_modify: 'weight', weight -%}
+      {{ weighted_font | font_face: font_display: 'swap' }}
+    {%- endfor -%}
+  {% endif %}
+
+  .comparison-tabs-{{ section.id }} {
+    --ctb-bg: {{ section.settings.background_color }};
+    --ctb-bg-mobile: {{ section.settings.background_color_mobile }};
+    --ctb-pt: {{ section.settings.padding_top }}px;
+    --ctb-pb: {{ section.settings.padding_bottom }}px;
+    --ctb-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ctb-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ctb-max-width: {{ section.settings.max_width }}px;
+    --ctb-inner-p: {{ section.settings.inner_padding }}px;
+    --ctb-inner-p-mobile: {{ section.settings.inner_padding_mobile }}px;
+    --ctb-inner-pb-mobile: {{ section.settings.inner_padding_bottom_mobile }}px;
+    --ctb-heading-ff: {{ heading_ff }};
+    --ctb-heading-fs: {{ heading_fs }};
+    --ctb-heading-fw: {{ heading_fw }};
+    --ctb-body-ff: {{ body_ff }};
+    --ctb-body-fs: {{ body_fs }};
+    --ctb-body-fw: {{ body_fw }};
+    --ctb-title-color: {{ section.settings.title_color }};
+    --ctb-title-align: {{ section.settings.title_alignment }};
+    --ctb-title-size: {{ section.settings.title_size }}px;
+    --ctb-title-size-tablet: {{ section.settings.title_size_tablet }}px;
+    --ctb-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --ctb-title-lh: {{ section.settings.title_line_height }}%;
+    --ctb-title-lh-tablet: {{ section.settings.title_line_height_tablet }}%;
+    --ctb-title-lh-mobile: {{ section.settings.title_line_height_mobile }}%;
+    --ctb-title-ls: {{ section.settings.title_letter_spacing }}px;
+    --ctb-title-mt-mobile: {{ section.settings.title_margin_top_mobile }}px;
+    --ctb-title-px-mobile: {{ section.settings.title_padding_x_mobile }}px;
+    --ctb-nav-align: {{ section.settings.tabs_alignment }};
+    --ctb-nav-gap: {{ section.settings.tabs_gap }}px;
+    --ctb-nav-mt: {{ section.settings.tabs_margin_top }}px;
+    --ctb-nav-mt-mobile: {{ section.settings.tabs_margin_top_mobile }}px;
+    --ctb-tab-py: {{ section.settings.tab_padding_y }}px;
+    --ctb-tab-px: {{ section.settings.tab_padding_x }}px;
+    --ctb-tab-radius: {{ section.settings.tab_radius }}px;
+    --ctb-tab-bg: {{ section.settings.tab_background | default: 'transparent' }};
+    --ctb-tab-color: {{ section.settings.tab_color }};
+    --ctb-tab-active-bg: {{ section.settings.tab_active_background | default: 'transparent' }};
+    --ctb-tab-active-color: {{ section.settings.tab_active_color }};
+    --ctb-tab-weight: {{ section.settings.tab_weight }};
+    --ctb-tab-size: {{ section.settings.tab_size }}px;
+    --ctb-tab-size-tablet: {{ section.settings.tab_size_tablet }}px;
+    --ctb-tab-size-mobile: {{ section.settings.tab_size_mobile }}px;
+    --ctb-tab-lh: {{ section.settings.tab_line_height }}%;
+    --ctb-tab-lh-mobile: {{ section.settings.tab_line_height_mobile }}%;
+    --ctb-panel-p: {{ section.settings.panel_padding }}px;
+    --ctb-table-width: {{ section.settings.table_width }}px;
+    --ctb-table-mt: {{ section.settings.table_margin_top }}px;
+    --ctb-table-mb: {{ section.settings.table_margin_bottom }}px;
+    --ctb-table-mb-mobile: {{ section.settings.table_margin_bottom_mobile }}px;
+    --ctb-label-fr: {{ section.settings.label_columns }}fr;
+    --ctb-label-fr-mobile: {{ section.settings.label_columns_mobile }}fr;
+    --ctb-value-fr: {{ value_columns }}fr;
+    --ctb-value-fr-mobile: {{ value_columns_mobile }}fr;
+    --ctb-border-color: {{ section.settings.border_color }};
+    --ctb-border-width: {{ section.settings.border_width }}px;
+    --ctb-ours-bg: {{ section.settings.ours_background }};
+    --ctb-ours-bg-mobile: {{ section.settings.ours_background_mobile }};
+    --ctb-ours-color: {{ section.settings.ours_icon_color }};
+    --ctb-others-color: {{ section.settings.others_icon_color }};
+    --ctb-ours-radius: {{ section.settings.ours_radius }}px;
+    --ctb-cell-py: {{ section.settings.cell_padding_y }}px;
+    --ctb-cell-py-mobile: {{ section.settings.cell_padding_y_mobile }}px;
+    --ctb-header-pt: {{ section.settings.header_padding_top }}px;
+    --ctb-header-pb: {{ section.settings.header_padding_bottom }}px;
+    --ctb-header-pt-mobile: {{ section.settings.header_padding_top_mobile }}px;
+    --ctb-header-pb-mobile: {{ section.settings.header_padding_bottom_mobile }}px;
+    --ctb-label-px: {{ section.settings.label_padding_x }}px;
+    --ctb-label-pl-mobile: {{ section.settings.label_padding_left_mobile }}px;
+    --ctb-label-pr-mobile: {{ section.settings.label_padding_right_mobile }}px;
+    --ctb-label-color: {{ section.settings.label_color }};
+    --ctb-label-size: {{ section.settings.label_size }}px;
+    --ctb-label-size-tablet: {{ section.settings.label_size_tablet }}px;
+    --ctb-label-size-mobile: {{ section.settings.label_size_mobile }}px;
+    --ctb-label-lh: {{ section.settings.label_line_height }}%;
+    --ctb-label-ls-mobile: {{ section.settings.label_letter_spacing_mobile }}px;
+    --ctb-header-color: {{ section.settings.header_color }};
+    --ctb-header-weight: {{ section.settings.header_weight }};
+    --ctb-header-size: {{ section.settings.header_size }}px;
+    --ctb-header-size-tablet: {{ section.settings.header_size_tablet }}px;
+    --ctb-header-size-mobile: {{ section.settings.header_size_mobile }}px;
+    --ctb-header-lh: {{ section.settings.header_line_height }}%;
+    --ctb-icon-size: {{ section.settings.icon_size }}px;
+    --ctb-icon-size-tablet: {{ section.settings.icon_size_tablet }}px;
+    --ctb-icon-size-mobile: {{ section.settings.icon_size_mobile }}px;
+    --ctb-logo-w: {{ section.settings.logo_width }}px;
+    --ctb-logo-h-mobile: {{ section.settings.logo_height_mobile }}px;
+  }
+
+  {%- if tab_count > 0 -%}
+    {%- for i in (1..tab_count) -%}
+      #ComparisonTab-{{ section.id }}-{{ i }}:checked ~ .comparison-tabs__panels > .comparison-tabs__panel:nth-child({{ i }}) {
+        display: block;
+      }
+      #ComparisonTab-{{ section.id }}-{{ i }}:checked ~ .comparison-tabs__nav > .comparison-tabs__label:nth-child({{ i }}) {
+        background-color: var(--ctb-tab-active-bg);
+        color: var(--ctb-tab-active-color);
+      }
+      #ComparisonTab-{{ section.id }}-{{ i }}:focus-visible ~ .comparison-tabs__nav > .comparison-tabs__label:nth-child({{ i }}) {
+        outline: 0.2rem solid var(--ctb-tab-active-color);
+        outline-offset: 0.2rem;
+      }
+    {%- endfor -%}
+  {%- endif -%}
+{%- endstyle -%}
+
+<div
+  id="ComparisonTabs-{{ section.id }}"
+  class="comparison-tabs comparison-tabs-{{ section.id }}"
+>
+  <div class="comparison-tabs__inner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {%- if section.settings.title != blank -%}
+      <{{ section.settings.title_tag }} class="comparison-tabs__title">
+        {{- section.settings.title -}}
+      </{{ section.settings.title_tag }}>
+    {%- endif -%}
+
+    <div class="comparison-tabs__tabs">
+      {%- if tab_count > 0 -%}
+        {%- for i in (1..tab_count) -%}
+          <input
+            type="radio"
+            class="visually-hidden"
+            name="ComparisonTabs-{{ section.id }}"
+            id="ComparisonTab-{{ section.id }}-{{ i }}"
+            {% if forloop.first %}
+              checked
+            {% endif %}
+          >
+        {%- endfor -%}
+
+        <div class="comparison-tabs__nav">
+          {%- assign tab_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tab' -%}
+              {%- assign tab_index = tab_index | plus: 1 -%}
+              <label
+                for="ComparisonTab-{{ section.id }}-{{ tab_index }}"
+                class="comparison-tabs__label"
+                data-index="{{ tab_index }}"
+                {{ block.shopify_attributes }}
+              >
+                {{- block.settings.label | escape -}}
+              </label>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="comparison-tabs__panels">
+        {%- liquid
+          assign panel_index = 1
+          assign seen_tab = false
+          assign in_table = false
+        -%}
+        <div
+          class="comparison-tabs__panel{% if tab_count == 0 %} comparison-tabs__panel--static{% endif %}"
+          data-index="1"
+        >
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tab' -%}
+              {%- if seen_tab -%}
+                {%- if in_table -%}
+                  </div>
+                  {%- assign in_table = false -%}
+                {%- endif -%}
+                {%- assign panel_index = panel_index | plus: 1 -%}
+                </div>
+                <div class="comparison-tabs__panel" data-index="{{ panel_index }}">
+              {%- endif -%}
+              {%- assign seen_tab = true -%}
+              {%- continue -%}
+            {%- endif -%}
+
+            {%- if block.type == 'comparison_header' or block.type == 'comparison_row' -%}
+              {%- unless in_table -%}
+                <div class="comparison-tabs__table" role="table">
+                {%- assign in_table = true -%}
+              {%- endunless -%}
+            {%- elsif in_table -%}
+              </div>
+              {%- assign in_table = false -%}
+            {%- endif -%}
+
+            {%- case block.type -%}
+              {%- when 'comparison_header' -%}
+                <div
+                  class="comparison-tabs__row comparison-tabs__row--header"
+                  role="row"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="comparison-tabs__cell comparison-tabs__cell--label" role="columnheader">
+                    {%- if block.settings.label_heading != blank -%}
+                      <span class="comparison-tabs__header-label">{{ block.settings.label_heading | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="comparison-tabs__cell comparison-tabs__cell--ours" role="columnheader">
+                    {%- if block.settings.logo != blank -%}
+                      {%- liquid
+                        assign logo_class = 'comparison-tabs__logo'
+                        if block.settings.logo_mobile != blank
+                          assign logo_class = 'comparison-tabs__logo comparison-tabs__logo--desktop'
+                        endif
+                        assign logo_width_2x = section.settings.logo_width | times: 2
+                      -%}
+                      {{
+                        block.settings.logo
+                        | image_url: width: logo_width_2x
+                        | image_tag: class: logo_class, alt: block.settings.ours_label, loading: 'lazy'
+                      }}
+                      {%- if block.settings.logo_mobile != blank -%}
+                        {{
+                          block.settings.logo_mobile
+                          | image_url: height: 140
+                          | image_tag:
+                            class: 'comparison-tabs__logo comparison-tabs__logo--mobile',
+                            alt: block.settings.ours_label,
+                            loading: 'lazy'
+                        }}
+                      {%- endif -%}
+                    {%- else -%}
+                      <span class="comparison-tabs__header-label">{{ block.settings.ours_label | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="comparison-tabs__cell comparison-tabs__cell--others" role="columnheader">
+                    <span class="comparison-tabs__header-label">
+                      {{- block.settings.others_label | escape | newline_to_br -}}
+                    </span>
+                  </div>
+                </div>
+              {%- when 'comparison_row' -%}
+                <div class="comparison-tabs__row" role="row" {{ block.shopify_attributes }}>
+                  <div class="comparison-tabs__cell comparison-tabs__cell--label" role="rowheader">
+                    <span class="comparison-tabs__row-label">
+                      {{- block.settings.label | escape | newline_to_br -}}
+                    </span>
+                  </div>
+                  <div class="comparison-tabs__cell comparison-tabs__cell--ours" role="cell">
+                    {%- render 'comparison-tabs-value',
+                      icon: block.settings.ours_icon,
+                      text: block.settings.ours_text
+                    -%}
+                  </div>
+                  <div class="comparison-tabs__cell comparison-tabs__cell--others" role="cell">
+                    {%- render 'comparison-tabs-value',
+                      icon: block.settings.others_icon,
+                      text: block.settings.others_text
+                    -%}
+                  </div>
+                </div>
+              {%- when 'heading' -%}
+                <div
+                  class="comparison-tabs__block"
+                  style="--mt: {{ block.settings.margin_top }}px; --mt-tablet: {{ block.settings.margin_top_tablet }}px; --mt-mobile: {{ block.settings.margin_top_mobile }}px;"
+                  {{ block.shopify_attributes }}
+                >
+                  <{{ block.settings.heading_tag }}
+                    class="comparison-tabs__block-heading"
+                    style="--size: {{ block.settings.font_size }}px; --size-tablet: {{ block.settings.font_size_tablet }}px; --size-mobile: {{ block.settings.font_size_mobile }}px; --lh: {{ block.settings.line_height }}%; --lh-tablet: {{ block.settings.line_height_tablet }}%; --lh-mobile: {{ block.settings.line_height_mobile }}%; --weight: {{ block.settings.font_weight }}; --color: {{ block.settings.color }}; --align: {{ block.settings.alignment }};"
+                  >
+                    {{- block.settings.heading -}}
+                  </{{ block.settings.heading_tag }}>
+                </div>
+              {%- when 'text' -%}
+                <div
+                  class="comparison-tabs__block"
+                  style="--mt: {{ block.settings.margin_top }}px; --mt-tablet: {{ block.settings.margin_top_tablet }}px; --mt-mobile: {{ block.settings.margin_top_mobile }}px;"
+                  {{ block.shopify_attributes }}
+                >
+                  <div
+                    class="comparison-tabs__block-text"
+                    style="--size: {{ block.settings.font_size }}px; --size-tablet: {{ block.settings.font_size_tablet }}px; --size-mobile: {{ block.settings.font_size_mobile }}px; --lh: {{ block.settings.line_height }}%; --lh-tablet: {{ block.settings.line_height_tablet }}%; --lh-mobile: {{ block.settings.line_height_mobile }}%; --fs: {% if block.settings.italic %}italic{% else %}normal{% endif %}; --color: {{ block.settings.color }}; --align: {{ block.settings.alignment }};"
+                  >
+                    {{ block.settings.text }}
+                  </div>
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+          {%- if in_table -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if request.design_mode and tab_count > 1 -%}
+  <script>
+    document.addEventListener('shopify:block:select', function (event) {
+      var root = document.getElementById('ComparisonTabs-{{ section.id }}');
+      if (!root || !root.contains(event.target)) return;
+      var holder = event.target.closest('[data-index]');
+      if (!holder) return;
+      var input = document.getElementById('ComparisonTab-{{ section.id }}-' + holder.dataset.index);
+      if (input) input.checked = true;
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Comparativa con pestañas",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Título",
+      "default": "Por qué elegir Gujoy?"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Etiqueta HTML",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "p", "label": "Párrafo" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#151515"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño en escritorio",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "title_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "title_line_height_tablet",
+      "label": "Interlineado en tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "title_line_height_mobile",
+      "label": "Interlineado en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Espaciado entre letras",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_margin_top_mobile",
+      "label": "Margen superior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "title_padding_x_mobile",
+      "label": "Relleno lateral en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Pestañas"
+    },
+    {
+      "type": "select",
+      "id": "tabs_alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "tabs_gap",
+      "label": "Espacio entre pestañas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "tabs_margin_top",
+      "label": "Margen superior en escritorio y tablet",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "tabs_margin_top_mobile",
+      "label": "Margen superior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tab_padding_y",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "tab_padding_x",
+      "label": "Relleno lateral",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_radius",
+      "label": "Radio de esquinas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "tab_background",
+      "label": "Fondo"
+    },
+    {
+      "type": "color",
+      "id": "tab_color",
+      "label": "Texto",
+      "default": "#4D4D4D"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_background",
+      "label": "Fondo activo",
+      "default": "#FCDCDC"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_color",
+      "label": "Texto activo",
+      "default": "#7A1F1F"
+    },
+    {
+      "type": "select",
+      "id": "tab_weight",
+      "label": "Grosor",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "tab_size",
+      "label": "Tamaño en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "tab_line_height",
+      "label": "Interlineado en escritorio y tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "tab_line_height_mobile",
+      "label": "Interlineado en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "panel_padding",
+      "label": "Relleno del contenido de la pestaña",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Tabla comparativa"
+    },
+    {
+      "type": "range",
+      "id": "table_width",
+      "label": "Ancho máximo",
+      "min": 400,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "default": 770
+    },
+    {
+      "type": "range",
+      "id": "label_columns",
+      "label": "Ancho de la columna de texto en escritorio (de 12)",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "label_columns_mobile",
+      "label": "Ancho de la columna de texto en móvil (de 12)",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "table_margin_top",
+      "label": "Margen superior",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "table_margin_bottom",
+      "label": "Margen inferior en escritorio y tablet",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "table_margin_bottom_mobile",
+      "label": "Margen inferior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color de las líneas",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor de las líneas",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "ours_background",
+      "label": "Fondo de la columna destacada en escritorio",
+      "default": "#7F1426"
+    },
+    {
+      "type": "color",
+      "id": "ours_background_mobile",
+      "label": "Fondo de la columna destacada en móvil",
+      "default": "#731122"
+    },
+    {
+      "type": "range",
+      "id": "ours_radius",
+      "label": "Radio de la columna destacada",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "ours_icon_color",
+      "label": "Color de iconos en la columna destacada",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "others_icon_color",
+      "label": "Color de iconos en la columna de comparación",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño de iconos en escritorio",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "icon_size_tablet",
+      "label": "Tamaño de iconos en tablet",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Tamaño de iconos en móvil",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_y",
+      "label": "Relleno vertical de filas en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_y_mobile",
+      "label": "Relleno vertical de filas en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "label_padding_x",
+      "label": "Relleno lateral del texto en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "label_padding_left_mobile",
+      "label": "Relleno izquierdo del texto en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "label_padding_right_mobile",
+      "label": "Relleno derecho del texto en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color del texto de filas",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Tamaño del texto de filas en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_size_tablet",
+      "label": "Tamaño del texto de filas en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Tamaño del texto de filas en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "label_line_height",
+      "label": "Interlineado del texto de filas",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "label_letter_spacing_mobile",
+      "label": "Espaciado entre letras de filas en móvil",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": -0.4
+    },
+    {
+      "type": "header",
+      "content": "Encabezado de la tabla"
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Color del texto",
+      "default": "#242424"
+    },
+    {
+      "type": "select",
+      "id": "header_weight",
+      "label": "Grosor",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "label": "Tamaño en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "header_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "header_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "header_line_height",
+      "label": "Interlineado",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "header_padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "header_padding_bottom",
+      "label": "Relleno inferior en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "header_padding_top_mobile",
+      "label": "Relleno superior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "header_padding_bottom_mobile",
+      "label": "Relleno inferior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Ancho del logo en escritorio",
+      "min": 40,
+      "max": 140,
+      "step": 1,
+      "unit": "px",
+      "default": 93
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Alto del logo en móvil",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "lora_n4"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de pestañas, tabla y textos",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Sección"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo en escritorio",
+      "default": "#FDF8ED"
+    },
+    {
+      "type": "color",
+      "id": "background_color_mobile",
+      "label": "Color de fondo en móvil",
+      "default": "#F9F9F9"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo del contenido",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "inner_padding",
+      "label": "Relleno interior en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "inner_padding_mobile",
+      "label": "Relleno interior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "inner_padding_bottom_mobile",
+      "label": "Relleno interior inferior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Relleno inferior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Relleno superior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Relleno inferior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestaña",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Los bloques que pongas debajo de esta pestaña (hasta la siguiente) se muestran dentro de ella."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre de la pestaña",
+          "default": "Fórmula"
+        }
+      ]
+    },
+    {
+      "type": "comparison_header",
+      "name": "Encabezado de tabla",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label_heading",
+          "label": "Texto de la primera columna",
+          "info": "Opcional."
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo de la columna destacada"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_mobile",
+          "label": "Logo en móvil",
+          "info": "Opcional. Si está vacío se usa el logo principal."
+        },
+        {
+          "type": "text",
+          "id": "ours_label",
+          "label": "Nombre de la marca",
+          "info": "Se muestra si no hay logo y se usa como texto alternativo.",
+          "default": "Gujoy"
+        },
+        {
+          "type": "textarea",
+          "id": "others_label",
+          "label": "Texto de la columna de comparación",
+          "default": "Otras\nMarcas"
+        }
+      ]
+    },
+    {
+      "type": "comparison_row",
+      "name": "Fila de comparación",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Texto",
+          "default": "Triple Bloqueo DHT Shield™"
+        },
+        {
+          "type": "select",
+          "id": "ours_icon",
+          "label": "Icono de la columna destacada",
+          "options": [
+            { "value": "check_circle_fill", "label": "Check (círculo)" },
+            { "value": "check_bold", "label": "Check" },
+            { "value": "x", "label": "X" },
+            { "value": "none", "label": "Ninguno" }
+          ],
+          "default": "check_circle_fill"
+        },
+        {
+          "type": "text",
+          "id": "ours_text",
+          "label": "Texto de la columna destacada",
+          "info": "Opcional. Reemplaza el icono."
+        },
+        {
+          "type": "select",
+          "id": "others_icon",
+          "label": "Icono de la columna de comparación",
+          "options": [
+            { "value": "check_circle_fill", "label": "Check (círculo)" },
+            { "value": "check_bold", "label": "Check" },
+            { "value": "x", "label": "X" },
+            { "value": "none", "label": "Ninguno" }
+          ],
+          "default": "x"
+        },
+        {
+          "type": "text",
+          "id": "others_text",
+          "label": "Texto de la columna de comparación",
+          "info": "Opcional. Reemplaza el icono."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Título",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Título",
+          "default": "Fabricada con los estándares más altos del mundo"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Etiqueta HTML",
+          "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "p", "label": "Párrafo" }
+          ],
+          "default": "h3"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Seminegrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alineación",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "right", "label": "Derecha" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño en escritorio",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_tablet",
+          "label": "Tamaño en tablet",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Tamaño en móvil",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "label": "Interlineado en escritorio",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "line_height_tablet",
+          "label": "Interlineado en tablet",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "line_height_mobile",
+          "label": "Interlineado en móvil",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 140
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margen superior en escritorio",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_tablet",
+          "label": "Margen superior en tablet",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "label": "Margen superior en móvil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p><em>Cada gominola de Gujoy pasa por controles de calidad estrictos antes de llegar a tus manos. Nuestro laboratorio cuenta con certificación GMP verificada por Intertek, registro FDA y certificaciones ISO 9001 y HACCP los mismos estándares exigidos a los medicamentos. Porque lo que entra en tu cuerpo merece garantías reales, no promesas vacías.</em></p>"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#4D4D4D"
+        },
+        {
+          "type": "checkbox",
+          "id": "italic",
+          "label": "Cursiva en todo el texto",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alineación",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "right", "label": "Derecha" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño en escritorio",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_tablet",
+          "label": "Tamaño en tablet",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Tamaño en móvil",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "label": "Interlineado en escritorio",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "line_height_tablet",
+          "label": "Interlineado en tablet",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "line_height_mobile",
+          "label": "Interlineado en móvil",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Margen superior en escritorio",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_tablet",
+          "label": "Margen superior en tablet",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "label": "Margen superior en móvil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 7
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparativa con pestañas",
+      "blocks": [
+        { "type": "tab" },
+        { "type": "comparison_header" },
+        { "type": "comparison_row" },
+        { "type": "comparison_row", "settings": { "label": "Vegano &\nSin Gluten" } },
+        { "type": "comparison_row", "settings": { "label": "Avalada por dermatólogas" } },
+        { "type": "comparison_row", "settings": { "label": "Fabricada en laboratorio cGMP" } },
+        { "type": "comparison_row", "settings": { "label": "Sin colorantes ni conservantes artificiales" } },
+        { "type": "comparison_row", "settings": { "label": "Garantía de 90 días" } },
+        { "type": "tab", "settings": { "label": "Calidad & Seguridad" } },
+        { "type": "heading" },
+        { "type": "text" }
+      ]
+    }
+  ]
+}
+{% endschema %}
