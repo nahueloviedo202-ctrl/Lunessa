@@ -624,6 +624,7 @@
         "ingredient_X9jDi4": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/SawPalmetto2.webp",
             "name": "Palma Enana",
             "description": "Ayuda a frenar la caída desde la raíz",
             "tag": "PROTECCIÓN"
@@ -632,6 +633,7 @@
         "ingredient_tMBhbT": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/SemillaCalabaza.webp",
             "name": "Semilla de Calabaza",
             "description": "Cuida el folículo para un pelo más fuerte",
             "tag": "FORTALECE"
@@ -640,6 +642,7 @@
         "ingredient_Cqb7iM": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Betasitosterol.webp",
             "name": "Beta-sitosterol",
             "description": "Refuerza el extracto y frena la caída",
             "tag": "SINERGIA"
@@ -662,6 +665,7 @@
         "ingredient_37DEAq": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaA.webp",
             "name": "Vitamina A",
             "description": "Ayuda a renovar el cuero cabelludo",
             "tag": "RENOVACIÓN"
@@ -670,6 +674,7 @@
         "ingredient_eetFFX": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaC.webp",
             "name": "Vitamina C",
             "description": "Antioxidante que protege la fibra capilar",
             "tag": "ANTIOXIDANTE"
@@ -678,6 +683,7 @@
         "ingredient_8FUJYg": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaB6.webp",
             "name": "Vitamina B6",
             "description": "Apoya la producción natural de queratina",
             "tag": "QUERATINA"
@@ -686,6 +692,7 @@
         "ingredient_c79WaY": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaB12.webp",
             "name": "Vitamina B12",
             "description": "Ayuda a oxigenar el folículo capilar",
             "tag": "OXIGENACIÓN"
@@ -694,6 +701,7 @@
         "ingredient_CG9M3z": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaB5.webp",
             "name": "Vitamina B5",
             "description": "Hidrata el cuero cabelludo desde dentro",
             "tag": "HIDRATACIÓN"
@@ -702,6 +710,7 @@
         "ingredient_mbdEwY": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Biotina2.webp",
             "name": "Biotina",
             "description": "Apoya el crecimiento natural del pelo",
             "tag": "CRECIMIENTO"
@@ -710,6 +719,7 @@
         "ingredient_aNRiaF": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaE.webp",
             "name": "Vitamina E",
             "description": "Antioxidante que cuida el cuero cabelludo",
             "tag": "PROTECCIÓN"
@@ -718,6 +728,7 @@
         "ingredient_TNgGVJ": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Zinc.webp",
             "name": "Zinc",
             "description": "Ayuda a reparar y fortalecer el folículo",
             "tag": "REPARACIÓN"
@@ -726,6 +737,7 @@
         "ingredient_BabWA8": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Selenio.webp",
             "name": "Selenio",
             "description": "Protege las células frente al daño externo",
             "tag": "PROTECCIÓN"
