@@ -1,0 +1,288 @@
+/* Ingredients tabs — every selector is scoped to .ing */
+
+.ing {
+  padding-top: var(--ing-pt-mobile);
+  padding-bottom: var(--ing-pb-mobile);
+  background: var(--ing-bg);
+  font-family: var(--ing-body-font, var(--font-body-family));
+  font-style: var(--ing-body-style, var(--font-body-style));
+}
+
+.ing *,
+.ing *::before,
+.ing *::after {
+  box-sizing: border-box;
+}
+
+/* Header */
+
+.ing__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.ing .ing__title {
+  margin: 0;
+  color: var(--ing-title-color);
+  font-family: var(--ing-heading-font, var(--font-heading-family));
+  font-style: var(--ing-heading-style, var(--font-heading-style));
+  font-size: var(--ing-title-size-mobile);
+  font-weight: var(--ing-title-weight);
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+
+.ing__button-wrapper--desktop {
+  display: none;
+}
+
+.ing__button-wrapper--mobile {
+  margin-top: 10px;
+}
+
+.ing__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 18px 0;
+  border-radius: var(--ing-button-radius);
+  background: var(--ing-button-bg);
+  color: var(--ing-button-color);
+  font-size: var(--ing-button-size-mobile);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.ing__button-icon {
+  flex-shrink: 0;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+/* Tabs */
+
+.ing__tabs {
+  margin-top: var(--ing-tabs-mt-mobile);
+}
+
+.ing__tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ing-tab-gap);
+}
+
+.ing__tab {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--ing-tab-py) var(--ing-tab-px);
+  border: 1px solid var(--ing-tab-border);
+  border-radius: var(--ing-tab-radius);
+  background: var(--ing-tab-bg);
+  color: var(--ing-tab-color);
+  font-size: var(--ing-tab-size-mobile);
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: -0.4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.ing__panel {
+  display: none;
+  margin-top: var(--ing-panel-mt);
+  padding-bottom: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ing-scrollbar-thumb) var(--ing-scrollbar-track);
+}
+
+.ing__radio:checked + .ing__panel {
+  display: block;
+}
+
+.ing__panel::-webkit-scrollbar {
+  height: 5px;
+}
+
+.ing__panel::-webkit-scrollbar-track {
+  background: var(--ing-scrollbar-track);
+}
+
+.ing__panel::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: var(--ing-scrollbar-thumb);
+}
+
+.ing .ing__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ing-columns-mobile), minmax(0, 1fr));
+  column-gap: var(--ing-column-gap);
+  row-gap: var(--ing-row-gap);
+  min-width: var(--ing-min-width-mobile);
+  margin: 0;
+  padding: 0;
+}
+
+/* Ingredient card */
+
+.ing-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.ing-card__media {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ing-card__image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: var(--ing-image-height-mobile);
+  object-fit: contain;
+  border-radius: var(--ing-image-radius);
+}
+
+.ing-card__image--placeholder {
+  width: var(--ing-image-height-mobile);
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+.ing .ing-card__name {
+  width: 100%;
+  margin: 10px 0 0;
+  color: var(--ing-name-color);
+  font-family: var(--ing-heading-font, var(--font-heading-family));
+  font-style: var(--ing-heading-style, var(--font-heading-style));
+  font-size: var(--ing-name-size-mobile);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.ing-card__divider {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  border-bottom: var(--ing-divider-width-mobile) solid var(--ing-divider-color);
+}
+
+.ing .ing-card__description {
+  margin: 3px 0 0;
+  color: var(--ing-desc-color);
+  font-size: var(--ing-desc-size-mobile);
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+.ing-card__tag {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 3px 20px;
+  border: 1px solid var(--ing-tag-border);
+  border-radius: var(--ing-tag-radius);
+  background: var(--ing-tag-bg);
+  color: var(--ing-tag-color);
+  font-size: var(--ing-tag-size-mobile);
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+@media screen and (max-width: 749px) {
+  .ing .ing__container {
+    padding-left: var(--ing-px-mobile);
+    padding-right: var(--ing-px-mobile);
+  }
+}
+
+/* Tablet & desktop */
+
+@media screen and (min-width: 750px) {
+  .ing {
+    padding-top: var(--ing-pt);
+    padding-bottom: var(--ing-pb);
+  }
+
+  .ing .ing__title {
+    font-size: var(--ing-title-size);
+  }
+
+  .ing__tabs {
+    margin-top: var(--ing-tabs-mt);
+  }
+
+  .ing__tab {
+    font-size: var(--ing-tab-size);
+    line-height: 1.5;
+  }
+
+  .ing .ing__grid {
+    grid-template-columns: repeat(var(--ing-columns), minmax(0, 1fr));
+    min-width: var(--ing-min-width-tablet);
+  }
+
+  .ing-card__image {
+    height: var(--ing-image-height);
+  }
+
+  .ing-card__image--placeholder {
+    width: var(--ing-image-height);
+  }
+
+  .ing .ing-card__name {
+    margin-top: 5px;
+    font-size: var(--ing-name-size);
+  }
+
+  .ing-card__divider {
+    margin-top: 0;
+    border-bottom-width: var(--ing-divider-width);
+  }
+
+  .ing .ing-card__description {
+    font-size: var(--ing-desc-size);
+  }
+
+  .ing-card__tag {
+    font-size: var(--ing-tag-size);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .ing__header {
+    display: grid;
+    grid-template-columns: minmax(0, 9fr) minmax(0, 3fr);
+    align-items: end;
+    gap: 16px;
+  }
+
+  .ing__button-wrapper--desktop {
+    display: block;
+  }
+
+  .ing__button-wrapper--mobile {
+    display: none;
+  }
+
+  .ing__button {
+    padding: 12px 24px;
+    font-size: var(--ing-button-size);
+    line-height: 1.8;
+  }
+
+  .ing .ing__grid {
+    min-width: var(--ing-min-width);
+  }
+}

@@ -1,0 +1,915 @@
+{{ 'section-ingredients-tabs.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign radio_prefix = 'Ingredients-' | append: section.id | append: '-'
+
+  assign tab_count = 0
+  assign active_tab = 0
+  for b in section.blocks
+    if b.type == 'tab'
+      assign tab_count = tab_count | plus: 1
+      if b.settings.selected and active_tab == 0
+        assign active_tab = tab_count
+      endif
+    endif
+  endfor
+  if active_tab == 0
+    assign active_tab = 1
+  endif
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .ing--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --ing-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --ing-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --ing-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --ing-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --ing-bg: {{ section.settings.background }};
+    --ing-pt: {{ section.settings.padding_top }}px;
+    --ing-pb: {{ section.settings.padding_bottom }}px;
+    --ing-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ing-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ing-px-mobile: {{ section.settings.padding_horizontal_mobile }}px;
+
+    --ing-title-size: {{ section.settings.heading_size }}px;
+    --ing-title-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ing-title-weight: {{ section.settings.heading_weight }};
+    --ing-title-color: {{ section.settings.heading_color }};
+
+    --ing-button-bg: {{ section.settings.button_background }};
+    --ing-button-color: {{ section.settings.button_color }};
+    --ing-button-radius: {{ section.settings.button_radius }}px;
+    --ing-button-size: {{ section.settings.button_size }}px;
+    --ing-button-size-mobile: {{ section.settings.button_size_mobile }}px;
+
+    --ing-tabs-mt: {{ section.settings.tabs_margin_top }}px;
+    --ing-tabs-mt-mobile: {{ section.settings.tabs_margin_top_mobile }}px;
+    --ing-tab-gap: {{ section.settings.tab_gap }}px;
+    --ing-tab-px: {{ section.settings.tab_padding_horizontal }}px;
+    --ing-tab-py: {{ section.settings.tab_padding_vertical }}px;
+    --ing-tab-radius: {{ section.settings.tab_radius }}px;
+    --ing-tab-size: {{ section.settings.tab_size }}px;
+    --ing-tab-size-mobile: {{ section.settings.tab_size_mobile }}px;
+    --ing-tab-color: {{ section.settings.tab_color }};
+    --ing-tab-border: {{ section.settings.tab_border_color }};
+    --ing-tab-bg: {{ section.settings.tab_background }};
+    --ing-tab-active-color: {{ section.settings.tab_active_color }};
+    --ing-tab-active-bg: {{ section.settings.tab_active_background }};
+    --ing-panel-mt: {{ section.settings.panel_margin_top }}px;
+    --ing-scrollbar-thumb: {{ section.settings.scrollbar_thumb }};
+    --ing-scrollbar-track: {{ section.settings.scrollbar_track }};
+
+    --ing-image-height: {{ section.settings.image_height }}px;
+    --ing-image-height-mobile: {{ section.settings.image_height_mobile }}px;
+    --ing-image-radius: {{ section.settings.image_radius }}px;
+    --ing-name-size: {{ section.settings.name_size }}px;
+    --ing-name-size-mobile: {{ section.settings.name_size_mobile }}px;
+    --ing-name-color: {{ section.settings.name_color }};
+    --ing-divider-color: {{ section.settings.divider_color }};
+    --ing-divider-width: {{ section.settings.divider_width }}px;
+    --ing-divider-width-mobile: {{ section.settings.divider_width_mobile }}px;
+    --ing-desc-size: {{ section.settings.description_size }}px;
+    --ing-desc-size-mobile: {{ section.settings.description_size_mobile }}px;
+    --ing-desc-color: {{ section.settings.description_color }};
+    --ing-tag-color: {{ section.settings.tag_color }};
+    --ing-tag-border: {{ section.settings.tag_border_color }};
+    --ing-tag-bg: {{ section.settings.tag_background }};
+    --ing-tag-radius: {{ section.settings.tag_radius }}px;
+    --ing-tag-size: {{ section.settings.tag_size }}px;
+    --ing-tag-size-mobile: {{ section.settings.tag_size_mobile }}px;
+  }
+
+  {%- assign tab_index = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'tab' -%}
+      {%- assign tab_index = tab_index | plus: 1 -%}
+      {%- assign radio_id = radio_prefix | append: tab_index %}
+      .ing--{{ section.id }} .ing__tabs:has([id="{{ radio_id }}"]:checked) [for="{{ radio_id }}"] {
+        border-color: var(--ing-tab-active-bg);
+        background: var(--ing-tab-active-bg);
+        color: var(--ing-tab-active-color);
+      }
+      .ing--{{ section.id }} .ing__tabs:has([id="{{ radio_id }}"]:focus-visible) [for="{{ radio_id }}"] {
+        outline: 2px solid var(--ing-tab-active-bg);
+        outline-offset: 2px;
+      }
+    {%- endif -%}
+  {%- endfor %}
+{%- endstyle -%}
+
+<section class="ing ing--{{ section.id }}">
+  <div class="ing__container page-width">
+    <div class="ing__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ing__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div class="ing__button-wrapper ing__button-wrapper--desktop">
+          {%- render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: section.settings.button_icon -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if tab_count > 0 -%}
+      <div class="ing__tabs">
+        <div class="ing__tablist" role="radiogroup" aria-label="{{ section.settings.heading | strip_html | escape }}">
+          {%- assign tab_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tab' -%}
+              {%- assign tab_index = tab_index | plus: 1 -%}
+              {%- assign radio_id = radio_prefix | append: tab_index -%}
+              <label for="{{ radio_id }}" class="ing__tab" data-tab-radio="{{ radio_id }}" {{ block.shopify_attributes }}>
+                {{- block.settings.label | escape -}}
+              </label>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- assign tab_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'tab' -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- liquid
+            assign tab_index = tab_index | plus: 1
+            assign radio_id = radio_prefix | append: tab_index
+            assign items_offset = forloop.index
+          -%}
+          <input
+            type="radio"
+            class="ing__radio visually-hidden"
+            name="ingredients-{{ section.id }}"
+            id="{{ radio_id }}"
+            {% if tab_index == active_tab %}
+              checked
+            {% endif %}
+          >
+          <div
+            class="ing__panel"
+            style="--ing-columns: {{ block.settings.columns }}; --ing-columns-mobile: {{ block.settings.columns_mobile }}; --ing-column-gap: {{ block.settings.column_gap }}px; --ing-row-gap: {{ block.settings.row_gap }}px; --ing-min-width: {{ block.settings.min_width }}%; --ing-min-width-tablet: {{ block.settings.min_width_tablet }}%; --ing-min-width-mobile: {{ block.settings.min_width_mobile }}%;"
+          >
+            <ul class="ing__grid list-unstyled" role="list">
+              {%- for item in section.blocks offset: items_offset -%}
+                {%- if item.type != 'ingredient' -%}
+                  {%- break -%}
+                {%- endif -%}
+                <li class="ing-card" data-tab-radio="{{ radio_id }}" {{ item.shopify_attributes }}>
+                  <div class="ing-card__media">
+                    {%- if item.settings.image != blank -%}
+                      {{
+                        item.settings.image
+                        | image_url: height: 300
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '150, 300, 450',
+                          sizes: '200px',
+                          class: 'ing-card__image'
+                      }}
+                    {%- else -%}
+                      {{ 'image' | placeholder_svg_tag: 'ing-card__image ing-card__image--placeholder placeholder-svg' }}
+                    {%- endif -%}
+                  </div>
+                  {%- if item.settings.name != blank -%}
+                    <h3 class="ing-card__name">{{ item.settings.name | escape }}</h3>
+                  {%- endif -%}
+                  <span class="ing-card__divider" aria-hidden="true"></span>
+                  {%- if item.settings.description != blank -%}
+                    <p class="ing-card__description">{{ item.settings.description | escape }}</p>
+                  {%- endif -%}
+                  {%- if item.settings.tag != blank -%}
+                    <span class="ing-card__tag">{{ item.settings.tag | escape }}</span>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="ing__button-wrapper ing__button-wrapper--mobile">
+        {%- render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: section.settings.button_icon -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if request.design_mode -%}
+  <script>
+    document.addEventListener('shopify:block:select', (event) => {
+      const radioId = event.target.dataset.tabRadio;
+      const radio = radioId && document.getElementById(radioId);
+      if (radio) radio.checked = true;
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Ingredientes con pestañas",
+  "tag": "div",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "12 ingredientes estudiados y encontrados en la naturaleza"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (móvil)",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Semi negrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "paragraph",
+      "content": "En escritorio se muestra junto al título; en tablet y móvil, debajo de las pestañas."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "Ver Informaciones Nutricionales"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "select",
+      "id": "button_icon",
+      "label": "Icono",
+      "options": [
+        { "value": "none", "label": "Ninguno" },
+        { "value": "article", "label": "Documento" },
+        { "value": "leaf", "label": "Hoja" },
+        { "value": "shield", "label": "Escudo" },
+        { "value": "sparkle", "label": "Destello" },
+        { "value": "check_circle", "label": "Check" }
+      ],
+      "default": "article"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Fondo",
+      "default": "#FDF8ED"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color de texto",
+      "default": "#731122"
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Pestañas"
+    },
+    {
+      "type": "range",
+      "id": "tabs_margin_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen superior",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "tabs_margin_top_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen superior (móvil)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "tab_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre pestañas",
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "tab_padding_horizontal",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno horizontal",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "tab_padding_vertical",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "tab_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "tab_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "tab_color",
+      "label": "Texto",
+      "default": "#731122"
+    },
+    {
+      "type": "color",
+      "id": "tab_border_color",
+      "label": "Borde",
+      "default": "#731122"
+    },
+    {
+      "type": "color",
+      "id": "tab_background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_color",
+      "label": "Texto activo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_background",
+      "label": "Fondo activo",
+      "default": "#731122"
+    },
+    {
+      "type": "range",
+      "id": "panel_margin_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación pestañas / ingredientes",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_thumb",
+      "label": "Barra de desplazamiento",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_track",
+      "label": "Fondo de la barra de desplazamiento",
+      "default": "#F1F1F1"
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas de ingrediente"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 40,
+      "max": 240,
+      "step": 2,
+      "unit": "px",
+      "label": "Alto de imagen",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "min": 40,
+      "max": 240,
+      "step": 2,
+      "unit": "px",
+      "label": "Alto de imagen (móvil)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de imagen",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del nombre",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "name_size_mobile",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del nombre (móvil)",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Color del nombre",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color del separador",
+      "default": "#CBCBCB"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Grosor del separador",
+      "default": 1.5
+    },
+    {
+      "type": "range",
+      "id": "divider_width_mobile",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Grosor del separador (móvil)",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la descripción",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la descripción (móvil)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color de la descripción",
+      "default": "#848484"
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Texto de etiqueta",
+      "default": "#731122"
+    },
+    {
+      "type": "color",
+      "id": "tag_border_color",
+      "label": "Borde de etiqueta",
+      "default": "#731122"
+    },
+    {
+      "type": "color",
+      "id": "tag_background",
+      "label": "Fondo de etiqueta",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "tag_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de etiqueta",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "tag_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de etiqueta",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tag_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de etiqueta (móvil)",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral (móvil)",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en título y nombres",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de título y nombres",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestaña",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Los bloques Ingrediente colocados justo después de esta pestaña se muestran dentro de ella."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre",
+          "default": "Todos"
+        },
+        {
+          "type": "checkbox",
+          "id": "selected",
+          "label": "Abierta por defecto",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "columns",
+          "min": 1,
+          "max": 8,
+          "step": 1,
+          "label": "Columnas",
+          "default": 6
+        },
+        {
+          "type": "range",
+          "id": "columns_mobile",
+          "min": 1,
+          "max": 8,
+          "step": 1,
+          "label": "Columnas (móvil)",
+          "default": 6
+        },
+        {
+          "type": "range",
+          "id": "column_gap",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Separación entre columnas",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "row_gap",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Separación entre filas",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "min_width",
+          "min": 100,
+          "max": 400,
+          "step": 5,
+          "unit": "%",
+          "label": "Ancho del contenido (escritorio)",
+          "info": "Más de 100% activa el desplazamiento horizontal.",
+          "default": 145
+        },
+        {
+          "type": "range",
+          "id": "min_width_tablet",
+          "min": 100,
+          "max": 400,
+          "step": 5,
+          "unit": "%",
+          "label": "Ancho del contenido (tablet)",
+          "default": 190
+        },
+        {
+          "type": "range",
+          "id": "min_width_mobile",
+          "min": 100,
+          "max": 400,
+          "step": 5,
+          "unit": "%",
+          "label": "Ancho del contenido (móvil)",
+          "default": 295
+        }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Ingrediente",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Ingrediente"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Describe el beneficio de este ingrediente"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Etiqueta",
+          "default": "BENEFICIO"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredientes con pestañas",
+      "blocks": [
+        { "type": "tab", "settings": { "label": "Todos", "selected": true } },
+        { "type": "ingredient", "settings": { "name": "Palma Enana", "description": "Ayuda a frenar la caída desde la raíz", "tag": "PROTECCIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Beta-sitosterol", "description": "Refuerza el extracto y frena la caída", "tag": "SINERGIA" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina C", "description": "Antioxidante que protege la fibra capilar", "tag": "ANTIOXIDANTE" } },
+        { "type": "ingredient", "settings": { "name": "Selenio", "description": "Protege las células frente al daño externo", "tag": "PROTECCIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina B5", "description": "Hidrata el cuero cabelludo desde dentro", "tag": "HIDRATACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina B6", "description": "Apoya la producción natural de queratina", "tag": "QUERATINA" } },
+        { "type": "ingredient", "settings": { "name": "Semilla de Calabaza", "description": "Cuida el folículo para un pelo más fuerte", "tag": "FORTALECE" } },
+        { "type": "ingredient", "settings": { "name": "Biotina", "description": "Apoya el crecimiento natural del pelo", "tag": "CRECIMIENTO" } },
+        { "type": "ingredient", "settings": { "name": "Zinc", "description": "Ayuda a reparar y fortalecer el folículo.", "tag": "REPARACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina A", "description": "Ayuda a renovar el cuero cabelludo", "tag": "RENOVACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina E", "description": "Antioxidante que cuida el cuero cabelludo", "tag": "PROTECCIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina B12", "description": "Ayuda a oxigenar el folículo capilar", "tag": "OXIGENACIÓN" } },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "DHT-Shield™",
+            "columns": 3,
+            "columns_mobile": 3,
+            "column_gap": 20,
+            "row_gap": 16,
+            "min_width": 100,
+            "min_width_tablet": 100,
+            "min_width_mobile": 140
+          }
+        },
+        { "type": "ingredient", "settings": { "name": "Palma Enana", "description": "Ayuda a frenar la caída desde la raíz", "tag": "PROTECCIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Semilla de Calabaza", "description": "Cuida el folículo para un pelo más fuerte", "tag": "FORTALECE" } },
+        { "type": "ingredient", "settings": { "name": "Beta-sitosterol", "description": "Refuerza el extracto y frena la caída", "tag": "SINERGIA" } },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Activos",
+            "columns": 5,
+            "columns_mobile": 5,
+            "column_gap": 20,
+            "row_gap": 20,
+            "min_width": 120,
+            "min_width_tablet": 160,
+            "min_width_mobile": 245
+          }
+        },
+        { "type": "ingredient", "settings": { "name": "Vitamina A", "description": "Ayuda a renovar el cuero cabelludo", "tag": "RENOVACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina C", "description": "Antioxidante que protege la fibra capilar", "tag": "ANTIOXIDANTE" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina B6", "description": "Apoya la producción natural de queratina", "tag": "QUERATINA" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina B12", "description": "Ayuda a oxigenar el folículo capilar", "tag": "OXIGENACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina B5", "description": "Hidrata el cuero cabelludo desde dentro", "tag": "HIDRATACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Biotina", "description": "Apoya el crecimiento natural del pelo", "tag": "CRECIMIENTO" } },
+        { "type": "ingredient", "settings": { "name": "Vitamina E", "description": "Antioxidante que cuida el cuero cabelludo", "tag": "PROTECCIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Zinc", "description": "Ayuda a reparar y fortalecer el folículo", "tag": "REPARACIÓN" } },
+        { "type": "ingredient", "settings": { "name": "Selenio", "description": "Protege las células frente al daño externo", "tag": "PROTECCIÓN" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
