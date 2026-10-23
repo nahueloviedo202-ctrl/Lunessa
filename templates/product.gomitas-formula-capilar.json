@@ -1203,6 +1203,7 @@
         "shadow_opacity": 30,
         "shadow_distance": 4,
         "shadow_blur": 4,
+        "badge_image": "shopify://shop_images/2_fe2db7a7-5062-41ef-9817-d2a148b6e91d.webp",
         "badge_width": 20,
         "badge_width_tablet": 80,
         "badge_width_mobile": 100,
@@ -1286,7 +1287,7 @@
           "type": "comparison_header",
           "settings": {
             "label_heading": "",
-            "ours_label": "Gujoy",
+            "ours_label": "Lunessa",
             "others_label": "Otras\nMarcas"
           }
         },
