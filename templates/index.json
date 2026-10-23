@@ -102,7 +102,7 @@
         "background_mobile": "#e7f0f0",
         "image_mobile": "shopify://shop_images/Gemini_Generated_Image_t88s86t88s86t88s.webp",
         "mobile_layout": "above",
-        "mobile_height": 75,
+        "mobile_height": 80,
         "image_fit_mobile": "cover",
         "content_width": 50,
         "column_gap": 32,
