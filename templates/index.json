@@ -747,12 +747,746 @@
         "body_font_custom": false,
         "body_font": "assistant_n4"
       }
+    },
+    "product_offer_hero_dcPhAM": {
+      "type": "product-offer-hero",
+      "blocks": {
+        "rating_ib6Um9": {
+          "type": "rating",
+          "settings": {
+            "stars": 5,
+            "star_color": "#93433D",
+            "star_size": 18,
+            "text": "2.432 Evaluaciones",
+            "text_color": "#50020B",
+            "text_size": 15,
+            "text_size_mobile": 14,
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 8,
+            "visibility": "all"
+          }
+        },
+        "title_Mm9FwJ": {
+          "type": "title",
+          "settings": {
+            "title": "Gujoy Fórmula Capilar Completa<strong>™</strong>",
+            "heading_tag": "h1",
+            "text_size": 32,
+            "text_size_mobile": 25,
+            "font_weight": "500",
+            "text_color": "#151515",
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 0,
+            "visibility": "all"
+          }
+        },
+        "badge_AfcDHz": {
+          "type": "badge",
+          "settings": {
+            "text": "100% Vegana",
+            "background": "#fba691",
+            "text_color": "#FFFFFF",
+            "visibility": "all"
+          }
+        },
+        "badge_ktkx64": {
+          "type": "badge",
+          "settings": {
+            "text": "Triple Bloqueo DHT",
+            "background": "#f2756b",
+            "text_color": "#FFFFFF",
+            "visibility": "all"
+          }
+        },
+        "text_6TX7q6": {
+          "type": "text",
+          "settings": {
+            "text": "<p>12 ingredientes + Triple Bloqueo DHT en 2 gominola al día. Frena tu caída hoy, pelo más grueso mañana.</p>",
+            "text_size": 16,
+            "text_size_mobile": 14,
+            "text_color": "#000000",
+            "spacing_top": 5,
+            "spacing_bottom": 16,
+            "spacing_bottom_mobile": 12,
+            "visibility": "all"
+          }
+        },
+        "highlight_JzgDat": {
+          "type": "highlight",
+          "settings": {
+            "text": "Detiene la Caída Desde la Raíz",
+            "visibility": "mobile_tablet"
+          }
+        },
+        "highlight_AxLFML": {
+          "type": "highlight",
+          "settings": {
+            "text": "Pelo más grueso desde dentro",
+            "visibility": "mobile_tablet"
+          }
+        },
+        "heading_KpLTmB": {
+          "type": "heading",
+          "settings": {
+            "text": "Beneficios",
+            "text_size": 17,
+            "text_size_mobile": 16,
+            "text_color": "#7F1525",
+            "spacing_bottom": 4,
+            "spacing_bottom_mobile": 6,
+            "visibility": "desktop"
+          }
+        },
+        "benefit_LhdtUU": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Frena la caída",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_EgA6XN": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Menos entradas",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_TiRHjf": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Raya más fina",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_ApgNWB": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Menos cuero visible",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_MrgjiD": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Coleta más gruesa",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_CrntT8": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Pelo más fuerte",
+            "visibility": "desktop"
+          }
+        },
+        "offer_A3JtTL": {
+          "type": "offer",
+          "settings": {
+            "quantity": 3,
+            "title": "Compra 2 Lleva 3",
+            "subtitle": "50% DTO + 4 Regalos",
+            "tag": "Mejor Oferta",
+            "discount_type": "amount",
+            "discount_value": 59.6,
+            "selected": true
+          }
+        },
+        "gift_dV3GhR": {
+          "type": "gift",
+          "settings": {
+            "title": "Comunidad Privada Gujoy",
+            "badge": "GRATIS",
+            "value": "€50,00"
+          }
+        },
+        "gift_HDKFQf": {
+          "type": "gift",
+          "settings": {
+            "title": "Guía: El Método Desde Dentro",
+            "badge": "GRATIS",
+            "value": "€30,00"
+          }
+        },
+        "gift_JTbTtq": {
+          "type": "gift",
+          "settings": {
+            "title": "Planner de Progreso 90 Días",
+            "badge": "GRATIS",
+            "value": "€15,00"
+          }
+        },
+        "gift_tDTzRa": {
+          "type": "gift",
+          "settings": {
+            "title": "Envío Gratis",
+            "badge": "GRATIS",
+            "value": "€3,00"
+          }
+        },
+        "offer_6tEYPJ": {
+          "type": "offer",
+          "settings": {
+            "quantity": 2,
+            "title": "Compra 1 Lleva 2",
+            "subtitle": "50% DTO",
+            "tag": "",
+            "discount_type": "fixed_price",
+            "discount_value": 39.8,
+            "selected": false
+          }
+        },
+        "offer_zDQmTP": {
+          "type": "offer",
+          "settings": {
+            "quantity": 1,
+            "title": "Compra 1",
+            "subtitle": "30 días",
+            "tag": "",
+            "discount_type": "none",
+            "discount_value": 0,
+            "selected": false
+          }
+        },
+        "buy_buttons_QeAxBD": {
+          "type": "buy_buttons",
+          "settings": {
+            "label": "Añadir Al Carrito",
+            "sold_out_label": "Agotado",
+            "show_dynamic_checkout": false,
+            "background": "#731122",
+            "text_color": "#F3F6F2",
+            "sold_out_background": "#B7B7B7",
+            "radius": 100,
+            "text_size": 20,
+            "text_size_mobile": 18,
+            "padding_vertical": 12,
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 0,
+            "visibility": "all"
+          }
+        },
+        "trust_6G7gKL": {
+          "type": "trust",
+          "settings": {
+            "icon": "leaf",
+            "text": "<p>Sin Azúcar</p><p>y 100% Natural</p>",
+            "visibility": "all"
+          }
+        },
+        "trust_AFMRtU": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield",
+            "text": "<p>90 días</p><p>de Garantía</p>",
+            "visibility": "all"
+          }
+        },
+        "trust_yBY4Ri": {
+          "type": "trust",
+          "settings": {
+            "icon": "sparkle",
+            "text": "<p>Orgullosamente Español</p>",
+            "visibility": "all"
+          }
+        },
+        "testimonial_pPpf9j": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“Para mis pacientes con caída y afinamiento, Gujoy es siempre mi primera recomendación”</p>",
+            "author": "Dra Carmen Vidal | Tricóloga",
+            "background": "#FDF8ED",
+            "border_color": "#731122",
+            "radius": 20,
+            "text_color": "#4D4D4D",
+            "author_color": "#000000",
+            "text_size": 16,
+            "text_size_mobile": 13,
+            "spacing_top": 16,
+            "visibility": "mobile"
+          }
+        },
+        "faq_jCJr36": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Por qué Gujoy sí funciona?",
+            "content": "<p>Si ya has probado vitaminas y sigues viendo pelo en el cepillo, es normal que te preguntes qué cambia esta vez.</p><p>Gujoy combina dos pilares en una misma fórmula:</p><p><strong>Cuidado del factor hormonal</strong><br>Una hormona llamada DHT puede debilitar las raíces sensibles a ella. El Complejo DHT Shield™ reúne Palma Enana, Semilla de Calabaza y Beta-Sitosterol en una fórmula diseñada para abordar ese factor.</p><p><strong>Nutrición desde dentro</strong><br>Biotina, zinc y selenio contribuyen al mantenimiento del cabello en condiciones normales, junto con un conjunto de vitaminas que completa la fórmula.</p><p><strong>La diferencia está en combinar ambos enfoques, en lugar de quedarse solo en la biotina.</strong></p><p>Y tienes <strong>90 días de garantía de devolución</strong> para probar Gujoy.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_z4B6zF": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Cuánto tardo en ver resultados?",
+            "content": "<p>Tu pelo tiene un <strong>ciclo natural</strong> de aproximadamente <strong>90 días</strong>. Por eso <strong>no vendemos un pack de 1 mes</strong>: no da tiempo a ver el cambio real, y preferimos que <strong>veas el resultado completo antes de decidir.</strong></p><p>Muchas notan <strong>menos caída ya en las primeras semanas</strong>. Pero un pelo <strong>más grueso</strong> de verdad llega dentro de ese ciclo de 90 días, por eso nuestra <strong>garantía</strong> también dura <strong>90 días</strong>.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_f6YJAk": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Funciona con mi tipo de caída?",
+            "content": "<p>Sí. Gujoy actúa en las causas más comunes de la caída:</p><p>🔄 Cambios Hormonales<br>⏳ Edad &amp; Envejecimiento<br>🤱 Postparto<br>😰 Estrés &amp; Ansiedad<br>🚿 Agua Dura<br>🥗 Déficit Nutricional<br>🤷‍♀️ No estoy segura</p><p>Su Triple Bloqueo DHT frena la causa hormonal. Sus 12 vitaminas nutren tu raíz, sea cual sea el motivo.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_aMx8Qx": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Tiene efectos secundarios?",
+            "content": "<p>Gujoy está formulado con <strong>ingredientes 100% naturales y sin azúcar</strong> añadido, pensado para ser <strong>seguro</strong> en el uso diario. Si estás embarazada o tienes alguna condición médica, consulta con tu médico antes de empezar.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_LGDBqa": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Qué lleva Gujoy dentro?",
+            "content": "<p>Gujoy lleva Triple Bloqueo DHT — Palma Enana, Semilla de Calabaza y Beta-sitosterol — más 12 vitaminas y minerales pensados para tu pelo.</p><p>Para ver todos los ingredientes y el beneficio de cada uno, haz clic abajo.</p>",
+            "button_label": "Conocer Ingredientes",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "before_after_GMGwmd": {
+          "type": "before_after",
+          "settings": {
+            "label_before": "ANTES (DÍA 0)",
+            "label_after": "DESPUÉS (3 MESES)"
+          }
+        },
+        "before_after_MRBHbj": {
+          "type": "before_after",
+          "settings": {
+            "label_before": "ANTES (DÍA 0)",
+            "label_after": "DESPUÉS (2 MESES)"
+          }
+        },
+        "before_after_yi6EGC": {
+          "type": "before_after",
+          "settings": {
+            "label_before": "ANTES (DÍA 0)",
+            "label_after": "DESPUÉS (5 MESES)"
+          }
+        }
+      },
+      "block_order": [
+        "rating_ib6Um9",
+        "title_Mm9FwJ",
+        "badge_AfcDHz",
+        "badge_ktkx64",
+        "text_6TX7q6",
+        "highlight_JzgDat",
+        "highlight_AxLFML",
+        "heading_KpLTmB",
+        "benefit_LhdtUU",
+        "benefit_EgA6XN",
+        "benefit_TiRHjf",
+        "benefit_ApgNWB",
+        "benefit_MrgjiD",
+        "benefit_CrntT8",
+        "offer_A3JtTL",
+        "gift_dV3GhR",
+        "gift_HDKFQf",
+        "gift_JTbTtq",
+        "gift_tDTzRa",
+        "offer_6tEYPJ",
+        "offer_zDQmTP",
+        "buy_buttons_QeAxBD",
+        "trust_6G7gKL",
+        "trust_AFMRtU",
+        "trust_yBY4Ri",
+        "testimonial_pPpf9j",
+        "faq_jCJr36",
+        "faq_z4B6zF",
+        "faq_f6YJAk",
+        "faq_aMx8Qx",
+        "faq_LGDBqa",
+        "before_after_GMGwmd",
+        "before_after_MRBHbj",
+        "before_after_yi6EGC"
+      ],
+      "name": "Producto con ofertas",
+      "settings": {
+        "product": "",
+        "color_scheme": "",
+        "gallery_width": 50,
+        "columns_gap": 32,
+        "mobile_row_gap": 16,
+        "mobile_gutter": 20,
+        "padding_top": 60,
+        "padding_bottom": 80,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 32,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4",
+        "media_ratio": "1 / 1",
+        "media_fit": "cover",
+        "media_radius": 8,
+        "show_thumbnails": true,
+        "thumbnails_per_row": 5,
+        "thumbnails_per_row_mobile": 5,
+        "thumbnail_gap": 8,
+        "thumbnail_radius": 0,
+        "thumbnail_active_width": 0,
+        "thumbnail_active_color": "#731122",
+        "show_arrows_mobile": true,
+        "show_arrows_desktop": false,
+        "arrow_background": "#DCCCCE",
+        "arrow_color": "#121212",
+        "arrow_icon_size": 16,
+        "arrow_icon_size_mobile": 11,
+        "gallery_button_label": "Ver Informaciones Nutricionales",
+        "gallery_button_link": "",
+        "gallery_button_icon": "article",
+        "gallery_button_visibility": "desktop",
+        "gallery_button_background": "#FDF8ED",
+        "gallery_button_color": "#731122",
+        "gallery_button_radius": 15,
+        "gallery_button_size": 14,
+        "badge_size": 16,
+        "badge_size_mobile": 14,
+        "badge_padding": 16,
+        "badge_gap": 5,
+        "badge_radius": 100,
+        "badge_margin_top": 10,
+        "highlight_columns": 2,
+        "highlight_gap": 16,
+        "highlight_image_size": 80,
+        "highlight_image_size_mobile": 35,
+        "highlight_image_radius": 50,
+        "highlight_text_size": 16,
+        "highlight_text_size_mobile": 14,
+        "highlight_text_color": "#731122",
+        "benefit_columns": 3,
+        "benefit_columns_mobile": 3,
+        "benefit_column_gap": 4,
+        "benefit_row_gap": 0,
+        "benefit_icon_size": 18,
+        "benefit_icon_size_mobile": 16,
+        "benefit_icon_color": "#7F1525",
+        "benefit_text_size": 16,
+        "benefit_text_size_mobile": 12,
+        "benefit_text_color": "#7F1525",
+        "benefit_margin_bottom": 16,
+        "offer_gap": 12,
+        "offer_radius": 13,
+        "offer_border_width": 2,
+        "offer_border_color": "#7F1525",
+        "offer_border_color_inactive": "#E4E4E4",
+        "offer_background": "#FFFFFF",
+        "offer_background_inactive": "#FFFFFF",
+        "offer_title_color": "#000000",
+        "offer_title_size": 17,
+        "offer_subtitle_color": "#7F1525",
+        "offer_subtitle_size": 14,
+        "offer_price_color": "#222222",
+        "offer_price_size": 18,
+        "offer_compare_color": "#7F1525",
+        "offer_compare_size": 15,
+        "offer_tag_background": "#7F1525",
+        "offer_tag_color": "#FFFFFF",
+        "offer_tag_size": 13,
+        "gift_background": "#FFF5F9",
+        "gift_text_color": "#222222",
+        "gift_badge_background": "#81003E",
+        "gift_badge_color": "#FFFFFF",
+        "gift_image_size": 44,
+        "offer_margin_bottom": 16,
+        "trust_columns": 3,
+        "trust_icon_size": 19,
+        "trust_icon_size_mobile": 23,
+        "trust_icon_color": "#7D1727",
+        "trust_icon_border": "#E7D9DA",
+        "trust_icon_radius": 8,
+        "trust_text_color": "#731122",
+        "trust_text_size": 14,
+        "trust_margin_top": 16,
+        "faq_exclusive": true,
+        "faq_gap": 12,
+        "faq_gap_mobile": 4,
+        "faq_title_size": 17,
+        "faq_title_size_mobile": 16,
+        "faq_title_color": "#000000",
+        "faq_text_size": 16,
+        "faq_text_size_mobile": 14,
+        "faq_text_color": "#151515",
+        "faq_border_color": "#E0E0E0",
+        "faq_icon_color": "#4D4D4D",
+        "faq_button_background": "#F8E4DE",
+        "faq_button_color": "#D2402E",
+        "faq_margin_top": 10,
+        "ba_visibility": "all",
+        "ba_ratio": "4 / 3",
+        "ba_image_height_mobile": 200,
+        "ba_radius": 6,
+        "ba_gap": 16,
+        "ba_label_size": 16,
+        "ba_label_size_mobile": 14,
+        "ba_label_color": "#151515",
+        "ba_label_align": "left",
+        "ba_label_align_mobile": "center",
+        "ba_arrow_background": "#F3F3F3",
+        "ba_arrow_color": "#731122",
+        "ba_show_dots": true,
+        "ba_show_dots_mobile": false,
+        "ba_dot_color": "#E2E2E2",
+        "ba_dot_active_color": "#121212",
+        "ba_autoplay": false,
+        "ba_speed": 5,
+        "ba_margin_top": 16,
+        "ba_margin_bottom": 16
+      }
+    },
+    "comparison_tabs_8id7a6": {
+      "type": "comparison-tabs",
+      "blocks": {
+        "tab_YWkm4b": {
+          "type": "tab",
+          "settings": {
+            "label": "Fórmula"
+          }
+        },
+        "comparison_header_LxQXbJ": {
+          "type": "comparison_header",
+          "settings": {
+            "label_heading": "",
+            "ours_label": "Gujoy",
+            "others_label": "Otras\nMarcas"
+          }
+        },
+        "comparison_row_J3V6Qd": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Triple Bloqueo DHT Shield™",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_zTFwG9": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Vegano &\nSin Gluten",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_AhE3A4": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Avalada por dermatólogas",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_9X4trK": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Fabricada en laboratorio cGMP",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_xteUQV": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Sin colorantes ni conservantes artificiales",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_WiPgdU": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Garantía de 90 días",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "tab_xgBJFn": {
+          "type": "tab",
+          "settings": {
+            "label": "Calidad & Seguridad"
+          }
+        },
+        "heading_JAKpMa": {
+          "type": "heading",
+          "settings": {
+            "heading": "Fabricada con los estándares más altos del mundo",
+            "heading_tag": "h3",
+            "color": "#000000",
+            "font_weight": "700",
+            "alignment": "left",
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 18,
+            "line_height": 180,
+            "line_height_tablet": 180,
+            "line_height_mobile": 140,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        },
+        "text_9VMgKJ": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>Cada gominola de Gujoy pasa por controles de calidad estrictos antes de llegar a tus manos. Nuestro laboratorio cuenta con certificación GMP verificada por Intertek, registro FDA y certificaciones ISO 9001 y HACCP los mismos estándares exigidos a los medicamentos. Porque lo que entra en tu cuerpo merece garantías reales, no promesas vacías.</em></p>",
+            "color": "#4D4D4D",
+            "italic": false,
+            "alignment": "left",
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 14,
+            "line_height": 180,
+            "line_height_tablet": 180,
+            "line_height_mobile": 180,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 7
+          }
+        }
+      },
+      "block_order": [
+        "tab_YWkm4b",
+        "comparison_header_LxQXbJ",
+        "comparison_row_J3V6Qd",
+        "comparison_row_zTFwG9",
+        "comparison_row_AhE3A4",
+        "comparison_row_9X4trK",
+        "comparison_row_xteUQV",
+        "comparison_row_WiPgdU",
+        "tab_xgBJFn",
+        "heading_JAKpMa",
+        "text_9VMgKJ"
+      ],
+      "name": "Comparativa con pestañas",
+      "settings": {
+        "title": "Por qué elegir Gujoy?",
+        "title_tag": "h2",
+        "title_color": "#151515",
+        "title_alignment": "center",
+        "title_size": 38,
+        "title_size_tablet": 16,
+        "title_size_mobile": 26,
+        "title_line_height": 100,
+        "title_line_height_tablet": 180,
+        "title_line_height_mobile": 130,
+        "title_letter_spacing": 0,
+        "title_margin_top_mobile": 10,
+        "title_padding_x_mobile": 25,
+        "tabs_alignment": "center",
+        "tabs_gap": 8,
+        "tabs_margin_top": 15,
+        "tabs_margin_top_mobile": 12,
+        "tab_padding_y": 8,
+        "tab_padding_x": 16,
+        "tab_radius": 12,
+        "tab_background": "",
+        "tab_color": "#4D4D4D",
+        "tab_active_background": "#FCDCDC",
+        "tab_active_color": "#7A1F1F",
+        "tab_weight": "600",
+        "tab_size": 16,
+        "tab_size_tablet": 16,
+        "tab_size_mobile": 14,
+        "tab_line_height": 180,
+        "tab_line_height_mobile": 150,
+        "panel_padding": 16,
+        "table_width": 770,
+        "label_columns": 4,
+        "label_columns_mobile": 6,
+        "table_margin_top": 10,
+        "table_margin_bottom": 16,
+        "table_margin_bottom_mobile": 14,
+        "border_color": "#666666",
+        "border_width": 1,
+        "ours_background": "#7F1426",
+        "ours_background_mobile": "#731122",
+        "ours_radius": 10,
+        "ours_icon_color": "#FFFFFF",
+        "others_icon_color": "#000000",
+        "icon_size": 26,
+        "icon_size_tablet": 26,
+        "icon_size_mobile": 22,
+        "cell_padding_y": 24,
+        "cell_padding_y_mobile": 21,
+        "label_padding_x": 24,
+        "label_padding_left_mobile": 0,
+        "label_padding_right_mobile": 10,
+        "label_color": "#000000",
+        "label_size": 16,
+        "label_size_tablet": 16,
+        "label_size_mobile": 15,
+        "label_line_height": 130,
+        "label_letter_spacing_mobile": -0.4,
+        "header_color": "#242424",
+        "header_weight": "600",
+        "header_size": 16,
+        "header_size_tablet": 16,
+        "header_size_mobile": 14,
+        "header_line_height": 130,
+        "header_padding_top": 26,
+        "header_padding_bottom": 26,
+        "header_padding_top_mobile": 21,
+        "header_padding_bottom_mobile": 15,
+        "logo_width": 93,
+        "logo_height_mobile": 35,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "background_color": "#FDF8ED",
+        "background_color_mobile": "#F9F9F9",
+        "max_width": 1200,
+        "inner_padding": 16,
+        "inner_padding_mobile": 16,
+        "inner_padding_bottom_mobile": 0,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     }
   },
   "order": [
     "hero_split_banner_QHjKfa",
     "image_panel_banner_8Er6k9",
     "image_checklist_9X9r6M",
-    "ingredients_tabs_e8BwbD"
+    "ingredients_tabs_e8BwbD",
+    "product_offer_hero_dcPhAM",
+    "comparison_tabs_8id7a6"
   ]
 }
