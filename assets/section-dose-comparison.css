@@ -1,0 +1,122 @@
+/* Dose comparison — every selector is scoped to .dsc */
+
+.dsc {
+  padding: var(--dsc-pt-mobile) var(--dsc-px) var(--dsc-pb-mobile);
+  background: var(--dsc-bg);
+  font-family: var(--dsc-body-font, var(--font-body-family));
+  font-style: var(--dsc-body-style, var(--font-body-style));
+}
+
+.dsc *,
+.dsc *::before,
+.dsc *::after {
+  box-sizing: border-box;
+}
+
+.dsc__inner {
+  max-width: var(--dsc-max-width);
+  margin: 0 auto;
+}
+
+/* Heading & subtitle */
+
+.dsc .dsc__heading {
+  margin: 0 0 10px;
+  color: var(--dsc-heading-color);
+  font-family: var(--dsc-heading-font, var(--font-heading-family));
+  font-style: var(--dsc-heading-style, var(--font-heading-style));
+  font-size: var(--dsc-heading-size-mobile);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-align: center;
+  word-break: break-word;
+}
+
+.dsc .dsc__subtitle {
+  max-width: var(--dsc-subtitle-max);
+  margin: 0 auto var(--dsc-subtitle-mb);
+  color: var(--dsc-subtitle-color);
+  font-size: var(--dsc-subtitle-size);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.dsc .dsc__subtitle p,
+.dsc .dsc__note p {
+  margin: 0;
+}
+
+/* Bars */
+
+.dsc .dsc__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsc-bar-gap);
+  margin: 0;
+  padding: 0;
+}
+
+.dsc .dsc-bar__label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+  color: var(--dsc-label-color);
+  font-size: var(--dsc-label-size);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.dsc-bar__value {
+  flex-shrink: 0;
+  color: var(--dsc-value-color);
+  font-weight: 400;
+  text-align: right;
+}
+
+.dsc-bar__track {
+  width: 100%;
+  height: var(--dsc-bar-height);
+  border-radius: 999px;
+  background: var(--dsc-track);
+  overflow: hidden;
+}
+
+.dsc-bar__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.dsc-bar__fill--highlight {
+  background: linear-gradient(90deg, var(--dsc-fill-start), var(--dsc-fill-end));
+}
+
+.dsc-bar__fill--muted {
+  background: var(--dsc-fill-muted);
+}
+
+/* Note */
+
+.dsc .dsc__note {
+  margin-top: calc(var(--dsc-bar-gap) + 20px);
+  color: var(--dsc-note-color);
+  font-size: var(--dsc-note-size);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Tablet & desktop */
+
+@media screen and (min-width: 750px) {
+  .dsc {
+    padding-top: var(--dsc-pt);
+    padding-bottom: var(--dsc-pb);
+  }
+
+  .dsc .dsc__heading {
+    font-size: var(--dsc-heading-size);
+  }
+}

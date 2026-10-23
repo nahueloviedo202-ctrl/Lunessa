@@ -1,0 +1,1092 @@
+{{ 'section-dark-feature.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign background = section.settings.background_gradient | default: section.settings.background_color
+
+  case section.settings.header_alignment
+    when 'left'
+      assign subtitle_ml = '0'
+      assign subtitle_mr = 'auto'
+    when 'right'
+      assign subtitle_ml = 'auto'
+      assign subtitle_mr = '0'
+    else
+      assign subtitle_ml = 'auto'
+      assign subtitle_mr = 'auto'
+  endcase
+
+  assign eyebrow_bg_opacity = section.settings.eyebrow_background_opacity | divided_by: 100.0
+  assign number_bg_opacity = section.settings.number_background_opacity | divided_by: 100.0
+  assign number_border_opacity = section.settings.number_border_opacity | divided_by: 100.0
+  assign card_bg_opacity = section.settings.card_background_opacity | divided_by: 100.0
+  assign card_border_opacity = section.settings.card_border_opacity | divided_by: 100.0
+
+  assign step_blocks = section.blocks | where: 'type', 'step'
+  assign card_blocks = section.blocks | where: 'type', 'card'
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .dark-feature-{{ section.id }} {
+    --df-bg: {{ background }};
+    --df-pt: {{ section.settings.padding_top }}px;
+    --df-pb: {{ section.settings.padding_bottom }}px;
+    --df-px: {{ section.settings.padding_x }}px;
+    --df-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --df-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --df-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --df-max-width: {{ section.settings.max_width }}px;
+    --df-header-align: {{ section.settings.header_alignment }};
+    --df-heading-ff: {{ heading_ff }};
+    --df-heading-fs: {{ heading_fs }};
+    --df-heading-fw: {{ section.settings.heading_font_weight }};
+    --df-body-ff: {{ body_ff }};
+    --df-body-fs: {{ body_fs }};
+    --df-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --df-eyebrow-bg: {{ section.settings.eyebrow_background_color | color_modify: 'alpha', eyebrow_bg_opacity }};
+    --df-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --df-eyebrow-ls: {{ section.settings.eyebrow_letter_spacing }}px;
+    --df-eyebrow-tt: {{ section.settings.eyebrow_text_transform }};
+    --df-eyebrow-py: {{ section.settings.eyebrow_padding_y }}px;
+    --df-eyebrow-px: {{ section.settings.eyebrow_padding_x }}px;
+    --df-eyebrow-radius: {{ section.settings.eyebrow_radius }}px;
+    --df-eyebrow-mb: {{ section.settings.eyebrow_margin_bottom }}px;
+    --df-heading-color: {{ section.settings.heading_color }};
+    --df-heading-size: {{ section.settings.heading_size }}px;
+    --df-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --df-heading-lh: {{ section.settings.heading_line_height }}%;
+    --df-subtitle-color: {{ section.settings.subtitle_color }};
+    --df-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --df-subtitle-size-mobile: {{ section.settings.subtitle_size_mobile }}px;
+    --df-subtitle-lh: {{ section.settings.subtitle_line_height }}%;
+    --df-subtitle-ls: {{ section.settings.subtitle_letter_spacing }}px;
+    --df-subtitle-max-width: {{ section.settings.subtitle_max_width }}px;
+    --df-subtitle-mt: {{ section.settings.subtitle_margin_top }}px;
+    --df-subtitle-ml: {{ subtitle_ml }};
+    --df-subtitle-mr: {{ subtitle_mr }};
+    --df-content-mt: {{ section.settings.content_margin_top }}px;
+    --df-mechanism-gap: {{ section.settings.mechanism_gap }}px;
+    --df-diagram-max-width: {{ section.settings.diagram_max_width }}px;
+    --df-diagram-hair: {{ section.settings.diagram_hair_color }};
+    --df-diagram-dht: {{ section.settings.diagram_dht_color }};
+    --df-steps-heading-color: {{ section.settings.steps_heading_color }};
+    --df-steps-heading-size: {{ section.settings.steps_heading_size }}px;
+    --df-steps-heading-mb: {{ section.settings.steps_heading_margin_bottom }}px;
+    --df-steps-mt: {{ section.settings.steps_margin_top }}px;
+    --df-step-color: {{ section.settings.step_text_color }};
+    --df-step-size: {{ section.settings.step_text_size }}px;
+    --df-step-lh: {{ section.settings.step_line_height }}%;
+    --df-step-spacing: {{ section.settings.step_spacing }}px;
+    --df-step-gap: {{ section.settings.step_gap }}px;
+    --df-number-size: {{ section.settings.number_size }}px;
+    --df-number-font-size: {{ section.settings.number_font_size }}px;
+    --df-number-color: {{ section.settings.number_color }};
+    --df-number-bg: {{ section.settings.number_background_color | color_modify: 'alpha', number_bg_opacity }};
+    --df-number-border: {{ section.settings.number_background_color | color_modify: 'alpha', number_border_opacity }};
+    --df-cards-columns: {{ section.settings.cards_columns }};
+    --df-cards-gap: {{ section.settings.cards_gap }}px;
+    --df-card-bg: {{ section.settings.card_background_color | color_modify: 'alpha', card_bg_opacity }};
+    --df-card-border: {{ section.settings.card_background_color | color_modify: 'alpha', card_border_opacity }};
+    --df-card-radius: {{ section.settings.card_radius }}px;
+    --df-card-py: {{ section.settings.card_padding_y }}px;
+    --df-card-px: {{ section.settings.card_padding_x }}px;
+    --df-card-align: {{ section.settings.card_alignment }};
+    --df-card-icon-size: {{ section.settings.card_icon_size }}px;
+    --df-card-icon-color: {{ section.settings.card_icon_color }};
+    --df-card-icon-mb: {{ section.settings.card_icon_margin_bottom }}px;
+    --df-card-title-color: {{ section.settings.card_title_color }};
+    --df-card-title-size: {{ section.settings.card_title_size }}px;
+    --df-card-title-mb: {{ section.settings.card_title_margin_bottom }}px;
+    --df-card-text-color: {{ section.settings.card_text_color }};
+    --df-card-text-size: {{ section.settings.card_text_size }}px;
+    --df-card-text-lh: {{ section.settings.card_text_line_height }}%;
+  }
+{%- endstyle -%}
+
+<div class="dark-feature dark-feature-{{ section.id }}{% unless section.settings.enable_animation %} dark-feature--static{% endunless %}">
+  <div class="dark-feature__inner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {%- if section.settings.eyebrow != blank
+      or section.settings.heading != blank
+      or section.settings.subtitle != blank
+    -%}
+      <div class="dark-feature__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="dark-feature__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="dark-feature__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="dark-feature__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if step_blocks.size > 0 -%}
+      <div class="dark-feature__mechanism{% unless section.settings.show_diagram %} dark-feature__mechanism--no-diagram{% endunless %}">
+        {%- if section.settings.show_diagram -%}
+          <div class="dark-feature__diagram">
+            {%- if section.settings.diagram_image != blank -%}
+              {{
+                section.settings.diagram_image
+                | image_url: width: 760
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '380, 570, 760',
+                  sizes: '(min-width: 860px) 380px, 100vw',
+                  class: 'dark-feature__diagram-image'
+              }}
+            {%- else -%}
+              {%- render 'dark-feature-diagram' -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="dark-feature__steps">
+          {%- if section.settings.steps_heading != blank -%}
+            <h3 class="dark-feature__steps-heading">{{ section.settings.steps_heading }}</h3>
+          {%- endif -%}
+          <ol class="dark-feature__step-list" role="list">
+            {%- for block in step_blocks -%}
+              <li class="dark-feature__step" {{ block.shopify_attributes }}>
+                <span class="dark-feature__step-number" aria-hidden="true">
+                  {{- block.settings.number | default: forloop.index | escape -}}
+                </span>
+                <span class="dark-feature__step-text">{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ol>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if card_blocks.size > 0 -%}
+      <div class="dark-feature__cards">
+        {%- for block in card_blocks -%}
+          <div class="dark-feature__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon_image != blank -%}
+              <span class="dark-feature__card-icon">
+                {{
+                  block.settings.icon_image
+                  | image_url: width: 132
+                  | image_tag: loading: 'lazy', widths: '44, 88, 132', sizes: '44px', alt: ''
+                }}
+              </span>
+            {%- elsif block.settings.icon != 'none' -%}
+              {%- assign icon_file = block.settings.icon | replace: '_', '-' | prepend: 'icon-line-' | append: '.svg' -%}
+              <span class="dark-feature__card-icon">{{ icon_file | inline_asset_content }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="dark-feature__card-title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="dark-feature__card-text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bloque oscuro",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Agrega bloques «Paso» para mostrar el diagrama con la lista numerada, o bloques «Tarjeta» para mostrar la cuadrícula de tarjetas."
+    },
+    {
+      "type": "header",
+      "content": "Fondo"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Degradado de fondo",
+      "default": "linear-gradient(180deg, rgba(107, 22, 38, 1) 0%, rgba(74, 15, 28, 1) 100%)"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "info": "Se usa cuando no hay degradado.",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo del contenido",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "unit": "px",
+      "default": 1100
+    },
+    {
+      "type": "header",
+      "content": "Encabezado"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta",
+      "default": "El Mecanismo"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Color del texto de la etiqueta",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_background_color",
+      "label": "Color de fondo de la etiqueta",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_background_opacity",
+      "label": "Opacidad del fondo de la etiqueta",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Tamaño de la etiqueta",
+      "min": 8,
+      "max": 24,
+      "step": 0.5,
+      "unit": "px",
+      "default": 12.5
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_letter_spacing",
+      "label": "Espaciado entre letras de la etiqueta",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_text_transform",
+      "label": "Mayúsculas de la etiqueta",
+      "options": [
+        { "value": "none", "label": "Ninguna" },
+        { "value": "capitalize", "label": "Capitalizar palabras" },
+        { "value": "uppercase", "label": "Mayúsculas" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_padding_y",
+      "label": "Relleno vertical de la etiqueta",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_padding_x",
+      "label": "Relleno lateral de la etiqueta",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_radius",
+      "label": "Radio de la etiqueta",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_margin_bottom",
+      "label": "Espacio bajo la etiqueta",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Así Ataca el DHT Tu Raíz"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del título",
+      "default": "#FBE0E4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño del título",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño del título en móvil",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado del título",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color del subtítulo",
+      "default": "#F2C9D1"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Tamaño del subtítulo",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "label": "Tamaño del subtítulo en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "subtitle_line_height",
+      "label": "Interlineado del subtítulo",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "subtitle_letter_spacing",
+      "label": "Espaciado entre letras del subtítulo",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0.6
+    },
+    {
+      "type": "range",
+      "id": "subtitle_max_width",
+      "label": "Ancho máximo del subtítulo",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "subtitle_margin_top",
+      "label": "Espacio sobre el subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "content_margin_top",
+      "label": "Espacio entre encabezado y contenido",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Diagrama y pasos"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_diagram",
+      "label": "Mostrar diagrama",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image",
+      "label": "Imagen del diagrama",
+      "info": "Opcional. Reemplaza el diagrama animado."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Animar el diagrama",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "diagram_hair_color",
+      "label": "Color del pelo y la raíz",
+      "default": "#FBE0E4"
+    },
+    {
+      "type": "color",
+      "id": "diagram_dht_color",
+      "label": "Color de las partículas DHT",
+      "default": "#E08A3E"
+    },
+    {
+      "type": "range",
+      "id": "diagram_max_width",
+      "label": "Ancho máximo del diagrama",
+      "min": 160,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "mechanism_gap",
+      "label": "Separación entre diagrama y pasos",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "inline_richtext",
+      "id": "steps_heading",
+      "label": "Título de los pasos",
+      "default": "El ciclo real, paso a paso"
+    },
+    {
+      "type": "color",
+      "id": "steps_heading_color",
+      "label": "Color del título de los pasos",
+      "default": "#FBE0E4"
+    },
+    {
+      "type": "range",
+      "id": "steps_heading_size",
+      "label": "Tamaño del título de los pasos",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "steps_heading_margin_bottom",
+      "label": "Espacio bajo el título de los pasos",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "steps_margin_top",
+      "label": "Espacio sobre la lista",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "step_text_color",
+      "label": "Color del texto de los pasos",
+      "default": "#F2C9D1"
+    },
+    {
+      "type": "range",
+      "id": "step_text_size",
+      "label": "Tamaño del texto de los pasos",
+      "min": 10,
+      "max": 24,
+      "step": 0.5,
+      "unit": "px",
+      "default": 14.5
+    },
+    {
+      "type": "range",
+      "id": "step_line_height",
+      "label": "Interlineado de los pasos",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 155
+    },
+    {
+      "type": "range",
+      "id": "step_spacing",
+      "label": "Separación entre pasos",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "step_gap",
+      "label": "Separación entre número y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Tamaño del círculo numerado",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "number_font_size",
+      "label": "Tamaño del número",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Color del número",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "number_background_color",
+      "label": "Color del círculo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "number_background_opacity",
+      "label": "Opacidad del relleno del círculo",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "number_border_opacity",
+      "label": "Opacidad del borde del círculo",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "range",
+      "id": "cards_columns",
+      "label": "Columnas en escritorio",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "cards_gap",
+      "label": "Separación entre tarjetas",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Color de fondo y borde",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_background_opacity",
+      "label": "Opacidad del fondo",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "card_border_opacity",
+      "label": "Opacidad del borde",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Relleno lateral",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "select",
+      "id": "card_alignment",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "card_icon_size",
+      "label": "Tamaño del icono",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "color",
+      "id": "card_icon_color",
+      "label": "Color del icono",
+      "default": "#FBE0E4"
+    },
+    {
+      "type": "range",
+      "id": "card_icon_margin_bottom",
+      "label": "Espacio bajo el icono",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Color del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Tamaño del título",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "card_title_margin_bottom",
+      "label": "Espacio bajo el título",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Color del texto",
+      "default": "#F2C9D1"
+    },
+    {
+      "type": "range",
+      "id": "card_text_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 24,
+      "step": 0.5,
+      "unit": "px",
+      "default": 13.5
+    },
+    {
+      "type": "range",
+      "id": "card_text_line_height",
+      "label": "Interlineado del texto",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 155
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente de los títulos",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada de los títulos",
+      "default": "lora_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor de los títulos",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Relleno inferior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Relleno lateral en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Relleno superior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Relleno inferior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Relleno lateral en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Número",
+          "info": "Si está vacío se numera automáticamente."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "El DHT (dihidrotestosterona) circula en tu cuerpo y se acumula alrededor de tu raíz capilar."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Tarjeta",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "shield", "label": "Escudo" },
+            { "value": "circle_plus", "label": "Círculo con cruz" },
+            { "value": "arrows", "label": "Flechas" },
+            { "value": "none", "label": "Ninguno" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icono personalizado",
+          "info": "Opcional. Reemplaza el icono seleccionado."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Título",
+          "default": "Extracto de Palma Enana"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "El ingrediente central. Frena el DHT justo donde ataca tu raíz."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bloque oscuro: mecanismo",
+      "blocks": [
+        { "type": "step" },
+        {
+          "type": "step",
+          "settings": {
+            "text": "Se instala en la raíz y hace que cada pelo nuevo nazca más débil y más fino que el anterior."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "text": "Con el tiempo, la raíz debilitada deja de producir pelo — así avanza la caída, ciclo tras ciclo."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "text": "El Triple Bloqueo DHT de Gujoy actúa justo ahí, frenando la causa antes de que siga dañando tu raíz."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bloque oscuro: tarjetas",
+      "settings": {
+        "eyebrow": "La Fórmula",
+        "heading": "Triple Bloqueo DHT",
+        "subtitle": "Tres ingredientes trabajando a la vez, no uno solo intentándolo todo."
+      },
+      "blocks": [
+        { "type": "card" },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "circle_plus",
+            "title": "Semilla de Calabaza",
+            "text": "Cuida tu folículo y sostiene el efecto principal durante todo el día."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "arrows",
+            "title": "Beta-Sitosterol",
+            "text": "Refuerza el efecto de la Palma Enana — la combinación con más respaldo."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

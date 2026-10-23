@@ -1,0 +1,509 @@
+{{ 'section-centered-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .chr--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --chr-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --chr-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --chr-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --chr-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --chr-bg: {{ section.settings.background }};
+    --chr-color: {{ section.settings.text_color }};
+    --chr-align: {{ section.settings.alignment }};
+    --chr-max-width: {{ section.settings.max_width }}px;
+    --chr-pt: {{ section.settings.padding_top }}px;
+    --chr-pb: {{ section.settings.padding_bottom }}px;
+    --chr-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --chr-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --chr-px: {{ section.settings.padding_horizontal }}px;
+  }
+{%- endstyle -%}
+
+{%- liquid
+  case section.settings.alignment
+    when 'left'
+      assign chr_items = 'flex-start'
+    when 'right'
+      assign chr_items = 'flex-end'
+    else
+      assign chr_items = 'center'
+  endcase
+-%}
+
+<section class="chr chr--{{ section.id }}" style="--chr-items: {{ chr_items }};">
+  <div class="chr__inner">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'eyebrow' -%}
+          <p
+            class="chr__eyebrow"
+            style="--chr-block-mt: {{ block.settings.margin_top }}px; --chr-eyebrow-color: {{ block.settings.text_color }}; --chr-eyebrow-bg: {{ block.settings.background }}; --chr-eyebrow-size: {{ block.settings.text_size }}px;"
+            {{ block.shopify_attributes }}
+          >
+            {{- block.settings.text | escape -}}
+          </p>
+
+        {%- when 'heading' -%}
+          <{{ block.settings.heading_tag }}
+            class="chr__heading"
+            style="--chr-block-mt: {{ block.settings.margin_top }}px; --chr-heading-color: {{ block.settings.text_color }}; --chr-heading-size: {{ block.settings.text_size }}px; --chr-heading-size-mobile: {{ block.settings.text_size_mobile }}px; --chr-heading-weight: {{ block.settings.font_weight }}; --chr-heading-lh: {{ block.settings.line_height | divided_by: 100.0 }}; --chr-heading-max: {{ block.settings.max_width }}px;"
+            {{ block.shopify_attributes }}
+          >
+            {{- block.settings.heading -}}
+          </{{ block.settings.heading_tag }}>
+
+        {%- when 'text' -%}
+          <div
+            class="chr__text rte"
+            style="--chr-block-mt: {{ block.settings.margin_top }}px; --chr-text-color: {{ block.settings.text_color }}; --chr-text-size: {{ block.settings.text_size }}px; --chr-text-size-mobile: {{ block.settings.text_size_mobile }}px; --chr-text-lh: {{ block.settings.line_height | divided_by: 100.0 }}; --chr-text-max: {{ block.settings.max_width }}px;"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.text }}
+          </div>
+
+        {%- when 'image' -%}
+          <div
+            class="chr__media"
+            style="--chr-block-mt: {{ block.settings.margin_top }}px; --chr-image-max: {{ block.settings.max_width }}px; --chr-image-max-mobile: {{ block.settings.max_width_mobile }}px; --chr-image-radius: {{ block.settings.radius }}px;"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.image != blank -%}
+              {%- capture image_sizes -%}
+                (min-width: 750px) {{ block.settings.max_width }}px, min({{ block.settings.max_width_mobile }}px, 100vw)
+              {%- endcapture -%}
+              {%- liquid
+                if section.index > 2
+                  assign image_loading = 'lazy'
+                else
+                  assign image_loading = 'eager'
+                endif
+              -%}
+              {{
+                block.settings.image
+                | image_url: width: 1600
+                | image_tag:
+                  loading: image_loading,
+                  widths: '340, 480, 680, 1000, 1600',
+                  sizes: image_sizes,
+                  class: 'chr__image'
+              }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'chr__image chr__image--placeholder placeholder-svg' }}
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero centrado",
+  "tag": "div",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto base",
+      "default": "#3A1E26"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en títulos",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de títulos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "Etiqueta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Cómo Funciona Realmente"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#B12141"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Fondo",
+          "default": "#FBE0E4"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 10,
+          "max": 20,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Tamaño de texto",
+          "default": 12.5
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "info": "No se aplica si es el primer bloque.",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Título",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Título",
+          "default": "No Es Genética. Es Esto Lo Que Ataca Tu Raíz."
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Etiqueta HTML",
+          "info": "Usa h1 solo si es el título principal de la página.",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" }
+          ],
+          "default": "h1"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#6B1626"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 16,
+          "max": 72,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 16,
+          "max": 72,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño (móvil)",
+          "default": 24
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Semi negrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "min": 100,
+          "max": 180,
+          "step": 2,
+          "unit": "%",
+          "label": "Interlineado",
+          "default": 128
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "min": 300,
+          "max": 1200,
+          "step": 20,
+          "unit": "px",
+          "label": "Ancho máximo",
+          "default": 780
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "info": "No se aplica si es el primer bloque.",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Casi todas las gominolas del mercado atacan el síntoma. Lunessa va directo a la causa — y así es exactamente cómo lo hace.</p>"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#5C3540"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño (móvil)",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "min": 100,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "label": "Interlineado",
+          "default": 155
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "min": 300,
+          "max": 1200,
+          "step": 20,
+          "unit": "px",
+          "label": "Ancho máximo",
+          "default": 620
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "info": "No se aplica si es el primer bloque.",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "min": 100,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "label": "Ancho máximo",
+          "default": 340
+        },
+        {
+          "type": "range",
+          "id": "max_width_mobile",
+          "min": 100,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "label": "Ancho máximo (móvil)",
+          "default": 340
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "min": 0,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Radio de las esquinas",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "info": "No se aplica si es el primer bloque.",
+          "default": 36
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero centrado",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

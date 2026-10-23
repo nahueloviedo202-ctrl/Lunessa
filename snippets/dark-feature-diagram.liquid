@@ -1,0 +1,26 @@
+{%- doc -%}
+  Renders the animated hair-root diagram (DHT particles around a follicle).
+  Colors come from the --df-diagram-hair and --df-diagram-dht custom properties set by the section.
+
+  @example
+  {% render 'dark-feature-diagram' %}
+{%- enddoc -%}
+<svg
+  class="dark-feature__diagram-svg"
+  viewBox="0 0 300 320"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  <rect x="10" y="20" width="280" height="26" rx="4" fill="#f2c9d1" opacity="0.25"/>
+  <rect x="10" y="46" width="280" height="70" rx="4" fill="#e79ba8" opacity="0.18"/>
+  <rect x="10" y="116" width="280" height="160" rx="6" fill="#fff" opacity="0.06"/>
+  <path class="dark-feature__diagram-hair" d="M150 46 C150 100, 165 130, 165 190 C165 220, 150 235, 150 260" stroke-width="6" stroke-linecap="round"/>
+  <ellipse class="dark-feature__diagram-root" cx="150" cy="266" rx="20" ry="14" opacity="0.9"/>
+  <circle class="dark-feature__diagram-dot" cx="95" cy="150" r="7"/>
+  <circle class="dark-feature__diagram-dot dark-feature__diagram-dot--2" cx="215" cy="130" r="6"/>
+  <circle class="dark-feature__diagram-dot dark-feature__diagram-dot--3" cx="205" cy="190" r="5"/>
+  <circle class="dark-feature__diagram-pulse" cx="150" cy="266" r="5" stroke-width="2"/>
+  <circle cx="150" cy="266" r="26" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+</svg>

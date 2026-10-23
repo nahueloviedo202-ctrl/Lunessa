@@ -1,0 +1,270 @@
+/* Breakpoints follow the original: text sizes switch at 750px,
+   cards go multi-column at 700px and the diagram sits beside the steps at 860px. */
+
+.dark-feature {
+  background: var(--df-bg);
+  padding: var(--df-pt-mobile) var(--df-px-mobile) var(--df-pb-mobile);
+  overflow-x: hidden;
+  font-family: var(--df-body-ff);
+  font-style: var(--df-body-fs);
+}
+
+.dark-feature__inner {
+  max-width: var(--df-max-width);
+  margin: 0 auto;
+}
+
+/* Header */
+.dark-feature__header {
+  text-align: var(--df-header-align);
+}
+
+.dark-feature__eyebrow {
+  display: inline-block;
+  margin-bottom: var(--df-eyebrow-mb);
+  padding: var(--df-eyebrow-py) var(--df-eyebrow-px);
+  border-radius: var(--df-eyebrow-radius);
+  background: var(--df-eyebrow-bg);
+  color: var(--df-eyebrow-color);
+  font-family: var(--df-body-ff);
+  font-weight: 700;
+  font-size: var(--df-eyebrow-size);
+  line-height: normal;
+  letter-spacing: var(--df-eyebrow-ls);
+  text-transform: var(--df-eyebrow-tt);
+}
+
+.dark-feature__heading,
+.dark-feature__steps-heading,
+.dark-feature__card-title {
+  margin: 0;
+  font-family: var(--df-heading-ff);
+  font-style: var(--df-heading-fs);
+  font-weight: var(--df-heading-fw);
+  line-height: var(--df-heading-lh);
+  letter-spacing: normal;
+  word-break: break-word;
+}
+
+.dark-feature__heading {
+  font-size: var(--df-heading-size-mobile);
+  color: var(--df-heading-color);
+}
+
+.dark-feature__subtitle {
+  max-width: var(--df-subtitle-max-width);
+  margin: var(--df-subtitle-mt) var(--df-subtitle-mr) 0 var(--df-subtitle-ml);
+  font-size: var(--df-subtitle-size-mobile);
+  line-height: var(--df-subtitle-lh);
+  letter-spacing: var(--df-subtitle-ls);
+  color: var(--df-subtitle-color);
+}
+
+/* Mechanism: diagram + numbered steps */
+.dark-feature__mechanism {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--df-mechanism-gap);
+  align-items: center;
+  margin-top: var(--df-content-mt);
+}
+
+.dark-feature__diagram {
+  display: flex;
+  justify-content: center;
+}
+
+.dark-feature__diagram-svg,
+.dark-feature__diagram-image {
+  display: block;
+  width: 100%;
+  max-width: var(--df-diagram-max-width);
+  height: auto;
+}
+
+.dark-feature__diagram-hair {
+  stroke: var(--df-diagram-hair);
+}
+
+.dark-feature__diagram-root {
+  fill: var(--df-diagram-hair);
+}
+
+.dark-feature__diagram-dot {
+  fill: var(--df-diagram-dht);
+  animation: darkFeatureFloat 3s ease-in-out infinite;
+}
+
+.dark-feature__diagram-dot--2 {
+  animation-delay: 0.6s;
+}
+
+.dark-feature__diagram-dot--3 {
+  animation-delay: 1.2s;
+}
+
+.dark-feature__diagram-pulse {
+  stroke: var(--df-diagram-dht);
+  animation: darkFeaturePulse 2.2s ease-in-out infinite;
+}
+
+.dark-feature--static .dark-feature__diagram-dot,
+.dark-feature--static .dark-feature__diagram-pulse {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark-feature__diagram-dot,
+  .dark-feature__diagram-pulse {
+    animation: none;
+  }
+}
+
+@keyframes darkFeaturePulse {
+  0%,
+  100% {
+    opacity: 0.9;
+    r: 5;
+  }
+
+  50% {
+    opacity: 0.3;
+    r: 11;
+  }
+}
+
+@keyframes darkFeatureFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.dark-feature__steps {
+  min-width: 0;
+  text-align: left;
+}
+
+.dark-feature__steps-heading {
+  margin-bottom: var(--df-steps-heading-mb);
+  font-size: var(--df-steps-heading-size);
+  color: var(--df-steps-heading-color);
+}
+
+.dark-feature__step-list {
+  margin: var(--df-steps-mt) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dark-feature__step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--df-step-gap);
+  margin-bottom: var(--df-step-spacing);
+  font-size: var(--df-step-size);
+  line-height: var(--df-step-lh);
+  color: var(--df-step-color);
+}
+
+.dark-feature__step-number {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--df-number-size);
+  height: var(--df-number-size);
+  border: 1px solid var(--df-number-border);
+  border-radius: 50%;
+  background: var(--df-number-bg);
+  color: var(--df-number-color);
+  font-weight: 700;
+  font-size: var(--df-number-font-size);
+  line-height: 1;
+}
+
+.dark-feature__step-text {
+  min-width: 0;
+  word-break: break-word;
+}
+
+/* Cards */
+.dark-feature__cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--df-cards-gap);
+  margin-top: var(--df-content-mt);
+}
+
+.dark-feature__card {
+  padding: var(--df-card-py) var(--df-card-px);
+  border: 1px solid var(--df-card-border);
+  border-radius: var(--df-card-radius);
+  background: var(--df-card-bg);
+  text-align: var(--df-card-align);
+}
+
+.dark-feature__card-icon {
+  display: inline-block;
+  width: var(--df-card-icon-size);
+  height: var(--df-card-icon-size);
+  margin-bottom: var(--df-card-icon-mb);
+  color: var(--df-card-icon-color);
+  line-height: 0;
+}
+
+.dark-feature__card-icon svg,
+.dark-feature__card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dark-feature__card-title {
+  margin-bottom: var(--df-card-title-mb);
+  font-size: var(--df-card-title-size);
+  color: var(--df-card-title-color);
+}
+
+.dark-feature__card-text {
+  margin: 0;
+  font-size: var(--df-card-text-size);
+  line-height: var(--df-card-text-lh);
+  letter-spacing: normal;
+  color: var(--df-card-text-color);
+  word-break: break-word;
+}
+
+@media screen and (min-width: 700px) {
+  .dark-feature__cards {
+    grid-template-columns: repeat(var(--df-cards-columns), minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .dark-feature {
+    padding: var(--df-pt) var(--df-px) var(--df-pb);
+  }
+
+  .dark-feature__heading {
+    font-size: var(--df-heading-size);
+  }
+
+  .dark-feature__subtitle {
+    font-size: var(--df-subtitle-size);
+  }
+}
+
+@media screen and (min-width: 860px) {
+  .dark-feature__mechanism {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dark-feature__mechanism--no-diagram {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

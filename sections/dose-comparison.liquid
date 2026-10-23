@@ -1,0 +1,452 @@
+{{ 'section-dose-comparison.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .dsc--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --dsc-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --dsc-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --dsc-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --dsc-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --dsc-bg: {{ section.settings.background }};
+    --dsc-max-width: {{ section.settings.max_width }}px;
+    --dsc-pt: {{ section.settings.padding_top }}px;
+    --dsc-pb: {{ section.settings.padding_bottom }}px;
+    --dsc-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --dsc-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --dsc-px: {{ section.settings.padding_horizontal }}px;
+
+    --dsc-heading-color: {{ section.settings.heading_color }};
+    --dsc-heading-size: {{ section.settings.heading_size }}px;
+    --dsc-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --dsc-subtitle-color: {{ section.settings.subtitle_color }};
+    --dsc-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --dsc-subtitle-max: {{ section.settings.subtitle_max_width }}px;
+    --dsc-subtitle-mb: {{ section.settings.subtitle_margin_bottom }}px;
+
+    --dsc-label-color: {{ section.settings.label_color }};
+    --dsc-value-color: {{ section.settings.value_color }};
+    --dsc-label-size: {{ section.settings.label_size }}px;
+    --dsc-bar-height: {{ section.settings.bar_height }}px;
+    --dsc-bar-gap: {{ section.settings.bar_gap }}px;
+    --dsc-track: {{ section.settings.track_color }};
+    --dsc-fill-start: {{ section.settings.fill_start }};
+    --dsc-fill-end: {{ section.settings.fill_end }};
+    --dsc-fill-muted: {{ section.settings.fill_muted }};
+
+    --dsc-note-color: {{ section.settings.note_color }};
+    --dsc-note-size: {{ section.settings.note_size }}px;
+  }
+{%- endstyle -%}
+
+<section class="dsc dsc--{{ section.id }}">
+  <div class="dsc__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="dsc__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <div class="dsc__subtitle rte">{{ section.settings.subtitle }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="dsc__bars list-unstyled" role="list">
+        {%- for block in section.blocks -%}
+          <li class="dsc-bar" {{ block.shopify_attributes }}>
+            <p class="dsc-bar__label">
+              <span class="dsc-bar__name">{{ block.settings.label | escape }}</span>
+              {%- if block.settings.value != blank -%}
+                <span class="dsc-bar__value">{{ block.settings.value | escape }}</span>
+              {%- endif -%}
+            </p>
+            <div
+              class="dsc-bar__track"
+              role="meter"
+              aria-label="{{ block.settings.label | escape }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="{{ block.settings.percentage }}"
+              {% if block.settings.value != blank %}
+                aria-valuetext="{{ block.settings.value | escape }}"
+              {% endif %}
+            >
+              <span
+                class="dsc-bar__fill dsc-bar__fill--{{ block.settings.style }}"
+                style="width: {{ block.settings.percentage }}%;"
+              ></span>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.note != blank -%}
+      <div class="dsc__note rte">{{ section.settings.note }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparación de dosis",
+  "tag": "div",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "La Diferencia Está en la Dosis"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "<p>La mayoría de gominolas del mercado usan la dosis mínima posible para ahorrar costes. Así de simple.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Nota al pie",
+      "default": "<p>Dosis por porción, según información pública de fórmulas comparables en el mercado. No representa una marca específica.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Título y subtítulo"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del título",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (móvil)",
+      "default": 21
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color del subtítulo",
+      "default": "#5C3540"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 12,
+      "max": 22,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño del subtítulo",
+      "default": 14.5
+    },
+    {
+      "type": "range",
+      "id": "subtitle_max_width",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del subtítulo",
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "subtitle_margin_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación antes de las barras",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Barras"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color del nombre",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "value_color",
+      "label": "Color del valor",
+      "default": "#8A5560"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 10,
+      "max": 20,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño de nombre y valor",
+      "default": 13.5
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Alto de la barra",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "bar_gap",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre barras",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "track_color",
+      "label": "Fondo de la barra",
+      "default": "#F3D9DD"
+    },
+    {
+      "type": "color",
+      "id": "fill_start",
+      "label": "Barra destacada: color inicial",
+      "default": "#B12141"
+    },
+    {
+      "type": "color",
+      "id": "fill_end",
+      "label": "Barra destacada: color final",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "fill_muted",
+      "label": "Barra atenuada: color",
+      "default": "#D8A3AC"
+    },
+    {
+      "type": "header",
+      "content": "Nota al pie"
+    },
+    {
+      "type": "color",
+      "id": "note_color",
+      "label": "Color",
+      "default": "#A97E88"
+    },
+    {
+      "type": "range",
+      "id": "note_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Fondo y espaciado"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en el título",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bar",
+      "name": "Barra",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre",
+          "default": "Lunessa"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Valor",
+          "default": "200 mg Palma Enana"
+        },
+        {
+          "type": "range",
+          "id": "percentage",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Largo de la barra",
+          "default": 100
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Estilo",
+          "options": [
+            { "value": "highlight", "label": "Destacada (degradado)" },
+            { "value": "muted", "label": "Atenuada" }
+          ],
+          "default": "highlight"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparación de dosis",
+      "blocks": [
+        {
+          "type": "bar",
+          "settings": {
+            "label": "Lunessa",
+            "value": "200 mg Palma Enana",
+            "percentage": 100,
+            "style": "highlight"
+          }
+        },
+        {
+          "type": "bar",
+          "settings": {
+            "label": "Dosis mínima típica del mercado",
+            "value": "~50 mg",
+            "percentage": 25,
+            "style": "muted"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

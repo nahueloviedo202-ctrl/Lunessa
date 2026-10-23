@@ -1,0 +1,124 @@
+/* Centered hero — every selector is scoped to .chr */
+
+.chr {
+  padding: var(--chr-pt-mobile) var(--chr-px) var(--chr-pb-mobile);
+  background: var(--chr-bg);
+  color: var(--chr-color);
+  font-family: var(--chr-body-font, var(--font-body-family));
+  font-style: var(--chr-body-style, var(--font-body-style));
+  overflow-x: hidden;
+}
+
+.chr *,
+.chr *::before,
+.chr *::after {
+  box-sizing: border-box;
+}
+
+.chr__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: var(--chr-items);
+  max-width: var(--chr-max-width);
+  margin: 0 auto;
+  text-align: var(--chr-align);
+}
+
+.chr__inner > * {
+  margin-top: var(--chr-block-mt);
+}
+
+.chr .chr__inner > :first-child {
+  margin-top: 0;
+}
+
+/* Eyebrow */
+
+.chr .chr__eyebrow {
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--chr-eyebrow-bg);
+  color: var(--chr-eyebrow-color);
+  font-size: var(--chr-eyebrow-size);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Heading */
+
+.chr .chr__heading {
+  width: 100%;
+  max-width: var(--chr-heading-max);
+  margin-bottom: 0;
+  color: var(--chr-heading-color);
+  font-family: var(--chr-heading-font, var(--font-heading-family));
+  font-style: var(--chr-heading-style, var(--font-heading-style));
+  font-size: var(--chr-heading-size-mobile);
+  font-weight: var(--chr-heading-weight);
+  line-height: var(--chr-heading-lh);
+  letter-spacing: normal;
+  word-break: break-word;
+}
+
+/* Text */
+
+.chr .chr__text {
+  width: 100%;
+  max-width: var(--chr-text-max);
+  margin-bottom: 0;
+  color: var(--chr-text-color);
+  font-size: var(--chr-text-size-mobile);
+  line-height: var(--chr-text-lh);
+}
+
+.chr .chr__text p {
+  margin: 0;
+}
+
+.chr .chr__text p + p {
+  margin-top: 0.75em;
+}
+
+/* Image */
+
+.chr__media {
+  width: 100%;
+  max-width: var(--chr-image-max-mobile);
+}
+
+.chr__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--chr-image-radius);
+}
+
+.chr__image--placeholder {
+  aspect-ratio: 1 / 1;
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+/* Tablet & desktop */
+
+@media screen and (min-width: 750px) {
+  .chr {
+    padding-top: var(--chr-pt);
+    padding-bottom: var(--chr-pb);
+  }
+
+  .chr .chr__heading {
+    font-size: var(--chr-heading-size);
+  }
+
+  .chr .chr__text {
+    font-size: var(--chr-text-size);
+  }
+
+  .chr__media {
+    max-width: var(--chr-image-max);
+  }
+}
