@@ -9,76 +9,750 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero_split_banner_QHjKfa": {
+      "type": "hero-split-banner",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "rating_hchJyd": {
+          "type": "rating",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "stars": 5,
+            "star_color": "#7F1426",
+            "star_size": 16,
+            "star_size_mobile": 22,
+            "star_gap": 3,
+            "text": "2434 Evaluaciones • 45000 Clientes Felices",
+            "text_color": "#7F1525",
+            "text_size": 16,
+            "text_size_mobile": 14,
+            "font_weight": "500",
+            "layout_mobile": "stacked",
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 12,
+            "visibility": "all"
           }
         },
-        "button": {
-          "type": "buttons",
+        "heading_9QWnth": {
+          "type": "heading",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "heading": "frena tu caída y consigue un\npelo más grueso en 90 días",
+            "heading_tag": "h2",
+            "text_size": 48,
+            "text_size_tablet": 32,
+            "text_size_mobile": 28,
+            "line_height": 120,
+            "font_weight": "700",
+            "text_transform": "capitalize",
+            "text_color": "#7F1525",
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 0,
+            "visibility": "all"
+          }
+        },
+        "text_RdpzLN": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Fórmula Exclusiva con 12 Ingredientes Naturales Que Actúa Desde La Raíz Capilar</p>",
+            "text_size": 16,
+            "text_size_mobile": 14,
+            "line_height": 180,
+            "text_color": "#7F1525",
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 0,
+            "visibility": "desktop"
+          }
+        },
+        "button_RyGt6L": {
+          "type": "button",
+          "settings": {
+            "label": "Descubre Cómo",
+            "link": "",
+            "anchor": "",
+            "background": "#7F1525",
+            "text_color": "#FEEBEB",
+            "radius": 4,
+            "text_size": 16,
+            "text_size_mobile": 15,
+            "font_weight": "700",
+            "padding_vertical": 14,
+            "padding_horizontal": 40,
+            "padding_vertical_mobile": 12,
+            "padding_horizontal_mobile": 26,
+            "full_width_mobile": false,
+            "spacing_top": 20,
+            "spacing_top_mobile": 20,
+            "visibility": "all"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "rating_hchJyd",
+        "heading_9QWnth",
+        "text_RdpzLN",
+        "button_RyGt6L"
       ],
+      "name": "Banner hero dividido",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "visibility": "all",
+        "image": "shopify://shop_images/Resize_image_to_4_3_20260923083523.webp",
+        "media_radius": 0,
+        "show_media_tablet": true,
+        "show_media_mobile": false,
+        "background": "#DCD2C8",
+        "background_tablet": "#F3F3F3",
+        "background_mobile": "#F4C9C6",
+        "overlay_mobile": true,
+        "content_width": 50,
+        "column_gap": 32,
+        "vertical_alignment": "center",
+        "padding_left": 180,
+        "padding_right": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_vertical_tablet": 24,
+        "padding_horizontal_tablet": 20,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 0,
+        "padding_horizontal_mobile": 20,
+        "text_alignment_mobile": "center",
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "image_panel_banner_8Er6k9": {
+      "type": "image-panel-banner",
+      "blocks": {
+        "heading_fhErUp": {
+          "type": "heading",
+          "settings": {
+            "heading": "empieza a frenar tu caída hoy",
+            "heading_tag": "h2",
+            "color": "#FFFFFF",
+            "text_transform": "capitalize",
+            "letter_spacing": -0.4,
+            "font_size": 38,
+            "font_size_tablet": 16,
+            "font_size_mobile": 26,
+            "line_height": 100,
+            "line_height_tablet": 180,
+            "line_height_mobile": 120,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        },
+        "text_J7PqbC": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Tu pelo cae porque el DHT ataca tu raíz. Gujoy lo frena con Triple Bloqueo DHT y 12 nutrientes, para que tu pelo vuelva a crecer fuerte</p>",
+            "color": "#FFFFFF",
+            "letter_spacing": 0,
+            "letter_spacing_mobile": -0.1,
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 16,
+            "line_height": 150,
+            "line_height_tablet": 180,
+            "line_height_mobile": 150,
+            "margin_top": 10,
+            "margin_top_tablet": 10,
+            "margin_top_mobile": 5
+          }
+        },
+        "button_yQ3E67": {
+          "type": "button",
+          "settings": {
+            "label": "conocer la fórmula",
+            "link": "",
+            "anchor": "",
+            "new_tab": false,
+            "background_color": "#FFFFFF",
+            "text_color": "#7F1525",
+            "hover_background_color": "#EDB4B1",
+            "hover_text_color": "#FFFCF7",
+            "font_weight": "700",
+            "text_transform": "capitalize",
+            "font_size": 16,
+            "font_size_tablet": 13,
+            "font_size_mobile": 15,
+            "line_height": 130,
+            "letter_spacing": 0,
+            "radius": 4,
+            "hover_radius": 0,
+            "padding_top": 14,
+            "padding_bottom": 13,
+            "padding_x": 40,
+            "padding_y_mobile": 12,
+            "padding_x_mobile": 26,
+            "margin_top": 20,
+            "margin_top_tablet": 20,
+            "margin_top_mobile": 20
+          }
+        }
+      },
+      "block_order": [
+        "heading_fhErUp",
+        "text_J7PqbC",
+        "button_yQ3E67"
+      ],
+      "name": "Imagen con panel",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "image": "shopify://shop_images/ChatGPT_Image_11_sept_2026_21_03_33.webp",
+        "image_layout": "left",
+        "media_columns": 5,
+        "image_fit": "cover",
+        "image_position": "center",
+        "image_height": 250,
+        "image_height_tablet": 250,
+        "image_height_mobile": 250,
+        "panel_background_color": "#7F1525",
+        "panel_fixed_background": true,
+        "panel_image_position": "50% 50%",
+        "panel_image_position_mobile": "100% 100%",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "panel_radius_corner": "bottom_right",
+        "panel_radius": 125,
+        "panel_radius_mobile": 50,
+        "panel_padding_x": 30,
+        "panel_padding_y": 0,
+        "panel_padding_mobile": 25,
+        "content_alignment": "center",
+        "text_alignment": "left",
+        "text_alignment_mobile": "left",
+        "content_first_mobile": false,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "background_color": "#FFFCF7",
+        "max_width": 1000,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_x": 0,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_x_mobile": 20
+      }
+    },
+    "image_checklist_9X9r6M": {
+      "type": "image-checklist",
+      "blocks": {
+        "heading_iMtHVC": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>¿es gujoy para ti?</strong>",
+            "heading_tag": "h2",
+            "color": "#7F1525",
+            "text_transform": "capitalize",
+            "letter_spacing": -0.4,
+            "font_size": 38,
+            "font_size_tablet": 16,
+            "font_size_mobile": 26,
+            "line_height": 100,
+            "line_height_tablet": 180,
+            "line_height_mobile": 120,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        },
+        "text_TKWPJL": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Si te sientes identificada con esto, Gujoy fue<br>pensada para ti</p>",
+            "color": "#7F1525",
+            "font_weight": "400",
+            "italic": false,
+            "letter_spacing": 0,
+            "letter_spacing_mobile": -0.1,
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 16,
+            "line_height": 180,
+            "line_height_tablet": 180,
+            "line_height_mobile": 150,
+            "margin_top": 12,
+            "margin_top_tablet": 12,
+            "margin_top_mobile": 5
+          }
+        },
+        "text_L6hUR4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Es para ti si:</p>",
+            "color": "#7F1525",
+            "font_weight": "600",
+            "italic": true,
+            "letter_spacing": 0,
+            "letter_spacing_mobile": -0.1,
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 15,
+            "line_height": 180,
+            "line_height_tablet": 180,
+            "line_height_mobile": 180,
+            "margin_top": 10,
+            "margin_top_tablet": 10,
+            "margin_top_mobile": 10
+          }
+        },
+        "list_item_cUybTw": {
+          "type": "list_item",
+          "settings": {
+            "text": "Notas más pelo de lo normal en el cepillo o en la almohada",
+            "icon": "check_bold"
+          }
+        },
+        "list_item_YpEYHc": {
+          "type": "list_item",
+          "settings": {
+            "text": "Ves que tu raya está cada vez más ancha",
+            "icon": "check_bold"
+          }
+        },
+        "list_item_Qt338y": {
+          "type": "list_item",
+          "settings": {
+            "text": "Ya has probado de todo y nada ha frenado tu caída",
+            "icon": "check_bold"
+          }
+        },
+        "list_item_nHH3ij": {
+          "type": "list_item",
+          "settings": {
+            "text": "Quieres una rutina sencilla, sin complicaciones",
+            "icon": "check_bold"
+          }
+        },
+        "button_i7pjLc": {
+          "type": "button",
+          "settings": {
+            "label": "empieza tu transformación",
+            "link": "",
+            "anchor": "",
+            "new_tab": false,
+            "full_width_mobile": true,
+            "background_color": "#7F1525",
+            "text_color": "#FEEBEB",
+            "hover_background_color": "#560A15",
+            "hover_text_color": "#FFFFFF",
+            "font_weight": "700",
+            "text_transform": "capitalize",
+            "font_size": 16,
+            "font_size_tablet": 13,
+            "font_size_mobile": 15,
+            "line_height": 130,
+            "letter_spacing": 0,
+            "radius": 4,
+            "hover_radius": 0,
+            "padding_top": 14,
+            "padding_bottom": 13,
+            "padding_x": 40,
+            "padding_y_mobile": 12,
+            "padding_x_mobile": 26,
+            "margin_top": 20,
+            "margin_top_tablet": 20,
+            "margin_top_mobile": 20
+          }
+        }
+      },
+      "block_order": [
+        "heading_iMtHVC",
+        "text_TKWPJL",
+        "text_L6hUR4",
+        "list_item_cUybTw",
+        "list_item_YpEYHc",
+        "list_item_Qt338y",
+        "list_item_nHH3ij",
+        "button_i7pjLc"
+      ],
+      "name": "Lista con imagen",
+      "settings": {
+        "image": "shopify://shop_images/b64505c7014926136358e7d853cbcccb.webp",
+        "image_layout": "right",
+        "image_first_mobile": false,
+        "image_max_width": 500,
+        "image_ratio": "1 / 1",
+        "image_ratio_tablet": "1 / 1",
+        "image_ratio_mobile": "4 / 3",
+        "image_position": "center",
+        "image_radius_top_left": 50,
+        "image_radius_top_right": 8,
+        "image_radius_bottom_right": 50,
+        "image_radius_bottom_left": 8,
+        "content_columns": 6,
+        "content_alignment": "center",
+        "text_alignment": "left",
+        "text_alignment_mobile": "left",
+        "icon_color": "#7F1525",
+        "icon_size": 24,
+        "icon_size_tablet": 24,
+        "icon_size_mobile": 24,
+        "list_icon_alignment": "center",
+        "list_icon_gap": 3,
+        "list_row_gap": 2,
+        "list_margin_top": 0,
+        "list_margin_top_mobile": 0,
+        "list_text_color": "#7F1525",
+        "list_font_size": 16,
+        "list_font_size_tablet": 16,
+        "list_font_size_mobile": 16,
+        "list_line_height": 180,
+        "list_line_height_tablet": 180,
+        "list_line_height_mobile": 140,
+        "list_letter_spacing": 0,
+        "list_letter_spacing_mobile": -0.1,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "background_color": "#FFFCF7",
+        "max_width": 1000,
+        "column_gap": 51,
+        "row_gap_mobile": 16,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_x": 0,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 15,
+        "padding_x_mobile": 20
+      }
+    },
+    "ingredients_tabs_e8BwbD": {
+      "type": "ingredients-tabs",
+      "blocks": {
+        "tab_TjdW8h": {
+          "type": "tab",
+          "settings": {
+            "label": "Todos",
+            "selected": true,
+            "columns": 6,
+            "columns_mobile": 6,
+            "column_gap": 16,
+            "row_gap": 16,
+            "min_width": 145,
+            "min_width_tablet": 190,
+            "min_width_mobile": 295
+          }
+        },
+        "ingredient_pAacPU": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Palma Enana",
+            "description": "Ayuda a frenar la caída desde la raíz",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_JkYcxK": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Beta-sitosterol",
+            "description": "Refuerza el extracto y frena la caída",
+            "tag": "SINERGIA"
+          }
+        },
+        "ingredient_mNtJpF": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina C",
+            "description": "Antioxidante que protege la fibra capilar",
+            "tag": "ANTIOXIDANTE"
+          }
+        },
+        "ingredient_yefTtK": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Selenio",
+            "description": "Protege las células frente al daño externo",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_T6jFQk": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B5",
+            "description": "Hidrata el cuero cabelludo desde dentro",
+            "tag": "HIDRATACIÓN"
+          }
+        },
+        "ingredient_4eHffT": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B6",
+            "description": "Apoya la producción natural de queratina",
+            "tag": "QUERATINA"
+          }
+        },
+        "ingredient_nE8LV4": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Semilla de Calabaza",
+            "description": "Cuida el folículo para un pelo más fuerte",
+            "tag": "FORTALECE"
+          }
+        },
+        "ingredient_Ce7RMN": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Biotina",
+            "description": "Apoya el crecimiento natural del pelo",
+            "tag": "CRECIMIENTO"
+          }
+        },
+        "ingredient_RDPrc8": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Zinc",
+            "description": "Ayuda a reparar y fortalecer el folículo.",
+            "tag": "REPARACIÓN"
+          }
+        },
+        "ingredient_FQVJRp": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina A",
+            "description": "Ayuda a renovar el cuero cabelludo",
+            "tag": "RENOVACIÓN"
+          }
+        },
+        "ingredient_X9Tggy": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina E",
+            "description": "Antioxidante que cuida el cuero cabelludo",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_x4nimc": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B12",
+            "description": "Ayuda a oxigenar el folículo capilar",
+            "tag": "OXIGENACIÓN"
+          }
+        },
+        "tab_wj4cxJ": {
+          "type": "tab",
+          "settings": {
+            "label": "DHT-Shield™",
+            "selected": false,
+            "columns": 3,
+            "columns_mobile": 3,
+            "column_gap": 20,
+            "row_gap": 16,
+            "min_width": 100,
+            "min_width_tablet": 100,
+            "min_width_mobile": 140
+          }
+        },
+        "ingredient_X9jDi4": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Palma Enana",
+            "description": "Ayuda a frenar la caída desde la raíz",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_tMBhbT": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Semilla de Calabaza",
+            "description": "Cuida el folículo para un pelo más fuerte",
+            "tag": "FORTALECE"
+          }
+        },
+        "ingredient_Cqb7iM": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Beta-sitosterol",
+            "description": "Refuerza el extracto y frena la caída",
+            "tag": "SINERGIA"
+          }
+        },
+        "tab_CDcYfc": {
+          "type": "tab",
+          "settings": {
+            "label": "Activos",
+            "selected": false,
+            "columns": 5,
+            "columns_mobile": 5,
+            "column_gap": 20,
+            "row_gap": 20,
+            "min_width": 120,
+            "min_width_tablet": 160,
+            "min_width_mobile": 245
+          }
+        },
+        "ingredient_37DEAq": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina A",
+            "description": "Ayuda a renovar el cuero cabelludo",
+            "tag": "RENOVACIÓN"
+          }
+        },
+        "ingredient_eetFFX": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina C",
+            "description": "Antioxidante que protege la fibra capilar",
+            "tag": "ANTIOXIDANTE"
+          }
+        },
+        "ingredient_8FUJYg": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B6",
+            "description": "Apoya la producción natural de queratina",
+            "tag": "QUERATINA"
+          }
+        },
+        "ingredient_c79WaY": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B12",
+            "description": "Ayuda a oxigenar el folículo capilar",
+            "tag": "OXIGENACIÓN"
+          }
+        },
+        "ingredient_CG9M3z": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B5",
+            "description": "Hidrata el cuero cabelludo desde dentro",
+            "tag": "HIDRATACIÓN"
+          }
+        },
+        "ingredient_mbdEwY": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Biotina",
+            "description": "Apoya el crecimiento natural del pelo",
+            "tag": "CRECIMIENTO"
+          }
+        },
+        "ingredient_aNRiaF": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina E",
+            "description": "Antioxidante que cuida el cuero cabelludo",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_TNgGVJ": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Zinc",
+            "description": "Ayuda a reparar y fortalecer el folículo",
+            "tag": "REPARACIÓN"
+          }
+        },
+        "ingredient_BabWA8": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Selenio",
+            "description": "Protege las células frente al daño externo",
+            "tag": "PROTECCIÓN"
+          }
+        }
+      },
+      "block_order": [
+        "tab_TjdW8h",
+        "ingredient_pAacPU",
+        "ingredient_JkYcxK",
+        "ingredient_mNtJpF",
+        "ingredient_yefTtK",
+        "ingredient_T6jFQk",
+        "ingredient_4eHffT",
+        "ingredient_nE8LV4",
+        "ingredient_Ce7RMN",
+        "ingredient_RDPrc8",
+        "ingredient_FQVJRp",
+        "ingredient_X9Tggy",
+        "ingredient_x4nimc",
+        "tab_wj4cxJ",
+        "ingredient_X9jDi4",
+        "ingredient_tMBhbT",
+        "ingredient_Cqb7iM",
+        "tab_CDcYfc",
+        "ingredient_37DEAq",
+        "ingredient_eetFFX",
+        "ingredient_8FUJYg",
+        "ingredient_c79WaY",
+        "ingredient_CG9M3z",
+        "ingredient_mbdEwY",
+        "ingredient_aNRiaF",
+        "ingredient_TNgGVJ",
+        "ingredient_BabWA8"
+      ],
+      "name": "Ingredientes con pestañas",
+      "settings": {
+        "heading": "12 ingredientes estudiados y encontrados en la naturaleza",
+        "heading_size": 38,
+        "heading_size_mobile": 28,
+        "heading_weight": "500",
+        "heading_color": "#000000",
+        "background": "#FFFFFF",
+        "button_label": "Ver Informaciones Nutricionales",
+        "button_link": "",
+        "button_icon": "article",
+        "button_background": "#FDF8ED",
+        "button_color": "#731122",
+        "button_radius": 15,
+        "button_size": 14,
+        "button_size_mobile": 15,
+        "tabs_margin_top": 20,
+        "tabs_margin_top_mobile": 15,
+        "tab_gap": 7,
+        "tab_padding_horizontal": 32,
+        "tab_padding_vertical": 4,
+        "tab_radius": 30,
+        "tab_size": 16,
+        "tab_size_mobile": 14,
+        "tab_color": "#731122",
+        "tab_border_color": "#731122",
+        "tab_background": "#FFFFFF",
+        "tab_active_color": "#FFFFFF",
+        "tab_active_background": "#731122",
+        "panel_margin_top": 20,
+        "scrollbar_thumb": "#888888",
+        "scrollbar_track": "#F1F1F1",
+        "image_height": 100,
+        "image_height_mobile": 100,
+        "image_radius": 8,
+        "name_size": 18,
+        "name_size_mobile": 18,
+        "name_color": "#2C2C2C",
+        "divider_color": "#CBCBCB",
+        "divider_width": 1.5,
+        "divider_width_mobile": 1,
+        "description_size": 14,
+        "description_size_mobile": 14,
+        "description_color": "#848484",
+        "tag_color": "#731122",
+        "tag_border_color": "#731122",
+        "tag_background": "#FFFFFF",
+        "tag_radius": 10,
+        "tag_size": 12,
+        "tag_size_mobile": 14,
+        "padding_top": 16,
+        "padding_bottom": 32,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 22,
+        "padding_horizontal_mobile": 12,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "hero_split_banner_QHjKfa",
+    "image_panel_banner_8Er6k9",
+    "image_checklist_9X9r6M",
+    "ingredients_tabs_e8BwbD"
   ]
 }
