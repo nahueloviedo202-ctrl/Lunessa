@@ -1,0 +1,1167 @@
+{{ 'section-image-panel-banner.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+      assign heading_fw = 'var(--font-heading-weight)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+      assign heading_fw = 'var(--font-body-weight)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+      assign heading_fw = heading_font.weight
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+      assign body_fw = 'var(--font-heading-weight)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+      assign body_fw = 'var(--font-body-weight)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+      assign body_fw = body_font.weight
+  endcase
+
+  case section.settings.panel_radius_corner
+    when 'top_left'
+      assign radius_template = 'R 0 0 0'
+    when 'top_right'
+      assign radius_template = '0 R 0 0'
+    when 'bottom_left'
+      assign radius_template = '0 0 0 R'
+    when 'all'
+      assign radius_template = 'R'
+    else
+      assign radius_template = '0 0 R 0'
+  endcase
+  assign radius_desktop = section.settings.panel_radius | append: 'px'
+  assign radius_mobile = section.settings.panel_radius_mobile | append: 'px'
+  assign radius_desktop = radius_template | replace: 'R', radius_desktop
+  assign radius_mobile = radius_template | replace: 'R', radius_mobile
+
+  assign content_columns = 12 | minus: section.settings.media_columns
+
+  if section.settings.panel_image != blank
+    assign panel_image = section.settings.panel_image | image_url: width: 2000
+    assign panel_image = 'url(' | append: panel_image | append: ')'
+    assign panel_image_mobile = section.settings.panel_image | image_url: width: 1100
+    assign panel_image_mobile = 'url(' | append: panel_image_mobile | append: ')'
+  else
+    assign panel_image = 'none'
+    assign panel_image_mobile = 'none'
+  endif
+  if section.settings.panel_image_mobile != blank
+    assign panel_image_mobile = section.settings.panel_image_mobile | image_url: width: 1100
+    assign panel_image_mobile = 'url(' | append: panel_image_mobile | append: ')'
+  endif
+
+  if section.settings.panel_fixed_background
+    assign panel_attachment = 'fixed'
+  else
+    assign panel_attachment = 'scroll'
+  endif
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {{ heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'button' -%}
+        {%- assign button_font = body_font | font_modify: 'weight', block.settings.font_weight -%}
+        {{ button_font | font_face: font_display: 'swap' }}
+      {%- endif -%}
+    {%- endfor -%}
+  {% endif %}
+
+  .image-panel-banner-{{ section.id }} {
+    --ipb-bg: {{ section.settings.background_color }};
+    --ipb-pt: {{ section.settings.padding_top }}px;
+    --ipb-pb: {{ section.settings.padding_bottom }}px;
+    --ipb-px: {{ section.settings.padding_x }}px;
+    --ipb-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ipb-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ipb-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --ipb-max-width: {{ section.settings.max_width }}px;
+    --ipb-media-fr: {{ section.settings.media_columns }}fr;
+    --ipb-content-fr: {{ content_columns }}fr;
+    --ipb-img-h: {{ section.settings.image_height }}px;
+    --ipb-img-h-tablet: {{ section.settings.image_height_tablet }}px;
+    --ipb-img-h-mobile: {{ section.settings.image_height_mobile }}px;
+    --ipb-img-fit: {{ section.settings.image_fit }};
+    --ipb-img-position: {{ section.settings.image_position }};
+    --ipb-panel-bg: {{ section.settings.panel_background_color }};
+    --ipb-panel-img: {{ panel_image }};
+    --ipb-panel-img-mobile: {{ panel_image_mobile }};
+    --ipb-panel-pos: {{ section.settings.panel_image_position }};
+    --ipb-panel-pos-mobile: {{ section.settings.panel_image_position_mobile }};
+    --ipb-panel-attachment: {{ panel_attachment }};
+    --ipb-overlay: {{ section.settings.overlay_color }};
+    --ipb-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --ipb-panel-px: {{ section.settings.panel_padding_x }}px;
+    --ipb-panel-py: {{ section.settings.panel_padding_y }}px;
+    --ipb-panel-p-mobile: {{ section.settings.panel_padding_mobile }}px;
+    --ipb-radius: {{ radius_desktop }};
+    --ipb-radius-mobile: {{ radius_mobile }};
+    --ipb-content-align: {{ section.settings.content_alignment }};
+    --ipb-text-align: {{ section.settings.text_alignment }};
+    --ipb-text-align-mobile: {{ section.settings.text_alignment_mobile }};
+    --ipb-heading-ff: {{ heading_ff }};
+    --ipb-heading-fs: {{ heading_fs }};
+    --ipb-heading-fw: {{ heading_fw }};
+    --ipb-body-ff: {{ body_ff }};
+    --ipb-body-fs: {{ body_fs }};
+    --ipb-body-fw: {{ body_fw }};
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+  assign media_ratio = section.settings.media_columns | divided_by: 12.0
+  assign media_max_width = section.settings.max_width | times: media_ratio | round
+  assign mobile_gutter = section.settings.padding_x_mobile | times: 2
+-%}
+
+<div class="image-panel-banner image-panel-banner-{{ section.id }}">
+  <div
+    class="image-panel-banner__grid image-panel-banner__grid--image-{{ section.settings.image_layout }}{% if section.settings.content_first_mobile %} image-panel-banner__grid--content-first-mobile{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+  >
+    <div class="image-panel-banner__media">
+      {%- if section.settings.image != blank -%}
+        {%- capture sizes -%}
+          (min-width: {{ section.settings.max_width }}px) {{ media_max_width }}px,
+          (min-width: 768px) calc(100vw * {{ media_ratio }}),
+          calc(100vw - {{ mobile_gutter }}px)
+        {%- endcapture -%}
+        {{
+          section.settings.image
+          | image_url: width: 1500
+          | image_tag:
+            widths: '375, 550, 750, 1100, 1500',
+            sizes: sizes,
+            class: 'image-panel-banner__image',
+            fetchpriority: fetch_priority
+        }}
+      {%- else -%}
+        <div class="image-panel-banner__placeholder">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="image-panel-banner__panel">
+      <div class="image-panel-banner__content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <div
+                class="image-panel-banner__block"
+                style="--mt: {{ block.settings.margin_top }}px; --mt-tablet: {{ block.settings.margin_top_tablet }}px; --mt-mobile: {{ block.settings.margin_top_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <{{ block.settings.heading_tag }}
+                  class="image-panel-banner__heading"
+                  style="--size: {{ block.settings.font_size }}px; --size-tablet: {{ block.settings.font_size_tablet }}px; --size-mobile: {{ block.settings.font_size_mobile }}px; --lh: {{ block.settings.line_height }}%; --lh-tablet: {{ block.settings.line_height_tablet }}%; --lh-mobile: {{ block.settings.line_height_mobile }}%; --ls: {{ block.settings.letter_spacing }}px; --color: {{ block.settings.color }}; --tt: {{ block.settings.text_transform }};"
+                >
+                  {{- block.settings.heading -}}
+                </{{ block.settings.heading_tag }}>
+              </div>
+            {%- when 'text' -%}
+              <div
+                class="image-panel-banner__block"
+                style="--mt: {{ block.settings.margin_top }}px; --mt-tablet: {{ block.settings.margin_top_tablet }}px; --mt-mobile: {{ block.settings.margin_top_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <div
+                  class="image-panel-banner__text"
+                  style="--size: {{ block.settings.font_size }}px; --size-tablet: {{ block.settings.font_size_tablet }}px; --size-mobile: {{ block.settings.font_size_mobile }}px; --lh: {{ block.settings.line_height }}%; --lh-tablet: {{ block.settings.line_height_tablet }}%; --lh-mobile: {{ block.settings.line_height_mobile }}%; --ls: {{ block.settings.letter_spacing }}px; --ls-mobile: {{ block.settings.letter_spacing_mobile }}px; --color: {{ block.settings.color }};"
+                >
+                  {{ block.settings.text }}
+                </div>
+              </div>
+            {%- when 'button' -%}
+              {%- liquid
+                assign button_href = block.settings.link
+                assign anchor = block.settings.anchor | strip
+                if anchor != blank
+                  assign first_char = anchor | slice: 0
+                  if first_char == '#'
+                    assign button_href = anchor
+                  else
+                    assign button_href = '#' | append: anchor
+                  endif
+                endif
+              -%}
+              <div
+                class="image-panel-banner__block"
+                style="--mt: {{ block.settings.margin_top }}px; --mt-tablet: {{ block.settings.margin_top_tablet }}px; --mt-mobile: {{ block.settings.margin_top_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <a
+                  class="image-panel-banner__button"
+                  {% if button_href == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ button_href }}"
+                    {% if block.settings.new_tab %}
+                      target="_blank" rel="noopener"
+                    {% endif %}
+                  {% endif %}
+                  style="--size: {{ block.settings.font_size }}px; --size-tablet: {{ block.settings.font_size_tablet }}px; --size-mobile: {{ block.settings.font_size_mobile }}px; --lh: {{ block.settings.line_height }}%; --ls: {{ block.settings.letter_spacing }}px; --weight: {{ block.settings.font_weight }}; --tt: {{ block.settings.text_transform }}; --pt: {{ block.settings.padding_top }}px; --pb: {{ block.settings.padding_bottom }}px; --px: {{ block.settings.padding_x }}px; --py-mobile: {{ block.settings.padding_y_mobile }}px; --px-mobile: {{ block.settings.padding_x_mobile }}px; --radius: {{ block.settings.radius }}px; --hover-radius: {{ block.settings.hover_radius }}px; --bg: {{ block.settings.background_color }}; --color: {{ block.settings.text_color }}; --hover-bg: {{ block.settings.hover_background_color }}; --hover-color: {{ block.settings.hover_text_color }};"
+                >
+                  {{- block.settings.label | escape -}}
+                </a>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Imagen con panel",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen"
+    },
+    {
+      "type": "select",
+      "id": "image_layout",
+      "label": "Posición de la imagen en escritorio",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "media_columns",
+      "label": "Ancho de la imagen (columnas de 12)",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Ajuste de la imagen",
+      "options": [
+        { "value": "cover", "label": "Cubrir" },
+        { "value": "contain", "label": "Contener" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posición del recorte",
+      "options": [
+        { "value": "center", "label": "Centro" },
+        { "value": "top", "label": "Arriba" },
+        { "value": "bottom", "label": "Abajo" },
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Alto de la imagen en escritorio",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "image_height_tablet",
+      "label": "Alto de la imagen en tablet",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "label": "Alto de la imagen en móvil",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "header",
+      "content": "Panel de contenido"
+    },
+    {
+      "type": "image_picker",
+      "id": "panel_image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "image_picker",
+      "id": "panel_image_mobile",
+      "label": "Imagen de fondo en móvil",
+      "info": "Opcional. Si está vacía se usa la imagen de fondo."
+    },
+    {
+      "type": "color",
+      "id": "panel_background_color",
+      "label": "Color de fondo",
+      "info": "Visible cuando no hay imagen de fondo.",
+      "default": "#7F1525"
+    },
+    {
+      "type": "checkbox",
+      "id": "panel_fixed_background",
+      "label": "Fondo fijo (efecto parallax) en escritorio y tablet",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "panel_image_position",
+      "label": "Posición del fondo en escritorio",
+      "options": [
+        { "value": "50% 50%", "label": "Centro" },
+        { "value": "50% 0%", "label": "Arriba" },
+        { "value": "50% 100%", "label": "Abajo" },
+        { "value": "0% 50%", "label": "Izquierda" },
+        { "value": "100% 50%", "label": "Derecha" },
+        { "value": "100% 100%", "label": "Abajo a la derecha" }
+      ],
+      "default": "50% 50%"
+    },
+    {
+      "type": "select",
+      "id": "panel_image_position_mobile",
+      "label": "Posición del fondo en móvil",
+      "options": [
+        { "value": "50% 50%", "label": "Centro" },
+        { "value": "50% 0%", "label": "Arriba" },
+        { "value": "50% 100%", "label": "Abajo" },
+        { "value": "0% 50%", "label": "Izquierda" },
+        { "value": "100% 50%", "label": "Derecha" },
+        { "value": "100% 100%", "label": "Abajo a la derecha" }
+      ],
+      "default": "100% 100%"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Color de superposición",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Opacidad de superposición",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "panel_radius_corner",
+      "label": "Esquina redondeada",
+      "options": [
+        { "value": "bottom_right", "label": "Inferior derecha" },
+        { "value": "bottom_left", "label": "Inferior izquierda" },
+        { "value": "top_right", "label": "Superior derecha" },
+        { "value": "top_left", "label": "Superior izquierda" },
+        { "value": "all", "label": "Todas" }
+      ],
+      "default": "bottom_right"
+    },
+    {
+      "type": "range",
+      "id": "panel_radius",
+      "label": "Radio de esquina en escritorio",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 125
+    },
+    {
+      "type": "range",
+      "id": "panel_radius_mobile",
+      "label": "Radio de esquina en móvil",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_x",
+      "label": "Relleno horizontal en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_y",
+      "label": "Relleno vertical en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_mobile",
+      "label": "Relleno en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Alineación vertical del contenido",
+      "options": [
+        { "value": "flex-start", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Abajo" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alineación del texto en escritorio",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "Alineación del texto en móvil",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "content_first_mobile",
+      "label": "Mostrar el contenido antes que la imagen en móvil",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente de los títulos",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada de títulos",
+      "default": "lora_n4"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto y botones",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Sección"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#FFFCF7"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo del contenido",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1000
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Relleno inferior en escritorio",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Relleno lateral en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Relleno superior en móvil",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Relleno inferior en móvil",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Relleno lateral en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Título",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Título",
+          "default": "empieza a frenar tu caída hoy"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Etiqueta HTML",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "p", "label": "Párrafo" }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "select",
+          "id": "text_transform",
+          "label": "Mayúsculas",
+          "options": [
+            { "value": "none", "label": "Ninguna" },
+            { "value": "capitalize", "label": "Capitalizar palabras" },
+            { "value": "uppercase", "label": "Mayúsculas" },
+            { "value": "lowercase", "label": "Minúsculas" }
+          ],
+          "default": "capitalize"
+        },
+        {
+          "type": "range",
+          "id": "letter_spacing",
+          "label": "Espaciado entre letras",
+          "min": -2,
+          "max": 2,
+          "step": 0.1,
+          "unit": "px",
+          "default": -0.4
+        },
+        {
+          "type": "header",
+          "content": "Tamaño"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño en escritorio",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 38
+        },
+        {
+          "type": "range",
+          "id": "font_size_tablet",
+          "label": "Tamaño en tablet",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Tamaño en móvil",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "label": "Interlineado en escritorio",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "line_height_tablet",
+          "label": "Interlineado en tablet",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "line_height_mobile",
+          "label": "Interlineado en móvil",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 120
+        },
+        {
+          "type": "header",
+          "content": "Margen superior"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Escritorio",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_tablet",
+          "label": "Tablet",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "label": "Móvil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Tu pelo cae porque el DHT ataca tu raíz. Gujoy lo frena con Triple Bloqueo DHT y 12 nutrientes, para que tu pelo vuelva a crecer fuerte</p>"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "letter_spacing",
+          "label": "Espaciado entre letras en escritorio y tablet",
+          "min": -2,
+          "max": 2,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "letter_spacing_mobile",
+          "label": "Espaciado entre letras en móvil",
+          "min": -2,
+          "max": 2,
+          "step": 0.1,
+          "unit": "px",
+          "default": -0.1
+        },
+        {
+          "type": "header",
+          "content": "Tamaño"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño en escritorio",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_tablet",
+          "label": "Tamaño en tablet",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Tamaño en móvil",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "label": "Interlineado en escritorio",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "range",
+          "id": "line_height_tablet",
+          "label": "Interlineado en tablet",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 180
+        },
+        {
+          "type": "range",
+          "id": "line_height_mobile",
+          "label": "Interlineado en móvil",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 150
+        },
+        {
+          "type": "header",
+          "content": "Margen superior"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Escritorio",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "margin_top_tablet",
+          "label": "Tablet",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "label": "Móvil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 5
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Botón",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto del botón",
+          "default": "conocer la fórmula"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Ancla de desplazamiento",
+          "info": "ID de una sección de esta página (por ejemplo, #ingredientes). Si se completa, tiene prioridad sobre el enlace."
+        },
+        {
+          "type": "checkbox",
+          "id": "new_tab",
+          "label": "Abrir enlace en una pestaña nueva",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Colores"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Fondo",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Texto",
+          "default": "#7F1525"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "Fondo al pasar el cursor",
+          "default": "#EDB4B1"
+        },
+        {
+          "type": "color",
+          "id": "hover_text_color",
+          "label": "Texto al pasar el cursor",
+          "default": "#FFFCF7"
+        },
+        {
+          "type": "header",
+          "content": "Tipografía"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Seminegrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "select",
+          "id": "text_transform",
+          "label": "Mayúsculas",
+          "options": [
+            { "value": "none", "label": "Ninguna" },
+            { "value": "capitalize", "label": "Capitalizar palabras" },
+            { "value": "uppercase", "label": "Mayúsculas" },
+            { "value": "lowercase", "label": "Minúsculas" }
+          ],
+          "default": "capitalize"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño en escritorio",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_tablet",
+          "label": "Tamaño en tablet",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Tamaño en móvil",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "line_height",
+          "label": "Interlineado",
+          "min": 80,
+          "max": 200,
+          "step": 5,
+          "unit": "%",
+          "default": 130
+        },
+        {
+          "type": "range",
+          "id": "letter_spacing",
+          "label": "Espaciado entre letras",
+          "min": -2,
+          "max": 2,
+          "step": 0.1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Forma y espaciado"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "label": "Radio de esquinas",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "hover_radius",
+          "label": "Radio de esquinas al pasar el cursor",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Relleno superior en escritorio",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Relleno inferior en escritorio",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "padding_x",
+          "label": "Relleno lateral en escritorio",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "padding_y_mobile",
+          "label": "Relleno vertical en móvil",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_x_mobile",
+          "label": "Relleno lateral en móvil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 26
+        },
+        {
+          "type": "header",
+          "content": "Margen superior"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "label": "Escritorio",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "margin_top_tablet",
+          "label": "Tablet",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "label": "Móvil",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Imagen con panel",
+      "blocks": [
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "button" }
+      ]
+    }
+  ]
+}
+{% endschema %}
