@@ -1,0 +1,112 @@
+/* Marquee bar — every selector is scoped to .mqb */
+
+.mqb {
+  padding: var(--mqb-py-mobile) 0;
+  overflow: hidden;
+  background: var(--mqb-bg);
+  color: var(--mqb-color);
+  font-family: var(--mqb-font, var(--font-body-family));
+  font-style: var(--mqb-font-style, var(--font-body-style));
+}
+
+.mqb__track {
+  display: flex;
+  width: max-content;
+  animation: mqb-scroll var(--mqb-duration-mobile) linear infinite;
+}
+
+.mqb--right .mqb__track {
+  animation-direction: reverse;
+}
+
+.mqb--pause-on-hover:hover .mqb__track {
+  animation-play-state: paused;
+}
+
+.mqb .mqb__group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.mqb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--mqb-item-py) var(--mqb-gap-mobile) var(--mqb-item-py) 0;
+  white-space: nowrap;
+}
+
+.mqb--separator .mqb__item {
+  gap: calc(var(--mqb-gap-mobile) / 2);
+  padding-right: calc(var(--mqb-gap-mobile) / 2);
+}
+
+.mqb__text {
+  font-size: var(--mqb-size-mobile);
+  font-weight: var(--mqb-weight);
+  line-height: 1.8;
+  letter-spacing: var(--mqb-ls-mobile);
+  text-transform: var(--mqb-transform);
+}
+
+.mqb__icon {
+  display: block;
+  width: auto;
+  height: 1.4em;
+}
+
+.mqb__separator {
+  flex-shrink: 0;
+  width: var(--mqb-separator-size);
+  height: var(--mqb-separator-size);
+  color: var(--mqb-separator-color);
+}
+
+@keyframes mqb-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .mqb {
+    padding: var(--mqb-py) 0;
+  }
+
+  .mqb__track {
+    animation-duration: var(--mqb-duration);
+  }
+
+  .mqb__item {
+    padding-right: var(--mqb-gap);
+  }
+
+  .mqb--separator .mqb__item {
+    gap: calc(var(--mqb-gap) / 2);
+    padding-right: calc(var(--mqb-gap) / 2);
+  }
+
+  .mqb__text {
+    font-size: var(--mqb-size-tablet);
+    letter-spacing: var(--mqb-ls);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .mqb__text {
+    font-size: var(--mqb-size);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mqb__track {
+    animation: none;
+  }
+}

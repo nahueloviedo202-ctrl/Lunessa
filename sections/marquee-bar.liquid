@@ -1,0 +1,353 @@
+{{ 'section-marquee-bar.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {%- if section.settings.font_custom -%}
+    {{ section.settings.font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .mqb--{{ section.id }} {
+    {%- if section.settings.font_custom %}
+      --mqb-font: {{ section.settings.font.family }}, {{ section.settings.font.fallback_families }};
+      --mqb-font-style: {{ section.settings.font.style }};
+    {%- endif %}
+    --mqb-bg: {{ section.settings.background }};
+    --mqb-color: {{ section.settings.text_color }};
+    --mqb-separator-color: {{ section.settings.separator_color }};
+    --mqb-separator-size: {{ section.settings.separator_size }}px;
+    --mqb-py: {{ section.settings.padding_vertical }}px;
+    --mqb-py-mobile: {{ section.settings.padding_vertical_mobile }}px;
+    --mqb-item-py: {{ section.settings.item_padding_vertical }}px;
+    --mqb-gap: {{ section.settings.item_gap }}px;
+    --mqb-gap-mobile: {{ section.settings.item_gap_mobile }}px;
+    --mqb-size: {{ section.settings.text_size }}px;
+    --mqb-size-tablet: {{ section.settings.text_size_tablet }}px;
+    --mqb-size-mobile: {{ section.settings.text_size_mobile }}px;
+    --mqb-weight: {{ section.settings.font_weight }};
+    --mqb-ls: {{ section.settings.letter_spacing }}px;
+    --mqb-ls-mobile: {{ section.settings.letter_spacing_mobile }}px;
+    --mqb-transform: {{ section.settings.text_transform }};
+    --mqb-duration: {{ section.settings.duration }}s;
+    --mqb-duration-mobile: {{ section.settings.duration_mobile }}s;
+  }
+{%- endstyle -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div
+    class="mqb mqb--{{ section.id }} mqb--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} mqb--pause-on-hover{% endif %}{% if section.settings.show_separator %} mqb--separator{% endif %}"
+  >
+    <div class="mqb__track">
+      {%- comment -%}
+        The track holds two identical halves, each made of the items repeated
+        `repeat_count` times, so translating it by -50% loops seamlessly.
+      {%- endcomment -%}
+      {%- assign group_count = section.settings.repeat_count | times: 2 -%}
+      {%- for i in (1..group_count) -%}
+        {%- assign is_first_group = forloop.first -%}
+        <ul
+          class="mqb__group list-unstyled"
+          role="list"
+          {% unless forloop.first %}
+            aria-hidden="true"
+          {% endunless %}
+        >
+          {%- for block in section.blocks -%}
+            <li
+              class="mqb__item"
+              {% if is_first_group %}
+                {{ block.shopify_attributes }}
+              {% endif %}
+            >
+              {%- if block.settings.icon != blank -%}
+                {{
+                  block.settings.icon
+                  | image_url: width: 80
+                  | image_tag: loading: 'lazy', class: 'mqb__icon', alt: '', widths: '40, 80', sizes: '40px'
+                }}
+              {%- endif -%}
+              <span class="mqb__text">{{ block.settings.text | escape }}</span>
+              {%- if section.settings.show_separator -%}
+                <svg class="mqb__separator" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="3" fill="currentColor"/>
+                </svg>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Marquesina",
+  "tag": "div",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Animación"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "min": 5,
+      "max": 90,
+      "step": 1,
+      "unit": "s",
+      "label": "Duración de una vuelta",
+      "info": "Menos segundos = más rápido.",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "duration_mobile",
+      "min": 5,
+      "max": 90,
+      "step": 1,
+      "unit": "s",
+      "label": "Duración de una vuelta (móvil)",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Dirección",
+      "options": [
+        { "value": "left", "label": "Hacia la izquierda" },
+        { "value": "right", "label": "Hacia la derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pausar al pasar el ratón",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "repeat_count",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Repeticiones de los textos",
+      "info": "Aumenta si ves huecos en pantallas muy anchas o con pocos textos.",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#7F1525"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#FEEBEB"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (escritorio)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "text_size_tablet",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (tablet)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Grosor",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Semi negrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 6,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Espaciado entre letras",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing_mobile",
+      "min": 0,
+      "max": 6,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Espaciado entre letras (móvil)",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Mayúsculas",
+      "options": [
+        { "value": "none", "label": "Como está escrito" },
+        { "value": "uppercase", "label": "Todo en mayúsculas" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 8,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación entre textos",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "item_gap_mobile",
+      "min": 8,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación entre textos (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical",
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical (móvil)",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "item_padding_vertical",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical de cada texto",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Separador"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Mostrar punto entre textos",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Color del punto",
+      "default": "#FEEBEB"
+    },
+    {
+      "type": "range",
+      "id": "separator_size",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del punto",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "font_custom",
+      "label": "Usar fuente personalizada",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "font",
+      "label": "Fuente",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "ENVÍO GRATIS"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icono",
+          "info": "Opcional. Se muestra antes del texto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquesina",
+      "blocks": [
+        { "type": "item", "settings": { "text": "ENVÍO GRATIS" } },
+        { "type": "item", "settings": { "text": "GARANTÍA 90 DÍAS" } },
+        { "type": "item", "settings": { "text": "CLINICAMENTE ESTUDIADO" } },
+        { "type": "item", "settings": { "text": "SIN AZÚCAR" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
