@@ -174,10 +174,9 @@
 
   .hsb--overlay-mobile .hsb__content {
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
+    inset: 0;
     z-index: 1;
+    justify-content: var(--hsb-overlay-justify);
     padding: var(--hsb-pt-mobile) var(--hsb-px-mobile) var(--hsb-pb-mobile);
   }
 
@@ -196,6 +195,31 @@
   .hsb--height-mobile .hsb__inner {
     min-height: calc(var(--hsb-height-mobile) * 1vh);
     min-height: calc(var(--hsb-height-mobile) * 1svh);
+  }
+
+  .hsb--stack-mobile .hsb__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hsb--stack-mobile .hsb__grid {
+    flex-shrink: 0;
+  }
+
+  .hsb--stack-mobile-above .hsb__grid {
+    order: -1;
+  }
+
+  .hsb--height-mobile.hsb--stack-mobile .hsb__inner {
+    height: calc(var(--hsb-height-mobile) * 1vh);
+    height: calc(var(--hsb-height-mobile) * 1svh);
+  }
+
+  .hsb--height-mobile.hsb--stack-mobile .hsb__background--mobile {
+    flex: 1 1 0;
+    min-height: 0;
+    object-fit: var(--hsb-image-fit-mobile);
+    object-position: var(--hsb-image-position-mobile);
   }
 
   .hsb--height-mobile.hsb--overlay-mobile .hsb__background--mobile {

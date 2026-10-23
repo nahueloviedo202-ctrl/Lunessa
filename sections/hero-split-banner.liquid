@@ -8,9 +8,23 @@
   endif
 
   assign hero_classes = 'hsb hsb--' | append: section.id | append: ' hsb--visibility-' | append: section.settings.visibility
-  if section.settings.image_mobile != blank and section.settings.overlay_mobile
-    assign hero_classes = hero_classes | append: ' hsb--overlay-mobile'
+  assign mobile_layout = section.settings.mobile_layout
+  if section.settings.image_mobile == blank
+    assign mobile_layout = 'above'
   endif
+  if mobile_layout contains 'overlay'
+    assign hero_classes = hero_classes | append: ' hsb--overlay-mobile'
+  else
+    assign hero_classes = hero_classes | append: ' hsb--stack-mobile hsb--stack-mobile-' | append: mobile_layout
+  endif
+  case mobile_layout
+    when 'overlay_center'
+      assign overlay_justify = 'center'
+    when 'overlay_bottom'
+      assign overlay_justify = 'flex-end'
+    else
+      assign overlay_justify = 'flex-start'
+  endcase
   if section.settings.mobile_height > 0
     assign hero_classes = hero_classes | append: ' hsb--height-mobile'
   endif
@@ -68,6 +82,7 @@
     --hsb-media-radius: {{ section.settings.media_radius }}px;
     --hsb-height-mobile: {{ section.settings.mobile_height }};
     --hsb-image-fit-mobile: {{ section.settings.image_fit_mobile }};
+    --hsb-overlay-justify: {{ overlay_justify }};
     --hsb-image-position-mobile: {{ section.settings.image_mobile.presentation.focal_point | default: 'center' }};
   }
 {%- endstyle -%}
@@ -306,13 +321,20 @@
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Imagen de fondo (móvil)",
-      "info": "Se muestra completa y define el alto del banner en móvil."
+      "info": "Si se deja vacía, en móvil solo se muestra el texto."
     },
     {
-      "type": "checkbox",
-      "id": "overlay_mobile",
-      "label": "Superponer el contenido sobre la imagen en móvil",
-      "default": true
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Posición del texto en móvil",
+      "options": [
+        { "value": "above", "label": "Arriba de la imagen" },
+        { "value": "below", "label": "Debajo de la imagen" },
+        { "value": "overlay_top", "label": "Sobre la imagen, arriba" },
+        { "value": "overlay_center", "label": "Sobre la imagen, centrado" },
+        { "value": "overlay_bottom", "label": "Sobre la imagen, abajo" }
+      ],
+      "default": "overlay_top"
     },
     {
       "type": "range",
@@ -329,7 +351,7 @@
       "type": "select",
       "id": "image_fit_mobile",
       "label": "Ajuste de la imagen en móvil",
-      "info": "Se aplica cuando hay un alto en móvil y el contenido está superpuesto.",
+      "info": "Se aplica cuando hay un alto en móvil.",
       "options": [
         { "value": "fill", "label": "Estirar para llenar (sin recortes)" },
         { "value": "cover", "label": "Recortar para llenar" },
