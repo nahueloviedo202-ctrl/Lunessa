@@ -93,7 +93,7 @@
       "name": "Banner hero dividido",
       "settings": {
         "visibility": "all",
-        "image": "shopify://shop_images/Resize_image_to_4_3_20260923083523.webp",
+        "image": "shopify://shop_images/Gemini_Generated_Image_7d2xup7d2xup7d2x.webp",
         "media_radius": 0,
         "show_media_tablet": true,
         "show_media_mobile": false,
@@ -260,7 +260,7 @@
       ],
       "name": "Imagen con panel",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_11_sept_2026_21_03_33.webp",
+        "image": "shopify://shop_images/Gemini_Generated_Image_4swc3t4swc3t4swc.webp",
         "image_layout": "left",
         "media_columns": 5,
         "image_fit": "cover",
@@ -432,7 +432,7 @@
       ],
       "name": "Lista con imagen",
       "settings": {
-        "image": "shopify://shop_images/b64505c7014926136358e7d853cbcccb.webp",
+        "image": "shopify://shop_images/Gemini_Generated_Image_j3stl2j3stl2j3st.webp",
         "image_layout": "right",
         "image_first_mobile": false,
         "image_max_width": 500,
