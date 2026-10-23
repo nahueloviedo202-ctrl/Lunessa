@@ -116,7 +116,7 @@
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 0,
         "padding_horizontal_mobile": 20,
-        "text_alignment_mobile": "center",
+        "text_alignment_mobile": "left",
         "heading_font_custom": false,
         "heading_font": "lato_n4",
         "body_font_custom": false,
