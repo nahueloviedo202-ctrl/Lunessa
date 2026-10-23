@@ -1,0 +1,3083 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-offer-hero.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign product = section.settings.product | default: product
+  assign variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: section.id
+  assign grouped_types = 'badge,highlight,benefit,offer,trust,faq,before_after' | split: ','
+
+  assign first_offer_id = ''
+  assign selected_offer_id = ''
+  for b in section.blocks
+    if b.type == 'offer'
+      if first_offer_id == ''
+        assign first_offer_id = b.id
+      endif
+      if b.settings.selected and selected_offer_id == ''
+        assign selected_offer_id = b.id
+      endif
+    endif
+  endfor
+  if selected_offer_id == ''
+    assign selected_offer_id = first_offer_id
+  endif
+
+  if section.index > 2
+    assign first_image_loading = 'lazy'
+  else
+    assign first_image_loading = 'eager'
+  endif
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .poh--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --poh-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --poh-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --poh-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --poh-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --poh-pt: {{ section.settings.padding_top }}px;
+    --poh-pb: {{ section.settings.padding_bottom }}px;
+    --poh-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --poh-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --poh-columns-gap: {{ section.settings.columns_gap }}px;
+    --poh-gallery-width: {{ section.settings.gallery_width }}%;
+    --poh-gutter-mobile: {{ section.settings.mobile_gutter }}px;
+    --poh-row-gap-mobile: {{ section.settings.mobile_row_gap }}px;
+
+    --poh-media-ratio: {{ section.settings.media_ratio }};
+    --poh-media-fit: {{ section.settings.media_fit }};
+    --poh-media-radius: {{ section.settings.media_radius }}px;
+    --poh-thumbs-per-row: {{ section.settings.thumbnails_per_row }};
+    --poh-thumbs-per-row-mobile: {{ section.settings.thumbnails_per_row_mobile }};
+    --poh-thumb-gap: {{ section.settings.thumbnail_gap }}px;
+    --poh-thumb-radius: {{ section.settings.thumbnail_radius }}px;
+    --poh-thumb-active-color: {{ section.settings.thumbnail_active_color }};
+    --poh-thumb-active-width: {{ section.settings.thumbnail_active_width }}px;
+    --poh-arrow-bg: {{ section.settings.arrow_background }};
+    --poh-arrow-color: {{ section.settings.arrow_color }};
+    --poh-arrow-size: {{ section.settings.arrow_icon_size }}px;
+    --poh-arrow-size-mobile: {{ section.settings.arrow_icon_size_mobile }}px;
+
+    --poh-gallery-button-bg: {{ section.settings.gallery_button_background }};
+    --poh-gallery-button-color: {{ section.settings.gallery_button_color }};
+    --poh-gallery-button-radius: {{ section.settings.gallery_button_radius }}px;
+    --poh-gallery-button-size: {{ section.settings.gallery_button_size }}px;
+
+    --poh-badge-size: {{ section.settings.badge_size }}px;
+    --poh-badge-size-mobile: {{ section.settings.badge_size_mobile }}px;
+    --poh-badge-padding: {{ section.settings.badge_padding }}px;
+    --poh-badge-gap: {{ section.settings.badge_gap }}px;
+    --poh-badge-radius: {{ section.settings.badge_radius }}px;
+    --poh-badge-margin-top: {{ section.settings.badge_margin_top }}px;
+
+    --poh-highlight-columns: {{ section.settings.highlight_columns }};
+    --poh-highlight-gap: {{ section.settings.highlight_gap }}px;
+    --poh-highlight-image: {{ section.settings.highlight_image_size }}px;
+    --poh-highlight-image-mobile: {{ section.settings.highlight_image_size_mobile }}px;
+    --poh-highlight-image-radius: {{ section.settings.highlight_image_radius }}%;
+    --poh-highlight-size: {{ section.settings.highlight_text_size }}px;
+    --poh-highlight-size-mobile: {{ section.settings.highlight_text_size_mobile }}px;
+    --poh-highlight-color: {{ section.settings.highlight_text_color }};
+
+    --poh-benefit-columns: {{ section.settings.benefit_columns }};
+    --poh-benefit-columns-mobile: {{ section.settings.benefit_columns_mobile }};
+    --poh-benefit-column-gap: {{ section.settings.benefit_column_gap }}px;
+    --poh-benefit-row-gap: {{ section.settings.benefit_row_gap }}px;
+    --poh-benefit-icon-size: {{ section.settings.benefit_icon_size }}px;
+    --poh-benefit-icon-size-mobile: {{ section.settings.benefit_icon_size_mobile }}px;
+    --poh-benefit-icon-color: {{ section.settings.benefit_icon_color }};
+    --poh-benefit-color: {{ section.settings.benefit_text_color }};
+    --poh-benefit-size: {{ section.settings.benefit_text_size }}px;
+    --poh-benefit-size-mobile: {{ section.settings.benefit_text_size_mobile }}px;
+    --poh-benefit-margin-bottom: {{ section.settings.benefit_margin_bottom }}px;
+
+    --poh-offer-gap: {{ section.settings.offer_gap }}px;
+    --poh-offer-radius: {{ section.settings.offer_radius }}px;
+    --poh-offer-border-width: {{ section.settings.offer_border_width }}px;
+    --poh-offer-border: {{ section.settings.offer_border_color }};
+    --poh-offer-border-inactive: {{ section.settings.offer_border_color_inactive }};
+    --poh-offer-bg: {{ section.settings.offer_background }};
+    --poh-offer-bg-inactive: {{ section.settings.offer_background_inactive }};
+    --poh-offer-title-color: {{ section.settings.offer_title_color }};
+    --poh-offer-title-size: {{ section.settings.offer_title_size }}px;
+    --poh-offer-subtitle-color: {{ section.settings.offer_subtitle_color }};
+    --poh-offer-subtitle-size: {{ section.settings.offer_subtitle_size }}px;
+    --poh-offer-price-color: {{ section.settings.offer_price_color }};
+    --poh-offer-price-size: {{ section.settings.offer_price_size }}px;
+    --poh-offer-compare-color: {{ section.settings.offer_compare_color }};
+    --poh-offer-compare-size: {{ section.settings.offer_compare_size }}px;
+    --poh-offer-tag-bg: {{ section.settings.offer_tag_background }};
+    --poh-offer-tag-color: {{ section.settings.offer_tag_color }};
+    --poh-offer-tag-size: {{ section.settings.offer_tag_size }}px;
+    --poh-offer-margin-bottom: {{ section.settings.offer_margin_bottom }}px;
+    --poh-gift-bg: {{ section.settings.gift_background }};
+    --poh-gift-color: {{ section.settings.gift_text_color }};
+    --poh-gift-badge-bg: {{ section.settings.gift_badge_background }};
+    --poh-gift-badge-color: {{ section.settings.gift_badge_color }};
+    --poh-gift-image: {{ section.settings.gift_image_size }}px;
+
+    --poh-trust-columns: {{ section.settings.trust_columns }};
+    --poh-trust-icon-size: {{ section.settings.trust_icon_size }}px;
+    --poh-trust-icon-size-mobile: {{ section.settings.trust_icon_size_mobile }}px;
+    --poh-trust-icon-color: {{ section.settings.trust_icon_color }};
+    --poh-trust-icon-border: {{ section.settings.trust_icon_border }};
+    --poh-trust-icon-radius: {{ section.settings.trust_icon_radius }}px;
+    --poh-trust-color: {{ section.settings.trust_text_color }};
+    --poh-trust-size: {{ section.settings.trust_text_size }}px;
+    --poh-trust-margin-top: {{ section.settings.trust_margin_top }}px;
+
+    --poh-faq-gap: {{ section.settings.faq_gap }}px;
+    --poh-faq-gap-mobile: {{ section.settings.faq_gap_mobile }}px;
+    --poh-faq-title-size: {{ section.settings.faq_title_size }}px;
+    --poh-faq-title-size-mobile: {{ section.settings.faq_title_size_mobile }}px;
+    --poh-faq-title-color: {{ section.settings.faq_title_color }};
+    --poh-faq-text-size: {{ section.settings.faq_text_size }}px;
+    --poh-faq-text-size-mobile: {{ section.settings.faq_text_size_mobile }}px;
+    --poh-faq-text-color: {{ section.settings.faq_text_color }};
+    --poh-faq-border: {{ section.settings.faq_border_color }};
+    --poh-faq-icon-color: {{ section.settings.faq_icon_color }};
+    --poh-faq-button-bg: {{ section.settings.faq_button_background }};
+    --poh-faq-button-color: {{ section.settings.faq_button_color }};
+    --poh-faq-margin-top: {{ section.settings.faq_margin_top }}px;
+
+    --poh-ba-ratio: {{ section.settings.ba_ratio }};
+    --poh-ba-height-mobile: {{ section.settings.ba_image_height_mobile }}px;
+    --poh-ba-radius: {{ section.settings.ba_radius }}px;
+    --poh-ba-gap: {{ section.settings.ba_gap }}px;
+    --poh-ba-label-size: {{ section.settings.ba_label_size }}px;
+    --poh-ba-label-size-mobile: {{ section.settings.ba_label_size_mobile }}px;
+    --poh-ba-label-color: {{ section.settings.ba_label_color }};
+    --poh-ba-label-align: {{ section.settings.ba_label_align }};
+    --poh-ba-label-align-mobile: {{ section.settings.ba_label_align_mobile }};
+    --poh-ba-arrow-bg: {{ section.settings.ba_arrow_background }};
+    --poh-ba-arrow-color: {{ section.settings.ba_arrow_color }};
+    --poh-ba-dot-color: {{ section.settings.ba_dot_color }};
+    --poh-ba-dot-active-color: {{ section.settings.ba_dot_active_color }};
+    --poh-ba-margin-top: {{ section.settings.ba_margin_top }}px;
+    --poh-ba-margin-bottom: {{ section.settings.ba_margin_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="poh poh--{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+  <div class="poh__container page-width">
+    <div class="poh__grid">
+      {%- comment -%} Gallery column {%- endcomment -%}
+      <div class="poh__media">
+        {%- if product.media.size > 0 -%}
+          <media-gallery
+            id="MediaGallery-{{ section.id }}"
+            class="poh-gallery"
+            role="region"
+            aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
+            data-desktop-layout="thumbnail"
+          >
+            <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
+            <slider-component
+              id="GalleryViewer-{{ section.id }}"
+              class="poh-gallery__viewer{% if section.settings.show_arrows_mobile %} poh-gallery__viewer--arrows-mobile{% endif %}{% if section.settings.show_arrows_desktop %} poh-gallery__viewer--arrows-desktop{% endif %}"
+            >
+              <ul id="Slider-Gallery-{{ section.id }}" class="poh-gallery__list slider slider--everywhere list-unstyled">
+                {%- for media in product.media -%}
+                  <li
+                    id="Slide-{{ section.id }}-{{ media.id }}"
+                    class="poh-gallery__item slider__slide{% if forloop.first %} is-active{% endif %}"
+                    data-media-id="{{ section.id }}-{{ media.id }}"
+                  >
+                    {%- liquid
+                      if forloop.first
+                        assign media_loading = first_image_loading
+                      else
+                        assign media_loading = 'lazy'
+                      endif
+                    -%}
+                    {{
+                      media.preview_image
+                      | image_url: width: 1500
+                      | image_tag:
+                        loading: media_loading,
+                        widths: '375, 550, 750, 1100, 1500',
+                        sizes: '(min-width: 1200px) 600px, (min-width: 750px) 50vw, 100vw',
+                        class: 'poh-gallery__image',
+                        alt: media.alt
+                    }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+              <button
+                type="button"
+                class="poh-gallery__arrow poh-gallery__arrow--prev"
+                name="previous"
+                aria-label="{{ 'general.slider.previous_slide' | t }}"
+                aria-controls="Slider-Gallery-{{ section.id }}"
+              >
+                {%- render 'product-offer-hero-icon', icon: 'caret_right' -%}
+              </button>
+              <button
+                type="button"
+                class="poh-gallery__arrow poh-gallery__arrow--next"
+                name="next"
+                aria-label="{{ 'general.slider.next_slide' | t }}"
+                aria-controls="Slider-Gallery-{{ section.id }}"
+              >
+                {%- render 'product-offer-hero-icon', icon: 'caret_right' -%}
+              </button>
+            </slider-component>
+
+            {%- if section.settings.show_thumbnails and product.media.size > 1 -%}
+              <slider-component id="GalleryThumbnails-{{ section.id }}" class="poh-gallery__thumbs">
+                <ul id="Slider-Thumbnails-{{ section.id }}" class="poh-gallery__thumbs-list slider list-unstyled">
+                  {%- for media in product.media -%}
+                    <li
+                      id="Slide-Thumbnails-{{ section.id }}-{{ forloop.index0 }}"
+                      class="poh-gallery__thumb slider__slide"
+                      data-target="{{ section.id }}-{{ media.id }}"
+                      data-media-position="{{ forloop.index }}"
+                    >
+                      <button
+                        type="button"
+                        class="poh-gallery__thumb-button"
+                        aria-label="{{ 'products.product.media.load_image' | t: index: forloop.index }}"
+                        aria-controls="GalleryViewer-{{ section.id }}"
+                        {% if forloop.first %}
+                          aria-current="true"
+                        {% endif %}
+                      >
+                        {{
+                          media.preview_image
+                          | image_url: width: 360
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '120, 240, 360',
+                            sizes: '(min-width: 990px) 120px, 20vw',
+                            class: 'poh-gallery__thumb-image',
+                            alt: ''
+                        }}
+                      </button>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </slider-component>
+            {%- endif -%}
+          </media-gallery>
+        {%- else -%}
+          <div class="poh-gallery__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'poh-gallery__image placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.gallery_button_label != blank -%}
+          <div class="poh-gallery-button poh-visibility--{{ section.settings.gallery_button_visibility }}">
+            <a
+              class="poh-gallery-button__link"
+              {% if section.settings.gallery_button_link != blank %}
+                href="{{ section.settings.gallery_button_link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+            >
+              {%- if section.settings.gallery_button_icon != 'none' -%}
+                {%- render 'product-offer-hero-icon', icon: section.settings.gallery_button_icon, class: 'poh-gallery-button__icon' -%}
+              {%- endif -%}
+              <span>{{ section.settings.gallery_button_label | escape }}</span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Info column {%- endcomment -%}
+      <div class="poh__info" id="ProductInfo-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign block_index = forloop.index0
+            assign visibility = block.settings.visibility | default: 'all'
+
+            assign group = block.type
+            if group == 'gift'
+              assign group = 'offer'
+            endif
+
+            assign prev_group = ''
+            unless forloop.first
+              assign prev_index = forloop.index0 | minus: 1
+              assign prev_group = section.blocks[prev_index].type
+              if prev_group == 'gift'
+                assign prev_group = 'offer'
+              endif
+            endunless
+
+            assign is_grouped = false
+            if grouped_types contains group
+              assign is_grouped = true
+            endif
+          -%}
+
+          {%- comment -%} Grouped blocks are rendered together by the first block of each run. {%- endcomment -%}
+          {%- if is_grouped and group == prev_group -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- case group -%}
+            {%- when 'rating' -%}
+              <div
+                class="poh-rating poh-visibility--{{ visibility }}"
+                style="--poh-star-color: {{ block.settings.star_color }}; --poh-star-size: {{ block.settings.star_size }}px; --poh-rating-color: {{ block.settings.text_color }}; --poh-rating-size: {{ block.settings.text_size }}px; --poh-rating-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <span
+                  class="poh-rating__stars"
+                  role="img"
+                  aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: block.settings.stars, rating_max: 5 }}"
+                >
+                  {%- for i in (1..block.settings.stars) -%}
+                    {%- render 'product-offer-hero-icon', icon: 'star', class: 'poh-rating__star' -%}
+                  {%- endfor -%}
+                </span>
+                {%- if block.settings.text != blank -%}
+                  <span class="poh-rating__text">{{ block.settings.text | escape }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'title' -%}
+              <{{ block.settings.heading_tag }}
+                class="poh-title poh-visibility--{{ visibility }}"
+                style="--poh-title-size: {{ block.settings.text_size }}px; --poh-title-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-title-color: {{ block.settings.text_color }}; --poh-title-weight: {{ block.settings.font_weight }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.title != blank -%}
+                  {{ block.settings.title }}
+                {%- else -%}
+                  {{ product.title | default: 'Product title' | escape }}
+                {%- endif -%}
+              </{{ block.settings.heading_tag }}>
+
+            {%- when 'text' -%}
+              <div
+                class="poh-text rte poh-visibility--{{ visibility }}"
+                style="--poh-text-size: {{ block.settings.text_size }}px; --poh-text-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-text-color: {{ block.settings.text_color }}; --poh-block-mt: {{ block.settings.spacing_top }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.text }}
+              </div>
+
+            {%- when 'heading' -%}
+              <h2
+                class="poh-heading poh-visibility--{{ visibility }}"
+                style="--poh-heading-size: {{ block.settings.text_size }}px; --poh-heading-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-heading-color: {{ block.settings.text_color }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.text | escape }}
+              </h2>
+
+            {%- when 'badge' -%}
+              <div class="poh-badges poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'badge' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <span
+                    class="poh-badge poh-visibility--{{ item.settings.visibility }}"
+                    style="--poh-badge-bg: {{ item.settings.background }}; --poh-badge-color: {{ item.settings.text_color }};"
+                    {{ item.shopify_attributes }}
+                  >
+                    {{- item.settings.text | escape -}}
+                  </span>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'highlight' -%}
+              <div class="poh-highlights poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'highlight' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <div class="poh-highlight poh-visibility--{{ item.settings.visibility }}" {{ item.shopify_attributes }}>
+                    <div class="poh-highlight__media">
+                      {%- if item.settings.image != blank -%}
+                        {{
+                          item.settings.image
+                          | image_url: width: 240
+                          | image_tag: loading: 'lazy', widths: '80, 160, 240', sizes: '80px', class: 'poh-highlight__image'
+                        }}
+                      {%- else -%}
+                        {{ 'image' | placeholder_svg_tag: 'poh-highlight__image placeholder-svg' }}
+                      {%- endif -%}
+                    </div>
+                    <p class="poh-highlight__text">{{ item.settings.text | escape }}</p>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'benefit' -%}
+              {%- liquid
+                assign run_count = 0
+                for item in section.blocks offset: block_index
+                  if item.type != 'benefit'
+                    break
+                  endif
+                  assign run_count = run_count | plus: 1
+                endfor
+                assign benefit_rows = run_count | plus: section.settings.benefit_columns | minus: 1 | divided_by: section.settings.benefit_columns | floor
+                assign benefit_rows_mobile = run_count | plus: section.settings.benefit_columns_mobile | minus: 1 | divided_by: section.settings.benefit_columns_mobile | floor
+              -%}
+              <ul
+                class="poh-benefits list-unstyled poh-visibility--{{ visibility }}"
+                style="--poh-benefit-rows: {{ benefit_rows }}; --poh-benefit-rows-mobile: {{ benefit_rows_mobile }};"
+              >
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'benefit' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <li class="poh-benefit poh-visibility--{{ item.settings.visibility }}" {{ item.shopify_attributes }}>
+                    <span class="poh-benefit__icon">
+                      {%- if item.settings.custom_icon != blank -%}
+                        {{
+                          item.settings.custom_icon
+                          | image_url: width: 64
+                          | image_tag: loading: 'lazy', class: 'poh-benefit__icon-image', alt: ''
+                        }}
+                      {%- elsif item.settings.icon != 'none' -%}
+                        {%- render 'product-offer-hero-icon', icon: item.settings.icon -%}
+                      {%- endif -%}
+                    </span>
+                    <span class="poh-benefit__text">{{ item.settings.text | escape }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'offer' -%}
+              <fieldset class="poh-offers">
+                <legend class="visually-hidden">{{ 'products.product.quantity.label' | t }}</legend>
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'offer' and item.type != 'gift' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  {%- if item.type == 'gift' -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  {%- liquid
+                    assign item_index = block_index | plus: forloop.index0
+                    assign qty = item.settings.quantity
+                    assign unit_price = variant.price | default: 0
+                    assign unit_compare = variant.compare_at_price | default: unit_price
+                    if unit_compare < unit_price
+                      assign unit_compare = unit_price
+                    endif
+                    assign base_total = unit_price | times: qty
+                    assign compare_total = unit_compare | times: qty
+
+                    case item.settings.discount_type
+                      when 'percentage'
+                        assign keep_percent = 100 | minus: item.settings.discount_value
+                        assign offer_total = base_total | times: keep_percent | divided_by: 100.0 | round
+                      when 'amount'
+                        assign discount_cents = item.settings.discount_value | times: 100 | round
+                        assign offer_total = base_total | minus: discount_cents | at_least: 0
+                      when 'fixed_price'
+                        assign offer_total = item.settings.discount_value | times: 100 | round
+                      else
+                        assign offer_total = base_total
+                    endcase
+
+                    assign saved_percent = 0
+                    if compare_total > 0 and compare_total > offer_total
+                      assign saved_percent = compare_total | minus: offer_total | times: 100.0 | divided_by: compare_total | round
+                    endif
+                    assign saved_label = saved_percent | append: '%'
+                    assign offer_subtitle = item.settings.subtitle | replace: '[descuento]', saved_label
+
+                    assign gift_offset = item_index | plus: 1
+                    assign has_gifts = false
+                    if section.blocks[gift_offset].type == 'gift'
+                      assign has_gifts = true
+                    endif
+                  -%}
+                  <label class="poh-offer" {{ item.shopify_attributes }}>
+                    <input
+                      class="poh-offer__input visually-hidden"
+                      type="radio"
+                      name="quantity"
+                      value="{{ qty }}"
+                      form="{{ product_form_id }}"
+                      {% if item.id == selected_offer_id %}
+                        checked
+                      {% endif %}
+                    >
+                    {%- if item.settings.tag != blank -%}
+                      <span class="poh-offer__tag">{{ item.settings.tag | escape }}</span>
+                    {%- endif -%}
+                    <span class="poh-offer__main">
+                      <span class="poh-offer__radio" aria-hidden="true"></span>
+                      <span class="poh-offer__info">
+                        <span class="poh-offer__title">{{ item.settings.title | escape }}</span>
+                        {%- if offer_subtitle != blank -%}
+                          <span class="poh-offer__subtitle">{{ offer_subtitle | escape }}</span>
+                        {%- endif -%}
+                      </span>
+                      <span class="poh-offer__prices">
+                        <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                        <span class="poh-offer__price">{{ offer_total | money }}</span>
+                        {%- if compare_total > offer_total -%}
+                          <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                          <s class="poh-offer__compare">{{ compare_total | money }}</s>
+                        {%- endif -%}
+                      </span>
+                    </span>
+
+                    {%- if has_gifts -%}
+                      <span class="poh-gifts">
+                        {%- for gift in section.blocks offset: gift_offset -%}
+                          {%- if gift.type != 'gift' -%}
+                            {%- break -%}
+                          {%- endif -%}
+                          <span class="poh-gift" {{ gift.shopify_attributes }}>
+                            <span class="poh-gift__media">
+                              {%- if gift.settings.image != blank -%}
+                                {{
+                                  gift.settings.image
+                                  | image_url: width: 160
+                                  | image_tag: loading: 'lazy', widths: '80, 160', sizes: '80px', class: 'poh-gift__image', alt: ''
+                                }}
+                              {%- else -%}
+                                {{ 'product-2' | placeholder_svg_tag: 'poh-gift__image placeholder-svg' }}
+                              {%- endif -%}
+                              {%- if gift.settings.badge != blank -%}
+                                <span class="poh-gift__badge">{{ gift.settings.badge | escape }}</span>
+                              {%- endif -%}
+                            </span>
+                            <span class="poh-gift__title">{{ gift.settings.title | escape }}</span>
+                            {%- if gift.settings.value != blank -%}
+                              <s class="poh-gift__value">{{ gift.settings.value | escape }}</s>
+                            {%- endif -%}
+                          </span>
+                        {%- endfor -%}
+                      </span>
+                    {%- endif -%}
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+
+            {%- when 'buy_buttons' -%}
+              {%- liquid
+                if block.settings.label != blank
+                  assign buy_label = block.settings.label | escape
+                else
+                  assign buy_label = 'products.product.add_to_cart' | t
+                endif
+              -%}
+              <div
+                class="poh-buy poh-visibility--{{ visibility }}"
+                style="--poh-buy-bg: {{ block.settings.background }}; --poh-buy-color: {{ block.settings.text_color }}; --poh-buy-disabled-bg: {{ block.settings.sold_out_background }}; --poh-buy-radius: {{ block.settings.radius }}px; --poh-buy-size: {{ block.settings.text_size }}px; --poh-buy-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-buy-py: {{ block.settings.padding_vertical }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if product != blank -%}
+                  <product-form class="poh-buy__form" data-section-id="{{ section.id }}">
+                    <div class="product-form__error-message-wrapper poh-buy__error" role="alert" hidden>
+                      <span class="svg-wrapper">
+                        {{- 'icon-error.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="product-form__error-message"></span>
+                    </div>
+                    {%- form 'product',
+                      product,
+                      id: product_form_id,
+                      class: 'poh-buy__product-form',
+                      novalidate: 'novalidate',
+                      data-type: 'add-to-cart-form'
+                    -%}
+                      <input
+                        type="hidden"
+                        name="id"
+                        value="{{ variant.id }}"
+                        class="product-variant-id"
+                        {% if variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      {%- if first_offer_id == '' -%}
+                        <input type="hidden" name="quantity" value="1">
+                      {%- endif -%}
+                      <button
+                        type="submit"
+                        name="add"
+                        class="poh-buy__button"
+                        {% if variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                        <span class="poh-buy__label">
+                          {%- if variant.available -%}
+                            {{ buy_label }}
+                          {%- elsif block.settings.sold_out_label != blank -%}
+                            {{ block.settings.sold_out_label | escape }}
+                          {%- else -%}
+                            {{ 'products.product.sold_out' | t }}
+                          {%- endif -%}
+                        </span>
+                        {%- render 'loading-spinner' -%}
+                      </button>
+                      {%- if block.settings.show_dynamic_checkout -%}
+                        {{ form | payment_button }}
+                      {%- endif -%}
+                    {%- endform -%}
+                  </product-form>
+                {%- else -%}
+                  <button type="button" class="poh-buy__button" disabled>
+                    <span class="poh-buy__label">{{ buy_label }}</span>
+                  </button>
+                {%- endif -%}
+              </div>
+
+            {%- when 'trust' -%}
+              <ul class="poh-trust list-unstyled poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'trust' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <li class="poh-trust__item poh-visibility--{{ item.settings.visibility }}" {{ item.shopify_attributes }}>
+                    <span class="poh-trust__icon">
+                      {%- if item.settings.custom_icon != blank -%}
+                        {{
+                          item.settings.custom_icon
+                          | image_url: width: 96
+                          | image_tag: loading: 'lazy', class: 'poh-trust__icon-image', alt: ''
+                        }}
+                      {%- elsif item.settings.icon != 'none' -%}
+                        {%- render 'product-offer-hero-icon', icon: item.settings.icon -%}
+                      {%- endif -%}
+                    </span>
+                    <div class="poh-trust__text">{{ item.settings.text }}</div>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'testimonial' -%}
+              <div
+                class="poh-testimonial poh-visibility--{{ visibility }}"
+                style="--poh-testimonial-bg: {{ block.settings.background }}; --poh-testimonial-border: {{ block.settings.border_color }}; --poh-testimonial-radius: {{ block.settings.radius }}px; --poh-testimonial-color: {{ block.settings.text_color }}; --poh-testimonial-author-color: {{ block.settings.author_color }}; --poh-testimonial-size: {{ block.settings.text_size }}px; --poh-testimonial-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-block-mt: {{ block.settings.spacing_top }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <div class="poh-testimonial__media">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 300
+                      | image_tag: loading: 'lazy', widths: '100, 200, 300', sizes: '100px', class: 'poh-testimonial__image'
+                    }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'poh-testimonial__image placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+                <div class="poh-testimonial__content">
+                  <blockquote class="poh-testimonial__quote">{{ block.settings.quote }}</blockquote>
+                  {%- if block.settings.author != blank -%}
+                    <p class="poh-testimonial__author">{{ block.settings.author | escape }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+
+            {%- when 'faq' -%}
+              <div class="poh-faq poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'faq' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <details
+                    class="poh-faq__item poh-visibility--{{ item.settings.visibility }}"
+                    {% if section.settings.faq_exclusive %}
+                      name="poh-faq-{{ section.id }}"
+                    {% endif %}
+                    {% if item.settings.open %}
+                      open
+                    {% endif %}
+                    {{ item.shopify_attributes }}
+                  >
+                    <summary class="poh-faq__summary">
+                      <span class="poh-faq__title">{{ item.settings.title | escape }}</span>
+                      {%- render 'product-offer-hero-icon', icon: 'plus', class: 'poh-faq__icon' -%}
+                    </summary>
+                    <div class="poh-faq__content">
+                      <div class="rte">{{ item.settings.content }}</div>
+                      {%- if item.settings.button_label != blank -%}
+                        <a
+                          class="poh-faq__button"
+                          {% if item.settings.button_link != blank %}
+                            href="{{ item.settings.button_link }}"
+                          {% else %}
+                            role="link" aria-disabled="true"
+                          {% endif %}
+                        >
+                          <span>{{ item.settings.button_label | escape }}</span>
+                          {%- render 'product-offer-hero-icon', icon: 'caret_right_bold', class: 'poh-faq__button-icon' -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </details>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'before_after' -%}
+              {%- liquid
+                assign ba_count = 0
+                for item in section.blocks offset: block_index
+                  if item.type != 'before_after'
+                    break
+                  endif
+                  assign ba_count = ba_count | plus: 1
+                endfor
+              -%}
+              <div class="poh-ba poh-visibility--{{ section.settings.ba_visibility }}">
+                <slideshow-component class="poh-ba__slideshow">
+                  <ul
+                    id="Slider-{{ section.id }}-ba"
+                    class="poh-ba__list slider slider--everywhere list-unstyled"
+                    data-autoplay="{{ section.settings.ba_autoplay }}"
+                    data-speed="{{ section.settings.ba_speed }}"
+                  >
+                    {%- for item in section.blocks offset: block_index -%}
+                      {%- if item.type != 'before_after' -%}
+                        {%- break -%}
+                      {%- endif -%}
+                      <li
+                        id="Slide-{{ section.id }}-ba-{{ forloop.index }}"
+                        class="poh-ba__slide slider__slide slideshow__slide"
+                        role="group"
+                        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ ba_count }}"
+                        {{ item.shopify_attributes }}
+                      >
+                        <figure class="poh-ba__figure">
+                          {%- if item.settings.image_before != blank -%}
+                            {{
+                              item.settings.image_before
+                              | image_url: width: 900
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '300, 450, 600, 900',
+                                sizes: '(min-width: 990px) 300px, 50vw',
+                                class: 'poh-ba__image'
+                            }}
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag: 'poh-ba__image placeholder-svg' }}
+                          {%- endif -%}
+                          {%- if item.settings.label_before != blank -%}
+                            <figcaption class="poh-ba__label">{{ item.settings.label_before | escape }}</figcaption>
+                          {%- endif -%}
+                        </figure>
+                        <figure class="poh-ba__figure">
+                          {%- if item.settings.image_after != blank -%}
+                            {{
+                              item.settings.image_after
+                              | image_url: width: 900
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '300, 450, 600, 900',
+                                sizes: '(min-width: 990px) 300px, 50vw',
+                                class: 'poh-ba__image'
+                            }}
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag: 'poh-ba__image placeholder-svg' }}
+                          {%- endif -%}
+                          {%- if item.settings.label_after != blank -%}
+                            <figcaption class="poh-ba__label">{{ item.settings.label_after | escape }}</figcaption>
+                          {%- endif -%}
+                        </figure>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  <div class="poh-ba__controls slider-buttons">
+                    <button
+                      type="button"
+                      class="poh-ba__arrow poh-ba__arrow--prev"
+                      name="previous"
+                      aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+                      aria-controls="Slider-{{ section.id }}-ba"
+                    >
+                      {%- render 'product-offer-hero-icon', icon: 'caret_right_bold' -%}
+                    </button>
+                    <div class="poh-ba__dots{% if section.settings.ba_show_dots %} poh-ba__dots--desktop{% endif %}{% if section.settings.ba_show_dots_mobile %} poh-ba__dots--mobile{% endif %}">
+                      {%- for i in (1..ba_count) -%}
+                        <button
+                          type="button"
+                          class="poh-ba__dot slider-counter__link{% if forloop.first %} slider-counter__link--active{% endif %}"
+                          aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                          aria-controls="Slider-{{ section.id }}-ba"
+                          {% if forloop.first %}
+                            aria-current="true"
+                          {% endif %}
+                        ></button>
+                      {%- endfor -%}
+                    </div>
+                    <button
+                      type="button"
+                      class="poh-ba__arrow poh-ba__arrow--next"
+                      name="next"
+                      aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+                      aria-controls="Slider-{{ section.id }}-ba"
+                    >
+                      {%- render 'product-offer-hero-icon', icon: 'caret_right_bold' -%}
+                    </button>
+                    {%- if section.settings.ba_autoplay -%}
+                      <button
+                        type="button"
+                        class="poh-ba__autoplay slideshow__autoplay"
+                        aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
+                      >
+                        <span class="svg-wrapper poh-ba__autoplay-pause">
+                          {{- 'icon-pause.svg' | inline_asset_content -}}
+                        </span>
+                        <span class="svg-wrapper poh-ba__autoplay-play">
+                          {{- 'icon-play.svg' | inline_asset_content -}}
+                        </span>
+                      </button>
+                    {%- endif -%}
+                  </div>
+                </slideshow-component>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Producto con ofertas",
+  "tag": "div",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto",
+      "info": "Si se deja vacío, en la plantilla de producto se usa el producto actual."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "gallery_width",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "label": "Ancho de la galería (escritorio)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Separación entre columnas",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_row_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación galería / información (móvil)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_gutter",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (móvil)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en títulos",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de títulos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "header",
+      "content": "Galería"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Proporción de imagen",
+      "options": [
+        { "value": "1 / 1", "label": "Cuadrada (1:1)" },
+        { "value": "4 / 5", "label": "Vertical (4:5)" },
+        { "value": "3 / 4", "label": "Vertical (3:4)" },
+        { "value": "4 / 3", "label": "Horizontal (4:3)" }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "select",
+      "id": "media_fit",
+      "label": "Ajuste de imagen",
+      "options": [
+        { "value": "cover", "label": "Recortar" },
+        { "value": "contain", "label": "Contener" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de imagen principal",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails",
+      "label": "Mostrar miniaturas",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "thumbnails_per_row",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "label": "Miniaturas visibles (escritorio)",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "thumbnails_per_row_mobile",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "label": "Miniaturas visibles (móvil)",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación de miniaturas",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de miniaturas",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_active_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Borde de miniatura activa",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "thumbnail_active_color",
+      "label": "Color de borde de miniatura activa",
+      "default": "#731122"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Mostrar flechas en móvil",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Mostrar flechas en escritorio",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Fondo de flechas",
+      "default": "#DCCCCE"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Color de flechas",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "arrow_icon_size",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de icono de flecha",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "arrow_icon_size_mobile",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de icono de flecha (móvil)",
+      "default": 11
+    },
+    {
+      "type": "header",
+      "content": "Botón bajo la galería"
+    },
+    {
+      "type": "text",
+      "id": "gallery_button_label",
+      "label": "Texto",
+      "default": "Ver Informaciones Nutricionales"
+    },
+    {
+      "type": "url",
+      "id": "gallery_button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "select",
+      "id": "gallery_button_icon",
+      "label": "Icono",
+      "options": [
+        { "value": "none", "label": "Ninguno" },
+        { "value": "article", "label": "Documento" },
+        { "value": "leaf", "label": "Hoja" },
+        { "value": "shield", "label": "Escudo" },
+        { "value": "sparkle", "label": "Destello" },
+        { "value": "star", "label": "Estrella" },
+        { "value": "check_circle", "label": "Check" }
+      ],
+      "default": "article"
+    },
+    {
+      "type": "select",
+      "id": "gallery_button_visibility",
+      "label": "Visibilidad",
+      "options": [
+        { "value": "all", "label": "Todos los dispositivos" },
+        { "value": "desktop", "label": "Solo escritorio" },
+        { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+        { "value": "mobile_tablet", "label": "Móvil y tablet" },
+        { "value": "mobile", "label": "Solo móvil" }
+      ],
+      "default": "desktop"
+    },
+    {
+      "type": "color",
+      "id": "gallery_button_background",
+      "label": "Fondo",
+      "default": "#FDF8ED"
+    },
+    {
+      "type": "color",
+      "id": "gallery_button_color",
+      "label": "Color de texto",
+      "default": "#731122"
+    },
+    {
+      "type": "range",
+      "id": "gallery_button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "gallery_button_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Insignias"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "badge_padding",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno horizontal",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "badge_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "badge_margin_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen superior",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Destacados con imagen"
+    },
+    {
+      "type": "range",
+      "id": "highlight_columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "highlight_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "highlight_image_size",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño de imagen",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "highlight_image_size_mobile",
+      "min": 20,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de imagen (móvil)",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "highlight_image_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "label": "Radio de imagen",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "highlight_text_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "highlight_text_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "highlight_text_color",
+      "label": "Color de texto",
+      "default": "#731122"
+    },
+    {
+      "type": "header",
+      "content": "Beneficios"
+    },
+    {
+      "type": "range",
+      "id": "benefit_columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "benefit_columns_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas (móvil)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "benefit_column_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre columnas",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "benefit_row_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre filas",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "benefit_icon_size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de icono",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "benefit_icon_size_mobile",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de icono (móvil)",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "benefit_icon_color",
+      "label": "Color de icono",
+      "default": "#7F1525"
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "benefit_text_color",
+      "label": "Color de texto",
+      "default": "#7F1525"
+    },
+    {
+      "type": "range",
+      "id": "benefit_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen inferior",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Ofertas por cantidad"
+    },
+    {
+      "type": "paragraph",
+      "content": "Las ofertas fijan la cantidad que se añade al carrito y muestran el precio calculado. El descuento real debe configurarse en Descuentos de Shopify."
+    },
+    {
+      "type": "range",
+      "id": "offer_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre ofertas",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "offer_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "offer_border_width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Grosor de borde",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "offer_border_color",
+      "label": "Borde seleccionado",
+      "default": "#7F1525"
+    },
+    {
+      "type": "color",
+      "id": "offer_border_color_inactive",
+      "label": "Borde no seleccionado",
+      "default": "#E4E4E4"
+    },
+    {
+      "type": "color",
+      "id": "offer_background",
+      "label": "Fondo seleccionado",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "offer_background_inactive",
+      "label": "Fondo no seleccionado",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "offer_title_color",
+      "label": "Color de título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "offer_title_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de título",
+      "default": 17
+    },
+    {
+      "type": "color",
+      "id": "offer_subtitle_color",
+      "label": "Color de subtítulo",
+      "default": "#7F1525"
+    },
+    {
+      "type": "range",
+      "id": "offer_subtitle_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de subtítulo",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "offer_price_color",
+      "label": "Color de precio",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "offer_price_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de precio",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "offer_compare_color",
+      "label": "Color de precio tachado",
+      "default": "#7F1525"
+    },
+    {
+      "type": "range",
+      "id": "offer_compare_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de precio tachado",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "offer_tag_background",
+      "label": "Fondo de etiqueta",
+      "default": "#7F1525"
+    },
+    {
+      "type": "color",
+      "id": "offer_tag_color",
+      "label": "Texto de etiqueta",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "offer_tag_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de etiqueta",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "gift_background",
+      "label": "Fondo de regalos",
+      "default": "#FFF5F9"
+    },
+    {
+      "type": "color",
+      "id": "gift_text_color",
+      "label": "Texto de regalos",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "gift_badge_background",
+      "label": "Fondo de insignia de regalo",
+      "default": "#81003E"
+    },
+    {
+      "type": "color",
+      "id": "gift_badge_color",
+      "label": "Texto de insignia de regalo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "gift_image_size",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de imagen de regalo",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "offer_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen inferior",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Garantías"
+    },
+    {
+      "type": "range",
+      "id": "trust_columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_size",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de icono",
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_size_mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de icono (móvil)",
+      "default": 23
+    },
+    {
+      "type": "color",
+      "id": "trust_icon_color",
+      "label": "Color de icono",
+      "default": "#7D1727"
+    },
+    {
+      "type": "color",
+      "id": "trust_icon_border",
+      "label": "Borde de icono",
+      "default": "#E7D9DA"
+    },
+    {
+      "type": "range",
+      "id": "trust_icon_radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de icono",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "trust_text_color",
+      "label": "Color de texto",
+      "default": "#731122"
+    },
+    {
+      "type": "range",
+      "id": "trust_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "trust_margin_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen superior",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Preguntas frecuentes"
+    },
+    {
+      "type": "checkbox",
+      "id": "faq_exclusive",
+      "label": "Abrir solo una pregunta a la vez",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "faq_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación título / contenido",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "faq_gap_mobile",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación título / contenido (móvil)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "faq_title_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de pregunta",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "faq_title_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de pregunta (móvil)",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "faq_title_color",
+      "label": "Color de pregunta",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "faq_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de respuesta",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "faq_text_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de respuesta (móvil)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "faq_text_color",
+      "label": "Color de respuesta",
+      "default": "#151515"
+    },
+    {
+      "type": "color",
+      "id": "faq_border_color",
+      "label": "Color de separador",
+      "default": "#E0E0E0"
+    },
+    {
+      "type": "color",
+      "id": "faq_icon_color",
+      "label": "Color de icono",
+      "default": "#4D4D4D"
+    },
+    {
+      "type": "color",
+      "id": "faq_button_background",
+      "label": "Fondo de botón",
+      "default": "#F8E4DE"
+    },
+    {
+      "type": "color",
+      "id": "faq_button_color",
+      "label": "Texto de botón",
+      "default": "#D2402E"
+    },
+    {
+      "type": "range",
+      "id": "faq_margin_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen superior",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Antes y después"
+    },
+    {
+      "type": "select",
+      "id": "ba_visibility",
+      "label": "Visibilidad",
+      "options": [
+        { "value": "all", "label": "Todos los dispositivos" },
+        { "value": "desktop", "label": "Solo escritorio" },
+        { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+        { "value": "mobile_tablet", "label": "Móvil y tablet" },
+        { "value": "mobile", "label": "Solo móvil" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "select",
+      "id": "ba_ratio",
+      "label": "Proporción de imagen",
+      "options": [
+        { "value": "1 / 1", "label": "Cuadrada (1:1)" },
+        { "value": "4 / 3", "label": "Horizontal (4:3)" },
+        { "value": "3 / 4", "label": "Vertical (3:4)" },
+        { "value": "4 / 5", "label": "Vertical (4:5)" }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "range",
+      "id": "ba_image_height_mobile",
+      "min": 100,
+      "max": 400,
+      "step": 5,
+      "unit": "px",
+      "label": "Alto de imagen (móvil)",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "ba_radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de imagen",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "ba_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre imágenes",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "ba_label_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de etiqueta",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "ba_label_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de etiqueta (móvil)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "ba_label_color",
+      "label": "Color de etiqueta",
+      "default": "#151515"
+    },
+    {
+      "type": "select",
+      "id": "ba_label_align",
+      "label": "Alineación de etiqueta",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "ba_label_align_mobile",
+      "label": "Alineación de etiqueta (móvil)",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "ba_arrow_background",
+      "label": "Fondo de flechas",
+      "default": "#F3F3F3"
+    },
+    {
+      "type": "color",
+      "id": "ba_arrow_color",
+      "label": "Color de flechas",
+      "default": "#731122"
+    },
+    {
+      "type": "checkbox",
+      "id": "ba_show_dots",
+      "label": "Mostrar puntos (escritorio)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "ba_show_dots_mobile",
+      "label": "Mostrar puntos (móvil)",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "ba_dot_color",
+      "label": "Color de puntos",
+      "default": "#E2E2E2"
+    },
+    {
+      "type": "color",
+      "id": "ba_dot_active_color",
+      "label": "Color de punto activo",
+      "default": "#121212"
+    },
+    {
+      "type": "checkbox",
+      "id": "ba_autoplay",
+      "label": "Reproducción automática",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "ba_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Cambiar diapositiva cada",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "ba_margin_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen superior",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "ba_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen inferior",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rating",
+      "name": "Valoración",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Estrellas",
+          "default": 5
+        },
+        {
+          "type": "color",
+          "id": "star_color",
+          "label": "Color de estrellas",
+          "default": "#93433D"
+        },
+        {
+          "type": "range",
+          "id": "star_size",
+          "min": 10,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de estrellas",
+          "default": 18
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "2.432 Evaluaciones"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#50020B"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto (móvil)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 8
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Título",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Título",
+          "info": "Si se deja vacío se muestra el nombre del producto."
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Etiqueta HTML",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "p", "label": "Párrafo" }
+          ],
+          "default": "h1"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 16,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 16,
+          "max": 60,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño (móvil)",
+          "default": 25
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Semi negrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#151515"
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Insignia",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "100% Vegana"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Fondo",
+          "default": "#FBA691"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "info": "La primera insignia de cada grupo define la visibilidad del grupo.",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>12 ingredientes + Triple Bloqueo DHT en 2 gominola al día. Frena tu caída hoy, pelo más grueso mañana.</p>"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño (móvil)",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "spacing_top",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "highlight",
+      "name": "Destacado con imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Detiene la Caída Desde la Raíz"
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "info": "El primer destacado de cada grupo define la visibilidad del grupo.",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "mobile_tablet"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Encabezado",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Beneficios"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 12,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño",
+          "default": 17
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 12,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño (móvil)",
+          "default": 16
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#7F1525"
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 6
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "none", "label": "Ninguno" },
+            { "value": "check_circle", "label": "Check" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "leaf", "label": "Hoja" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "sparkle", "label": "Destello" }
+          ],
+          "default": "check_circle"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Icono personalizado",
+          "info": "Reemplaza el icono seleccionado."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Frena la caída"
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "info": "El primer beneficio de cada grupo define la visibilidad del grupo.",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "offer",
+      "name": "Oferta por cantidad",
+      "settings": [
+        {
+          "type": "range",
+          "id": "quantity",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Cantidad",
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Compra 1"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo",
+          "info": "Usa [descuento] para mostrar el porcentaje de ahorro calculado."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Etiqueta"
+        },
+        {
+          "type": "select",
+          "id": "discount_type",
+          "label": "Tipo de descuento",
+          "options": [
+            { "value": "none", "label": "Sin descuento" },
+            { "value": "percentage", "label": "Porcentaje" },
+            { "value": "amount", "label": "Importe fijo de descuento" },
+            { "value": "fixed_price", "label": "Precio total fijo" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "number",
+          "id": "discount_value",
+          "label": "Valor del descuento",
+          "info": "Porcentaje, importe o precio total según el tipo elegido.",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "selected",
+          "label": "Seleccionada por defecto",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "gift",
+      "name": "Regalo de oferta",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Coloca este bloque justo después de una oferta para mostrarlo dentro de ella."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Regalo"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Insignia",
+          "default": "GRATIS"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Valor tachado",
+          "default": "€15,00"
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Botón de compra",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Añadir Al Carrito"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_label",
+          "label": "Texto agotado",
+          "default": "Agotado"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Mostrar botones de pago dinámicos",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Fondo",
+          "default": "#731122"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#F3F6F2"
+        },
+        {
+          "type": "color",
+          "id": "sold_out_background",
+          "label": "Fondo agotado",
+          "default": "#B7B7B7"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Radio",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 12,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 12,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto (móvil)",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "padding_vertical",
+          "min": 4,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "label": "Relleno vertical",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Garantía",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "none", "label": "Ninguno" },
+            { "value": "leaf", "label": "Hoja" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "sparkle", "label": "Destello" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "check_circle", "label": "Check" },
+            { "value": "article", "label": "Documento" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Icono personalizado",
+          "info": "Reemplaza el icono seleccionado."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Sin Azúcar</p><p>y 100% Natural</p>"
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "info": "La primera garantía de cada grupo define la visibilidad del grupo.",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Cita",
+          "default": "<p>“Para mis pacientes con caída y afinamiento, Gujoy es siempre mi primera recomendación”</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autor",
+          "default": "Dra Carmen Vidal | Tricóloga"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Fondo",
+          "default": "#FDF8ED"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Borde",
+          "default": "#731122"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Radio",
+          "default": 20
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de cita",
+          "default": "#4D4D4D"
+        },
+        {
+          "type": "color",
+          "id": "author_color",
+          "label": "Color de autor",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de cita",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de cita (móvil)",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "spacing_top",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "default": 16
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "mobile"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Pregunta frecuente",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pregunta",
+          "default": "¿Por qué funciona?"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Respuesta",
+          "default": "<p>Escribe aquí la respuesta.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del botón"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Enlace del botón"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Abierta por defecto",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "info": "La primera pregunta de cada grupo define la visibilidad del grupo.",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "before_after",
+      "name": "Antes y después",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_before",
+          "label": "Imagen antes"
+        },
+        {
+          "type": "text",
+          "id": "label_before",
+          "label": "Etiqueta antes",
+          "default": "ANTES (DÍA 0)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_after",
+          "label": "Imagen después"
+        },
+        {
+          "type": "text",
+          "id": "label_after",
+          "label": "Etiqueta después",
+          "default": "DESPUÉS (3 MESES)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto con ofertas",
+      "blocks": [
+        { "type": "rating" },
+        {
+          "type": "title",
+          "settings": {
+            "title": "Gujoy Fórmula Capilar Completa<strong>™</strong>"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": { "text": "100% Vegana", "background": "#FBA691" }
+        },
+        {
+          "type": "badge",
+          "settings": { "text": "Triple Bloqueo DHT", "background": "#F2756B" }
+        },
+        { "type": "text" },
+        {
+          "type": "highlight",
+          "settings": { "text": "Detiene la Caída Desde la Raíz" }
+        },
+        {
+          "type": "highlight",
+          "settings": { "text": "Pelo más grueso desde dentro" }
+        },
+        {
+          "type": "heading",
+          "settings": { "text": "Beneficios", "visibility": "desktop" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "text": "Frena la caída", "visibility": "desktop" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "text": "Menos entradas", "visibility": "desktop" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "text": "Raya más fina", "visibility": "desktop" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "text": "Menos cuero visible", "visibility": "desktop" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "text": "Coleta más gruesa", "visibility": "desktop" }
+        },
+        {
+          "type": "benefit",
+          "settings": { "text": "Pelo más fuerte", "visibility": "desktop" }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "quantity": 3,
+            "title": "Compra 2 Lleva 3",
+            "subtitle": "50% DTO + 4 Regalos",
+            "tag": "Mejor Oferta",
+            "discount_type": "amount",
+            "discount_value": 59.6,
+            "selected": true
+          }
+        },
+        {
+          "type": "gift",
+          "settings": { "title": "Comunidad Privada Gujoy", "value": "€50,00" }
+        },
+        {
+          "type": "gift",
+          "settings": { "title": "Guía: El Método Desde Dentro", "value": "€30,00" }
+        },
+        {
+          "type": "gift",
+          "settings": { "title": "Planner de Progreso 90 Días", "value": "€15,00" }
+        },
+        {
+          "type": "gift",
+          "settings": { "title": "Envío Gratis", "value": "€3,00" }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "quantity": 2,
+            "title": "Compra 1 Lleva 2",
+            "subtitle": "50% DTO",
+            "discount_type": "fixed_price",
+            "discount_value": 39.8
+          }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "quantity": 1,
+            "title": "Compra 1",
+            "subtitle": "30 días",
+            "discount_type": "none"
+          }
+        },
+        { "type": "buy_buttons" },
+        {
+          "type": "trust",
+          "settings": { "icon": "leaf", "text": "<p>Sin Azúcar</p><p>y 100% Natural</p>" }
+        },
+        {
+          "type": "trust",
+          "settings": { "icon": "shield", "text": "<p>90 días</p><p>de Garantía</p>" }
+        },
+        {
+          "type": "trust",
+          "settings": { "icon": "sparkle", "text": "<p>Orgullosamente Español</p>" }
+        },
+        { "type": "testimonial" },
+        {
+          "type": "faq",
+          "settings": {
+            "title": "¿Por qué Gujoy sí funciona?",
+            "content": "<p>Si ya has probado vitaminas y sigues viendo pelo en el cepillo, es normal que te preguntes qué cambia esta vez.</p><p>Gujoy combina dos pilares en una misma fórmula:</p><p><strong>Cuidado del factor hormonal</strong><br>Una hormona llamada DHT puede debilitar las raíces sensibles a ella. El Complejo DHT Shield™ reúne Palma Enana, Semilla de Calabaza y Beta-Sitosterol en una fórmula diseñada para abordar ese factor.</p><p><strong>Nutrición desde dentro</strong><br>Biotina, zinc y selenio contribuyen al mantenimiento del cabello en condiciones normales, junto con un conjunto de vitaminas que completa la fórmula.</p><p><strong>La diferencia está en combinar ambos enfoques, en lugar de quedarse solo en la biotina.</strong></p><p>Y tienes <strong>90 días de garantía de devolución</strong> para probar Gujoy.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "title": "¿Cuánto tardo en ver resultados?",
+            "content": "<p>Tu pelo tiene un <strong>ciclo natural</strong> de aproximadamente <strong>90 días</strong>. Por eso <strong>no vendemos un pack de 1 mes</strong>: no da tiempo a ver el cambio real, y preferimos que <strong>veas el resultado completo antes de decidir.</strong></p><p>Muchas notan <strong>menos caída ya en las primeras semanas</strong>. Pero un pelo <strong>más grueso</strong> de verdad llega dentro de ese ciclo de 90 días, por eso nuestra <strong>garantía</strong> también dura <strong>90 días</strong>.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "title": "¿Funciona con mi tipo de caída?",
+            "content": "<p>Sí. Gujoy actúa en las causas más comunes de la caída:</p><p>🔄 Cambios Hormonales<br>⏳ Edad &amp; Envejecimiento<br>🤱 Postparto<br>😰 Estrés &amp; Ansiedad<br>🚿 Agua Dura<br>🥗 Déficit Nutricional<br>🤷‍♀️ No estoy segura</p><p>Su Triple Bloqueo DHT frena la causa hormonal. Sus 12 vitaminas nutren tu raíz, sea cual sea el motivo.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "title": "¿Tiene efectos secundarios?",
+            "content": "<p>Gujoy está formulado con <strong>ingredientes 100% naturales y sin azúcar</strong> añadido, pensado para ser <strong>seguro</strong> en el uso diario. Si estás embarazada o tienes alguna condición médica, consulta con tu médico antes de empezar.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "title": "¿Qué lleva Gujoy dentro?",
+            "content": "<p>Gujoy lleva Triple Bloqueo DHT — Palma Enana, Semilla de Calabaza y Beta-sitosterol — más 12 vitaminas y minerales pensados para tu pelo.</p><p>Para ver todos los ingredientes y el beneficio de cada uno, haz clic abajo.</p>",
+            "button_label": "Conocer Ingredientes"
+          }
+        },
+        {
+          "type": "before_after",
+          "settings": { "label_before": "ANTES (DÍA 0)", "label_after": "DESPUÉS (3 MESES)" }
+        },
+        {
+          "type": "before_after",
+          "settings": { "label_before": "ANTES (DÍA 0)", "label_after": "DESPUÉS (2 MESES)" }
+        },
+        {
+          "type": "before_after",
+          "settings": { "label_before": "ANTES (DÍA 0)", "label_after": "DESPUÉS (5 MESES)" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
