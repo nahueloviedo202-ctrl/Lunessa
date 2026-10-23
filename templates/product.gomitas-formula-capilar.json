@@ -684,12 +684,826 @@
         "card_padding_y_mobile": 10,
         "card_padding_x_mobile": 24
       }
+    },
+    "ingredients_tabs_zaWgjM": {
+      "type": "ingredients-tabs",
+      "blocks": {
+        "tab_eDThX4": {
+          "type": "tab",
+          "settings": {
+            "label": "Todos",
+            "selected": true,
+            "columns": 6,
+            "columns_mobile": 6,
+            "column_gap": 16,
+            "row_gap": 16,
+            "min_width": 145,
+            "min_width_tablet": 190,
+            "min_width_mobile": 295
+          }
+        },
+        "ingredient_Ee9t3Y": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/SawPalmetto2.webp",
+            "name": "Palma Enana",
+            "description": "Ayuda a frenar la caída desde la raíz",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_mgtGN8": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Betasitosterol.webp",
+            "name": "Beta-sitosterol",
+            "description": "Refuerza el extracto y frena la caída",
+            "tag": "SINERGIA"
+          }
+        },
+        "ingredient_Xmgkqf": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaC.webp",
+            "name": "Vitamina C",
+            "description": "Antioxidante que protege la fibra capilar",
+            "tag": "ANTIOXIDANTE"
+          }
+        },
+        "ingredient_TG9EQ4": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Selenio.webp",
+            "name": "Selenio",
+            "description": "Protege las células frente al daño externo",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_qwLYcb": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaB5.webp",
+            "name": "Vitamina B5",
+            "description": "Hidrata el cuero cabelludo desde dentro",
+            "tag": "HIDRATACIÓN"
+          }
+        },
+        "ingredient_W9z9h3": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaB6.webp",
+            "name": "Vitamina B6",
+            "description": "Apoya la producción natural de queratina",
+            "tag": "QUERATINA"
+          }
+        },
+        "ingredient_CKnmHy": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/SemillaCalabaza.webp",
+            "name": "Semilla de Calabaza",
+            "description": "Cuida el folículo para un pelo más fuerte",
+            "tag": "FORTALECE"
+          }
+        },
+        "ingredient_DBjG4j": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Biotina2.webp",
+            "name": "Biotina",
+            "description": "Apoya el crecimiento natural del pelo",
+            "tag": "CRECIMIENTO"
+          }
+        },
+        "ingredient_hbkPFN": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Zinc.webp",
+            "name": "Zinc",
+            "description": "Ayuda a reparar y fortalecer el folículo.",
+            "tag": "REPARACIÓN"
+          }
+        },
+        "ingredient_w4GM8G": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaA.webp",
+            "name": "Vitamina A",
+            "description": "Ayuda a renovar el cuero cabelludo",
+            "tag": "RENOVACIÓN"
+          }
+        },
+        "ingredient_iqKyP7": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaE.webp",
+            "name": "Vitamina E",
+            "description": "Antioxidante que cuida el cuero cabelludo",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_Xz3eYD": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaB12.webp",
+            "name": "Vitamina B12",
+            "description": "Ayuda a oxigenar el folículo capilar",
+            "tag": "OXIGENACIÓN"
+          }
+        },
+        "tab_CWGGbJ": {
+          "type": "tab",
+          "settings": {
+            "label": "DHT-Shield™",
+            "selected": false,
+            "columns": 3,
+            "columns_mobile": 3,
+            "column_gap": 20,
+            "row_gap": 16,
+            "min_width": 100,
+            "min_width_tablet": 100,
+            "min_width_mobile": 140
+          }
+        },
+        "ingredient_yfiTQB": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/SawPalmetto2.webp",
+            "name": "Palma Enana",
+            "description": "Ayuda a frenar la caída desde la raíz",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_Wz4R7B": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/SemillaCalabaza.webp",
+            "name": "Semilla de Calabaza",
+            "description": "Cuida el folículo para un pelo más fuerte",
+            "tag": "FORTALECE"
+          }
+        },
+        "ingredient_XjQdAj": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Betasitosterol.webp",
+            "name": "Beta-sitosterol",
+            "description": "Refuerza el extracto y frena la caída",
+            "tag": "SINERGIA"
+          }
+        },
+        "tab_Xgxzmq": {
+          "type": "tab",
+          "settings": {
+            "label": "Activos",
+            "selected": false,
+            "columns": 5,
+            "columns_mobile": 5,
+            "column_gap": 20,
+            "row_gap": 20,
+            "min_width": 120,
+            "min_width_tablet": 160,
+            "min_width_mobile": 245
+          }
+        },
+        "ingredient_NeXqUd": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaA.webp",
+            "name": "Vitamina A",
+            "description": "Ayuda a renovar el cuero cabelludo",
+            "tag": "RENOVACIÓN"
+          }
+        },
+        "ingredient_wpq3kB": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaC.webp",
+            "name": "Vitamina C",
+            "description": "Antioxidante que protege la fibra capilar",
+            "tag": "ANTIOXIDANTE"
+          }
+        },
+        "ingredient_heqYme": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaB6.webp",
+            "name": "Vitamina B6",
+            "description": "Apoya la producción natural de queratina",
+            "tag": "QUERATINA"
+          }
+        },
+        "ingredient_BwXpUc": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaB12.webp",
+            "name": "Vitamina B12",
+            "description": "Ayuda a oxigenar el folículo capilar",
+            "tag": "OXIGENACIÓN"
+          }
+        },
+        "ingredient_cz7FMz": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaB5.webp",
+            "name": "Vitamina B5",
+            "description": "Hidrata el cuero cabelludo desde dentro",
+            "tag": "HIDRATACIÓN"
+          }
+        },
+        "ingredient_XhN77y": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Biotina2.webp",
+            "name": "Biotina",
+            "description": "Apoya el crecimiento natural del pelo",
+            "tag": "CRECIMIENTO"
+          }
+        },
+        "ingredient_7GiT8G": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/VitaminaE.webp",
+            "name": "Vitamina E",
+            "description": "Antioxidante que cuida el cuero cabelludo",
+            "tag": "PROTECCIÓN"
+          }
+        },
+        "ingredient_ndiTDU": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Zinc.webp",
+            "name": "Zinc",
+            "description": "Ayuda a reparar y fortalecer el folículo",
+            "tag": "REPARACIÓN"
+          }
+        },
+        "ingredient_VeaiA4": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/Selenio.webp",
+            "name": "Selenio",
+            "description": "Protege las células frente al daño externo",
+            "tag": "PROTECCIÓN"
+          }
+        }
+      },
+      "block_order": [
+        "tab_eDThX4",
+        "ingredient_Ee9t3Y",
+        "ingredient_mgtGN8",
+        "ingredient_Xmgkqf",
+        "ingredient_TG9EQ4",
+        "ingredient_qwLYcb",
+        "ingredient_W9z9h3",
+        "ingredient_CKnmHy",
+        "ingredient_DBjG4j",
+        "ingredient_hbkPFN",
+        "ingredient_w4GM8G",
+        "ingredient_iqKyP7",
+        "ingredient_Xz3eYD",
+        "tab_CWGGbJ",
+        "ingredient_yfiTQB",
+        "ingredient_Wz4R7B",
+        "ingredient_XjQdAj",
+        "tab_Xgxzmq",
+        "ingredient_NeXqUd",
+        "ingredient_wpq3kB",
+        "ingredient_heqYme",
+        "ingredient_BwXpUc",
+        "ingredient_cz7FMz",
+        "ingredient_XhN77y",
+        "ingredient_7GiT8G",
+        "ingredient_ndiTDU",
+        "ingredient_VeaiA4"
+      ],
+      "name": "Ingredientes con pestañas",
+      "settings": {
+        "heading": "12 ingredientes estudiados y encontrados en la naturaleza",
+        "heading_size": 38,
+        "heading_size_mobile": 28,
+        "heading_weight": "500",
+        "heading_color": "#000000",
+        "background": "#FFFFFF",
+        "button_label": "Ver Informaciones Nutricionales",
+        "button_link": "",
+        "button_icon": "article",
+        "button_background": "#FDF8ED",
+        "button_color": "#731122",
+        "button_radius": 15,
+        "button_size": 14,
+        "button_size_mobile": 15,
+        "tabs_margin_top": 20,
+        "tabs_margin_top_mobile": 15,
+        "tab_gap": 7,
+        "tab_padding_horizontal": 32,
+        "tab_padding_vertical": 4,
+        "tab_radius": 30,
+        "tab_size": 16,
+        "tab_size_mobile": 14,
+        "tab_color": "#731122",
+        "tab_border_color": "#731122",
+        "tab_background": "#FFFFFF",
+        "tab_active_color": "#FFFFFF",
+        "tab_active_background": "#731122",
+        "panel_margin_top": 20,
+        "scrollbar_thumb": "#888888",
+        "scrollbar_track": "#F1F1F1",
+        "image_height": 100,
+        "image_height_mobile": 100,
+        "image_radius": 8,
+        "name_size": 18,
+        "name_size_mobile": 18,
+        "name_color": "#2C2C2C",
+        "divider_color": "#CBCBCB",
+        "divider_width": 1.5,
+        "divider_width_mobile": 1,
+        "description_size": 14,
+        "description_size_mobile": 14,
+        "description_color": "#848484",
+        "tag_color": "#731122",
+        "tag_border_color": "#731122",
+        "tag_background": "#FFFFFF",
+        "tag_radius": 10,
+        "tag_size": 12,
+        "tag_size_mobile": 14,
+        "padding_top": 16,
+        "padding_bottom": 32,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 22,
+        "padding_horizontal_mobile": 12,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4"
+      }
+    },
+    "testimonials_carousel_8rAnhc": {
+      "type": "testimonials-carousel",
+      "blocks": {
+        "testimonial_L4fDp7": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao5.webp",
+            "rating": 5,
+            "title": "Mi raya ya no se nota tanto",
+            "text": "\"Después de 3 meses, he notado una gran mejora. Ya no se me nota tanto la raya. Gracias por devolverme algo que pensaba que no iba a recuperar\"",
+            "author": "Carmen Montoya",
+            "verified": true
+          }
+        },
+        "testimonial_DdAtd8": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao2.webp",
+            "rating": 5,
+            "title": "Menos caída de pelo",
+            "text": "\"Notaba muchísimo pelo en la almohada, la verdad, y la raya cada vez más ancha. Con Lunessa eso ha cambiado, se me cae mucho menos y ya casi ni se ve\"",
+            "author": "Marta González",
+            "verified": true
+          }
+        },
+        "testimonial_cfNwcH": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao7.webp",
+            "rating": 5,
+            "title": "Repoblar las entradas",
+            "text": "\"La caída ya me tenía agobiada, pelo hasta en el coche. Con Lunessa se nota bastante menos y las entradas se han rellenado un poco\"",
+            "author": "Sofía Peña",
+            "verified": true
+          }
+        },
+        "testimonial_7LGmqV": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao1.webp",
+            "rating": 5,
+            "title": "Mejora en la coronilla",
+            "text": "\"Noté una mejora bastante grande, sobre todo en la parte de arriba de la cabeza. Muy fácil de meter en la rutina y las gomitas están buenísimas la verdad\"",
+            "author": "Cristina Navarro",
+            "verified": true
+          }
+        },
+        "testimonial_64TGNT": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao6.webp",
+            "rating": 5,
+            "title": "La entrada ya no me acompleja",
+            "text": "\"Se me marcaba la entrada y me acomplejaba con el pelo mojado. Con Lunessa la noto mucho más poblada, ya no me da tanto reparo llevarlo recogido\"",
+            "author": "Patricia D.",
+            "verified": true
+          }
+        },
+        "testimonial_BWTwAc": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao3.webp",
+            "rating": 5,
+            "title": "Lo revertí con dos gomitas al día",
+            "text": "\"Durante mucho tiempo la caída me preocupó bastante, la verdad. Con solo dos gomitas al día lo conseguí revertir, y el proceso ha sido buenísimo\"",
+            "author": "Elena Martínez",
+            "verified": true
+          }
+        },
+        "testimonial_VqBMFJ": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/Transformacao4.webp",
+            "rating": 5,
+            "title": "Lunessa ha cambiado mi melena",
+            "text": "\"Tenía el pelo fino y débil, lo notaba al peinarme y verlo en el suelo del baño. Desde que tomo estas gomitas, eso se acabó\"",
+            "author": "Lucía Fernández",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_L4fDp7",
+        "testimonial_DdAtd8",
+        "testimonial_cfNwcH",
+        "testimonial_7LGmqV",
+        "testimonial_64TGNT",
+        "testimonial_BWTwAc",
+        "testimonial_VqBMFJ"
+      ],
+      "name": "Testimonios en carrusel",
+      "settings": {
+        "badge": "Testimoniales Reales",
+        "badge_background": "#F7CACA",
+        "badge_color": "#6B0011",
+        "badge_border_color": "#E4893A",
+        "badge_size": 16,
+        "badge_size_mobile": 14,
+        "subtitle": "2.500+ Evaluaciones • 50.000+ Mujeres",
+        "subtitle_color": "#FFFFFF",
+        "subtitle_size": 16,
+        "subtitle_size_mobile": 14,
+        "heading": "no te lo contamos nosotros. te lo cuentan ellas",
+        "heading_color": "#F7CACA",
+        "heading_size": 38,
+        "heading_size_mobile": 28,
+        "heading_transform": "capitalize",
+        "cards_desktop": 3.5,
+        "cards_tablet": 1.5,
+        "cards_mobile": 1.2,
+        "card_gap": 16,
+        "loop": true,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "show_arrows": true,
+        "arrow_background": "#FCF8ED",
+        "arrow_color": "#4D4D4D",
+        "show_fade": true,
+        "fade_color": "#802026",
+        "card_background": "#FDF8ED",
+        "card_border_color": "#F7CACA",
+        "card_radius": 8,
+        "card_radius_mobile": 12,
+        "image_ratio": "4 / 3",
+        "image_radius": 8,
+        "star_color": "#F89F38",
+        "star_size": 16,
+        "title_color": "#201712",
+        "title_size": 17,
+        "title_size_mobile": 16,
+        "text_color": "#5D5045",
+        "text_size": 14,
+        "text_size_tablet": 16,
+        "text_size_mobile": 14,
+        "divider_color": "#CAC7C0",
+        "verified_label": "Verificada",
+        "verified_color": "#3E7A3A",
+        "background": "linear-gradient(20deg, rgba(80, 1, 11, 1), rgba(152, 30, 43, 1) 100%)",
+        "background_mobile": "linear-gradient(183deg, rgba(80, 1, 11, 1), rgba(247, 202, 202, 1) 82%)",
+        "padding_top": 48,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 48,
+        "padding_horizontal_mobile": 20,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4"
+      }
+    },
+    "guarantee_banner_7mC3gD": {
+      "type": "guarantee-banner",
+      "name": "Banner de garantía",
+      "settings": {
+        "background_color": "#FDF8ED",
+        "card_color": "#731122",
+        "card_color_mobile": "#731122",
+        "card_max_width": 1200,
+        "card_radius": 8,
+        "content_columns": 6,
+        "column_gap": 16,
+        "show_shadow_mobile": true,
+        "shadow_color": "#EEB4B6",
+        "shadow_opacity": 30,
+        "shadow_distance": 4,
+        "shadow_blur": 4,
+        "badge_width": 20,
+        "badge_width_tablet": 80,
+        "badge_width_mobile": 100,
+        "badge_radius": 50,
+        "badge_alignment": "end",
+        "badge_alignment_mobile": "center",
+        "heading": "garantía de <em>90 días</em>",
+        "heading_color": "#FFFFFF",
+        "heading_accent_color": "#EEB4B6",
+        "heading_text_transform": "capitalize",
+        "heading_size": 38,
+        "heading_size_tablet": 16,
+        "heading_size_mobile": 28,
+        "heading_line_height": 130,
+        "heading_line_height_tablet": 180,
+        "heading_line_height_mobile": 130,
+        "heading_letter_spacing": -1,
+        "heading_letter_spacing_mobile": -0.3,
+        "heading_margin_top_mobile": 12,
+        "text": "Toma tus gominolas todos los días durante 90 días. Si no sientes que tu caída está frenando, te compramos el bote de vuelta y te devolvemos el 100% de tu dinero. Así de simple — el riesgo es nuestro, no tuyo.",
+        "text_color": "#FFFFFF",
+        "text_font_weight": "500",
+        "text_size": 16,
+        "text_size_tablet": 16,
+        "text_size_mobile": 14,
+        "text_line_height": 150,
+        "text_letter_spacing": -0.3,
+        "text_margin_top": 5,
+        "text_margin_bottom_tablet": 16,
+        "text_margin_bottom_mobile": 12,
+        "text_alignment": "left",
+        "text_alignment_mobile": "center",
+        "button_label": "Empezar 90 Días",
+        "button_link": "",
+        "button_anchor": "",
+        "button_new_tab": false,
+        "button_background_color": "#FFFFFF",
+        "button_text_color": "#731122",
+        "button_hover_background_color": "#EEB4B6",
+        "button_hover_text_color": "#FFFFFF",
+        "button_font_weight": "500",
+        "button_size": 18,
+        "button_size_tablet": 16,
+        "button_size_mobile": 16,
+        "button_line_height": 150,
+        "button_line_height_mobile": 180,
+        "button_letter_spacing": -0.3,
+        "button_padding_y": 12,
+        "button_padding_x": 50,
+        "button_radius": 100,
+        "button_margin_top": 12,
+        "button_margin_top_mobile": 10,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_x": 16,
+        "padding_top_mobile": 15,
+        "padding_bottom_mobile": 15,
+        "padding_x_mobile": 20,
+        "card_padding_y": 35,
+        "card_padding_x": 35,
+        "card_padding_top_mobile": 30,
+        "card_padding_bottom_mobile": 35,
+        "card_padding_x_mobile": 24
+      }
+    },
+    "comparison_tabs_f9jiyW": {
+      "type": "comparison-tabs",
+      "blocks": {
+        "tab_T4KxB4": {
+          "type": "tab",
+          "settings": {
+            "label": "Fórmula"
+          }
+        },
+        "comparison_header_Dwfhi4": {
+          "type": "comparison_header",
+          "settings": {
+            "label_heading": "",
+            "ours_label": "Gujoy",
+            "others_label": "Otras\nMarcas"
+          }
+        },
+        "comparison_row_LzmLhb": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Triple Bloqueo DHT Shield™",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_eBqPbQ": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Vegano &\nSin Gluten",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_BpiEVf": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Avalada por dermatólogas",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_RdyfQd": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Fabricada en laboratorio cGMP",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_PXtEqw": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Sin colorantes ni conservantes artificiales",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "comparison_row_dhYNjr": {
+          "type": "comparison_row",
+          "settings": {
+            "label": "Garantía de 90 días",
+            "ours_icon": "check_circle_fill",
+            "ours_text": "",
+            "others_icon": "x",
+            "others_text": ""
+          }
+        },
+        "tab_9km7tz": {
+          "type": "tab",
+          "settings": {
+            "label": "Calidad & Seguridad"
+          }
+        },
+        "heading_TKPwNL": {
+          "type": "heading",
+          "settings": {
+            "heading": "Fabricada con los estándares más altos del mundo",
+            "heading_tag": "h3",
+            "color": "#000000",
+            "font_weight": "700",
+            "alignment": "left",
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 18,
+            "line_height": 180,
+            "line_height_tablet": 180,
+            "line_height_mobile": 140,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        },
+        "text_PkMkVx": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>Cada gominola de Gujoy pasa por controles de calidad estrictos antes de llegar a tus manos. Nuestro laboratorio cuenta con certificación GMP verificada por Intertek, registro FDA y certificaciones ISO 9001 y HACCP los mismos estándares exigidos a los medicamentos. Porque lo que entra en tu cuerpo merece garantías reales, no promesas vacías.</em></p>",
+            "color": "#4D4D4D",
+            "italic": false,
+            "alignment": "left",
+            "font_size": 16,
+            "font_size_tablet": 16,
+            "font_size_mobile": 14,
+            "line_height": 180,
+            "line_height_tablet": 180,
+            "line_height_mobile": 180,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 7
+          }
+        }
+      },
+      "block_order": [
+        "tab_T4KxB4",
+        "comparison_header_Dwfhi4",
+        "comparison_row_LzmLhb",
+        "comparison_row_eBqPbQ",
+        "comparison_row_BpiEVf",
+        "comparison_row_RdyfQd",
+        "comparison_row_PXtEqw",
+        "comparison_row_dhYNjr",
+        "tab_9km7tz",
+        "heading_TKPwNL",
+        "text_PkMkVx"
+      ],
+      "name": "Comparativa con pestañas",
+      "settings": {
+        "title": "Por qué elegir Gujoy?",
+        "title_tag": "h2",
+        "title_color": "#151515",
+        "title_alignment": "center",
+        "title_size": 38,
+        "title_size_tablet": 16,
+        "title_size_mobile": 26,
+        "title_line_height": 100,
+        "title_line_height_tablet": 180,
+        "title_line_height_mobile": 130,
+        "title_letter_spacing": 0,
+        "title_margin_top_mobile": 10,
+        "title_padding_x_mobile": 25,
+        "tabs_alignment": "center",
+        "tabs_gap": 8,
+        "tabs_margin_top": 15,
+        "tabs_margin_top_mobile": 12,
+        "tab_padding_y": 8,
+        "tab_padding_x": 16,
+        "tab_radius": 12,
+        "tab_background": "",
+        "tab_color": "#4D4D4D",
+        "tab_active_background": "#FCDCDC",
+        "tab_active_color": "#7A1F1F",
+        "tab_weight": "600",
+        "tab_size": 16,
+        "tab_size_tablet": 16,
+        "tab_size_mobile": 14,
+        "tab_line_height": 180,
+        "tab_line_height_mobile": 150,
+        "panel_padding": 16,
+        "table_width": 770,
+        "label_columns": 4,
+        "label_columns_mobile": 6,
+        "table_margin_top": 10,
+        "table_margin_bottom": 16,
+        "table_margin_bottom_mobile": 14,
+        "border_color": "#666666",
+        "border_width": 1,
+        "ours_background": "#7F1426",
+        "ours_background_mobile": "#731122",
+        "ours_radius": 10,
+        "ours_icon_color": "#FFFFFF",
+        "others_icon_color": "#000000",
+        "icon_size": 26,
+        "icon_size_tablet": 26,
+        "icon_size_mobile": 22,
+        "cell_padding_y": 24,
+        "cell_padding_y_mobile": 21,
+        "label_padding_x": 24,
+        "label_padding_left_mobile": 0,
+        "label_padding_right_mobile": 10,
+        "label_color": "#000000",
+        "label_size": 16,
+        "label_size_tablet": 16,
+        "label_size_mobile": 15,
+        "label_line_height": 130,
+        "label_letter_spacing_mobile": -0.4,
+        "header_color": "#242424",
+        "header_weight": "600",
+        "header_size": 16,
+        "header_size_tablet": 16,
+        "header_size_mobile": 14,
+        "header_line_height": 130,
+        "header_padding_top": 26,
+        "header_padding_bottom": 26,
+        "header_padding_top_mobile": 21,
+        "header_padding_bottom_mobile": 15,
+        "logo_width": 93,
+        "logo_height_mobile": 35,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "background_color": "#FDF8ED",
+        "background_color_mobile": "#F9F9F9",
+        "max_width": 1200,
+        "inner_padding": 16,
+        "inner_padding_mobile": 16,
+        "inner_padding_bottom_mobile": 0,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     }
   },
   "order": [
     "main",
     "disclosures",
     "related-products",
-    "product_callouts_qmQnjw"
+    "product_callouts_qmQnjw",
+    "ingredients_tabs_zaWgjM",
+    "testimonials_carousel_8rAnhc",
+    "guarantee_banner_7mC3gD",
+    "comparison_tabs_f9jiyW"
   ]
 }
