@@ -1479,10 +1479,73 @@
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
       }
+    },
+    "marquee_bar_gpUcqY": {
+      "type": "marquee-bar",
+      "blocks": {
+        "item_AQdbmf": {
+          "type": "item",
+          "settings": {
+            "text": "ENVÍO GRATIS"
+          }
+        },
+        "item_tDTk4e": {
+          "type": "item",
+          "settings": {
+            "text": "GARANTÍA 90 DÍAS"
+          }
+        },
+        "item_4NxCKn": {
+          "type": "item",
+          "settings": {
+            "text": "CLINICAMENTE ESTUDIADO"
+          }
+        },
+        "item_ytV7Dh": {
+          "type": "item",
+          "settings": {
+            "text": "SIN AZÚCAR"
+          }
+        }
+      },
+      "block_order": [
+        "item_AQdbmf",
+        "item_tDTk4e",
+        "item_4NxCKn",
+        "item_ytV7Dh"
+      ],
+      "name": "Marquesina",
+      "settings": {
+        "duration": 20,
+        "duration_mobile": 15,
+        "direction": "left",
+        "pause_on_hover": true,
+        "repeat_count": 3,
+        "background": "#7F1525",
+        "text_color": "#FEEBEB",
+        "text_size": 12,
+        "text_size_tablet": 16,
+        "text_size_mobile": 14,
+        "font_weight": "600",
+        "letter_spacing": 2,
+        "letter_spacing_mobile": 1,
+        "text_transform": "none",
+        "item_gap": 60,
+        "item_gap_mobile": 60,
+        "padding_vertical": 7,
+        "padding_vertical_mobile": 5,
+        "item_padding_vertical": 8,
+        "show_separator": false,
+        "separator_color": "#FEEBEB",
+        "separator_size": 16,
+        "font_custom": false,
+        "font": "assistant_n4"
+      }
     }
   },
   "order": [
     "hero_split_banner_QHjKfa",
+    "marquee_bar_gpUcqY",
     "image_panel_banner_8Er6k9",
     "image_checklist_9X9r6M",
     "ingredients_tabs_e8BwbD",

@@ -11,30 +11,6 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "announcement-bar-0"
-      ],
-      "settings": {
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false
-      }
-    },
     "header": {
       "type": "header",
       "settings": {
@@ -52,10 +28,73 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "offer_bar_AgXdNM": {
+      "type": "offer-bar",
+      "blocks": {
+        "text_MGUa4J": {
+          "type": "text",
+          "settings": {
+            "text": "OFERTA DE OCTUBRE",
+            "color": "#FFFFFF",
+            "font_weight": "700",
+            "text_transform": "none",
+            "letter_spacing": 0,
+            "font_size": 15,
+            "font_size_tablet": 16,
+            "font_size_mobile": 15,
+            "line_height": 100,
+            "line_height_tablet": 180,
+            "line_height_mobile": 100,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        },
+        "text_jzgPjE": {
+          "type": "text",
+          "settings": {
+            "text": "4 Regalos Gratis + 90 Días de Garantia",
+            "color": "#FFFFFF",
+            "font_weight": "400",
+            "text_transform": "none",
+            "letter_spacing": 0,
+            "font_size": 12,
+            "font_size_tablet": 16,
+            "font_size_mobile": 12,
+            "line_height": 100,
+            "line_height_tablet": 180,
+            "line_height_mobile": 100,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_MGUa4J",
+        "text_jzgPjE"
+      ],
+      "name": "Barra de oferta",
+      "settings": {
+        "background_gradient": "linear-gradient(102deg, rgba(108, 0, 17, 1), rgba(227, 91, 19, 1) 100%)",
+        "background_color": "#6C0011",
+        "link": "",
+        "text_alignment": "center",
+        "max_width": 550,
+        "font_source": "custom",
+        "body_font": "inter_n4",
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_x": 0,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "padding_x_mobile": 0
+      }
     }
   },
   "order": [
-    "announcement-bar",
+    "offer_bar_AgXdNM",
     "header"
   ]
 }
