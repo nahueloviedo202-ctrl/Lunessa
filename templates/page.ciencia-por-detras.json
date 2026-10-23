@@ -24,8 +24,8 @@
           "type": "eyebrow",
           "settings": {
             "text": "Cómo Funciona Realmente",
-            "text_color": "#B12141",
-            "background": "#FBE0E4",
+            "text_color": "#b12141",
+            "background": "#fbe0e4",
             "text_size": 12.5,
             "margin_top": 0
           }
@@ -35,7 +35,7 @@
           "settings": {
             "heading": "No Es Genética. Es Esto Lo Que Ataca Tu Raíz.",
             "heading_tag": "h1",
-            "text_color": "#6B1626",
+            "text_color": "#6b1626",
             "text_size": 32,
             "text_size_mobile": 24,
             "font_weight": "700",
@@ -48,7 +48,7 @@
           "type": "text",
           "settings": {
             "text": "<p>Casi todas las gomitas del mercado atacan el síntoma. Lunessa va directo a la causa — y así es exactamente cómo lo hace.</p>",
-            "text_color": "#5C3540",
+            "text_color": "#5c3540",
             "text_size": 16,
             "text_size_mobile": 16,
             "line_height": 155,
@@ -75,8 +75,8 @@
       ],
       "name": "Hero centrado",
       "settings": {
-        "background": "#FEF5F1",
-        "text_color": "#3A1E26",
+        "background": "#fef5f1",
+        "text_color": "#3a1e26",
         "alignment": "center",
         "max_width": 1200,
         "padding_top": 60,
@@ -131,12 +131,12 @@
       "name": "Bloque oscuro: mecanismo",
       "settings": {
         "background_gradient": "linear-gradient(180deg, rgba(107, 22, 38, 1), rgba(74, 15, 28, 1) 100%)",
-        "background_color": "#6B1626",
+        "background_color": "#6b1626",
         "max_width": 1440,
         "header_alignment": "center",
         "eyebrow": "El Mecanismo",
-        "eyebrow_color": "#FFFFFF",
-        "eyebrow_background_color": "#FFFFFF",
+        "eyebrow_color": "#ffffff",
+        "eyebrow_background_color": "#ffffff",
         "eyebrow_background_opacity": 15,
         "eyebrow_size": 12.5,
         "eyebrow_letter_spacing": 1,
@@ -146,12 +146,12 @@
         "eyebrow_radius": 100,
         "eyebrow_margin_bottom": 16,
         "heading": "Así Ataca el DHT Tu Raíz",
-        "heading_color": "#FBE0E4",
+        "heading_color": "#fbe0e4",
         "heading_size": 25,
         "heading_size_mobile": 25,
         "heading_line_height": 130,
         "subtitle": "",
-        "subtitle_color": "#F2C9D1",
+        "subtitle_color": "#f2c9d1",
         "subtitle_size": 16,
         "subtitle_size_mobile": 15,
         "subtitle_line_height": 180,
@@ -161,29 +161,29 @@
         "content_margin_top": 40,
         "show_diagram": true,
         "enable_animation": true,
-        "diagram_hair_color": "#FBE0E4",
-        "diagram_dht_color": "#E08A3E",
+        "diagram_hair_color": "#fbe0e4",
+        "diagram_dht_color": "#e08a3e",
         "diagram_max_width": 600,
         "mechanism_gap": 40,
         "steps_heading": "El ciclo real, paso a paso",
-        "steps_heading_color": "#FBE0E4",
+        "steps_heading_color": "#fbe0e4",
         "steps_heading_size": 22,
         "steps_heading_margin_bottom": 14,
         "steps_margin_top": 20,
-        "step_text_color": "#F2C9D1",
+        "step_text_color": "#f2c9d1",
         "step_text_size": 14.5,
         "step_line_height": 155,
         "step_spacing": 16,
         "step_gap": 12,
         "number_size": 26,
         "number_font_size": 12,
-        "number_color": "#FFFFFF",
-        "number_background_color": "#FFFFFF",
+        "number_color": "#ffffff",
+        "number_background_color": "#ffffff",
         "number_background_opacity": 12,
         "number_border_opacity": 30,
         "cards_columns": 3,
         "cards_gap": 20,
-        "card_background_color": "#FFFFFF",
+        "card_background_color": "#ffffff",
         "card_background_opacity": 6,
         "card_border_opacity": 15,
         "card_radius": 18,
@@ -191,12 +191,12 @@
         "card_padding_x": 22,
         "card_alignment": "left",
         "card_icon_size": 44,
-        "card_icon_color": "#FBE0E4",
+        "card_icon_color": "#fbe0e4",
         "card_icon_margin_bottom": 14,
-        "card_title_color": "#FFFFFF",
+        "card_title_color": "#ffffff",
         "card_title_size": 17,
         "card_title_margin_bottom": 8,
-        "card_text_color": "#F2C9D1",
+        "card_text_color": "#f2c9d1",
         "card_text_size": 13.5,
         "card_text_line_height": 155,
         "heading_font_source": "custom",
@@ -243,25 +243,25 @@
         "heading": "La Diferencia Está en la Dosis",
         "subtitle": "<p>La mayoría de gominolas del mercado usan la dosis mínima posible para ahorrar costes. Así de simple.</p>",
         "note": "<p>Dosis por porción, según información pública de fórmulas comparables en el mercado. No representa una marca específica.</p>",
-        "heading_color": "#6B1626",
+        "heading_color": "#6b1626",
         "heading_size": 25,
         "heading_size_mobile": 21,
-        "subtitle_color": "#5C3540",
+        "subtitle_color": "#5c3540",
         "subtitle_size": 14.5,
         "subtitle_max_width": 560,
         "subtitle_margin_bottom": 40,
-        "label_color": "#6B1626",
-        "value_color": "#8A5560",
+        "label_color": "#6b1626",
+        "value_color": "#8a5560",
         "label_size": 13.5,
         "bar_height": 14,
         "bar_gap": 26,
-        "track_color": "#F3D9DD",
-        "fill_start": "#B12141",
-        "fill_end": "#6B1626",
-        "fill_muted": "#D8A3AC",
-        "note_color": "#A97E88",
+        "track_color": "#f3d9dd",
+        "fill_start": "#b12141",
+        "fill_end": "#6b1626",
+        "fill_muted": "#d8a3ac",
+        "note_color": "#a97e88",
         "note_size": 12,
-        "background": "#FEF5F1",
+        "background": "#fef5f1",
         "max_width": 900,
         "padding_top": 64,
         "padding_bottom": 64,
@@ -310,12 +310,12 @@
       "name": "Bloque oscuro: tarjetas",
       "settings": {
         "background_gradient": "linear-gradient(180deg, rgba(107, 22, 38, 1), rgba(74, 15, 28, 1) 100%)",
-        "background_color": "#6B1626",
+        "background_color": "#6b1626",
         "max_width": 1100,
         "header_alignment": "center",
         "eyebrow": "La Fórmula",
-        "eyebrow_color": "#FFFFFF",
-        "eyebrow_background_color": "#FFFFFF",
+        "eyebrow_color": "#ffffff",
+        "eyebrow_background_color": "#ffffff",
         "eyebrow_background_opacity": 15,
         "eyebrow_size": 12.5,
         "eyebrow_letter_spacing": 1,
@@ -325,12 +325,12 @@
         "eyebrow_radius": 100,
         "eyebrow_margin_bottom": 16,
         "heading": "Triple Bloqueo DHT",
-        "heading_color": "#FBE0E4",
+        "heading_color": "#fbe0e4",
         "heading_size": 25,
         "heading_size_mobile": 25,
         "heading_line_height": 130,
         "subtitle": "Tres ingredientes trabajando a la vez, no uno solo intentándolo todo.",
-        "subtitle_color": "#F2C9D1",
+        "subtitle_color": "#f2c9d1",
         "subtitle_size": 16,
         "subtitle_size_mobile": 15,
         "subtitle_line_height": 180,
@@ -340,29 +340,29 @@
         "content_margin_top": 40,
         "show_diagram": true,
         "enable_animation": true,
-        "diagram_hair_color": "#FBE0E4",
-        "diagram_dht_color": "#E08A3E",
+        "diagram_hair_color": "#fbe0e4",
+        "diagram_dht_color": "#e08a3e",
         "diagram_max_width": 380,
         "mechanism_gap": 40,
         "steps_heading": "El ciclo real, paso a paso",
-        "steps_heading_color": "#FBE0E4",
+        "steps_heading_color": "#fbe0e4",
         "steps_heading_size": 22,
         "steps_heading_margin_bottom": 14,
         "steps_margin_top": 20,
-        "step_text_color": "#F2C9D1",
+        "step_text_color": "#f2c9d1",
         "step_text_size": 14.5,
         "step_line_height": 155,
         "step_spacing": 16,
         "step_gap": 12,
         "number_size": 26,
         "number_font_size": 12,
-        "number_color": "#FFFFFF",
-        "number_background_color": "#FFFFFF",
+        "number_color": "#ffffff",
+        "number_background_color": "#ffffff",
         "number_background_opacity": 12,
         "number_border_opacity": 30,
         "cards_columns": 3,
         "cards_gap": 20,
-        "card_background_color": "#FFFFFF",
+        "card_background_color": "#ffffff",
         "card_background_opacity": 6,
         "card_border_opacity": 15,
         "card_radius": 18,
@@ -370,12 +370,12 @@
         "card_padding_x": 22,
         "card_alignment": "left",
         "card_icon_size": 44,
-        "card_icon_color": "#FBE0E4",
+        "card_icon_color": "#fbe0e4",
         "card_icon_margin_bottom": 14,
-        "card_title_color": "#FFFFFF",
+        "card_title_color": "#ffffff",
         "card_title_size": 17,
         "card_title_margin_bottom": 8,
-        "card_text_color": "#F2C9D1",
+        "card_text_color": "#f2c9d1",
         "card_text_size": 13.5,
         "card_text_line_height": 155,
         "heading_font_source": "custom",
@@ -390,6 +390,261 @@
         "padding_bottom_mobile": 64,
         "padding_x_mobile": 20
       }
+    },
+    "cycle_timeline_biqPch": {
+      "type": "cycle-timeline",
+      "blocks": {
+        "step_gjJfRt": {
+          "type": "step",
+          "settings": {
+            "label": "1",
+            "title": "Primeras Semanas",
+            "text": "El Triple Bloqueo DHT empieza a frenar la caída desde la raíz."
+          }
+        },
+        "step_rNbWjw": {
+          "type": "step",
+          "settings": {
+            "label": "30",
+            "title": "Día 30",
+            "text": "Tu cuero cabelludo recibe cada día los 12 nutrientes que necesita."
+          }
+        },
+        "step_yiND87": {
+          "type": "step",
+          "settings": {
+            "label": "60",
+            "title": "Día 60",
+            "text": "Empiezas a notar tu pelo más fuerte al tacto."
+          }
+        },
+        "step_Hfxric": {
+          "type": "step",
+          "settings": {
+            "label": "90",
+            "title": "Día 90",
+            "text": "Tu pelo se ve visiblemente más grueso — el cambio completo."
+          }
+        }
+      },
+      "block_order": [
+        "step_gjJfRt",
+        "step_rNbWjw",
+        "step_yiND87",
+        "step_Hfxric"
+      ],
+      "name": "Línea de tiempo",
+      "settings": {
+        "background_color": "#FEF5F1",
+        "max_width": 1000,
+        "track_max_width": 820,
+        "heading": "Tu Ciclo Capilar, Explicado",
+        "heading_color": "#6B1626",
+        "heading_size": 25,
+        "heading_size_mobile": 21,
+        "heading_line_height": 130,
+        "heading_alignment": "center",
+        "heading_margin_bottom": 44,
+        "show_line": true,
+        "line_color": "#F3D9DD",
+        "line_thickness": 3,
+        "dot_size": 36,
+        "dot_background_color": "#6B1626",
+        "dot_text_color": "#FFFFFF",
+        "dot_font_size": 12,
+        "dot_margin_bottom": 12,
+        "step_alignment": "center",
+        "step_padding_x": 6,
+        "step_width_mobile": 45,
+        "row_gap_mobile": 26,
+        "title_color": "#6B1626",
+        "title_size": 13.5,
+        "title_line_height": 130,
+        "title_margin_bottom": 6,
+        "text_color": "#4A2530",
+        "text_size": 12.5,
+        "text_line_height": 150,
+        "letter_spacing": 0.6,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_x": 20
+      }
+    },
+    "comparison_table_TFphHc": {
+      "type": "comparison-table",
+      "blocks": {
+        "row_mj996Y": {
+          "type": "row",
+          "settings": {
+            "label": "Triple Bloqueo DHT",
+            "ours": "check",
+            "ours_text": "",
+            "others": "cross",
+            "others_text": ""
+          }
+        },
+        "row_3AqyNE": {
+          "type": "row",
+          "settings": {
+            "label": "Dosis real, no mínima",
+            "ours": "check",
+            "ours_text": "",
+            "others": "cross",
+            "others_text": ""
+          }
+        },
+        "row_zP7F6V": {
+          "type": "row",
+          "settings": {
+            "label": "0 Azúcar, Vegana, Sin Gluten",
+            "ours": "check",
+            "ours_text": "",
+            "others": "cross",
+            "others_text": ""
+          }
+        },
+        "row_YT3kxw": {
+          "type": "row",
+          "settings": {
+            "label": "Avalada por tricóloga real",
+            "ours": "check",
+            "ours_text": "",
+            "others": "cross",
+            "others_text": ""
+          }
+        },
+        "row_phmYNF": {
+          "type": "row",
+          "settings": {
+            "label": "Fabricada en laboratorio GMP",
+            "ours": "check",
+            "ours_text": "",
+            "others": "check",
+            "others_text": ""
+          }
+        },
+        "row_4wBdcw": {
+          "type": "row",
+          "settings": {
+            "label": "Garantía de 90 días",
+            "ours": "check",
+            "ours_text": "",
+            "others": "cross",
+            "others_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_mj996Y",
+        "row_3AqyNE",
+        "row_zP7F6V",
+        "row_YT3kxw",
+        "row_phmYNF",
+        "row_4wBdcw"
+      ],
+      "name": "Tabla comparativa",
+      "settings": {
+        "heading": "Lunessa vs. El Resto",
+        "label_heading": "",
+        "ours_label": "Lunessa",
+        "others_label": "Otras Marcas",
+        "yes_label": "Sí",
+        "no_label": "No",
+        "heading_color": "#6B1626",
+        "heading_size": 25,
+        "heading_size_mobile": 21,
+        "heading_margin_bottom": 40,
+        "table_background": "#FFFFFF",
+        "table_radius": 16,
+        "shadow_color": "#6B1626",
+        "shadow_opacity": 8,
+        "border_color": "#F3DBE0",
+        "cell_padding_vertical": 14,
+        "cell_padding_horizontal": 16,
+        "header_padding_vertical": 20,
+        "header_size": 15,
+        "text_size": 13.5,
+        "label_color": "#3A1E26",
+        "text_color": "#3A1E26",
+        "ours_header_background": "#6B1626",
+        "ours_header_color": "#FFFFFF",
+        "ours_background": "#FBE4E7",
+        "others_header_color": "#8A5560",
+        "check_color": "#2E8B57",
+        "cross_color": "#B23B3B",
+        "icon_size": 17,
+        "background": "#FEF5F1",
+        "max_width": 900,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_horizontal": 20,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4"
+      }
+    },
+    "centered_hero_FUB4dk": {
+      "type": "centered-hero",
+      "blocks": {
+        "heading_mYUiYT": {
+          "type": "heading",
+          "settings": {
+            "heading": "¿Lista Para Frenar Tu Caída?",
+            "heading_tag": "h2",
+            "text_color": "#6B1626",
+            "text_size": 25,
+            "text_size_mobile": 25,
+            "font_weight": "700",
+            "line_height": 128,
+            "max_width": 780,
+            "margin_top": 0
+          }
+        },
+        "button_3xD8mi": {
+          "type": "button",
+          "settings": {
+            "label": "Ver Producto",
+            "link": "shopify://products/lunessa-formula-capilar-completa",
+            "background": "#6B1626",
+            "text_color": "#FFFFFF",
+            "text_size": 15,
+            "font_weight": "700",
+            "padding_vertical": 16,
+            "padding_horizontal": 36,
+            "radius": 100,
+            "full_width_mobile": false,
+            "margin_top": 18
+          }
+        }
+      },
+      "block_order": [
+        "heading_mYUiYT",
+        "button_3xD8mi"
+      ],
+      "name": "Llamada a la acción centrada",
+      "settings": {
+        "background": "#FEF5F1",
+        "text_color": "#3A1E26",
+        "alignment": "center",
+        "max_width": 1200,
+        "padding_top": 60,
+        "padding_bottom": 74,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 74,
+        "padding_horizontal": 20,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4"
+      }
     }
   },
   "order": [
@@ -397,6 +652,9 @@
     "centered_hero_6kyCkC",
     "dark_feature_3Jiwdf",
     "dose_comparison_47hHmf",
-    "dark_feature_wCqaby"
+    "dark_feature_wCqaby",
+    "cycle_timeline_biqPch",
+    "comparison_table_TFphHc",
+    "centered_hero_FUB4dk"
   ]
 }
