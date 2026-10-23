@@ -77,7 +77,7 @@
             "padding_horizontal": 40,
             "padding_vertical_mobile": 12,
             "padding_horizontal_mobile": 26,
-            "full_width_mobile": false,
+            "full_width_mobile": true,
             "spacing_top": 20,
             "spacing_top_mobile": 20,
             "visibility": "all"
