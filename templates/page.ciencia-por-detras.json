@@ -163,7 +163,7 @@
         "enable_animation": true,
         "diagram_hair_color": "#FBE0E4",
         "diagram_dht_color": "#E08A3E",
-        "diagram_max_width": 380,
+        "diagram_max_width": 600,
         "mechanism_gap": 40,
         "steps_heading": "El ciclo real, paso a paso",
         "steps_heading_color": "#FBE0E4",
