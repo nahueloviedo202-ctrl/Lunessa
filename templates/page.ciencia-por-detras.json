@@ -132,7 +132,7 @@
       "settings": {
         "background_gradient": "linear-gradient(180deg, rgba(107, 22, 38, 1), rgba(74, 15, 28, 1) 100%)",
         "background_color": "#6B1626",
-        "max_width": 1100,
+        "max_width": 1440,
         "header_alignment": "center",
         "eyebrow": "El Mecanismo",
         "eyebrow_color": "#FFFFFF",
