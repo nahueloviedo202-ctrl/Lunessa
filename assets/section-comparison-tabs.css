@@ -86,6 +86,11 @@
   text-align: center;
 }
 
+/* Keep empty cells in the grid: Dawn's base.css hides div:empty */
+.comparison-tabs__cell:empty {
+  display: flex;
+}
+
 .comparison-tabs__cell--label {
   align-items: stretch;
   padding: 0 var(--ctb-label-pr-mobile) 0 var(--ctb-label-pl-mobile);
