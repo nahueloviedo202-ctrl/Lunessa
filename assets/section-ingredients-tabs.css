@@ -104,6 +104,15 @@
   scrollbar-color: var(--ing-scrollbar-thumb) var(--ing-scrollbar-track);
 }
 
+.ing__panel.is-draggable {
+  cursor: grab;
+}
+
+.ing__panel.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
 .ing__radio:checked + .ing__panel {
   display: block;
 }
@@ -141,22 +150,18 @@
 }
 
 .ing-card__media {
-  display: flex;
-  justify-content: center;
   width: 100%;
 }
 
 .ing-card__image {
   display: block;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   height: var(--ing-image-height-mobile);
-  object-fit: contain;
+  object-fit: cover;
   border-radius: var(--ing-image-radius);
 }
 
 .ing-card__image--placeholder {
-  width: var(--ing-image-height-mobile);
   background-color: rgba(var(--color-foreground), 0.04);
 }
 
@@ -235,10 +240,6 @@
 
   .ing-card__image {
     height: var(--ing-image-height);
-  }
-
-  .ing-card__image--placeholder {
-    width: var(--ing-image-height);
   }
 
   .ing .ing-card__name {
