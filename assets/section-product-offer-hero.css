@@ -204,6 +204,12 @@
   text-decoration: none;
 }
 
+button.poh-gallery-button__link {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .poh-gallery-button__icon {
   flex-shrink: 0;
   width: 1.4em;

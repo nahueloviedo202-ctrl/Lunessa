@@ -58,6 +58,12 @@
   text-decoration: none;
 }
 
+button.ing__button {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .ing__button-icon {
   flex-shrink: 0;
   width: 1.1em;

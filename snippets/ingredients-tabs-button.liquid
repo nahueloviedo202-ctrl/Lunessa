@@ -4,21 +4,34 @@
   @param {string} label - Button text.
   @param {string} [link] - Button URL. Renders a disabled link when blank.
   @param {string} [icon] - Icon name from `product-offer-hero-icon`, or `none`.
+  @param {string} [modal_id] - Id of an image-modal to open on click. Takes precedence over link.
 
   @example
   {% render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: 'article' %}
 {%- enddoc -%}
 
-<a
-  class="ing__button"
-  {% if link != blank %}
-    href="{{ link }}"
-  {% else %}
-    role="link" aria-disabled="true"
-  {% endif %}
->
+{%- capture button_content -%}
   {%- if icon != blank and icon != 'none' -%}
     {%- render 'product-offer-hero-icon', icon: icon, class: 'ing__button-icon' -%}
   {%- endif -%}
   <span>{{ label | escape }}</span>
-</a>
+{%- endcapture -%}
+
+{%- if modal_id != blank -%}
+  <modal-opener data-modal="#{{ modal_id }}">
+    <button type="button" class="ing__button" aria-haspopup="dialog">
+      {{ button_content }}
+    </button>
+  </modal-opener>
+{%- else -%}
+  <a
+    class="ing__button"
+    {% if link != blank %}
+      href="{{ link }}"
+    {% else %}
+      role="link" aria-disabled="true"
+    {% endif %}
+  >
+    {{ button_content }}
+  </a>
+{%- endif -%}

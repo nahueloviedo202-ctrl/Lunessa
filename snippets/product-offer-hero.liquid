@@ -294,20 +294,41 @@
         {%- endif -%}
 
         {%- if section.settings.gallery_button_label != blank -%}
+          {%- capture gallery_button_content -%}
+            {%- if section.settings.gallery_button_icon != 'none' -%}
+              {%- render 'product-offer-hero-icon', icon: section.settings.gallery_button_icon, class: 'poh-gallery-button__icon' -%}
+            {%- endif -%}
+            <span>{{ section.settings.gallery_button_label | escape }}</span>
+          {%- endcapture -%}
           <div class="poh-gallery-button poh-visibility--{{ section.settings.gallery_button_visibility }}">
-            <a
-              class="poh-gallery-button__link"
-              {% if section.settings.gallery_button_link != blank %}
-                href="{{ section.settings.gallery_button_link }}"
-              {% else %}
-                role="link" aria-disabled="true"
-              {% endif %}
-            >
-              {%- if section.settings.gallery_button_icon != 'none' -%}
-                {%- render 'product-offer-hero-icon', icon: section.settings.gallery_button_icon, class: 'poh-gallery-button__icon' -%}
-              {%- endif -%}
-              <span>{{ section.settings.gallery_button_label | escape }}</span>
-            </a>
+            {%- if section.settings.gallery_button_image != blank -%}
+              <modal-opener data-modal="#GalleryButtonModal-{{ section.id }}">
+                <button
+                  type="button"
+                  class="poh-gallery-button__link"
+                  aria-haspopup="dialog"
+                >
+                  {{ gallery_button_content }}
+                </button>
+              </modal-opener>
+              {%- assign gallery_modal_id = 'GalleryButtonModal-' | append: section.id -%}
+              {%- render 'image-modal',
+                id: gallery_modal_id,
+                image: section.settings.gallery_button_image,
+                label: section.settings.gallery_button_label
+              -%}
+            {%- else -%}
+              <a
+                class="poh-gallery-button__link"
+                {% if section.settings.gallery_button_link != blank %}
+                  href="{{ section.settings.gallery_button_link }}"
+                {% else %}
+                  role="link" aria-disabled="true"
+                {% endif %}
+              >
+                {{ gallery_button_content }}
+              </a>
+            {%- endif -%}
           </div>
         {%- endif -%}
       </div>

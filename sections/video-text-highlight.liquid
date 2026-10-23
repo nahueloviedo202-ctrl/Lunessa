@@ -145,8 +145,22 @@
       </div>
     {%- endif -%}
 
-    <div class="video-text-highlight__media">
-      {%- if section.settings.video != blank -%}
+    <div class="video-text-highlight__media{% if section.settings.media_type == 'image' %} video-text-highlight__media--image{% endif %}">
+      {%- if section.settings.media_type == 'image' -%}
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1500
+            | image_tag:
+              loading: 'lazy',
+              widths: '375, 550, 750, 1100, 1500',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              class: 'video-text-highlight__image'
+          }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg video-text-highlight__image' }}
+        {%- endif -%}
+      {%- elsif section.settings.video != blank -%}
         {{
           section.settings.video
           | video_tag:
@@ -493,7 +507,23 @@
     },
     {
       "type": "header",
-      "content": "Video"
+      "content": "Video o imagen"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Tipo de contenido",
+      "options": [
+        { "value": "video", "label": "Video" },
+        { "value": "image", "label": "Imagen" }
+      ],
+      "default": "video"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen",
+      "info": "Se usa cuando el tipo de contenido es Imagen."
     },
     {
       "type": "video",

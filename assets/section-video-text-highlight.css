@@ -65,7 +65,12 @@
   overflow: hidden;
 }
 
-.video-text-highlight__video {
+.video-text-highlight__media--image {
+  background: none;
+}
+
+.video-text-highlight__video,
+.video-text-highlight__image {
   display: block;
   width: 100%;
   height: auto;

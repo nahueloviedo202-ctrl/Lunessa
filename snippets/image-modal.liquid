@@ -1,0 +1,43 @@
+{%- doc -%}
+  Renders an image inside Dawn's modal-dialog. Open it with
+  <modal-opener data-modal="#{id}"><button type="button">…</button></modal-opener>.
+
+  @param {string} id - Unique id of the modal (used by modal-opener).
+  @param {image} image - Image to show.
+  @param {string} [label] - Accessible name of the dialog.
+
+  @example
+  {% render 'image-modal', id: 'NutritionModal-1', image: section.settings.button_image, label: 'Info' %}
+{%- enddoc -%}
+
+{{ 'component-image-modal.css' | asset_url | stylesheet_tag }}
+
+<modal-dialog id="{{ id }}" class="image-modal">
+  <div
+    class="image-modal__dialog"
+    role="dialog"
+    aria-label="{{ label | escape }}"
+    aria-modal="true"
+    tabindex="-1"
+  >
+    <button
+      id="ModalClose-{{ id }}"
+      type="button"
+      class="image-modal__close"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      <span class="svg-wrapper">
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </span>
+    </button>
+    {{
+      image
+      | image_url: width: 1600
+      | image_tag:
+        loading: 'lazy',
+        widths: '600, 900, 1200, 1600',
+        sizes: '(min-width: 750px) 700px, 100vw',
+        class: 'image-modal__image'
+    }}
+  </div>
+</modal-dialog>

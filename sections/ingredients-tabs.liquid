@@ -4,6 +4,11 @@
 {%- liquid
   assign radio_prefix = 'Ingredients-' | append: section.id | append: '-'
 
+  assign button_modal_id = ''
+  if section.settings.button_image != blank and section.settings.button_label != blank
+    assign button_modal_id = 'IngredientsModal-' | append: section.id
+  endif
+
   assign tab_count = 0
   assign active_tab = 0
   for b in section.blocks
@@ -117,7 +122,7 @@
       {%- endif -%}
       {%- if section.settings.button_label != blank -%}
         <div class="ing__button-wrapper ing__button-wrapper--desktop">
-          {%- render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: section.settings.button_icon -%}
+          {%- render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: section.settings.button_icon, modal_id: button_modal_id -%}
         </div>
       {%- endif -%}
     </div>
@@ -201,10 +206,14 @@
 
     {%- if section.settings.button_label != blank -%}
       <div class="ing__button-wrapper ing__button-wrapper--mobile">
-        {%- render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: section.settings.button_icon -%}
+        {%- render 'ingredients-tabs-button', label: section.settings.button_label, link: section.settings.button_link, icon: section.settings.button_icon, modal_id: button_modal_id -%}
       </div>
     {%- endif -%}
   </div>
+
+  {%- if button_modal_id != blank -%}
+    {%- render 'image-modal', id: button_modal_id, image: section.settings.button_image, label: section.settings.button_label -%}
+  {%- endif -%}
 </section>
 
 {%- if request.design_mode -%}
@@ -294,6 +303,12 @@
       "type": "url",
       "id": "button_link",
       "label": "Enlace"
+    },
+    {
+      "type": "image_picker",
+      "id": "button_image",
+      "label": "Imagen al hacer clic",
+      "info": "Si eliges una imagen, el botón la abre en una ventana emergente y se ignora el enlace."
     },
     {
       "type": "select",
