@@ -1100,8 +1100,8 @@
         "faq_jCJr36": {
           "type": "faq",
           "settings": {
-            "title": "¿Por qué Gujoy sí funciona?",
-            "content": "<p>Si ya has probado vitaminas y sigues viendo pelo en el cepillo, es normal que te preguntes qué cambia esta vez.</p><p>Gujoy combina dos pilares en una misma fórmula:</p><p><strong>Cuidado del factor hormonal</strong><br>Una hormona llamada DHT puede debilitar las raíces sensibles a ella. El Complejo DHT Shield™ reúne Palma Enana, Semilla de Calabaza y Beta-Sitosterol en una fórmula diseñada para abordar ese factor.</p><p><strong>Nutrición desde dentro</strong><br>Biotina, zinc y selenio contribuyen al mantenimiento del cabello en condiciones normales, junto con un conjunto de vitaminas que completa la fórmula.</p><p><strong>La diferencia está en combinar ambos enfoques, en lugar de quedarse solo en la biotina.</strong></p><p>Y tienes <strong>90 días de garantía de devolución</strong> para probar Gujoy.</p>",
+            "title": "¿Por qué Lunessa sí funciona?",
+            "content": "<p>Si ya has probado vitaminas y sigues viendo cabello en el cepillo, es normal que te preguntes qué cambia esta vez.</p><p>Lunessa combina dos pilares en una misma fórmula:</p><p><strong>Cuidado del factor hormonal</strong><br/>Una hormona llamada DHT puede debilitar las raíces sensibles a ella. El Complejo DHT Shield™ reúne Palma Enana, Semilla de Calabaza y Beta-Sitosterol en una fórmula diseñada para abordar ese factor.</p><p><strong>Nutrición desde dentro</strong><br/>Biotina, zinc y selenio contribuyen al mantenimiento del cabello en condiciones normales, junto con un conjunto de vitaminas que completa la fórmula.</p><p>La diferencia está en combinar ambos enfoques, en lugar de quedarse solo en la biotina.</p><p>Y tienes 90 días de garantía de devolución para probar Lunessa.</p>",
             "button_label": "",
             "button_link": "",
             "open": false,
@@ -1112,7 +1112,7 @@
           "type": "faq",
           "settings": {
             "title": "¿Cuánto tardo en ver resultados?",
-            "content": "<p>Tu pelo tiene un <strong>ciclo natural</strong> de aproximadamente <strong>90 días</strong>. Por eso <strong>no vendemos un pack de 1 mes</strong>: no da tiempo a ver el cambio real, y preferimos que <strong>veas el resultado completo antes de decidir.</strong></p><p>Muchas notan <strong>menos caída ya en las primeras semanas</strong>. Pero un pelo <strong>más grueso</strong> de verdad llega dentro de ese ciclo de 90 días, por eso nuestra <strong>garantía</strong> también dura <strong>90 días</strong>.</p>",
+            "content": "<p>Tu cabello tiene un ciclo natural de aproximadamente 90 días. Por eso no vendemos un paquete de 1 mes: no da tiempo de ver el cambio real, y preferimos que veas el resultado completo antes de decidir.</p><p>Muchas notan menos caída desde las primeras semanas. Pero un cabello realmente más grueso llega dentro de ese ciclo de 90 días; por eso nuestra garantía también dura 90 días.</p>",
             "button_label": "",
             "button_link": "",
             "open": false,
@@ -1123,7 +1123,7 @@
           "type": "faq",
           "settings": {
             "title": "¿Funciona con mi tipo de caída?",
-            "content": "<p>Sí. Gujoy actúa en las causas más comunes de la caída:</p><p>🔄 Cambios Hormonales<br>⏳ Edad &amp; Envejecimiento<br>🤱 Postparto<br>😰 Estrés &amp; Ansiedad<br>🚿 Agua Dura<br>🥗 Déficit Nutricional<br>🤷‍♀️ No estoy segura</p><p>Su Triple Bloqueo DHT frena la causa hormonal. Sus 12 vitaminas nutren tu raíz, sea cual sea el motivo.</p>",
+            "content": "<p>Sí. Lunessa actúa en las causas más comunes de la caída:</p><p>🔄 Cambios Hormonales<br/>⏳ Edad y Envejecimiento<br/>🤱 Posparto<br/>😰 Estrés y Ansiedad<br/>🚿 Agua Dura<br/>🥗 Déficit Nutricional<br/>🤷‍♀️ No estoy segura</p><p>Su Triple Bloqueo DHT frena la causa hormonal. Sus 12 vitaminas nutren tu raíz, sea cual sea el motivo.</p>",
             "button_label": "",
             "button_link": "",
             "open": false,
@@ -1134,7 +1134,7 @@
           "type": "faq",
           "settings": {
             "title": "¿Tiene efectos secundarios?",
-            "content": "<p>Gujoy está formulado con <strong>ingredientes 100% naturales y sin azúcar</strong> añadido, pensado para ser <strong>seguro</strong> en el uso diario. Si estás embarazada o tienes alguna condición médica, consulta con tu médico antes de empezar.</p>",
+            "content": "<p>Lunessa está formulado con<strong> ingredientes</strong> <strong>100% naturales y sin azúcar</strong> añadida, diseñado para ser seguro en tu uso diario. Si estás embarazada o tienes alguna condición médica, consulta con tu médico antes de empezar.</p>",
             "button_label": "",
             "button_link": "",
             "open": false,
@@ -1144,8 +1144,8 @@
         "faq_LGDBqa": {
           "type": "faq",
           "settings": {
-            "title": "¿Qué lleva Gujoy dentro?",
-            "content": "<p>Gujoy lleva Triple Bloqueo DHT — Palma Enana, Semilla de Calabaza y Beta-sitosterol — más 12 vitaminas y minerales pensados para tu pelo.</p><p>Para ver todos los ingredientes y el beneficio de cada uno, haz clic abajo.</p>",
+            "title": "¿Qué lleva Lunessa dentro?",
+            "content": "<p><strong>Lunessa lleva Triple Bloqueo DHT</strong> —Palma Enana, Semilla de Calabaza y Beta-sitosterol— más 12 vitaminas y minerales pensados para tu cabello.</p><p>Para ver todos los ingredientes y el beneficio de cada uno, haz clic abajo.</p>",
             "button_label": "Conocer Ingredientes",
             "button_link": "",
             "open": false,
@@ -1155,21 +1155,27 @@
         "before_after_GMGwmd": {
           "type": "before_after",
           "settings": {
+            "image_before": "shopify://shop_images/Antes1.webp",
             "label_before": "ANTES (DÍA 0)",
+            "image_after": "shopify://shop_images/Despues1.webp",
             "label_after": "DESPUÉS (3 MESES)"
           }
         },
         "before_after_MRBHbj": {
           "type": "before_after",
           "settings": {
+            "image_before": "shopify://shop_images/Antes2.webp",
             "label_before": "ANTES (DÍA 0)",
+            "image_after": "shopify://shop_images/Despues2.webp",
             "label_after": "DESPUÉS (2 MESES)"
           }
         },
         "before_after_yi6EGC": {
           "type": "before_after",
           "settings": {
+            "image_before": "shopify://shop_images/ChatGPT_Image_11_sept_2026_12_28_34.webp",
             "label_before": "ANTES (DÍA 0)",
+            "image_after": "shopify://shop_images/Despues3.webp",
             "label_after": "DESPUÉS (5 MESES)"
           }
         }
