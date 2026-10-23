@@ -242,7 +242,7 @@
         "heading_iMtHVC": {
           "type": "heading",
           "settings": {
-            "heading": "<strong>¿es gujoy para ti?</strong>",
+            "heading": "<strong>¿es Lunessa para ti?</strong>",
             "heading_tag": "h2",
             "color": "#7f1525",
             "text_transform": "capitalize",
@@ -769,7 +769,7 @@
         "title_Mm9FwJ": {
           "type": "title",
           "settings": {
-            "title": "Gujoy Fórmula Capilar Completa<strong>™</strong>",
+            "title": "Lunessa Fórmula Capilar Completa<strong>™</strong>",
             "heading_tag": "h1",
             "text_size": 32,
             "text_size_mobile": 25,
