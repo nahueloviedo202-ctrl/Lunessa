@@ -161,8 +161,8 @@
         "direction": "left",
         "pause_on_hover": true,
         "repeat_count": 3,
-        "background": "#7F1525",
-        "text_color": "#FEEBEB",
+        "background": "#7f1525",
+        "text_color": "#feebeb",
         "text_size": 12,
         "text_size_tablet": 16,
         "text_size_mobile": 14,
@@ -176,7 +176,7 @@
         "padding_vertical_mobile": 5,
         "item_padding_vertical": 8,
         "show_separator": false,
-        "separator_color": "#FEEBEB",
+        "separator_color": "#feebeb",
         "separator_size": 16,
         "font_custom": false,
         "font": "assistant_n4"
@@ -1212,7 +1212,7 @@
       ],
       "name": "Producto con ofertas",
       "settings": {
-        "product": "",
+        "product": "lunessa-formula-capilar-completa",
         "color_scheme": "",
         "gallery_width": 50,
         "columns_gap": 32,
