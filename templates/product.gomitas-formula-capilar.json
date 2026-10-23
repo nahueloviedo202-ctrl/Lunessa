@@ -1498,12 +1498,123 @@
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
       }
+    },
+    "video_text_highlight_fGRqpD": {
+      "type": "video-text-highlight",
+      "blocks": {
+        "text_3bDYyN": {
+          "type": "text",
+          "settings": {
+            "text": "Dentro de tu cuerpo hay una hormona llamada <strong>DHT</strong> (dihidrotestosterona). Cuando sus niveles suben, se instala en tu raíz y hace que cada pelo nazca <strong>más débil y más fino</strong>"
+          }
+        },
+        "text_4XyNH9": {
+          "type": "text",
+          "settings": {
+            "text": "Con el tiempo, esa raíz debilitada <strong>deja de producir pelo</strong>. Así empieza, y avanza, tu caída"
+          }
+        },
+        "highlight_aiG9gX": {
+          "type": "highlight",
+          "settings": {
+            "show_icon": true,
+            "title": "Complejo DHT Shield™",
+            "text": "<em>El único complejo con triple bloqueo que ataca la hormona de la caída por tres vías distintas al mismo tiempo</em>",
+            "text_mobile": "<em>El único complejo que bloquea la hormona de la caída por tres vías a la vez.</em>"
+          }
+        }
+      },
+      "block_order": [
+        "text_3bDYyN",
+        "text_4XyNH9",
+        "highlight_aiG9gX"
+      ],
+      "name": "Video con destacado",
+      "settings": {
+        "background_color": "#F9F9F7",
+        "background_color_mobile": "#FFFFFF",
+        "max_width": 1200,
+        "content_columns": 6,
+        "column_gap": 50,
+        "heading": "Esto Es Lo Que\nRealmente Causa Tu Caída\n(No Es Genética)",
+        "heading_color": "#6B0011",
+        "heading_size": 36,
+        "heading_size_tablet": 16,
+        "heading_size_mobile": 26,
+        "heading_line_height": 130,
+        "heading_line_height_tablet": 180,
+        "heading_line_height_mobile": 130,
+        "heading_alignment": "left",
+        "heading_alignment_mobile": "center",
+        "heading_margin_bottom": 16,
+        "heading_margin_bottom_mobile": 5,
+        "text_color": "#151515",
+        "text_size": 18,
+        "text_size_tablet": 16,
+        "text_size_mobile": 15,
+        "text_line_height": 150,
+        "text_line_height_tablet": 180,
+        "text_line_height_mobile": 150,
+        "text_letter_spacing": -0.4,
+        "text_alignment": "left",
+        "paragraph_spacing": 0,
+        "paragraph_spacing_mobile": 7,
+        "video_description": "",
+        "video_autoplay": true,
+        "video_loop": true,
+        "video_controls": false,
+        "video_radius": 8,
+        "video_margin_top_mobile": 15,
+        "highlight_background_color": "#731122",
+        "highlight_background_color_mobile": "#731122",
+        "highlight_border_color": "#121212",
+        "highlight_border_width": 1,
+        "highlight_border_width_mobile": 0,
+        "highlight_radius": 16,
+        "highlight_radius_mobile": 8,
+        "highlight_padding": 16,
+        "highlight_padding_y_mobile": 12,
+        "highlight_padding_x_mobile": 10,
+        "highlight_margin_top": 20,
+        "highlight_margin_top_mobile": 15,
+        "highlight_gap": 16,
+        "icon_size": 79,
+        "icon_size_mobile": 44,
+        "icon_columns_mobile": 3,
+        "icon_offset_mobile": 10,
+        "highlight_text_color": "#FEF5F1",
+        "highlight_title_size": 21,
+        "highlight_title_size_tablet": 16,
+        "highlight_title_size_mobile": 18,
+        "highlight_title_line_height": 180,
+        "highlight_title_line_height_mobile": 130,
+        "highlight_title_letter_spacing_mobile": -0.3,
+        "highlight_text_size": 15,
+        "highlight_text_size_tablet": 16,
+        "highlight_text_size_mobile": 14,
+        "highlight_text_line_height": 150,
+        "highlight_text_line_height_tablet": 180,
+        "highlight_text_line_height_mobile": 150,
+        "highlight_text_letter_spacing": -0.4,
+        "heading_font_source": "custom",
+        "heading_font": "lora_n4",
+        "heading_font_weight": "500",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_x": 16,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "padding_x_mobile": 20
+      }
     }
   },
   "order": [
     "main",
     "disclosures",
     "related-products",
+    "video_text_highlight_fGRqpD",
     "product_callouts_qmQnjw",
     "ingredients_tabs_zaWgjM",
     "testimonials_carousel_8rAnhc",
