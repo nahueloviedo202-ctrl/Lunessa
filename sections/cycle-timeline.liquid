@@ -1,0 +1,542 @@
+{{ 'section-cycle-timeline.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .cycle-timeline-{{ section.id }} {
+    --ct-bg: {{ section.settings.background_color }};
+    --ct-pt: {{ section.settings.padding_top }}px;
+    --ct-pb: {{ section.settings.padding_bottom }}px;
+    --ct-px: {{ section.settings.padding_x }}px;
+    --ct-max-width: {{ section.settings.max_width }}px;
+    --ct-track-max-width: {{ section.settings.track_max_width }}px;
+    --ct-heading-ff: {{ heading_ff }};
+    --ct-heading-fs: {{ heading_fs }};
+    --ct-heading-fw: {{ section.settings.heading_font_weight }};
+    --ct-heading-color: {{ section.settings.heading_color }};
+    --ct-heading-size: {{ section.settings.heading_size }}px;
+    --ct-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ct-heading-lh: {{ section.settings.heading_line_height }}%;
+    --ct-heading-align: {{ section.settings.heading_alignment }};
+    --ct-heading-mb: {{ section.settings.heading_margin_bottom }}px;
+    --ct-body-ff: {{ body_ff }};
+    --ct-body-fs: {{ body_fs }};
+    --ct-line-color: {{ section.settings.line_color }};
+    --ct-line-thickness: {{ section.settings.line_thickness }}px;
+    --ct-dot-size: {{ section.settings.dot_size }}px;
+    --ct-dot-bg: {{ section.settings.dot_background_color }};
+    --ct-dot-color: {{ section.settings.dot_text_color }};
+    --ct-dot-font-size: {{ section.settings.dot_font_size }}px;
+    --ct-dot-mb: {{ section.settings.dot_margin_bottom }}px;
+    --ct-step-px: {{ section.settings.step_padding_x }}px;
+    --ct-step-align: {{ section.settings.step_alignment }};
+    --ct-step-width-mobile: {{ section.settings.step_width_mobile }}%;
+    --ct-row-gap-mobile: {{ section.settings.row_gap_mobile }}px;
+    --ct-title-color: {{ section.settings.title_color }};
+    --ct-title-size: {{ section.settings.title_size }}px;
+    --ct-title-lh: {{ section.settings.title_line_height }}%;
+    --ct-title-mb: {{ section.settings.title_margin_bottom }}px;
+    --ct-text-color: {{ section.settings.text_color }};
+    --ct-text-size: {{ section.settings.text_size }}px;
+    --ct-text-lh: {{ section.settings.text_line_height }}%;
+    --ct-ls: {{ section.settings.letter_spacing }}px;
+  }
+{%- endstyle -%}
+
+<div class="cycle-timeline cycle-timeline-{{ section.id }}">
+  <div class="cycle-timeline__inner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="cycle-timeline__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="cycle-timeline__track{% if section.settings.show_line %} cycle-timeline__track--line{% endif %}" role="list">
+        {%- for block in section.blocks -%}
+          <li class="cycle-timeline__step" {{ block.shopify_attributes }}>
+            <span class="cycle-timeline__dot">{{ block.settings.label | default: forloop.index | escape }}</span>
+            {%- if block.settings.title != blank -%}
+              <h3 class="cycle-timeline__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="cycle-timeline__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Línea de tiempo",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo de la sección",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "unit": "px",
+      "default": 1000
+    },
+    {
+      "type": "range",
+      "id": "track_max_width",
+      "label": "Ancho máximo de la línea de tiempo",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "default": 820
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Tu Ciclo Capilar, Explicado"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil",
+      "info": "Pantallas de hasta 480px.",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Línea y círculos"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line",
+      "label": "Mostrar línea",
+      "info": "Se oculta en móvil, donde los pasos pasan a dos columnas.",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Color de la línea",
+      "default": "#F3D9DD"
+    },
+    {
+      "type": "range",
+      "id": "line_thickness",
+      "label": "Grosor de la línea",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "dot_size",
+      "label": "Tamaño del círculo",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "dot_background_color",
+      "label": "Color del círculo",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "dot_text_color",
+      "label": "Color del número",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "dot_font_size",
+      "label": "Tamaño del número",
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "dot_margin_bottom",
+      "label": "Espacio bajo el círculo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Pasos"
+    },
+    {
+      "type": "select",
+      "id": "step_alignment",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "step_padding_x",
+      "label": "Relleno lateral de cada paso",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "step_width_mobile",
+      "label": "Ancho de cada paso en móvil",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "Separación entre filas en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título",
+      "min": 10,
+      "max": 30,
+      "step": 0.5,
+      "unit": "px",
+      "default": 13.5
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Interlineado del título",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Espacio bajo el título",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#4A2530"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 24,
+      "step": 0.5,
+      "unit": "px",
+      "default": 12.5
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Interlineado del texto",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Espaciado entre letras",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0.6
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "lora_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de los pasos",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de los pasos",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Relleno superior",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Relleno inferior",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Relleno lateral",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto del círculo",
+          "info": "Por ejemplo, 1 o 30. Si está vacío se numera automáticamente.",
+          "default": "1"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Título",
+          "default": "Primeras Semanas"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "El Triple Bloqueo DHT empieza a frenar la caída desde la raíz."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Línea de tiempo",
+      "blocks": [
+        { "type": "step" },
+        {
+          "type": "step",
+          "settings": {
+            "label": "30",
+            "title": "Día 30",
+            "text": "Tu cuero cabelludo recibe cada día los 12 nutrientes que necesita."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "60",
+            "title": "Día 60",
+            "text": "Empiezas a notar tu pelo más fuerte al tacto."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "90",
+            "title": "Día 90",
+            "text": "Tu pelo se ve visiblemente más grueso — el cambio completo."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

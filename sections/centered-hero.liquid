@@ -101,6 +101,25 @@
               {{ 'product-1' | placeholder_svg_tag: 'chr__image chr__image--placeholder placeholder-svg' }}
             {%- endif -%}
           </div>
+
+        {%- when 'button' -%}
+          <div
+            class="chr__button-wrapper"
+            style="--chr-block-mt: {{ block.settings.margin_top }}px;"
+            {{ block.shopify_attributes }}
+          >
+            <a
+              class="chr__button{% if block.settings.full_width_mobile %} chr__button--full-mobile{% endif %}"
+              {% if block.settings.link != blank %}
+                href="{{ block.settings.link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+              style="--chr-button-bg: {{ block.settings.background }}; --chr-button-color: {{ block.settings.text_color }}; --chr-button-size: {{ block.settings.text_size }}px; --chr-button-weight: {{ block.settings.font_weight }}; --chr-button-py: {{ block.settings.padding_vertical }}px; --chr-button-px: {{ block.settings.padding_horizontal }}px; --chr-button-radius: {{ block.settings.radius }}px;"
+            >
+              {{- block.settings.label | escape -}}
+            </a>
+          </div>
       {%- endcase -%}
     {%- endfor -%}
   </div>
@@ -492,9 +511,129 @@
           "default": 36
         }
       ]
+    },
+    {
+      "type": "button",
+      "name": "Botón",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Ver Producto"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Fondo",
+          "default": "#6B1626"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto",
+          "default": 15
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Semi negrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "range",
+          "id": "padding_vertical",
+          "min": 4,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "label": "Relleno vertical",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_horizontal",
+          "min": 8,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Relleno horizontal",
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Radio",
+          "default": 100
+        },
+        {
+          "type": "checkbox",
+          "id": "full_width_mobile",
+          "label": "Ancho completo en móvil",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen superior",
+          "info": "No se aplica si es el primer bloque.",
+          "default": 18
+        }
+      ]
     }
   ],
   "presets": [
+    {
+      "name": "Llamada a la acción centrada",
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 74,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 74
+      },
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "¿Lista Para Frenar Tu Caída?",
+            "heading_tag": "h2",
+            "text_size": 25,
+            "text_size_mobile": 25,
+            "margin_top": 0
+          }
+        },
+        { "type": "button" }
+      ]
+    },
     {
       "name": "Hero centrado",
       "blocks": [

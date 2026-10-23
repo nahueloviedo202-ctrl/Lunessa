@@ -1,0 +1,515 @@
+{{ 'section-comparison-table.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .cmt--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --cmt-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --cmt-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --cmt-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --cmt-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --cmt-bg: {{ section.settings.background }};
+    --cmt-max-width: {{ section.settings.max_width }}px;
+    --cmt-pt: {{ section.settings.padding_top }}px;
+    --cmt-pb: {{ section.settings.padding_bottom }}px;
+    --cmt-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --cmt-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --cmt-px: {{ section.settings.padding_horizontal }}px;
+
+    --cmt-heading-color: {{ section.settings.heading_color }};
+    --cmt-heading-size: {{ section.settings.heading_size }}px;
+    --cmt-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --cmt-heading-mb: {{ section.settings.heading_margin_bottom }}px;
+
+    --cmt-table-bg: {{ section.settings.table_background }};
+    --cmt-table-radius: {{ section.settings.table_radius }}px;
+    --cmt-shadow: {{ section.settings.shadow_color }};
+    --cmt-shadow-opacity: {{ section.settings.shadow_opacity }}%;
+    --cmt-border: {{ section.settings.border_color }};
+    --cmt-cell-py: {{ section.settings.cell_padding_vertical }}px;
+    --cmt-cell-px: {{ section.settings.cell_padding_horizontal }}px;
+    --cmt-header-py: {{ section.settings.header_padding_vertical }}px;
+    --cmt-header-size: {{ section.settings.header_size }}px;
+    --cmt-text-size: {{ section.settings.text_size }}px;
+    --cmt-text-color: {{ section.settings.text_color }};
+    --cmt-label-color: {{ section.settings.label_color }};
+
+    --cmt-ours-header-bg: {{ section.settings.ours_header_background }};
+    --cmt-ours-header-color: {{ section.settings.ours_header_color }};
+    --cmt-ours-bg: {{ section.settings.ours_background }};
+    --cmt-others-header-color: {{ section.settings.others_header_color }};
+
+    --cmt-check-color: {{ section.settings.check_color }};
+    --cmt-cross-color: {{ section.settings.cross_color }};
+    --cmt-icon-size: {{ section.settings.icon_size }}px;
+  }
+{%- endstyle -%}
+
+<section class="cmt cmt--{{ section.id }}">
+  <div class="cmt__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="cmt__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cmt__table-wrapper">
+        <table class="cmt__table">
+          <thead>
+            <tr>
+              <td class="cmt__corner">
+                {%- if section.settings.label_heading != blank -%}
+                  {{ section.settings.label_heading | escape }}
+                {%- endif -%}
+              </td>
+              <th scope="col" class="cmt__col cmt__col--ours">{{ section.settings.ours_label | escape }}</th>
+              <th scope="col" class="cmt__col cmt__col--others">{{ section.settings.others_label | escape }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row" class="cmt__label">{{ block.settings.label | escape }}</th>
+                <td class="cmt__value cmt__value--ours">
+                  {%- render 'comparison-table-value',
+                    type: block.settings.ours,
+                    text: block.settings.ours_text,
+                    yes_label: section.settings.yes_label,
+                    no_label: section.settings.no_label
+                  -%}
+                </td>
+                <td class="cmt__value cmt__value--others">
+                  {%- render 'comparison-table-value',
+                    type: block.settings.others,
+                    text: block.settings.others_text,
+                    yes_label: section.settings.yes_label,
+                    no_label: section.settings.no_label
+                  -%}
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tabla comparativa",
+  "tag": "div",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 15,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Lunessa vs. El Resto"
+    },
+    {
+      "type": "text",
+      "id": "label_heading",
+      "label": "Encabezado de la primera columna",
+      "info": "Opcional. En el original va vacío."
+    },
+    {
+      "type": "text",
+      "id": "ours_label",
+      "label": "Encabezado de tu marca",
+      "default": "Lunessa"
+    },
+    {
+      "type": "text",
+      "id": "others_label",
+      "label": "Encabezado de la competencia",
+      "default": "Otras Marcas"
+    },
+    {
+      "type": "text",
+      "id": "yes_label",
+      "label": "Texto accesible del check",
+      "info": "No se ve; lo leen los lectores de pantalla.",
+      "default": "Sí"
+    },
+    {
+      "type": "text",
+      "id": "no_label",
+      "label": "Texto accesible de la cruz",
+      "info": "No se ve; lo leen los lectores de pantalla.",
+      "default": "No"
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño (móvil)",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación antes de la tabla",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Tabla"
+    },
+    {
+      "type": "color",
+      "id": "table_background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "table_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Color de la sombra",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "label": "Opacidad de la sombra",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Líneas entre filas",
+      "default": "#F3DBE0"
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_vertical",
+      "min": 4,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical de filas",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "cell_padding_horizontal",
+      "min": 4,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno horizontal de celdas",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "header_padding_vertical",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical del encabezado",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del encabezado",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 20,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño del texto",
+      "default": 13.5
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color de la primera columna",
+      "default": "#3A1E26"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de textos en valores",
+      "default": "#3A1E26"
+    },
+    {
+      "type": "header",
+      "content": "Columnas"
+    },
+    {
+      "type": "color",
+      "id": "ours_header_background",
+      "label": "Tu marca: fondo del encabezado",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "ours_header_color",
+      "label": "Tu marca: texto del encabezado",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "ours_background",
+      "label": "Tu marca: fondo de las celdas",
+      "default": "#FBE4E7"
+    },
+    {
+      "type": "color",
+      "id": "others_header_color",
+      "label": "Competencia: texto del encabezado",
+      "default": "#8A5560"
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Color del check",
+      "default": "#2E8B57"
+    },
+    {
+      "type": "color",
+      "id": "cross_color",
+      "label": "Color de la cruz",
+      "default": "#B23B3B"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de check y cruz",
+      "default": 17
+    },
+    {
+      "type": "header",
+      "content": "Fondo y espaciado"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en título y encabezados",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de título y encabezados",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en la tabla",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de la tabla",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Fila",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Característica",
+          "default": "Triple Bloqueo DHT"
+        },
+        {
+          "type": "select",
+          "id": "ours",
+          "label": "Tu marca",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "cross", "label": "Cruz" },
+            { "value": "text", "label": "Texto" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "ours_text",
+          "label": "Tu marca: texto",
+          "info": "Se usa cuando elegiste Texto."
+        },
+        {
+          "type": "select",
+          "id": "others",
+          "label": "Competencia",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "cross", "label": "Cruz" },
+            { "value": "text", "label": "Texto" }
+          ],
+          "default": "cross"
+        },
+        {
+          "type": "text",
+          "id": "others_text",
+          "label": "Competencia: texto",
+          "info": "Se usa cuando elegiste Texto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabla comparativa",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Triple Bloqueo DHT" } },
+        { "type": "row", "settings": { "label": "Dosis real, no mínima" } },
+        { "type": "row", "settings": { "label": "0 Azúcar, Vegana, Sin Gluten" } },
+        { "type": "row", "settings": { "label": "Avalada por tricóloga real" } },
+        { "type": "row", "settings": { "label": "Fabricada en laboratorio GMP", "others": "check" } },
+        { "type": "row", "settings": { "label": "Garantía de 90 días" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

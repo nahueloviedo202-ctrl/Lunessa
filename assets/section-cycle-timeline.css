@@ -1,0 +1,113 @@
+/* Breakpoint follows the original: at 480px and below the steps wrap
+   into two columns and the connecting line is hidden. */
+
+.cycle-timeline {
+  background: var(--ct-bg);
+  padding: var(--ct-pt) var(--ct-px) var(--ct-pb);
+}
+
+.cycle-timeline__inner {
+  max-width: var(--ct-max-width);
+  margin: 0 auto;
+}
+
+.cycle-timeline__heading {
+  margin: 0 0 var(--ct-heading-mb);
+  font-family: var(--ct-heading-ff);
+  font-style: var(--ct-heading-fs);
+  font-weight: var(--ct-heading-fw);
+  font-size: var(--ct-heading-size);
+  line-height: var(--ct-heading-lh);
+  letter-spacing: normal;
+  color: var(--ct-heading-color);
+  text-align: var(--ct-heading-align);
+  word-break: break-word;
+}
+
+.cycle-timeline__track {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--ct-track-max-width);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cycle-timeline__track--line::before {
+  content: '';
+  position: absolute;
+  top: calc((var(--ct-dot-size) - var(--ct-line-thickness)) / 2);
+  left: 0;
+  right: 0;
+  z-index: 0;
+  height: var(--ct-line-thickness);
+  background: var(--ct-line-color);
+}
+
+.cycle-timeline__step {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--ct-step-px);
+  text-align: var(--ct-step-align);
+  font-family: var(--ct-body-ff);
+  font-style: var(--ct-body-fs);
+  letter-spacing: var(--ct-ls);
+}
+
+.cycle-timeline__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ct-dot-size);
+  height: var(--ct-dot-size);
+  margin: 0 auto var(--ct-dot-mb);
+  border-radius: 50%;
+  background: var(--ct-dot-bg);
+  color: var(--ct-dot-color);
+  font-weight: 700;
+  font-size: var(--ct-dot-font-size);
+  line-height: 1;
+  letter-spacing: normal;
+}
+
+.cycle-timeline__title {
+  margin: 0 0 var(--ct-title-mb);
+  font-family: var(--ct-body-ff);
+  font-style: var(--ct-body-fs);
+  font-weight: 700;
+  font-size: var(--ct-title-size);
+  line-height: var(--ct-title-lh);
+  letter-spacing: var(--ct-ls);
+  color: var(--ct-title-color);
+  word-break: break-word;
+}
+
+.cycle-timeline__text {
+  margin: 0;
+  font-size: var(--ct-text-size);
+  line-height: var(--ct-text-lh);
+  color: var(--ct-text-color);
+  word-break: break-word;
+}
+
+@media screen and (max-width: 480px) {
+  .cycle-timeline__heading {
+    font-size: var(--ct-heading-size-mobile);
+  }
+
+  .cycle-timeline__track {
+    flex-wrap: wrap;
+    row-gap: var(--ct-row-gap-mobile);
+  }
+
+  .cycle-timeline__track--line::before {
+    display: none;
+  }
+
+  .cycle-timeline__step {
+    flex: 0 0 var(--ct-step-width-mobile);
+  }
+}

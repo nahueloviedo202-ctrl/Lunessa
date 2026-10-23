@@ -1,0 +1,124 @@
+/* Comparison table — every selector is scoped to .cmt */
+
+.cmt {
+  padding: var(--cmt-pt-mobile) var(--cmt-px) var(--cmt-pb-mobile);
+  background: var(--cmt-bg);
+  font-family: var(--cmt-body-font, var(--font-body-family));
+  font-style: var(--cmt-body-style, var(--font-body-style));
+}
+
+.cmt *,
+.cmt *::before,
+.cmt *::after {
+  box-sizing: border-box;
+}
+
+.cmt__inner {
+  max-width: var(--cmt-max-width);
+  margin: 0 auto;
+}
+
+.cmt .cmt__heading {
+  margin: 0 0 var(--cmt-heading-mb);
+  color: var(--cmt-heading-color);
+  font-family: var(--cmt-heading-font, var(--font-heading-family));
+  font-style: var(--cmt-heading-style, var(--font-heading-style));
+  font-size: var(--cmt-heading-size-mobile);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Table */
+
+.cmt__table-wrapper {
+  border-radius: var(--cmt-table-radius);
+  background: var(--cmt-table-bg);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--cmt-shadow) var(--cmt-shadow-opacity), transparent);
+  overflow: hidden;
+}
+
+.cmt .cmt__table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  table-layout: auto;
+  color: var(--cmt-text-color);
+}
+
+.cmt .cmt__table th,
+.cmt .cmt__table td {
+  padding: var(--cmt-cell-py) var(--cmt-cell-px);
+  border: 0;
+  font-size: var(--cmt-text-size);
+  line-height: 1.4;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cmt .cmt__table thead th,
+.cmt .cmt__table thead td {
+  padding-top: var(--cmt-header-py);
+  padding-bottom: var(--cmt-header-py);
+  font-family: var(--cmt-heading-font, var(--font-heading-family));
+  font-style: var(--cmt-heading-style, var(--font-heading-style));
+  font-size: var(--cmt-header-size);
+  font-weight: 700;
+}
+
+.cmt .cmt__table .cmt__corner,
+.cmt .cmt__table .cmt__label {
+  text-align: left;
+}
+
+.cmt .cmt__table .cmt__col--ours {
+  background: var(--cmt-ours-header-bg);
+  color: var(--cmt-ours-header-color);
+}
+
+.cmt .cmt__table .cmt__col--others {
+  color: var(--cmt-others-header-color);
+}
+
+.cmt .cmt__table tbody tr {
+  border-bottom: 1px solid var(--cmt-border);
+}
+
+.cmt .cmt__table .cmt__label {
+  color: var(--cmt-label-color);
+  font-weight: 600;
+}
+
+.cmt .cmt__table .cmt__value--ours {
+  background: var(--cmt-ours-bg);
+  font-weight: 700;
+}
+
+.cmt__icon {
+  font-size: var(--cmt-icon-size);
+  line-height: 1;
+}
+
+.cmt__icon--check {
+  color: var(--cmt-check-color);
+}
+
+.cmt__icon--cross {
+  color: var(--cmt-cross-color);
+}
+
+/* Tablet & desktop */
+
+@media screen and (min-width: 750px) {
+  .cmt {
+    padding-top: var(--cmt-pt);
+    padding-bottom: var(--cmt-pb);
+  }
+
+  .cmt .cmt__heading {
+    font-size: var(--cmt-heading-size);
+  }
+}

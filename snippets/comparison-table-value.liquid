@@ -1,0 +1,26 @@
+{%- doc -%}
+  Renders one value cell of the comparison table section.
+
+  @param {string} type - `check`, `cross` or `text`.
+  @param {string} [text] - Text shown when type is `text`.
+  @param {string} [yes_label] - Screen reader text for the check.
+  @param {string} [no_label] - Screen reader text for the cross.
+
+  @example
+  {% render 'comparison-table-value', type: 'check', yes_label: 'Sí', no_label: 'No' %}
+{%- enddoc -%}
+
+{%- case type -%}
+  {%- when 'check' -%}
+    <span class="cmt__icon cmt__icon--check" aria-hidden="true">✔</span>
+    {%- if yes_label != blank -%}
+      <span class="visually-hidden">{{ yes_label | escape }}</span>
+    {%- endif -%}
+  {%- when 'cross' -%}
+    <span class="cmt__icon cmt__icon--cross" aria-hidden="true">✕</span>
+    {%- if no_label != blank -%}
+      <span class="visually-hidden">{{ no_label | escape }}</span>
+    {%- endif -%}
+  {%- else -%}
+    <span class="cmt__text">{{ text | escape }}</span>
+{%- endcase -%}

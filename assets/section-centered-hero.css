@@ -102,6 +102,38 @@
   background-color: rgba(var(--color-foreground), 0.04);
 }
 
+/* Button */
+
+.chr__button-wrapper {
+  width: 100%;
+}
+
+.chr__button {
+  display: inline-block;
+  padding: var(--chr-button-py) var(--chr-button-px);
+  border-radius: var(--chr-button-radius);
+  background: var(--chr-button-bg);
+  color: var(--chr-button-color);
+  font-family: inherit;
+  font-size: var(--chr-button-size);
+  font-weight: var(--chr-button-weight);
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.chr__button:hover {
+  opacity: 0.9;
+}
+
+@media screen and (max-width: 749px) {
+  .chr__button--full-mobile {
+    display: block;
+    width: 100%;
+  }
+}
+
 /* Tablet & desktop */
 
 @media screen and (min-width: 750px) {
