@@ -1,7 +1,7 @@
-if (!customElements.get('ingredients-drag-scroll')) {
+if (!customElements.get('drag-scroll')) {
   customElements.define(
-    'ingredients-drag-scroll',
-    class IngredientsDragScroll extends HTMLElement {
+    'drag-scroll',
+    class DragScroll extends HTMLElement {
       constructor() {
         super();
         this.dragThreshold = 5;
@@ -58,11 +58,14 @@ if (!customElements.get('ingredients-drag-scroll')) {
         this.removeEventListener('pointerup', this.onPointerUp);
         this.removeEventListener('pointercancel', this.onPointerUp);
         if (this.hasPointerCapture(this.pointerId)) this.releasePointerCapture(this.pointerId);
+        if (!this.classList.contains('is-dragging')) return;
+
         this.classList.remove('is-dragging');
+        this.dispatchEvent(new CustomEvent('dragscroll:end', { bubbles: true }));
       }
 
       onClick(event) {
-        // Swallow the click that ends a drag so it does not trigger links inside the cards.
+        // Swallow the click that ends a drag so it does not trigger links inside the content.
         if (!this.isDragging) return;
         event.preventDefault();
         event.stopPropagation();

@@ -1,5 +1,5 @@
 {{ 'section-ingredients-tabs.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'ingredients-tabs.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'drag-scroll.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign radio_prefix = 'Ingredients-' | append: section.id | append: '-'
@@ -156,7 +156,7 @@
               checked
             {% endif %}
           >
-          <ingredients-drag-scroll
+          <drag-scroll
             class="ing__panel"
             style="--ing-columns: {{ block.settings.columns }}; --ing-columns-mobile: {{ block.settings.columns_mobile }}; --ing-column-gap: {{ block.settings.column_gap }}px; --ing-row-gap: {{ block.settings.row_gap }}px; --ing-min-width: {{ block.settings.min_width }}%; --ing-min-width-tablet: {{ block.settings.min_width_tablet }}%; --ing-min-width-mobile: {{ block.settings.min_width_mobile }}%;"
           >
@@ -194,7 +194,7 @@
                 </li>
               {%- endfor -%}
             </ul>
-          </ingredients-drag-scroll>
+          </drag-scroll>
         {%- endfor -%}
       </div>
     {%- endif -%}

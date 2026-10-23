@@ -1,0 +1,1044 @@
+{{ 'section-guarantee-banner.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign media_columns = 12 | minus: section.settings.content_columns
+  assign shadow_opacity = section.settings.shadow_opacity | divided_by: 100.0
+
+  assign button_href = section.settings.button_link
+  assign anchor = section.settings.button_anchor | strip
+  if anchor != blank
+    assign first_char = anchor | slice: 0
+    if first_char == '#'
+      assign button_href = anchor
+    else
+      assign button_href = '#' | append: anchor
+    endif
+  endif
+
+  assign badge_image = section.settings.badge_image
+  assign badge_image_mobile = section.settings.badge_image_mobile
+  assign badge_split = false
+  if badge_image != blank and badge_image_mobile != blank
+    assign badge_split = true
+  endif
+  assign badge_single = badge_image | default: badge_image_mobile
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- assign heading_font_italic = heading_font_weighted | font_modify: 'style', 'italic' -%}
+    {{ heading_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {%- assign text_font = body_font | font_modify: 'weight', section.settings.text_font_weight | default: body_font -%}
+    {{ text_font | font_face: font_display: 'swap' }}
+    {%- assign button_font = body_font | font_modify: 'weight', section.settings.button_font_weight | default: body_font -%}
+    {{ button_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .guarantee-banner-{{ section.id }} {
+    --gb-bg: {{ section.settings.background_color }};
+    --gb-pt: {{ section.settings.padding_top }}px;
+    --gb-pb: {{ section.settings.padding_bottom }}px;
+    --gb-px: {{ section.settings.padding_x }}px;
+    --gb-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --gb-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --gb-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --gb-card-bg: {{ section.settings.card_color }};
+    --gb-card-bg-mobile: {{ section.settings.card_color_mobile }};
+    --gb-card-max-width: {{ section.settings.card_max_width }}px;
+    --gb-card-radius: {{ section.settings.card_radius }}px;
+    --gb-card-py: {{ section.settings.card_padding_y }}px;
+    --gb-card-px: {{ section.settings.card_padding_x }}px;
+    --gb-card-pt-mobile: {{ section.settings.card_padding_top_mobile }}px;
+    --gb-card-pb-mobile: {{ section.settings.card_padding_bottom_mobile }}px;
+    --gb-card-px-mobile: {{ section.settings.card_padding_x_mobile }}px;
+    {%- if section.settings.show_shadow_mobile %}
+      --gb-shadow-mobile: calc({{ section.settings.shadow_distance }}px * 0.7071) calc({{ section.settings.shadow_distance }}px * 0.7071) {{ section.settings.shadow_blur }}px 0 {{ section.settings.shadow_color | color_modify: 'alpha', shadow_opacity }};
+    {%- else %}
+      --gb-shadow-mobile: none;
+    {%- endif %}
+    --gb-content-fr: {{ section.settings.content_columns }}fr;
+    --gb-media-fr: {{ media_columns }}fr;
+    --gb-column-gap: {{ section.settings.column_gap }}px;
+    --gb-badge-width: {{ section.settings.badge_width }}%;
+    --gb-badge-width-tablet: {{ section.settings.badge_width_tablet }}px;
+    --gb-badge-width-mobile: {{ section.settings.badge_width_mobile }}px;
+    --gb-badge-radius: {{ section.settings.badge_radius }}%;
+    --gb-badge-align: {{ section.settings.badge_alignment }};
+    --gb-badge-align-mobile: {{ section.settings.badge_alignment_mobile }};
+    --gb-heading-ff: {{ heading_ff }};
+    --gb-heading-fs: {{ heading_fs }};
+    --gb-heading-fw: {{ section.settings.heading_font_weight }};
+    --gb-heading-color: {{ section.settings.heading_color }};
+    --gb-heading-accent: {{ section.settings.heading_accent_color }};
+    --gb-heading-tt: {{ section.settings.heading_text_transform }};
+    --gb-heading-size: {{ section.settings.heading_size }}px;
+    --gb-heading-size-tablet: {{ section.settings.heading_size_tablet }}px;
+    --gb-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --gb-heading-lh: {{ section.settings.heading_line_height }}%;
+    --gb-heading-lh-tablet: {{ section.settings.heading_line_height_tablet }}%;
+    --gb-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}%;
+    --gb-heading-ls: {{ section.settings.heading_letter_spacing }}px;
+    --gb-heading-ls-mobile: {{ section.settings.heading_letter_spacing_mobile }}px;
+    --gb-heading-mt-mobile: {{ section.settings.heading_margin_top_mobile }}px;
+    --gb-body-ff: {{ body_ff }};
+    --gb-body-fs: {{ body_fs }};
+    --gb-text-fw: {{ section.settings.text_font_weight }};
+    --gb-text-color: {{ section.settings.text_color }};
+    --gb-text-size: {{ section.settings.text_size }}px;
+    --gb-text-size-tablet: {{ section.settings.text_size_tablet }}px;
+    --gb-text-size-mobile: {{ section.settings.text_size_mobile }}px;
+    --gb-text-lh: {{ section.settings.text_line_height }}%;
+    --gb-text-ls: {{ section.settings.text_letter_spacing }}px;
+    --gb-text-mt: {{ section.settings.text_margin_top }}px;
+    --gb-text-mb-tablet: {{ section.settings.text_margin_bottom_tablet }}px;
+    --gb-text-mb-mobile: {{ section.settings.text_margin_bottom_mobile }}px;
+    --gb-align: {{ section.settings.text_alignment }};
+    --gb-align-mobile: {{ section.settings.text_alignment_mobile }};
+    --gb-button-fw: {{ section.settings.button_font_weight }};
+    --gb-button-bg: {{ section.settings.button_background_color }};
+    --gb-button-color: {{ section.settings.button_text_color }};
+    --gb-button-hover-bg: {{ section.settings.button_hover_background_color }};
+    --gb-button-hover-color: {{ section.settings.button_hover_text_color }};
+    --gb-button-radius: {{ section.settings.button_radius }}px;
+    --gb-button-py: {{ section.settings.button_padding_y }}px;
+    --gb-button-px: {{ section.settings.button_padding_x }}px;
+    --gb-button-size: {{ section.settings.button_size }}px;
+    --gb-button-size-tablet: {{ section.settings.button_size_tablet }}px;
+    --gb-button-size-mobile: {{ section.settings.button_size_mobile }}px;
+    --gb-button-lh: {{ section.settings.button_line_height }}%;
+    --gb-button-lh-mobile: {{ section.settings.button_line_height_mobile }}%;
+    --gb-button-ls: {{ section.settings.button_letter_spacing }}px;
+    --gb-button-mt: {{ section.settings.button_margin_top }}px;
+    --gb-button-mt-mobile: {{ section.settings.button_margin_top_mobile }}px;
+  }
+{%- endstyle -%}
+
+<div class="guarantee-banner guarantee-banner-{{ section.id }}">
+  <div class="guarantee-banner__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {%- if section.settings.card_image != blank -%}
+      {{
+        section.settings.card_image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'lazy',
+          alt: '',
+          sizes: '(min-width: 1232px) 1200px, 100vw',
+          widths: '750, 1100, 1500, 2000, 2400',
+          class: 'guarantee-banner__background guarantee-banner__background--desktop'
+      }}
+    {%- endif -%}
+    {%- if section.settings.card_image_mobile != blank -%}
+      {{
+        section.settings.card_image_mobile
+        | image_url: width: 1100
+        | image_tag:
+          loading: 'lazy',
+          alt: '',
+          sizes: '100vw',
+          widths: '375, 550, 750, 1100',
+          class: 'guarantee-banner__background guarantee-banner__background--mobile'
+      }}
+    {%- endif -%}
+
+    {%- if badge_single != blank or request.design_mode -%}
+      <div class="guarantee-banner__badge">
+        {%- if badge_split -%}
+          {{
+            badge_image
+            | image_url: width: 400
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 1025px) 120px, 80px',
+              widths: '80, 120, 160, 240, 400',
+              class: 'guarantee-banner__badge-image guarantee-banner__badge-image--desktop'
+          }}
+          {{
+            badge_image_mobile
+            | image_url: width: 300
+            | image_tag:
+              loading: 'lazy',
+              sizes: '100px',
+              widths: '100, 200, 300',
+              class: 'guarantee-banner__badge-image guarantee-banner__badge-image--mobile'
+          }}
+        {%- elsif badge_single != blank -%}
+          {{
+            badge_single
+            | image_url: width: 400
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 1025px) 120px, 100px',
+              widths: '100, 120, 160, 240, 400',
+              class: 'guarantee-banner__badge-image'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg guarantee-banner__badge-image' }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="guarantee-banner__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="guarantee-banner__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="guarantee-banner__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="guarantee-banner__actions">
+        <a
+          class="guarantee-banner__button"
+          {% if button_href == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ button_href }}"
+            {% if section.settings.button_new_tab %}
+              target="_blank" rel="noopener"
+            {% endif %}
+          {% endif %}
+        >
+          {{- section.settings.button_label | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner de garantía",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo de la sección",
+      "default": "#FDF8ED"
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image",
+      "label": "Imagen de fondo",
+      "info": "Escritorio y tablet."
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_mobile",
+      "label": "Imagen de fondo en móvil"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Color de fondo",
+      "info": "Visible si no hay imagen o mientras carga.",
+      "default": "#731122"
+    },
+    {
+      "type": "color",
+      "id": "card_color_mobile",
+      "label": "Color de fondo en móvil",
+      "default": "#731122"
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "content_columns",
+      "label": "Columnas del texto (de 12)",
+      "info": "Escritorio y tablet.",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Separación entre columnas",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shadow_mobile",
+      "label": "Mostrar sombra en móvil",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Color de la sombra",
+      "default": "#EEB4B6"
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "label": "Opacidad de la sombra",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "shadow_distance",
+      "label": "Distancia de la sombra",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "label": "Desenfoque de la sombra",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Sello"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Imagen",
+      "info": "Escritorio y tablet."
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image_mobile",
+      "label": "Imagen en móvil",
+      "info": "Opcional. Si está vacía se usa la imagen principal."
+    },
+    {
+      "type": "range",
+      "id": "badge_width",
+      "label": "Ancho en escritorio",
+      "info": "Porcentaje de su columna.",
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "badge_width_tablet",
+      "label": "Ancho en tablet",
+      "min": 40,
+      "max": 240,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "badge_width_mobile",
+      "label": "Ancho en móvil",
+      "min": 40,
+      "max": 240,
+      "step": 2,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "badge_radius",
+      "label": "Redondeo",
+      "info": "50% = círculo.",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "badge_alignment",
+      "label": "Alineación en escritorio y tablet",
+      "options": [
+        { "value": "start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "end", "label": "Derecha" }
+      ],
+      "default": "end"
+    },
+    {
+      "type": "select",
+      "id": "badge_alignment_mobile",
+      "label": "Alineación en móvil",
+      "options": [
+        { "value": "start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "end", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "info": "El texto en cursiva usa el color de acento.",
+      "default": "garantía de <em>90 días</em>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent_color",
+      "label": "Color de acento",
+      "default": "#EEB4B6"
+    },
+    {
+      "type": "select",
+      "id": "heading_text_transform",
+      "label": "Mayúsculas",
+      "options": [
+        { "value": "none", "label": "Ninguna" },
+        { "value": "capitalize", "label": "Capitalizar palabras" },
+        { "value": "uppercase", "label": "Mayúsculas" },
+        { "value": "lowercase", "label": "Minúsculas" }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_tablet",
+      "label": "Interlineado en tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Espaciado entre letras en escritorio y tablet",
+      "min": -3,
+      "max": 3,
+      "step": 0.1,
+      "unit": "px",
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing_mobile",
+      "label": "Espaciado entre letras en móvil",
+      "min": -3,
+      "max": 3,
+      "step": 0.1,
+      "unit": "px",
+      "default": -0.3
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_top_mobile",
+      "label": "Margen superior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "Toma tus gominolas todos los días durante 90 días. Si no sientes que tu caída está frenando, te compramos el bote de vuelta y te devolvemos el 100% de tu dinero. Así de simple — el riesgo es nuestro, no tuyo."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "select",
+      "id": "text_font_weight",
+      "label": "Grosor",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Interlineado",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "text_letter_spacing",
+      "label": "Espaciado entre letras",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": -0.3
+    },
+    {
+      "type": "range",
+      "id": "text_margin_top",
+      "label": "Margen superior",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "text_margin_bottom_tablet",
+      "label": "Margen inferior en tablet",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_margin_bottom_mobile",
+      "label": "Margen inferior en móvil",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alineación del título y texto en escritorio y tablet",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "Alineación del título y texto en móvil",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Empezar 90 Días"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "text",
+      "id": "button_anchor",
+      "label": "Ancla de desplazamiento",
+      "info": "ID de una sección de esta página (por ejemplo, #ofertas). Si se completa, tiene prioridad sobre el enlace."
+    },
+    {
+      "type": "checkbox",
+      "id": "button_new_tab",
+      "label": "Abrir enlace en una pestaña nueva",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Color de fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Color del texto",
+      "default": "#731122"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#EEB4B6"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Grosor",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "button_line_height_mobile",
+      "label": "Interlineado en tablet y móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Espaciado entre letras",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": -0.3
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x",
+      "label": "Relleno lateral",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top",
+      "label": "Margen superior en escritorio",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top_mobile",
+      "label": "Margen superior en tablet y móvil",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "lora_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto y botón",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto y botón",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Relleno inferior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Relleno lateral en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Relleno superior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Relleno inferior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Relleno lateral en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y",
+      "label": "Relleno vertical de la tarjeta en escritorio y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Relleno lateral de la tarjeta en escritorio y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "card_padding_top_mobile",
+      "label": "Relleno superior de la tarjeta en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_padding_bottom_mobile",
+      "label": "Relleno inferior de la tarjeta en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x_mobile",
+      "label": "Relleno lateral de la tarjeta en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner de garantía"
+    }
+  ]
+}
+{% endschema %}
