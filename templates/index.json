@@ -66,7 +66,7 @@
           "settings": {
             "label": "Descubre Cómo",
             "link": "",
-            "anchor": "#product-offer-hero.liquid",
+            "anchor": "",
             "background": "#7f1525",
             "text_color": "#feebeb",
             "radius": 4,
@@ -971,72 +971,12 @@
             "visibility": "desktop"
           }
         },
-        "offer_A3JtTL": {
-          "type": "offer",
-          "settings": {
-            "quantity": 3,
-            "title": "Compra 2 Lleva 3",
-            "subtitle": "50% DTO + 4 Regalos",
-            "tag": "Mejor Oferta",
-            "discount_type": "percentage",
-            "discount_value": 59,
-            "selected": true
-          }
-        },
-        "gift_dV3GhR": {
-          "type": "gift",
-          "settings": {
-            "title": "Comunidad Privada Gujoy",
-            "badge": "GRATIS",
-            "value": "€50,00"
-          }
-        },
-        "gift_HDKFQf": {
-          "type": "gift",
-          "settings": {
-            "title": "Guía: El Método Desde Dentro",
-            "badge": "GRATIS",
-            "value": "€30,00"
-          }
-        },
         "gift_JTbTtq": {
           "type": "gift",
           "settings": {
             "title": "Planner de Progreso 90 Días",
             "badge": "GRATIS",
             "value": "€15,00"
-          }
-        },
-        "gift_tDTzRa": {
-          "type": "gift",
-          "settings": {
-            "title": "Envío Gratis",
-            "badge": "GRATIS",
-            "value": "€3,00"
-          }
-        },
-        "offer_6tEYPJ": {
-          "type": "offer",
-          "settings": {
-            "quantity": 2,
-            "title": "Compra 1 Lleva 2",
-            "subtitle": "50% DTO",
-            "tag": "",
-            "discount_type": "fixed_price",
-            "discount_value": 39.8,
-            "selected": false
-          }
-        },
-        "offer_zDQmTP": {
-          "type": "offer",
-          "settings": {
-            "quantity": 1,
-            "title": "Compra 1",
-            "subtitle": "30 días",
-            "tag": "",
-            "discount_type": "none",
-            "discount_value": 0,
-            "selected": false
           }
         },
         "buy_buttons_QeAxBD": {
@@ -1195,13 +1135,7 @@
         "benefit_ApgNWB",
         "benefit_MrgjiD",
         "benefit_CrntT8",
-        "offer_A3JtTL",
-        "gift_dV3GhR",
-        "gift_HDKFQf",
         "gift_JTbTtq",
-        "gift_tDTzRa",
-        "offer_6tEYPJ",
-        "offer_zDQmTP",
         "buy_buttons_QeAxBD",
         "trust_6G7gKL",
         "trust_AFMRtU",
