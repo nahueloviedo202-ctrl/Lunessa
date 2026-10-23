@@ -120,6 +120,68 @@
         "body_font": "assistant_n4"
       }
     },
+    "marquee_bar_gpUcqY": {
+      "type": "marquee-bar",
+      "blocks": {
+        "item_AQdbmf": {
+          "type": "item",
+          "settings": {
+            "text": "ENVÍO GRATIS"
+          }
+        },
+        "item_tDTk4e": {
+          "type": "item",
+          "settings": {
+            "text": "GARANTÍA 90 DÍAS"
+          }
+        },
+        "item_4NxCKn": {
+          "type": "item",
+          "settings": {
+            "text": "CLINICAMENTE ESTUDIADO"
+          }
+        },
+        "item_ytV7Dh": {
+          "type": "item",
+          "settings": {
+            "text": "SIN AZÚCAR"
+          }
+        }
+      },
+      "block_order": [
+        "item_AQdbmf",
+        "item_tDTk4e",
+        "item_4NxCKn",
+        "item_ytV7Dh"
+      ],
+      "name": "Marquesina",
+      "settings": {
+        "duration": 30,
+        "duration_mobile": 15,
+        "direction": "left",
+        "pause_on_hover": true,
+        "repeat_count": 3,
+        "background": "#7F1525",
+        "text_color": "#FEEBEB",
+        "text_size": 12,
+        "text_size_tablet": 16,
+        "text_size_mobile": 14,
+        "font_weight": "600",
+        "letter_spacing": 2,
+        "letter_spacing_mobile": 1,
+        "text_transform": "none",
+        "item_gap": 60,
+        "item_gap_mobile": 60,
+        "padding_vertical": 7,
+        "padding_vertical_mobile": 5,
+        "item_padding_vertical": 8,
+        "show_separator": false,
+        "separator_color": "#FEEBEB",
+        "separator_size": 16,
+        "font_custom": false,
+        "font": "assistant_n4"
+      }
+    },
     "image_panel_banner_8Er6k9": {
       "type": "image-panel-banner",
       "blocks": {
@@ -440,6 +502,7 @@
         "ingredient_pAacPU": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/SawPalmetto2.webp",
             "name": "Palma Enana",
             "description": "Ayuda a frenar la caída desde la raíz",
             "tag": "PROTECCIÓN"
@@ -448,6 +511,7 @@
         "ingredient_JkYcxK": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Betasitosterol.webp",
             "name": "Beta-sitosterol",
             "description": "Refuerza el extracto y frena la caída",
             "tag": "SINERGIA"
@@ -456,6 +520,7 @@
         "ingredient_mNtJpF": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaC.webp",
             "name": "Vitamina C",
             "description": "Antioxidante que protege la fibra capilar",
             "tag": "ANTIOXIDANTE"
@@ -464,6 +529,7 @@
         "ingredient_yefTtK": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Selenio.webp",
             "name": "Selenio",
             "description": "Protege las células frente al daño externo",
             "tag": "PROTECCIÓN"
@@ -472,6 +538,7 @@
         "ingredient_T6jFQk": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaB5.webp",
             "name": "Vitamina B5",
             "description": "Hidrata el cuero cabelludo desde dentro",
             "tag": "HIDRATACIÓN"
@@ -480,6 +547,7 @@
         "ingredient_4eHffT": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaB6.webp",
             "name": "Vitamina B6",
             "description": "Apoya la producción natural de queratina",
             "tag": "QUERATINA"
@@ -488,6 +556,7 @@
         "ingredient_nE8LV4": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/SemillaCalabaza.webp",
             "name": "Semilla de Calabaza",
             "description": "Cuida el folículo para un pelo más fuerte",
             "tag": "FORTALECE"
@@ -496,6 +565,7 @@
         "ingredient_Ce7RMN": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Biotina2.webp",
             "name": "Biotina",
             "description": "Apoya el crecimiento natural del pelo",
             "tag": "CRECIMIENTO"
@@ -504,6 +574,7 @@
         "ingredient_RDPrc8": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Zinc.webp",
             "name": "Zinc",
             "description": "Ayuda a reparar y fortalecer el folículo.",
             "tag": "REPARACIÓN"
@@ -512,6 +583,7 @@
         "ingredient_FQVJRp": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaA.webp",
             "name": "Vitamina A",
             "description": "Ayuda a renovar el cuero cabelludo",
             "tag": "RENOVACIÓN"
@@ -520,6 +592,7 @@
         "ingredient_X9Tggy": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaE.webp",
             "name": "Vitamina E",
             "description": "Antioxidante que cuida el cuero cabelludo",
             "tag": "PROTECCIÓN"
@@ -528,6 +601,7 @@
         "ingredient_x4nimc": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/VitaminaB12.webp",
             "name": "Vitamina B12",
             "description": "Ayuda a oxigenar el folículo capilar",
             "tag": "OXIGENACIÓN"
@@ -1478,68 +1552,6 @@
         "padding_bottom": 32,
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
-      }
-    },
-    "marquee_bar_gpUcqY": {
-      "type": "marquee-bar",
-      "blocks": {
-        "item_AQdbmf": {
-          "type": "item",
-          "settings": {
-            "text": "ENVÍO GRATIS"
-          }
-        },
-        "item_tDTk4e": {
-          "type": "item",
-          "settings": {
-            "text": "GARANTÍA 90 DÍAS"
-          }
-        },
-        "item_4NxCKn": {
-          "type": "item",
-          "settings": {
-            "text": "CLINICAMENTE ESTUDIADO"
-          }
-        },
-        "item_ytV7Dh": {
-          "type": "item",
-          "settings": {
-            "text": "SIN AZÚCAR"
-          }
-        }
-      },
-      "block_order": [
-        "item_AQdbmf",
-        "item_tDTk4e",
-        "item_4NxCKn",
-        "item_ytV7Dh"
-      ],
-      "name": "Marquesina",
-      "settings": {
-        "duration": 20,
-        "duration_mobile": 15,
-        "direction": "left",
-        "pause_on_hover": true,
-        "repeat_count": 3,
-        "background": "#7F1525",
-        "text_color": "#FEEBEB",
-        "text_size": 12,
-        "text_size_tablet": 16,
-        "text_size_mobile": 14,
-        "font_weight": "600",
-        "letter_spacing": 2,
-        "letter_spacing_mobile": 1,
-        "text_transform": "none",
-        "item_gap": 60,
-        "item_gap_mobile": 60,
-        "padding_vertical": 7,
-        "padding_vertical_mobile": 5,
-        "item_padding_vertical": 8,
-        "show_separator": false,
-        "separator_color": "#FEEBEB",
-        "separator_size": 16,
-        "font_custom": false,
-        "font": "assistant_n4"
       }
     }
   },
