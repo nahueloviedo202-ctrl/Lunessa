@@ -102,6 +102,7 @@
         "background_mobile": "#f4c9c6",
         "image_mobile": "shopify://shop_images/Gemini_Generated_Image_t88s86t88s86t88s.webp",
         "overlay_mobile": true,
+        "mobile_height": 60,
         "content_width": 50,
         "column_gap": 32,
         "vertical_alignment": "center",
@@ -1030,7 +1031,7 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/Recreate_this_woman_202604190158.avif",
-            "quote": "<p>“Para mis pacientes con caída y afinamiento, Gujoy es siempre mi primera recomendación”</p>",
+            "quote": "<p>“Para mis pacientes con caída y afinamiento, Lunessa es siempre mi primera recomendación”</p>",
             "author": "Dra Carmen Vidal | Tricóloga",
             "background": "#fdf8ed",
             "border_color": "#731122",
