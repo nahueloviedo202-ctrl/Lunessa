@@ -1,0 +1,888 @@
+{%- doc -%}
+  Renders the product offer hero layout (gallery + offer column).
+  Shared by sections/product-offer-hero.liquid and sections/main-product.liquid,
+  so it reads `section` (settings and blocks) directly.
+
+  @param {product} product - Product to display
+
+  @example
+  {% render 'product-offer-hero', product: product %}
+{%- enddoc -%}
+
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-offer-hero.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: section.id
+  assign grouped_types = 'badge,highlight,benefit,offer,trust,faq,before_after' | split: ','
+
+  assign first_offer_id = ''
+  assign selected_offer_id = ''
+  for b in section.blocks
+    if b.type == 'offer'
+      if first_offer_id == ''
+        assign first_offer_id = b.id
+      endif
+      if b.settings.selected and selected_offer_id == ''
+        assign selected_offer_id = b.id
+      endif
+    endif
+  endfor
+  if selected_offer_id == ''
+    assign selected_offer_id = first_offer_id
+  endif
+
+  if section.index > 2
+    assign first_image_loading = 'lazy'
+  else
+    assign first_image_loading = 'eager'
+  endif
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .poh--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --poh-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --poh-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --poh-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --poh-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --poh-pt: {{ section.settings.padding_top }}px;
+    --poh-pb: {{ section.settings.padding_bottom }}px;
+    --poh-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --poh-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --poh-columns-gap: {{ section.settings.columns_gap }}px;
+    --poh-gallery-width: {{ section.settings.gallery_width }}%;
+    --poh-gutter-mobile: {{ section.settings.mobile_gutter }}px;
+    --poh-row-gap-mobile: {{ section.settings.mobile_row_gap }}px;
+
+    --poh-media-ratio: {{ section.settings.media_ratio }};
+    --poh-media-fit: {{ section.settings.media_fit }};
+    --poh-media-radius: {{ section.settings.media_radius }}px;
+    --poh-thumbs-per-row: {{ section.settings.thumbnails_per_row }};
+    --poh-thumbs-per-row-mobile: {{ section.settings.thumbnails_per_row_mobile }};
+    --poh-thumb-gap: {{ section.settings.thumbnail_gap }}px;
+    --poh-thumb-radius: {{ section.settings.thumbnail_radius }}px;
+    --poh-thumb-active-color: {{ section.settings.thumbnail_active_color }};
+    --poh-thumb-active-width: {{ section.settings.thumbnail_active_width }}px;
+    --poh-arrow-bg: {{ section.settings.arrow_background }};
+    --poh-arrow-color: {{ section.settings.arrow_color }};
+    --poh-arrow-size: {{ section.settings.arrow_icon_size }}px;
+    --poh-arrow-size-mobile: {{ section.settings.arrow_icon_size_mobile }}px;
+
+    --poh-gallery-button-bg: {{ section.settings.gallery_button_background }};
+    --poh-gallery-button-color: {{ section.settings.gallery_button_color }};
+    --poh-gallery-button-radius: {{ section.settings.gallery_button_radius }}px;
+    --poh-gallery-button-size: {{ section.settings.gallery_button_size }}px;
+
+    --poh-badge-size: {{ section.settings.badge_size }}px;
+    --poh-badge-size-mobile: {{ section.settings.badge_size_mobile }}px;
+    --poh-badge-padding: {{ section.settings.badge_padding }}px;
+    --poh-badge-gap: {{ section.settings.badge_gap }}px;
+    --poh-badge-radius: {{ section.settings.badge_radius }}px;
+    --poh-badge-margin-top: {{ section.settings.badge_margin_top }}px;
+
+    --poh-highlight-columns: {{ section.settings.highlight_columns }};
+    --poh-highlight-gap: {{ section.settings.highlight_gap }}px;
+    --poh-highlight-image: {{ section.settings.highlight_image_size }}px;
+    --poh-highlight-image-mobile: {{ section.settings.highlight_image_size_mobile }}px;
+    --poh-highlight-image-radius: {{ section.settings.highlight_image_radius }}%;
+    --poh-highlight-size: {{ section.settings.highlight_text_size }}px;
+    --poh-highlight-size-mobile: {{ section.settings.highlight_text_size_mobile }}px;
+    --poh-highlight-color: {{ section.settings.highlight_text_color }};
+
+    --poh-benefit-columns: {{ section.settings.benefit_columns }};
+    --poh-benefit-columns-mobile: {{ section.settings.benefit_columns_mobile }};
+    --poh-benefit-column-gap: {{ section.settings.benefit_column_gap }}px;
+    --poh-benefit-row-gap: {{ section.settings.benefit_row_gap }}px;
+    --poh-benefit-icon-size: {{ section.settings.benefit_icon_size }}px;
+    --poh-benefit-icon-size-mobile: {{ section.settings.benefit_icon_size_mobile }}px;
+    --poh-benefit-icon-color: {{ section.settings.benefit_icon_color }};
+    --poh-benefit-color: {{ section.settings.benefit_text_color }};
+    --poh-benefit-size: {{ section.settings.benefit_text_size }}px;
+    --poh-benefit-size-mobile: {{ section.settings.benefit_text_size_mobile }}px;
+    --poh-benefit-margin-bottom: {{ section.settings.benefit_margin_bottom }}px;
+
+    --poh-offer-gap: {{ section.settings.offer_gap }}px;
+    --poh-offer-radius: {{ section.settings.offer_radius }}px;
+    --poh-offer-border-width: {{ section.settings.offer_border_width }}px;
+    --poh-offer-border: {{ section.settings.offer_border_color }};
+    --poh-offer-border-inactive: {{ section.settings.offer_border_color_inactive }};
+    --poh-offer-bg: {{ section.settings.offer_background }};
+    --poh-offer-bg-inactive: {{ section.settings.offer_background_inactive }};
+    --poh-offer-title-color: {{ section.settings.offer_title_color }};
+    --poh-offer-title-size: {{ section.settings.offer_title_size }}px;
+    --poh-offer-subtitle-color: {{ section.settings.offer_subtitle_color }};
+    --poh-offer-subtitle-size: {{ section.settings.offer_subtitle_size }}px;
+    --poh-offer-price-color: {{ section.settings.offer_price_color }};
+    --poh-offer-price-size: {{ section.settings.offer_price_size }}px;
+    --poh-offer-compare-color: {{ section.settings.offer_compare_color }};
+    --poh-offer-compare-size: {{ section.settings.offer_compare_size }}px;
+    --poh-offer-tag-bg: {{ section.settings.offer_tag_background }};
+    --poh-offer-tag-color: {{ section.settings.offer_tag_color }};
+    --poh-offer-tag-size: {{ section.settings.offer_tag_size }}px;
+    --poh-offer-margin-bottom: {{ section.settings.offer_margin_bottom }}px;
+    --poh-gift-bg: {{ section.settings.gift_background }};
+    --poh-gift-color: {{ section.settings.gift_text_color }};
+    --poh-gift-badge-bg: {{ section.settings.gift_badge_background }};
+    --poh-gift-badge-color: {{ section.settings.gift_badge_color }};
+    --poh-gift-image: {{ section.settings.gift_image_size }}px;
+
+    --poh-trust-columns: {{ section.settings.trust_columns }};
+    --poh-trust-icon-size: {{ section.settings.trust_icon_size }}px;
+    --poh-trust-icon-size-mobile: {{ section.settings.trust_icon_size_mobile }}px;
+    --poh-trust-icon-color: {{ section.settings.trust_icon_color }};
+    --poh-trust-icon-border: {{ section.settings.trust_icon_border }};
+    --poh-trust-icon-radius: {{ section.settings.trust_icon_radius }}px;
+    --poh-trust-color: {{ section.settings.trust_text_color }};
+    --poh-trust-size: {{ section.settings.trust_text_size }}px;
+    --poh-trust-margin-top: {{ section.settings.trust_margin_top }}px;
+
+    --poh-faq-gap: {{ section.settings.faq_gap }}px;
+    --poh-faq-gap-mobile: {{ section.settings.faq_gap_mobile }}px;
+    --poh-faq-title-size: {{ section.settings.faq_title_size }}px;
+    --poh-faq-title-size-mobile: {{ section.settings.faq_title_size_mobile }}px;
+    --poh-faq-title-color: {{ section.settings.faq_title_color }};
+    --poh-faq-text-size: {{ section.settings.faq_text_size }}px;
+    --poh-faq-text-size-mobile: {{ section.settings.faq_text_size_mobile }}px;
+    --poh-faq-text-color: {{ section.settings.faq_text_color }};
+    --poh-faq-border: {{ section.settings.faq_border_color }};
+    --poh-faq-icon-color: {{ section.settings.faq_icon_color }};
+    --poh-faq-button-bg: {{ section.settings.faq_button_background }};
+    --poh-faq-button-color: {{ section.settings.faq_button_color }};
+    --poh-faq-margin-top: {{ section.settings.faq_margin_top }}px;
+    --poh-faq-pt-mobile: {{ section.settings.faq_padding_top_mobile }}px;
+    --poh-faq-pb-mobile: {{ section.settings.faq_padding_bottom_mobile }}px;
+    --poh-faq-content-mb-mobile: {{ section.settings.faq_content_spacing_mobile }}px;
+
+    --poh-ba-ratio: {{ section.settings.ba_ratio }};
+    --poh-ba-height-mobile: {{ section.settings.ba_image_height_mobile }}px;
+    --poh-ba-radius: {{ section.settings.ba_radius }}px;
+    --poh-ba-gap: {{ section.settings.ba_gap }}px;
+    --poh-ba-label-size: {{ section.settings.ba_label_size }}px;
+    --poh-ba-label-size-mobile: {{ section.settings.ba_label_size_mobile }}px;
+    --poh-ba-label-color: {{ section.settings.ba_label_color }};
+    --poh-ba-label-align: {{ section.settings.ba_label_align }};
+    --poh-ba-label-align-mobile: {{ section.settings.ba_label_align_mobile }};
+    --poh-ba-arrow-bg: {{ section.settings.ba_arrow_background }};
+    --poh-ba-arrow-color: {{ section.settings.ba_arrow_color }};
+    --poh-ba-dot-color: {{ section.settings.ba_dot_color }};
+    --poh-ba-dot-active-color: {{ section.settings.ba_dot_active_color }};
+    --poh-ba-margin-top: {{ section.settings.ba_margin_top }}px;
+    --poh-ba-margin-bottom: {{ section.settings.ba_margin_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="poh poh--{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+  <div class="poh__container page-width">
+    <div class="poh__grid">
+      {%- comment -%} Gallery column {%- endcomment -%}
+      <div class="poh__media">
+        {%- if product.media.size > 0 -%}
+          <media-gallery
+            id="MediaGallery-{{ section.id }}"
+            class="poh-gallery"
+            role="region"
+            aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
+            data-desktop-layout="thumbnail"
+          >
+            <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
+            <slider-component
+              id="GalleryViewer-{{ section.id }}"
+              class="poh-gallery__viewer{% if section.settings.show_arrows_mobile %} poh-gallery__viewer--arrows-mobile{% endif %}{% if section.settings.show_arrows_desktop %} poh-gallery__viewer--arrows-desktop{% endif %}"
+            >
+              <ul id="Slider-Gallery-{{ section.id }}" class="poh-gallery__list slider slider--everywhere list-unstyled">
+                {%- for media in product.media -%}
+                  <li
+                    id="Slide-{{ section.id }}-{{ media.id }}"
+                    class="poh-gallery__item slider__slide{% if forloop.first %} is-active{% endif %}"
+                    data-media-id="{{ section.id }}-{{ media.id }}"
+                  >
+                    {%- liquid
+                      if forloop.first
+                        assign media_loading = first_image_loading
+                      else
+                        assign media_loading = 'lazy'
+                      endif
+                    -%}
+                    {{
+                      media.preview_image
+                      | image_url: width: 1500
+                      | image_tag:
+                        loading: media_loading,
+                        widths: '375, 550, 750, 1100, 1500',
+                        sizes: '(min-width: 1200px) 600px, (min-width: 750px) 50vw, 100vw',
+                        class: 'poh-gallery__image',
+                        alt: media.alt
+                    }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+              <button
+                type="button"
+                class="poh-gallery__arrow poh-gallery__arrow--prev"
+                name="previous"
+                aria-label="{{ 'general.slider.previous_slide' | t }}"
+                aria-controls="Slider-Gallery-{{ section.id }}"
+              >
+                {%- render 'product-offer-hero-icon', icon: 'caret_right' -%}
+              </button>
+              <button
+                type="button"
+                class="poh-gallery__arrow poh-gallery__arrow--next"
+                name="next"
+                aria-label="{{ 'general.slider.next_slide' | t }}"
+                aria-controls="Slider-Gallery-{{ section.id }}"
+              >
+                {%- render 'product-offer-hero-icon', icon: 'caret_right' -%}
+              </button>
+            </slider-component>
+
+            {%- if section.settings.show_thumbnails and product.media.size > 1 -%}
+              <slider-component id="GalleryThumbnails-{{ section.id }}" class="poh-gallery__thumbs">
+                <ul id="Slider-Thumbnails-{{ section.id }}" class="poh-gallery__thumbs-list slider list-unstyled">
+                  {%- for media in product.media -%}
+                    <li
+                      id="Slide-Thumbnails-{{ section.id }}-{{ forloop.index0 }}"
+                      class="poh-gallery__thumb slider__slide"
+                      data-target="{{ section.id }}-{{ media.id }}"
+                      data-media-position="{{ forloop.index }}"
+                    >
+                      <button
+                        type="button"
+                        class="poh-gallery__thumb-button"
+                        aria-label="{{ 'products.product.media.load_image' | t: index: forloop.index }}"
+                        aria-controls="GalleryViewer-{{ section.id }}"
+                        {% if forloop.first %}
+                          aria-current="true"
+                        {% endif %}
+                      >
+                        {{
+                          media.preview_image
+                          | image_url: width: 360
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '120, 240, 360',
+                            sizes: '(min-width: 990px) 120px, 20vw',
+                            class: 'poh-gallery__thumb-image',
+                            alt: ''
+                        }}
+                      </button>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </slider-component>
+            {%- endif -%}
+          </media-gallery>
+        {%- else -%}
+          <div class="poh-gallery__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'poh-gallery__image placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.gallery_button_label != blank -%}
+          <div class="poh-gallery-button poh-visibility--{{ section.settings.gallery_button_visibility }}">
+            <a
+              class="poh-gallery-button__link"
+              {% if section.settings.gallery_button_link != blank %}
+                href="{{ section.settings.gallery_button_link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+            >
+              {%- if section.settings.gallery_button_icon != 'none' -%}
+                {%- render 'product-offer-hero-icon', icon: section.settings.gallery_button_icon, class: 'poh-gallery-button__icon' -%}
+              {%- endif -%}
+              <span>{{ section.settings.gallery_button_label | escape }}</span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Info column {%- endcomment -%}
+      <div class="poh__info" id="ProductInfo-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign block_index = forloop.index0
+            assign visibility = block.settings.visibility | default: 'all'
+
+            assign group = block.type
+            if group == 'gift'
+              assign group = 'offer'
+            endif
+
+            assign prev_group = ''
+            unless forloop.first
+              assign prev_index = forloop.index0 | minus: 1
+              assign prev_group = section.blocks[prev_index].type
+              if prev_group == 'gift'
+                assign prev_group = 'offer'
+              endif
+            endunless
+
+            assign is_grouped = false
+            if grouped_types contains group
+              assign is_grouped = true
+            endif
+          -%}
+
+          {%- comment -%} Grouped blocks are rendered together by the first block of each run. {%- endcomment -%}
+          {%- if is_grouped and group == prev_group -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- case group -%}
+            {%- when '@app' -%}
+              <div class="poh-app">
+                {%- render block -%}
+              </div>
+
+            {%- when 'rating' -%}
+              <div
+                class="poh-rating poh-visibility--{{ visibility }}"
+                style="--poh-star-color: {{ block.settings.star_color }}; --poh-star-size: {{ block.settings.star_size }}px; --poh-rating-color: {{ block.settings.text_color }}; --poh-rating-size: {{ block.settings.text_size }}px; --poh-rating-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <span
+                  class="poh-rating__stars"
+                  role="img"
+                  aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: block.settings.stars, rating_max: 5 }}"
+                >
+                  {%- for i in (1..block.settings.stars) -%}
+                    {%- render 'product-offer-hero-icon', icon: 'star', class: 'poh-rating__star' -%}
+                  {%- endfor -%}
+                </span>
+                {%- if block.settings.text != blank -%}
+                  <span class="poh-rating__text">{{ block.settings.text | escape }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'title' -%}
+              <{{ block.settings.heading_tag }}
+                class="poh-title poh-visibility--{{ visibility }}"
+                style="--poh-title-size: {{ block.settings.text_size }}px; --poh-title-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-title-color: {{ block.settings.text_color }}; --poh-title-weight: {{ block.settings.font_weight }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.title != blank -%}
+                  {{ block.settings.title }}
+                {%- else -%}
+                  {{ product.title | default: 'Product title' | escape }}
+                {%- endif -%}
+              </{{ block.settings.heading_tag }}>
+
+            {%- when 'text' -%}
+              <div
+                class="poh-text rte poh-visibility--{{ visibility }}"
+                style="--poh-text-size: {{ block.settings.text_size }}px; --poh-text-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-text-color: {{ block.settings.text_color }}; --poh-block-mt: {{ block.settings.spacing_top }}px; --poh-block-mt-mobile: {{ block.settings.spacing_top_mobile }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.text }}
+              </div>
+
+            {%- when 'heading' -%}
+              <h2
+                class="poh-heading poh-visibility--{{ visibility }}"
+                style="--poh-heading-size: {{ block.settings.text_size }}px; --poh-heading-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-heading-color: {{ block.settings.text_color }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.text | escape }}
+              </h2>
+
+            {%- when 'badge' -%}
+              <div class="poh-badges poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'badge' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <span
+                    class="poh-badge poh-visibility--{{ item.settings.visibility }}"
+                    style="--poh-badge-bg: {{ item.settings.background }}; --poh-badge-color: {{ item.settings.text_color }};"
+                    {{ item.shopify_attributes }}
+                  >
+                    {{- item.settings.text | escape -}}
+                  </span>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'highlight' -%}
+              <div class="poh-highlights poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'highlight' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <div class="poh-highlight poh-visibility--{{ item.settings.visibility }}" {{ item.shopify_attributes }}>
+                    <div class="poh-highlight__media">
+                      {%- if item.settings.image != blank -%}
+                        {{
+                          item.settings.image
+                          | image_url: width: 240
+                          | image_tag: loading: 'lazy', widths: '80, 160, 240', sizes: '80px', class: 'poh-highlight__image'
+                        }}
+                      {%- else -%}
+                        {{ 'image' | placeholder_svg_tag: 'poh-highlight__image placeholder-svg' }}
+                      {%- endif -%}
+                    </div>
+                    <p class="poh-highlight__text">{{ item.settings.text | escape }}</p>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'benefit' -%}
+              {%- liquid
+                assign run_count = 0
+                for item in section.blocks offset: block_index
+                  if item.type != 'benefit'
+                    break
+                  endif
+                  assign run_count = run_count | plus: 1
+                endfor
+                assign benefit_rows = run_count | plus: section.settings.benefit_columns | minus: 1 | divided_by: section.settings.benefit_columns | floor
+                assign benefit_rows_mobile = run_count | plus: section.settings.benefit_columns_mobile | minus: 1 | divided_by: section.settings.benefit_columns_mobile | floor
+              -%}
+              <ul
+                class="poh-benefits list-unstyled poh-visibility--{{ visibility }}"
+                style="--poh-benefit-rows: {{ benefit_rows }}; --poh-benefit-rows-mobile: {{ benefit_rows_mobile }};"
+              >
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'benefit' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <li class="poh-benefit poh-visibility--{{ item.settings.visibility }}" {{ item.shopify_attributes }}>
+                    <span class="poh-benefit__icon">
+                      {%- if item.settings.custom_icon != blank -%}
+                        {{
+                          item.settings.custom_icon
+                          | image_url: width: 64
+                          | image_tag: loading: 'lazy', class: 'poh-benefit__icon-image', alt: ''
+                        }}
+                      {%- elsif item.settings.icon != 'none' -%}
+                        {%- render 'product-offer-hero-icon', icon: item.settings.icon -%}
+                      {%- endif -%}
+                    </span>
+                    <span class="poh-benefit__text">{{ item.settings.text | escape }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'offer' -%}
+              {%- liquid
+                assign run_has_offer = false
+                for item in section.blocks offset: block_index
+                  if item.type == 'offer'
+                    assign run_has_offer = true
+                    break
+                  elsif item.type != 'gift'
+                    break
+                  endif
+                endfor
+              -%}
+              {%- unless run_has_offer -%}
+                {%- continue -%}
+              {%- endunless -%}
+              <fieldset class="poh-offers">
+                <legend class="visually-hidden">{{ 'products.product.quantity.label' | t }}</legend>
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'offer' and item.type != 'gift' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  {%- if item.type == 'gift' -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  {%- liquid
+                    assign item_index = block_index | plus: forloop.index0
+                    assign qty = item.settings.quantity
+                    assign unit_price = variant.price | default: 0
+                    assign unit_compare = variant.compare_at_price | default: unit_price
+                    if unit_compare < unit_price
+                      assign unit_compare = unit_price
+                    endif
+                    assign base_total = unit_price | times: qty
+                    assign compare_total = unit_compare | times: qty
+
+                    case item.settings.discount_type
+                      when 'percentage'
+                        assign keep_percent = 100 | minus: item.settings.discount_value
+                        assign offer_total = base_total | times: keep_percent | divided_by: 100.0 | round
+                      when 'amount'
+                        assign discount_cents = item.settings.discount_value | times: 100 | round
+                        assign offer_total = base_total | minus: discount_cents | at_least: 0
+                      when 'fixed_price'
+                        assign offer_total = item.settings.discount_value | times: 100 | round
+                      else
+                        assign offer_total = base_total
+                    endcase
+
+                    assign saved_percent = 0
+                    if compare_total > 0 and compare_total > offer_total
+                      assign saved_percent = compare_total | minus: offer_total | times: 100.0 | divided_by: compare_total | round
+                    endif
+                    assign saved_label = saved_percent | append: '%'
+                    assign offer_subtitle = item.settings.subtitle | replace: '[descuento]', saved_label
+
+                    assign gift_offset = item_index | plus: 1
+                    assign has_gifts = false
+                    if section.blocks[gift_offset].type == 'gift'
+                      assign has_gifts = true
+                    endif
+                  -%}
+                  <label class="poh-offer" {{ item.shopify_attributes }}>
+                    <input
+                      class="poh-offer__input visually-hidden"
+                      type="radio"
+                      name="quantity"
+                      value="{{ qty }}"
+                      form="{{ product_form_id }}"
+                      {% if item.id == selected_offer_id %}
+                        checked
+                      {% endif %}
+                    >
+                    {%- if item.settings.tag != blank -%}
+                      <span class="poh-offer__tag">{{ item.settings.tag | escape }}</span>
+                    {%- endif -%}
+                    <span class="poh-offer__main">
+                      <span class="poh-offer__radio" aria-hidden="true"></span>
+                      <span class="poh-offer__info">
+                        <span class="poh-offer__title">{{ item.settings.title | escape }}</span>
+                        {%- if offer_subtitle != blank -%}
+                          <span class="poh-offer__subtitle">{{ offer_subtitle | escape }}</span>
+                        {%- endif -%}
+                      </span>
+                      <span class="poh-offer__prices">
+                        <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                        <span class="poh-offer__price">{{ offer_total | money }}</span>
+                        {%- if compare_total > offer_total -%}
+                          <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                          <s class="poh-offer__compare">{{ compare_total | money }}</s>
+                        {%- endif -%}
+                      </span>
+                    </span>
+
+                    {%- if has_gifts -%}
+                      <span class="poh-gifts">
+                        {%- for gift in section.blocks offset: gift_offset -%}
+                          {%- if gift.type != 'gift' -%}
+                            {%- break -%}
+                          {%- endif -%}
+                          <span class="poh-gift" {{ gift.shopify_attributes }}>
+                            <span class="poh-gift__media">
+                              {%- if gift.settings.image != blank -%}
+                                {{
+                                  gift.settings.image
+                                  | image_url: width: 160
+                                  | image_tag: loading: 'lazy', widths: '80, 160', sizes: '80px', class: 'poh-gift__image', alt: ''
+                                }}
+                              {%- else -%}
+                                {{ 'product-2' | placeholder_svg_tag: 'poh-gift__image placeholder-svg' }}
+                              {%- endif -%}
+                              {%- if gift.settings.badge != blank -%}
+                                <span class="poh-gift__badge">{{ gift.settings.badge | escape }}</span>
+                              {%- endif -%}
+                            </span>
+                            <span class="poh-gift__title">{{ gift.settings.title | escape }}</span>
+                            {%- if gift.settings.value != blank -%}
+                              <s class="poh-gift__value">{{ gift.settings.value | escape }}</s>
+                            {%- endif -%}
+                          </span>
+                        {%- endfor -%}
+                      </span>
+                    {%- endif -%}
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+
+            {%- when 'buy_buttons' -%}
+              {%- liquid
+                if block.settings.label != blank
+                  assign buy_label = block.settings.label | escape
+                else
+                  assign buy_label = 'products.product.add_to_cart' | t
+                endif
+              -%}
+              <div
+                class="poh-buy poh-visibility--{{ visibility }}"
+                style="--poh-buy-bg: {{ block.settings.background }}; --poh-buy-color: {{ block.settings.text_color }}; --poh-buy-disabled-bg: {{ block.settings.sold_out_background }}; --poh-buy-radius: {{ block.settings.radius }}px; --poh-buy-size: {{ block.settings.text_size }}px; --poh-buy-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-buy-py: {{ block.settings.padding_vertical }}px; --poh-buy-py-mobile: {{ block.settings.padding_vertical_mobile }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if product != blank -%}
+                  <product-form class="poh-buy__form" data-section-id="{{ section.id }}">
+                    <div class="product-form__error-message-wrapper poh-buy__error" role="alert" hidden>
+                      <span class="svg-wrapper">
+                        {{- 'icon-error.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="product-form__error-message"></span>
+                    </div>
+                    {%- form 'product',
+                      product,
+                      id: product_form_id,
+                      class: 'poh-buy__product-form',
+                      novalidate: 'novalidate',
+                      data-type: 'add-to-cart-form'
+                    -%}
+                      <input
+                        type="hidden"
+                        name="id"
+                        value="{{ variant.id }}"
+                        class="product-variant-id"
+                        {% if variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      {%- if first_offer_id == '' -%}
+                        <input type="hidden" name="quantity" value="1">
+                      {%- endif -%}
+                      <button
+                        type="submit"
+                        name="add"
+                        class="poh-buy__button"
+                        {% if variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                        <span class="poh-buy__label">
+                          {%- if variant.available -%}
+                            {{ buy_label }}
+                          {%- elsif block.settings.sold_out_label != blank -%}
+                            {{ block.settings.sold_out_label | escape }}
+                          {%- else -%}
+                            {{ 'products.product.sold_out' | t }}
+                          {%- endif -%}
+                        </span>
+                        {%- render 'loading-spinner' -%}
+                      </button>
+                      {%- if block.settings.show_dynamic_checkout -%}
+                        {{ form | payment_button }}
+                      {%- endif -%}
+                    {%- endform -%}
+                  </product-form>
+                {%- else -%}
+                  <button type="button" class="poh-buy__button" disabled>
+                    <span class="poh-buy__label">{{ buy_label }}</span>
+                  </button>
+                {%- endif -%}
+              </div>
+
+            {%- when 'trust' -%}
+              <ul class="poh-trust list-unstyled poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'trust' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <li class="poh-trust__item poh-visibility--{{ item.settings.visibility }}" {{ item.shopify_attributes }}>
+                    <span class="poh-trust__icon">
+                      {%- if item.settings.custom_icon != blank -%}
+                        {{
+                          item.settings.custom_icon
+                          | image_url: width: 96
+                          | image_tag: loading: 'lazy', class: 'poh-trust__icon-image', alt: ''
+                        }}
+                      {%- elsif item.settings.icon != 'none' -%}
+                        {%- render 'product-offer-hero-icon', icon: item.settings.icon -%}
+                      {%- endif -%}
+                    </span>
+                    <div class="poh-trust__text">{{ item.settings.text }}</div>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'testimonial' -%}
+              <div
+                class="poh-testimonial poh-visibility--{{ visibility }}"
+                style="--poh-testimonial-bg: {{ block.settings.background }}; --poh-testimonial-border: {{ block.settings.border_color }}; --poh-testimonial-radius: {{ block.settings.radius }}px; --poh-testimonial-color: {{ block.settings.text_color }}; --poh-testimonial-author-color: {{ block.settings.author_color }}; --poh-testimonial-size: {{ block.settings.text_size }}px; --poh-testimonial-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-testimonial-lh-mobile: {{ block.settings.line_height_mobile | divided_by: 100.0 }}; --poh-block-mt: {{ block.settings.spacing_top }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <div class="poh-testimonial__media">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 300
+                      | image_tag: loading: 'lazy', widths: '100, 200, 300', sizes: '100px', class: 'poh-testimonial__image'
+                    }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'poh-testimonial__image placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+                <div class="poh-testimonial__content">
+                  <blockquote class="poh-testimonial__quote">{{ block.settings.quote }}</blockquote>
+                  {%- if block.settings.author != blank -%}
+                    <p class="poh-testimonial__author">{{ block.settings.author | escape }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+
+            {%- when 'faq' -%}
+              <div class="poh-faq poh-visibility--{{ visibility }}">
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'faq' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <details
+                    class="poh-faq__item poh-visibility--{{ item.settings.visibility }}"
+                    {% if section.settings.faq_exclusive %}
+                      name="poh-faq-{{ section.id }}"
+                    {% endif %}
+                    {% if item.settings.open %}
+                      open
+                    {% endif %}
+                    {{ item.shopify_attributes }}
+                  >
+                    <summary class="poh-faq__summary">
+                      <span class="poh-faq__title">{{ item.settings.title | escape }}</span>
+                      {%- render 'product-offer-hero-icon', icon: 'plus', class: 'poh-faq__icon' -%}
+                    </summary>
+                    <div class="poh-faq__content">
+                      <div class="rte">{{ item.settings.content }}</div>
+                      {%- if item.settings.button_label != blank -%}
+                        <a
+                          class="poh-faq__button"
+                          {% if item.settings.button_link != blank %}
+                            href="{{ item.settings.button_link }}"
+                          {% else %}
+                            role="link" aria-disabled="true"
+                          {% endif %}
+                        >
+                          <span>{{ item.settings.button_label | escape }}</span>
+                          {%- render 'product-offer-hero-icon', icon: 'caret_right_bold', class: 'poh-faq__button-icon' -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </details>
+                {%- endfor -%}
+              </div>
+
+            {%- when 'before_after' -%}
+              {%- liquid
+                assign ba_count = 0
+                for item in section.blocks offset: block_index
+                  if item.type != 'before_after'
+                    break
+                  endif
+                  assign ba_count = ba_count | plus: 1
+                endfor
+              -%}
+              <div class="poh-ba poh-visibility--{{ section.settings.ba_visibility }}">
+                <slideshow-component class="poh-ba__slideshow">
+                  <ul
+                    id="Slider-{{ section.id }}-ba"
+                    class="poh-ba__list slider slider--everywhere list-unstyled"
+                    data-autoplay="{{ section.settings.ba_autoplay }}"
+                    data-speed="{{ section.settings.ba_speed }}"
+                  >
+                    {%- for item in section.blocks offset: block_index -%}
+                      {%- if item.type != 'before_after' -%}
+                        {%- break -%}
+                      {%- endif -%}
+                      <li
+                        id="Slide-{{ section.id }}-ba-{{ forloop.index }}"
+                        class="poh-ba__slide slider__slide slideshow__slide"
+                        role="group"
+                        aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ ba_count }}"
+                        {{ item.shopify_attributes }}
+                      >
+                        <figure class="poh-ba__figure">
+                          {%- if item.settings.image_before != blank -%}
+                            {{
+                              item.settings.image_before
+                              | image_url: width: 900
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '300, 450, 600, 900',
+                                sizes: '(min-width: 990px) 300px, 50vw',
+                                class: 'poh-ba__image'
+                            }}
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag: 'poh-ba__image placeholder-svg' }}
+                          {%- endif -%}
+                          {%- if item.settings.label_before != blank -%}
+                            <figcaption class="poh-ba__label">{{ item.settings.label_before | escape }}</figcaption>
+                          {%- endif -%}
+                        </figure>
+                        <figure class="poh-ba__figure">
+                          {%- if item.settings.image_after != blank -%}
+                            {{
+                              item.settings.image_after
+                              | image_url: width: 900
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '300, 450, 600, 900',
+                                sizes: '(min-width: 990px) 300px, 50vw',
+                                class: 'poh-ba__image'
+                            }}
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag: 'poh-ba__image placeholder-svg' }}
+                          {%- endif -%}
+                          {%- if item.settings.label_after != blank -%}
+                            <figcaption class="poh-ba__label">{{ item.settings.label_after | escape }}</figcaption>
+                          {%- endif -%}
+                        </figure>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  <div class="poh-ba__controls slider-buttons">
+                    <button
+                      type="button"
+                      class="poh-ba__arrow poh-ba__arrow--prev"
+                      name="previous"
+                      aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+                      aria-controls="Slider-{{ section.id }}-ba"
+                    >
+                      {%- render 'product-offer-hero-icon', icon: 'caret_right_bold' -%}
+                    </button>
+                    <div class="poh-ba__dots{% if section.settings.ba_show_dots %} poh-ba__dots--desktop{% endif %}{% if section.settings.ba_show_dots_mobile %} poh-ba__dots--mobile{% endif %}">
+                      {%- for i in (1..ba_count) -%}
+                        <button
+                          type="button"
+                          class="poh-ba__dot slider-counter__link{% if forloop.first %} slider-counter__link--active{% endif %}"
+                          aria-label="{{ 'sections.slideshow.load_slide' | t }} {{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                          aria-controls="Slider-{{ section.id }}-ba"
+                          {% if forloop.first %}
+                            aria-current="true"
+                          {% endif %}
+                        ></button>
+                      {%- endfor -%}
+                    </div>
+                    <button
+                      type="button"
+                      class="poh-ba__arrow poh-ba__arrow--next"
+                      name="next"
+                      aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+                      aria-controls="Slider-{{ section.id }}-ba"
+                    >
+                      {%- render 'product-offer-hero-icon', icon: 'caret_right_bold' -%}
+                    </button>
+                    {%- if section.settings.ba_autoplay -%}
+                      <button
+                        type="button"
+                        class="poh-ba__autoplay slideshow__autoplay"
+                        aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
+                      >
+                        <span class="svg-wrapper poh-ba__autoplay-pause">
+                          {{- 'icon-pause.svg' | inline_asset_content -}}
+                        </span>
+                        <span class="svg-wrapper poh-ba__autoplay-play">
+                          {{- 'icon-play.svg' | inline_asset_content -}}
+                        </span>
+                      </button>
+                    {%- endif -%}
+                  </div>
+                </slideshow-component>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>

@@ -12,74 +12,456 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
+        "rating_ib6Um9": {
+          "type": "rating",
+          "settings": {
+            "stars": 5,
+            "star_color": "#93433d",
+            "star_size": 18,
+            "text": "2.432 Evaluaciones",
+            "text_color": "#50020b",
+            "text_size": 15,
+            "text_size_mobile": 14,
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 8,
+            "visibility": "all"
+          }
+        },
+        "title_Mm9FwJ": {
+          "type": "title",
+          "settings": {
+            "title": "",
+            "heading_tag": "h1",
+            "text_size": 32,
+            "text_size_mobile": 25,
+            "font_weight": "500",
+            "text_color": "#151515",
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 2,
+            "visibility": "all"
+          }
+        },
+        "badge_AfcDHz": {
+          "type": "badge",
+          "settings": {
+            "text": "100% Vegana",
+            "background": "#fba691",
+            "text_color": "#ffffff",
+            "visibility": "all"
+          }
+        },
+        "badge_ktkx64": {
+          "type": "badge",
+          "settings": {
+            "text": "Triple Bloqueo DHT",
+            "background": "#f2756b",
+            "text_color": "#ffffff",
+            "visibility": "all"
+          }
+        },
+        "text_6TX7q6": {
           "type": "text",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "text": "<p>12 ingredientes + Triple Bloqueo DHT en 2 gomitas al día. Frena tu caída hoy, cabello más grueso mañana.</p>",
+            "text_size": 16,
+            "text_size_mobile": 14,
+            "text_color": "#000000",
+            "spacing_top": 5,
+            "spacing_bottom": 16,
+            "spacing_bottom_mobile": 24,
+            "visibility": "all",
+            "spacing_top_mobile": 12
           }
         },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "variant_picker": {
-          "type": "variant_picker",
+        "highlight_JzgDat": {
+          "type": "highlight",
           "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
+            "text": "Detiene la Caída Desde la Raíz",
+            "visibility": "mobile_tablet"
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {}
+        "highlight_AxLFML": {
+          "type": "highlight",
+          "settings": {
+            "text": "Pelo Más Grueso Desde Dentro",
+            "visibility": "mobile_tablet"
+          }
         },
-        "buy_buttons": {
+        "heading_KpLTmB": {
+          "type": "heading",
+          "settings": {
+            "text": "Beneficios",
+            "text_size": 17,
+            "text_size_mobile": 16,
+            "text_color": "#7f1525",
+            "spacing_bottom": 4,
+            "spacing_bottom_mobile": 6,
+            "visibility": "desktop"
+          }
+        },
+        "benefit_LhdtUU": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Frena la caída",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_EgA6XN": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Menos entradas",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_TiRHjf": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Raya más fina",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_ApgNWB": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Menos cuero visible",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_MrgjiD": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Coleta más gruesa",
+            "visibility": "desktop"
+          }
+        },
+        "benefit_CrntT8": {
+          "type": "benefit",
+          "settings": {
+            "icon": "check_circle",
+            "text": "Pelo más fuerte",
+            "visibility": "desktop"
+          }
+        },
+        "gift_JTbTtq": {
+          "type": "gift",
+          "settings": {
+            "title": "Planner de Progreso 90 Días",
+            "badge": "GRATIS",
+            "value": "€15,00"
+          }
+        },
+        "buy_buttons_QeAxBD": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "label": "Añadir Al Carrito",
+            "sold_out_label": "Agotado",
+            "show_dynamic_checkout": false,
+            "background": "#731122",
+            "text_color": "#f3f6f2",
+            "sold_out_background": "#b7b7b7",
+            "radius": 100,
+            "text_size": 20,
+            "text_size_mobile": 18,
+            "padding_vertical": 12,
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 0,
+            "visibility": "all",
+            "padding_vertical_mobile": 16
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
+        "trust_6G7gKL": {
+          "type": "trust",
           "settings": {
-            "share_label": "Share"
+            "icon": "leaf",
+            "text": "<p>Sin Azúcar &amp;</p><p>100% Natural</p>",
+            "visibility": "all"
+          }
+        },
+        "trust_AFMRtU": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield",
+            "text": "<p>90 días</p><p>de Garantía</p>",
+            "visibility": "all"
+          }
+        },
+        "trust_yBY4Ri": {
+          "type": "trust",
+          "settings": {
+            "icon": "sparkle",
+            "text": "<p>Orgullosamente Mexicano</p>",
+            "visibility": "all"
+          }
+        },
+        "testimonial_pPpf9j": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“Para mis pacientes con caída y afinamiento, Gujoy es siempre mi primera recomendación”</p>",
+            "author": "Dra Carmen Vidal | Tricóloga",
+            "background": "#fdf8ed",
+            "border_color": "#731122",
+            "radius": 20,
+            "text_color": "#4d4d4d",
+            "author_color": "#000000",
+            "text_size": 16,
+            "text_size_mobile": 13,
+            "spacing_top": 16,
+            "visibility": "mobile",
+            "line_height_mobile": 150
+          }
+        },
+        "faq_jCJr36": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Por qué Lunessa sí funciona?",
+            "content": "<p>La caída del pelo en la mujer casi siempre tiene una causa: una hormona llamada DHT. La DHT se pega a la raíz capilar y hace que el pelo nazca cada vez más fino, hasta que casi no se nota.</p><p>Muchos productos solo alimentan el pelo por fuera. Lunessa actúa sobre la causa.</p><p><strong>Cómo actúa, paso a paso</strong></p><ol><li>Tomas una gominola al día, con los 12 nutrientes de la fórmula.</li><li>Dos de ellos —Palma Enana y Beta-Sitosterol— frenan la DHT antes de que llegue a la raíz.</li><li>Al frenar la DHT, la raíz deja de debilitarse. El pelo que nace, nace más fuerte.</li><li>Con el tiempo, se nota: menos pelo en la almohada, más densidad, más volumen.</li></ol><p><strong>El dato que lo respalda</strong></p><p>Esta combinación —Palma Enana + Beta-Sitosterol— cuenta con un ensayo clínico publicado (Prager, 2002) que confirma su efecto frenando la DHT.</p><p><strong>Cómo comprobarlo sin creernos</strong></p><p>Dale la vuelta al bote. Ahí están los 12 ingredientes, sin nombres inventados. Lo que ves en la etiqueta es lo que hay dentro.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_z4B6zF": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Cuánto tardo en ver resultados?",
+            "content": "<p>Tu pelo tiene un ciclo natural de unos 90 días. Por eso no vendemos un pack de 1 mes: no da tiempo a ver el cambio real, y preferimos que veas el resultado completo antes de decidir.</p><p>Muchas notan menos caída ya en las primeras semanas. Pero un pelo más grueso de verdad llega dentro de ese ciclo de 90 días, por eso nuestra garantía también dura 90 días.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_f6YJAk": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Funciona con mi tipo de caída?",
+            "content": "<p>Sí. Lunessa actúa en las causas más comunes de la caída:</p><p>🔄 Cambios Hormonales<br/>⏳ Edad y Envejecimiento<br/>🤱 Posparto<br/>😰 Estrés y Ansiedad<br/>🚿 Agua Dura<br/>🥗 Déficit Nutricional<br/>🤷‍♀️ No estoy segura</p><p>Su Triple Bloqueo DHT frena la causa hormonal. Sus 12 vitaminas nutren tu raíz, sea cual sea el motivo.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_aMx8Qx": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Tiene efectos secundarios?",
+            "content": "<p>Lunessa está formulado con<strong> ingredientes</strong> <strong>100% naturales y sin azúcar</strong> añadida, diseñado para ser seguro en tu uso diario. Si estás embarazada o tienes alguna condición médica, consulta con tu médico antes de empezar.</p>",
+            "button_label": "",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "faq_LGDBqa": {
+          "type": "faq",
+          "settings": {
+            "title": "¿Qué lleva Lunessa dentro?",
+            "content": "<p><strong>Lunessa lleva Triple Bloqueo DHT</strong> —Palma Enana, Semilla de Calabaza y Beta-sitosterol— más 12 vitaminas y minerales pensados para tu cabello.</p><p>Para ver todos los ingredientes y el beneficio de cada uno, haz clic abajo.</p>",
+            "button_label": "Conocer Ingredientes",
+            "button_link": "",
+            "open": false,
+            "visibility": "all"
+          }
+        },
+        "before_after_GMGwmd": {
+          "type": "before_after",
+          "settings": {
+            "image_before": "shopify://shop_images/Antes1.webp",
+            "label_before": "ANTES (DÍA 0)",
+            "image_after": "shopify://shop_images/Despues1.webp",
+            "label_after": "DESPUÉS (3 MESES)"
+          }
+        },
+        "before_after_MRBHbj": {
+          "type": "before_after",
+          "settings": {
+            "image_before": "shopify://shop_images/Antes2.webp",
+            "label_before": "ANTES (DÍA 0)",
+            "image_after": "shopify://shop_images/Despues2.webp",
+            "label_after": "DESPUÉS (2 MESES)"
+          }
+        },
+        "before_after_yi6EGC": {
+          "type": "before_after",
+          "settings": {
+            "image_before": "shopify://shop_images/ChatGPT_Image_11_sept_2026_12_28_34.webp",
+            "label_before": "ANTES (DÍA 0)",
+            "image_after": "shopify://shop_images/Despues3.webp",
+            "label_after": "DESPUÉS (5 MESES)"
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description",
-        "share"
+        "rating_ib6Um9",
+        "title_Mm9FwJ",
+        "badge_AfcDHz",
+        "badge_ktkx64",
+        "text_6TX7q6",
+        "highlight_JzgDat",
+        "highlight_AxLFML",
+        "heading_KpLTmB",
+        "benefit_LhdtUU",
+        "benefit_EgA6XN",
+        "benefit_TiRHjf",
+        "benefit_ApgNWB",
+        "benefit_MrgjiD",
+        "benefit_CrntT8",
+        "gift_JTbTtq",
+        "buy_buttons_QeAxBD",
+        "trust_6G7gKL",
+        "trust_AFMRtU",
+        "trust_yBY4Ri",
+        "testimonial_pPpf9j",
+        "faq_jCJr36",
+        "faq_z4B6zF",
+        "faq_f6YJAk",
+        "faq_aMx8Qx",
+        "faq_LGDBqa",
+        "before_after_GMGwmd",
+        "before_after_MRBHbj",
+        "before_after_yi6EGC"
       ],
+      "name": "Producto con ofertas",
       "settings": {
-        "enable_sticky_info": true,
-        "color_scheme": "scheme-1",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "mobile_thumbnails": "hide",
-        "media_position": "left",
-        "image_zoom": "lightbox",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12
+        "color_scheme": "",
+        "gallery_width": 50,
+        "columns_gap": 32,
+        "mobile_row_gap": 28,
+        "mobile_gutter": 20,
+        "padding_top": 60,
+        "padding_bottom": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 32,
+        "heading_font_custom": false,
+        "heading_font": "assistant_n4",
+        "body_font_custom": false,
+        "body_font": "assistant_n4",
+        "media_ratio": "1 / 1",
+        "media_fit": "cover",
+        "media_radius": 8,
+        "show_thumbnails": true,
+        "thumbnails_per_row": 5,
+        "thumbnails_per_row_mobile": 5,
+        "thumbnail_gap": 8,
+        "thumbnail_radius": 0,
+        "thumbnail_active_width": 0,
+        "thumbnail_active_color": "#731122",
+        "show_arrows_mobile": true,
+        "show_arrows_desktop": false,
+        "arrow_background": "#dcccce",
+        "arrow_color": "#121212",
+        "arrow_icon_size": 16,
+        "arrow_icon_size_mobile": 11,
+        "gallery_button_label": "Ver Informaciones Nutricionales",
+        "gallery_button_link": "",
+        "gallery_button_icon": "article",
+        "gallery_button_visibility": "desktop",
+        "gallery_button_background": "#fdf8ed",
+        "gallery_button_color": "#731122",
+        "gallery_button_radius": 15,
+        "gallery_button_size": 14,
+        "badge_size": 16,
+        "badge_size_mobile": 14,
+        "badge_padding": 16,
+        "badge_gap": 5,
+        "badge_radius": 100,
+        "badge_margin_top": 10,
+        "highlight_columns": 2,
+        "highlight_gap": 16,
+        "highlight_image_size": 80,
+        "highlight_image_size_mobile": 35,
+        "highlight_image_radius": 50,
+        "highlight_text_size": 16,
+        "highlight_text_size_mobile": 14,
+        "highlight_text_color": "#731122",
+        "benefit_columns": 3,
+        "benefit_columns_mobile": 3,
+        "benefit_column_gap": 4,
+        "benefit_row_gap": 0,
+        "benefit_icon_size": 18,
+        "benefit_icon_size_mobile": 16,
+        "benefit_icon_color": "#7f1525",
+        "benefit_text_size": 16,
+        "benefit_text_size_mobile": 12,
+        "benefit_text_color": "#7f1525",
+        "benefit_margin_bottom": 16,
+        "offer_gap": 12,
+        "offer_radius": 13,
+        "offer_border_width": 2,
+        "offer_border_color": "#7f1525",
+        "offer_border_color_inactive": "#e4e4e4",
+        "offer_background": "#ffffff",
+        "offer_background_inactive": "#ffffff",
+        "offer_title_color": "#000000",
+        "offer_title_size": 17,
+        "offer_subtitle_color": "#7f1525",
+        "offer_subtitle_size": 14,
+        "offer_price_color": "#222222",
+        "offer_price_size": 18,
+        "offer_compare_color": "#7f1525",
+        "offer_compare_size": 15,
+        "offer_tag_background": "#7f1525",
+        "offer_tag_color": "#ffffff",
+        "offer_tag_size": 13,
+        "gift_background": "#fff5f9",
+        "gift_text_color": "#222222",
+        "gift_badge_background": "#81003e",
+        "gift_badge_color": "#ffffff",
+        "gift_image_size": 44,
+        "offer_margin_bottom": 16,
+        "trust_columns": 3,
+        "trust_icon_size": 19,
+        "trust_icon_size_mobile": 23,
+        "trust_icon_color": "#7d1727",
+        "trust_icon_border": "#e7d9da",
+        "trust_icon_radius": 8,
+        "trust_text_color": "#731122",
+        "trust_text_size": 14,
+        "trust_margin_top": 16,
+        "faq_exclusive": true,
+        "faq_gap": 12,
+        "faq_gap_mobile": 4,
+        "faq_title_size": 17,
+        "faq_title_size_mobile": 16,
+        "faq_title_color": "#000000",
+        "faq_text_size": 16,
+        "faq_text_size_mobile": 14,
+        "faq_text_color": "#151515",
+        "faq_border_color": "#e0e0e0",
+        "faq_icon_color": "#4d4d4d",
+        "faq_button_background": "#f8e4de",
+        "faq_button_color": "#d2402e",
+        "faq_margin_top": 10,
+        "ba_visibility": "all",
+        "ba_ratio": "4 / 3",
+        "ba_image_height_mobile": 200,
+        "ba_radius": 6,
+        "ba_gap": 16,
+        "ba_label_size": 16,
+        "ba_label_size_mobile": 14,
+        "ba_label_color": "#151515",
+        "ba_label_align": "left",
+        "ba_label_align_mobile": "center",
+        "ba_arrow_background": "#f3f3f3",
+        "ba_arrow_color": "#731122",
+        "ba_show_dots": true,
+        "ba_show_dots_mobile": false,
+        "ba_dot_color": "#e2e2e2",
+        "ba_dot_active_color": "#121212",
+        "ba_autoplay": false,
+        "ba_speed": 5,
+        "ba_margin_top": 16,
+        "ba_margin_bottom": 16,
+        "faq_padding_top_mobile": 8,
+        "faq_padding_bottom_mobile": 8,
+        "faq_content_spacing_mobile": 10
       }
     },
     "disclosures": {

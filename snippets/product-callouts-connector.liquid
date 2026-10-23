@@ -1,0 +1,53 @@
+{%- doc -%}
+  Renders the dotted elbow line that joins a callout with the product image.
+  Coordinates are percentages of the visual area, measured from the callout's side and edge.
+
+  @param {string} side - 'left' or 'right'.
+  @param {string} edge - 'top' or 'bottom'.
+  @param {number} start_x - Horizontal start point (next to the image).
+  @param {number} line_x - Horizontal position of the vertical segment.
+  @param {number} start_y - Vertical start point.
+  @param {number} end_y - Vertical end point (next to the callout).
+  @param {number} radius - Elbow radius.
+
+  @example
+  {% render 'product-callouts-connector', side: 'left', edge: 'top', start_x: 26, line_x: 15.5, start_y: 36.5, end_y: 22.5, radius: 4 %}
+{%- enddoc -%}
+{%- liquid
+  assign delta_x = start_x | minus: line_x
+  assign delta_y = end_y | minus: start_y
+  assign abs_x = delta_x | abs
+  assign abs_y = delta_y | abs
+  assign r = radius | at_most: abs_x | at_most: abs_y
+
+  assign r_x = r
+  if delta_x < 0
+    assign r_x = r | times: -1
+  endif
+  assign r_y = r
+  if delta_y < 0
+    assign r_y = r | times: -1
+  endif
+
+  assign x1 = start_x
+  assign x2 = line_x | plus: r_x
+  assign x3 = line_x
+  assign y1 = start_y
+  assign y2 = start_y | plus: r_y
+  assign y3 = end_y
+
+  if side == 'right'
+    assign x1 = 100 | minus: x1
+    assign x2 = 100 | minus: x2
+    assign x3 = 100 | minus: x3
+  endif
+  if edge == 'bottom'
+    assign y1 = 100 | minus: y1
+    assign y2 = 100 | minus: y2
+    assign y3 = 100 | minus: y3
+  endif
+-%}
+<path
+  class="product-callouts__path"
+  d="M {{ x1 }} {{ y1 }} L {{ x2 }} {{ y1 }} Q {{ x3 }} {{ y1 }} {{ x3 }} {{ y2 }} L {{ x3 }} {{ y3 }}"
+></path>

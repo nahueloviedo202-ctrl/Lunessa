@@ -1,0 +1,1506 @@
+{{ 'section-product-callouts.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign number_font = section.settings.number_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign number_ff = number_font.family | append: ', ' | append: number_font.fallback_families
+
+  assign media_columns = 12 | minus: section.settings.content_columns
+  assign stat_text_columns = 12 | minus: section.settings.number_columns
+
+  assign stat_border_opacity = section.settings.stat_border_opacity | divided_by: 100.0
+  assign disclaimer_opacity = section.settings.disclaimer_opacity | divided_by: 100.0
+  assign callout_text_opacity = section.settings.callout_text_opacity | divided_by: 100.0
+  assign connector_opacity = section.settings.connector_opacity | divided_by: 100.0
+
+  assign image_sizes = '(min-width: 990px) ' | append: section.settings.image_max_width | append: 'px, (min-width: 750px) '
+  assign image_sizes = image_sizes | append: section.settings.image_max_width_tablet | append: 'px, '
+  assign image_sizes = image_sizes | append: section.settings.image_max_width_mobile | append: 'px'
+
+  assign stat_blocks = section.blocks | where: 'type', 'stat'
+  assign callout_blocks = section.blocks | where: 'type', 'callout'
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {{ heading_font_weighted | default: heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+  {% endif %}
+  {{ number_font | font_face: font_display: 'swap' }}
+
+  .product-callouts-{{ section.id }} {
+    --pc-bg: {{ section.settings.background_color | default: 'transparent' }};
+    --pc-pt: {{ section.settings.padding_top }}px;
+    --pc-pb: {{ section.settings.padding_bottom }}px;
+    --pc-px: {{ section.settings.padding_x }}px;
+    --pc-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --pc-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --pc-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --pc-card-bg: {{ section.settings.card_gradient | default: section.settings.card_color }};
+    --pc-card-bg-mobile: {{ section.settings.card_gradient_mobile | default: section.settings.card_gradient | default: section.settings.card_color }};
+    --pc-card-max-width: {{ section.settings.card_max_width }}px;
+    --pc-card-radius: {{ section.settings.card_radius }}px;
+    --pc-card-py: {{ section.settings.card_padding_y }}px;
+    --pc-card-px: {{ section.settings.card_padding_x }}px;
+    --pc-card-py-mobile: {{ section.settings.card_padding_y_mobile }}px;
+    --pc-card-px-mobile: {{ section.settings.card_padding_x_mobile }}px;
+    --pc-content-fr: {{ section.settings.content_columns }}fr;
+    --pc-media-fr: {{ media_columns }}fr;
+    --pc-column-gap: {{ section.settings.column_gap }}px;
+    --pc-heading-ff: {{ heading_ff }};
+    --pc-heading-fs: {{ heading_fs }};
+    --pc-heading-fw: {{ section.settings.heading_font_weight }};
+    --pc-body-ff: {{ body_ff }};
+    --pc-body-fs: {{ body_fs }};
+    --pc-number-ff: {{ number_ff }};
+    --pc-number-fs: {{ number_font.style }};
+    --pc-number-fw: {{ number_font.weight }};
+    --pc-heading-color: {{ section.settings.heading_color }};
+    --pc-heading-size: {{ section.settings.heading_size }}px;
+    --pc-heading-size-tablet: {{ section.settings.heading_size_tablet }}px;
+    --pc-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --pc-heading-lh: {{ section.settings.heading_line_height }}%;
+    --pc-heading-lh-tablet: {{ section.settings.heading_line_height_tablet }}%;
+    --pc-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}%;
+    --pc-heading-align: {{ section.settings.heading_alignment }};
+    --pc-heading-align-mobile: {{ section.settings.heading_alignment_mobile }};
+    --pc-heading-mt-mobile: {{ section.settings.heading_margin_top_mobile }}px;
+    --pc-stats-columns: {{ section.settings.stats_columns_desktop }};
+    --pc-stats-mt: {{ section.settings.stats_margin_top }}px;
+    --pc-stats-padding: {{ section.settings.stats_padding_mobile }}px;
+    --pc-stats-gap: {{ section.settings.stats_gap }}px;
+    --pc-stat-border: {{ section.settings.stat_border_width }}px solid {{ section.settings.stat_border_color | color_modify: 'alpha', stat_border_opacity }};
+    --pc-stat-radius: {{ section.settings.stat_radius }}px;
+    --pc-stat-py: {{ section.settings.stat_padding_y }}px;
+    --pc-stat-px: {{ section.settings.stat_padding_x }}px;
+    --pc-stat-py-mobile: {{ section.settings.stat_padding_y_mobile }}px;
+    --pc-stat-px-mobile: {{ section.settings.stat_padding_x_mobile }}px;
+    --pc-number-fr: {{ section.settings.number_columns }}fr;
+    --pc-stat-text-fr: {{ stat_text_columns }}fr;
+    --pc-number-color: {{ section.settings.number_color }};
+    --pc-number-size: {{ section.settings.number_size }}px;
+    --pc-number-size-tablet: {{ section.settings.number_size_tablet }}px;
+    --pc-number-size-mobile: {{ section.settings.number_size_mobile }}px;
+    --pc-number-lh: {{ section.settings.number_line_height }}%;
+    --pc-number-lh-tablet: {{ section.settings.number_line_height_tablet }}%;
+    --pc-number-lh-mobile: {{ section.settings.number_line_height_mobile }}%;
+    --pc-stat-text-color: {{ section.settings.stat_text_color }};
+    --pc-stat-text-size: {{ section.settings.stat_text_size }}px;
+    --pc-stat-text-size-tablet: {{ section.settings.stat_text_size_tablet }}px;
+    --pc-stat-text-size-mobile: {{ section.settings.stat_text_size_mobile }}px;
+    --pc-stat-text-lh: {{ section.settings.stat_text_line_height }}%;
+    --pc-stat-text-lh-tablet: {{ section.settings.stat_text_line_height_tablet }}%;
+    --pc-stat-text-lh-mobile: {{ section.settings.stat_text_line_height_mobile }}%;
+    --pc-stat-text-ls: {{ section.settings.stat_text_letter_spacing }}px;
+    --pc-disclaimer-color: {{ section.settings.disclaimer_color | color_modify: 'alpha', disclaimer_opacity }};
+    --pc-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+    --pc-disclaimer-size-tablet: {{ section.settings.disclaimer_size_tablet }}px;
+    --pc-disclaimer-size-mobile: {{ section.settings.disclaimer_size_mobile }}px;
+    --pc-disclaimer-lh: {{ section.settings.disclaimer_line_height }}%;
+    --pc-disclaimer-lh-tablet: {{ section.settings.disclaimer_line_height_tablet }}%;
+    --pc-disclaimer-lh-mobile: {{ section.settings.disclaimer_line_height_mobile }}%;
+    --pc-disclaimer-ls: {{ section.settings.disclaimer_letter_spacing }}px;
+    --pc-disclaimer-mt: {{ section.settings.disclaimer_margin_top }}px;
+    --pc-visual-height: {{ section.settings.visual_min_height }}px;
+    --pc-visual-height-tablet: {{ section.settings.visual_min_height_tablet }}px;
+    --pc-visual-height-mobile: {{ section.settings.visual_min_height_mobile }}px;
+    --pc-image-width: {{ section.settings.image_width }}%;
+    --pc-image-width-mobile: {{ section.settings.image_width_mobile }}%;
+    --pc-image-max-width: {{ section.settings.image_max_width }}px;
+    --pc-image-max-width-tablet: {{ section.settings.image_max_width_tablet }}px;
+    --pc-image-max-width-mobile: {{ section.settings.image_max_width_mobile }}px;
+    --pc-callout-max-width: {{ section.settings.callout_max_width }}px;
+    --pc-callout-max-width-tablet: {{ section.settings.callout_max_width_tablet }}px;
+    --pc-callout-max-width-percent: {{ section.settings.callout_max_width_percent }}%;
+    --pc-callout-align: {{ section.settings.callout_text_alignment }};
+    --pc-callout-title-color: {{ section.settings.callout_title_color }};
+    --pc-callout-title-size: {{ section.settings.callout_title_size }}px;
+    --pc-callout-title-size-tablet: {{ section.settings.callout_title_size_tablet }}px;
+    --pc-callout-title-size-mobile: {{ section.settings.callout_title_size_mobile }}px;
+    --pc-callout-title-lh: {{ section.settings.callout_title_line_height }}%;
+    --pc-callout-title-mb: {{ section.settings.callout_title_margin_bottom }}px;
+    --pc-callout-title-mb-mobile: {{ section.settings.callout_title_margin_bottom_mobile }}px;
+    --pc-callout-text-color: {{ section.settings.callout_text_color | color_modify: 'alpha', callout_text_opacity }};
+    --pc-callout-text-size: {{ section.settings.callout_text_size }}px;
+    --pc-callout-text-size-tablet: {{ section.settings.callout_text_size_tablet }}px;
+    --pc-callout-text-size-mobile: {{ section.settings.callout_text_size_mobile }}px;
+    --pc-callout-text-lh: {{ section.settings.callout_text_line_height }}%;
+    --pc-callout-text-lh-mobile: {{ section.settings.callout_text_line_height_mobile }}%;
+    --pc-connector-color: {{ section.settings.connector_color | color_modify: 'alpha', connector_opacity }};
+    --pc-connector-width: {{ section.settings.connector_width }};
+    --pc-connector-spacing: {{ section.settings.connector_spacing }};
+  }
+{%- endstyle -%}
+
+<div class="product-callouts product-callouts-{{ section.id }}">
+  {%- if section.settings.background_image != blank -%}
+    {{
+      section.settings.background_image
+      | image_url: width: 1920
+      | image_tag:
+        loading: 'lazy',
+        alt: '',
+        sizes: '100vw',
+        widths: '750, 1100, 1500, 1920',
+        class: 'product-callouts__background product-callouts__background--desktop'
+    }}
+  {%- endif -%}
+  {%- if section.settings.background_image_mobile != blank -%}
+    {{
+      section.settings.background_image_mobile
+      | image_url: width: 1000
+      | image_tag:
+        loading: 'lazy',
+        alt: '',
+        sizes: '100vw',
+        widths: '375, 550, 750, 1000',
+        class: 'product-callouts__background product-callouts__background--mobile'
+    }}
+  {%- endif -%}
+
+  <div class="product-callouts__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="product-callouts__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="product-callouts__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if stat_blocks.size > 0 -%}
+        <div class="product-callouts__stats">
+          {%- for block in stat_blocks -%}
+            {%- assign lines = block.settings.text | newline_to_br | split: '<br />' -%}
+            <div class="product-callouts__stat" {{ block.shopify_attributes }}>
+              <span class="product-callouts__stat-number">{{ block.settings.number | escape }}</span>
+              <span class="product-callouts__stat-text">
+                {%- for line in lines -%}
+                  <span class="product-callouts__stat-line">{{ line | strip | escape }}</span>
+                  {%- unless forloop.last %} {% endunless -%}
+                {%- endfor -%}
+              </span>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="product-callouts__disclaimer{% unless section.settings.show_disclaimer_mobile %} product-callouts__disclaimer--desktop{% endunless %}">
+          {{- section.settings.disclaimer -}}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <div class="product-callouts__visual">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 760
+          | image_tag:
+            loading: 'lazy',
+            sizes: image_sizes,
+            widths: '260, 300, 380, 520, 600, 760',
+            class: 'product-callouts__image'
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg product-callouts__image product-callouts__image--placeholder' }}
+      {%- endif -%}
+
+      {%- if callout_blocks.size > 0 -%}
+        <svg
+          class="product-callouts__connectors"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          {%- for block in callout_blocks -%}
+            {%- if block.settings.show_connector -%}
+              {%- assign position = block.settings.position | split: '_' -%}
+              {%- render 'product-callouts-connector',
+                side: position[1],
+                edge: position[0],
+                start_x: block.settings.connector_start_x,
+                line_x: block.settings.connector_line_x,
+                start_y: block.settings.connector_start_y,
+                end_y: block.settings.connector_end_y,
+                radius: section.settings.connector_radius
+              -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </svg>
+
+        {%- for block in callout_blocks -%}
+          {%- assign position = block.settings.position | split: '_' -%}
+          <div
+            class="product-callouts__callout product-callouts__callout--{{ position[0] }} product-callouts__callout--{{ position[1] }}"
+            style="--offset-x: {{ block.settings.offset_x }}%; --offset-y: {{ block.settings.offset_y }}%;"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.title != blank -%}
+              <strong class="product-callouts__callout-title">{{ block.settings.title | escape }}</strong>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="product-callouts__callout-text">{{ block.settings.text | escape | newline_to_br }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Producto con beneficios",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Fondo"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo de la sección"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagen de fondo",
+      "info": "Se muestra en escritorio y tablet."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Imagen de fondo en móvil",
+      "info": "Opcional. Si está vacía, en móvil no se muestra imagen de fondo."
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta"
+    },
+    {
+      "type": "color_background",
+      "id": "card_gradient",
+      "label": "Degradado de la tarjeta",
+      "default": "linear-gradient(20deg, rgba(80, 1, 11, 0.7) 0%, rgba(152, 30, 43, 1) 100%)"
+    },
+    {
+      "type": "color_background",
+      "id": "card_gradient_mobile",
+      "label": "Degradado de la tarjeta en móvil",
+      "info": "Si está vacío se usa el degradado de escritorio.",
+      "default": "linear-gradient(20deg, rgba(80, 1, 11, 0.6) 0%, rgba(152, 30, 43, 1) 100%)"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Color de la tarjeta",
+      "info": "Se usa cuando no hay degradado.",
+      "default": "#981E2B"
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "label": "Ancho máximo de la tarjeta",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "content_columns",
+      "label": "Columnas del texto (de 12)",
+      "info": "Escritorio y tablet. El resto es para la imagen.",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Separación entre columnas",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Así Se Ve Tu Pelo Cambiando Cada Mes"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_tablet",
+      "label": "Interlineado en tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 130
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alineación en escritorio y tablet",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_mobile",
+      "label": "Alineación en móvil",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_top_mobile",
+      "label": "Margen superior en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Estadísticas"
+    },
+    {
+      "type": "range",
+      "id": "stats_columns_desktop",
+      "label": "Ancho en escritorio (columnas de 12)",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "stats_margin_top",
+      "label": "Margen superior en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "stats_padding_mobile",
+      "label": "Relleno exterior en tablet y móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stats_gap",
+      "label": "Separación entre estadísticas",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "stat_border_color",
+      "label": "Color del borde",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "stat_border_opacity",
+      "label": "Opacidad del borde",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "stat_border_width",
+      "label": "Grosor del borde",
+      "min": 0,
+      "max": 4,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0.3
+    },
+    {
+      "type": "range",
+      "id": "stat_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "stat_padding_y",
+      "label": "Relleno vertical en escritorio y tablet",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "stat_padding_x",
+      "label": "Relleno lateral en escritorio y tablet",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stat_padding_y_mobile",
+      "label": "Relleno vertical en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "stat_padding_x_mobile",
+      "label": "Relleno lateral en móvil",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 39
+    },
+    {
+      "type": "range",
+      "id": "number_columns",
+      "label": "Columnas del número (de 12)",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "font_picker",
+      "id": "number_font",
+      "label": "Fuente del número",
+      "default": "lato_n4"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Color del número",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Tamaño del número en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "number_size_tablet",
+      "label": "Tamaño del número en tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "number_size_mobile",
+      "label": "Tamaño del número en móvil",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "number_line_height",
+      "label": "Interlineado del número en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "number_line_height_tablet",
+      "label": "Interlineado del número en tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "number_line_height_mobile",
+      "label": "Interlineado del número en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "color",
+      "id": "stat_text_color",
+      "label": "Color del texto",
+      "default": "#FDF8ED"
+    },
+    {
+      "type": "range",
+      "id": "stat_text_size",
+      "label": "Tamaño del texto en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stat_text_size_tablet",
+      "label": "Tamaño del texto en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stat_text_size_mobile",
+      "label": "Tamaño del texto en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stat_text_line_height",
+      "label": "Interlineado del texto en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "stat_text_line_height_tablet",
+      "label": "Interlineado del texto en tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "stat_text_line_height_mobile",
+      "label": "Interlineado del texto en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "stat_text_letter_spacing",
+      "label": "Espaciado entre letras del texto",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": -0.3
+    },
+    {
+      "type": "header",
+      "content": "Aviso legal"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "disclaimer",
+      "label": "Texto",
+      "default": "*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disclaimer_mobile",
+      "label": "Mostrar en tablet y móvil",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color",
+      "default": "#FDF8ED"
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_opacity",
+      "label": "Opacidad",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Tamaño en escritorio",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size_tablet",
+      "label": "Tamaño en tablet",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_line_height_tablet",
+      "label": "Interlineado en tablet",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_line_height_mobile",
+      "label": "Interlineado en móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_letter_spacing",
+      "label": "Espaciado entre letras",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": -0.3
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_margin_top",
+      "label": "Margen superior",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Imagen del producto"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen",
+      "info": "Se recomienda PNG con fondo transparente."
+    },
+    {
+      "type": "range",
+      "id": "visual_min_height",
+      "label": "Alto del área en escritorio",
+      "min": 300,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "visual_min_height_tablet",
+      "label": "Alto del área en tablet",
+      "min": 300,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "visual_min_height_mobile",
+      "label": "Alto del área en móvil",
+      "min": 300,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Ancho en escritorio",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "label": "Ancho en tablet y móvil",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "label": "Ancho máximo en escritorio",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "image_max_width_tablet",
+      "label": "Ancho máximo en tablet",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "image_max_width_mobile",
+      "label": "Ancho máximo en móvil",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "header",
+      "content": "Beneficios"
+    },
+    {
+      "type": "select",
+      "id": "callout_text_alignment",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "callout_max_width",
+      "label": "Ancho máximo en escritorio",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "callout_max_width_tablet",
+      "label": "Ancho máximo en tablet",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "callout_max_width_percent",
+      "label": "Ancho máximo relativo",
+      "info": "Límite en porcentaje del área. Se aplica en móvil y escritorio.",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "callout_title_color",
+      "label": "Color del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "callout_title_size",
+      "label": "Tamaño del título en escritorio",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "callout_title_size_tablet",
+      "label": "Tamaño del título en tablet",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "callout_title_size_mobile",
+      "label": "Tamaño del título en móvil",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "callout_title_line_height",
+      "label": "Interlineado del título",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "callout_title_margin_bottom",
+      "label": "Espacio bajo el título en escritorio",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "callout_title_margin_bottom_mobile",
+      "label": "Espacio bajo el título en tablet y móvil",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "callout_text_color",
+      "label": "Color de la descripción",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "callout_text_opacity",
+      "label": "Opacidad de la descripción",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "callout_text_size",
+      "label": "Tamaño de la descripción en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "callout_text_size_tablet",
+      "label": "Tamaño de la descripción en tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "callout_text_size_mobile",
+      "label": "Tamaño de la descripción en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "callout_text_line_height",
+      "label": "Interlineado de la descripción en escritorio",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "callout_text_line_height_mobile",
+      "label": "Interlineado de la descripción en tablet y móvil",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 140
+    },
+    {
+      "type": "header",
+      "content": "Líneas punteadas"
+    },
+    {
+      "type": "color",
+      "id": "connector_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "connector_opacity",
+      "label": "Opacidad",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "connector_width",
+      "label": "Grosor de los puntos",
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "connector_spacing",
+      "label": "Separación entre puntos",
+      "min": 2,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "connector_radius",
+      "label": "Curvatura del codo",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "lora_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado de la sección"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Relleno inferior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Relleno lateral en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Relleno superior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Relleno inferior en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Relleno lateral en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y",
+      "label": "Relleno vertical de la tarjeta en escritorio y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Relleno lateral de la tarjeta en escritorio y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y_mobile",
+      "label": "Relleno vertical de la tarjeta en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x_mobile",
+      "label": "Relleno lateral de la tarjeta en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Estadística",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Número",
+          "default": "3"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto",
+          "info": "Los saltos de línea se respetan en escritorio. En tablet y móvil el texto va en una sola línea.",
+          "default": "Meses para\nnotar tu cambio"
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Resultados en 90 Días"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descripción",
+          "default": "Tu ciclo capilar dura unos 90 días. Es el tiempo real para ver un cambio"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Posición",
+          "options": [
+            { "value": "top_left", "label": "Arriba a la izquierda" },
+            { "value": "top_right", "label": "Arriba a la derecha" },
+            { "value": "bottom_left", "label": "Abajo a la izquierda" },
+            { "value": "bottom_right", "label": "Abajo a la derecha" }
+          ],
+          "default": "top_left"
+        },
+        {
+          "type": "range",
+          "id": "offset_x",
+          "label": "Distancia al borde lateral",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "%",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "offset_y",
+          "label": "Distancia al borde superior o inferior",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "%",
+          "default": 6
+        },
+        {
+          "type": "header",
+          "content": "Línea punteada"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_connector",
+          "label": "Mostrar línea",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "connector_start_x",
+          "label": "Inicio horizontal",
+          "info": "Distancia desde el borde lateral del beneficio. Debe coincidir con el borde de la imagen.",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "%",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "connector_line_x",
+          "label": "Posición del tramo vertical",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "%",
+          "default": 15.5
+        },
+        {
+          "type": "range",
+          "id": "connector_start_y",
+          "label": "Inicio vertical",
+          "info": "Distancia desde el borde superior (o inferior si el beneficio está abajo).",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "%",
+          "default": 36.5
+        },
+        {
+          "type": "range",
+          "id": "connector_end_y",
+          "label": "Final vertical",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "%",
+          "default": 22.5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto con beneficios",
+      "blocks": [
+        { "type": "stat" },
+        { "type": "callout" },
+        {
+          "type": "callout",
+          "settings": {
+            "title": "Formulada Científicamente",
+            "text": "Con respaldo científico, no de moda: cada nutriente está ahí por una razón",
+            "position": "top_right",
+            "offset_x": 0
+          }
+        },
+        {
+          "type": "callout",
+          "settings": {
+            "title": "Ataca la Causa Real",
+            "text": "Frena el DHT, la hormona que ataca tu raíz y hace que tu pelo nazca más débil.",
+            "position": "bottom_left",
+            "connector_start_y": 38.5,
+            "connector_end_y": 26.5
+          }
+        },
+        {
+          "type": "callout",
+          "settings": {
+            "title": "Mayor Absorción",
+            "text": "Comprobado: absorbe mejor que una cápsula al masticarla, no disolverse",
+            "position": "bottom_right",
+            "offset_x": 0,
+            "connector_start_y": 36,
+            "connector_end_y": 18.5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
