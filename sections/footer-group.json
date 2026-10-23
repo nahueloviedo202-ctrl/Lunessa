@@ -17,9 +17,10 @@
         "brand_9gJUdR": {
           "type": "brand",
           "settings": {
-            "logo_width": 30,
+            "logo": "shopify://shop_images/Gemini_Generated_Image_julerwjulerwjule-removebg-preview_1e139d21-69f8-4d0a-ba35-d29a5b406efc.png",
+            "logo_width": 40,
             "logo_width_mobile": 28,
-            "tagline": "<p>Fórmula Clinicamente Estudiada Para<br>Frenar La Caída del Pelo Desde Dentro</p>",
+            "tagline": "<p>Fórmula Clinicamente Estudiada Para<br/>Frenar La Caída del Pelo Desde Dentro</p>",
             "tagline_size": 18,
             "tagline_size_mobile": 17,
             "tagline_margin_bottom": 48,
@@ -57,7 +58,7 @@
       "name": "Footer de marca",
       "settings": {
         "background": "#7F1525",
-        "text_color": "#FFFFFF",
+        "text_color": "#ffffff",
         "brand_column_width": 50,
         "column_gap": 32,
         "column_gap_mobile": 28,
@@ -82,8 +83,8 @@
         "legal_columns_mobile": 2,
         "disclaimer": "<p>*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
         "show_border": true,
-        "border_color": "#ECECEC",
-        "disclaimer_color": "#CB9D9D",
+        "border_color": "#ececec",
+        "disclaimer_color": "#cb9d9d",
         "copyright_size": 13,
         "copyright_size_mobile": 12,
         "legal_size": 12,
