@@ -31,7 +31,7 @@
           "type": "link_list",
           "settings": {
             "heading": "Comprar",
-            "menu": ""
+            "menu": "productos"
           }
         },
         "link_list_RP6Lq8": {
@@ -57,7 +57,7 @@
       ],
       "name": "Footer de marca",
       "settings": {
-        "background": "#7F1525",
+        "background": "#7f1525",
         "text_color": "#ffffff",
         "brand_column_width": 50,
         "column_gap": 32,
