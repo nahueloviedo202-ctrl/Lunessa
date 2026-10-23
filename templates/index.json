@@ -858,7 +858,7 @@
         "title_Mm9FwJ": {
           "type": "title",
           "settings": {
-            "title": "{{ section.settings.product.title }}<a href=\"/products/lunessa-formula-capilar-completa\" title=\"Lunessa Formula Capilar Completa\">/products/lunessa-formula-capilar-completa</a>",
+            "title": "{{ section.settings.product.title }}",
             "heading_tag": "h1",
             "text_size": 32,
             "text_size_mobile": 25,
