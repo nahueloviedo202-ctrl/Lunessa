@@ -11,6 +11,9 @@
   if section.settings.image_mobile != blank and section.settings.overlay_mobile
     assign hero_classes = hero_classes | append: ' hsb--overlay-mobile'
   endif
+  if section.settings.mobile_height > 0
+    assign hero_classes = hero_classes | append: ' hsb--height-mobile'
+  endif
   unless section.settings.show_media_tablet
     assign hero_classes = hero_classes | append: ' hsb--no-media-tablet'
   endunless
@@ -63,6 +66,8 @@
     --hsb-text-align-mobile: {{ section.settings.text_alignment_mobile }};
     --hsb-items-mobile: {{ items_mobile }};
     --hsb-media-radius: {{ section.settings.media_radius }}px;
+    --hsb-height-mobile: {{ section.settings.mobile_height }};
+    --hsb-image-position-mobile: {{ section.settings.image_mobile.presentation.focal_point | default: 'center' }};
   }
 {%- endstyle -%}
 
@@ -307,6 +312,17 @@
       "id": "overlay_mobile",
       "label": "Superponer el contenido sobre la imagen en móvil",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Alto en móvil (% de la pantalla)",
+      "info": "0 = se adapta a la imagen. Con el contenido superpuesto, la imagen se recorta para llenar el alto respetando su punto focal.",
+      "default": 80
     },
     {
       "type": "header",

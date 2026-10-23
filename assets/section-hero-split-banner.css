@@ -192,6 +192,19 @@
   .hsb--overlay-mobile .hsb__media {
     margin-top: 0;
   }
+
+  .hsb--height-mobile .hsb__inner {
+    min-height: calc(var(--hsb-height-mobile) * 1vh);
+    min-height: calc(var(--hsb-height-mobile) * 1svh);
+  }
+
+  .hsb--height-mobile.hsb--overlay-mobile .hsb__background--mobile {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--hsb-image-position-mobile);
+  }
 }
 
 /* Tablet & desktop */
