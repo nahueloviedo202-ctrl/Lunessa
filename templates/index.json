@@ -1271,7 +1271,7 @@
           "type": "comparison_header",
           "settings": {
             "label_heading": "",
-            "ours_label": "Gujoy",
+            "ours_label": "Lunessa",
             "others_label": "Otras\nMarcas"
           }
         },
@@ -1394,7 +1394,7 @@
       ],
       "name": "Comparativa con pestañas",
       "settings": {
-        "title": "Por qué elegir Gujoy?",
+        "title": "Por qué elegir Lunessa?",
         "title_tag": "h2",
         "title_color": "#151515",
         "title_alignment": "center",
