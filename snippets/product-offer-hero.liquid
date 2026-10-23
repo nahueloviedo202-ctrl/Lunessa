@@ -767,17 +767,34 @@
                     <div class="poh-faq__content">
                       <div class="rte">{{ item.settings.content }}</div>
                       {%- if item.settings.button_label != blank -%}
-                        <a
-                          class="poh-faq__button"
-                          {% if item.settings.button_link != blank %}
-                            href="{{ item.settings.button_link }}"
-                          {% else %}
-                            role="link" aria-disabled="true"
-                          {% endif %}
-                        >
+                        {%- capture faq_button_content -%}
                           <span>{{ item.settings.button_label | escape }}</span>
                           {%- render 'product-offer-hero-icon', icon: 'caret_right_bold', class: 'poh-faq__button-icon' -%}
-                        </a>
+                        {%- endcapture -%}
+                        {%- if item.settings.button_image != blank -%}
+                          {%- assign faq_modal_id = 'FaqModal-' | append: item.id -%}
+                          <modal-opener data-modal="#{{ faq_modal_id }}">
+                            <button type="button" class="poh-faq__button" aria-haspopup="dialog">
+                              {{ faq_button_content }}
+                            </button>
+                          </modal-opener>
+                          {%- render 'image-modal',
+                            id: faq_modal_id,
+                            image: item.settings.button_image,
+                            label: item.settings.button_label
+                          -%}
+                        {%- else -%}
+                          <a
+                            class="poh-faq__button"
+                            {% if item.settings.button_link != blank %}
+                              href="{{ item.settings.button_link }}"
+                            {% else %}
+                              role="link" aria-disabled="true"
+                            {% endif %}
+                          >
+                            {{ faq_button_content }}
+                          </a>
+                        {%- endif -%}
                       {%- endif -%}
                     </div>
                   </details>

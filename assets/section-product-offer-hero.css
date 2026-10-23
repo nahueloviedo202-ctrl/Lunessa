@@ -826,6 +826,12 @@ button.poh-gallery-button__link {
   text-decoration: none;
 }
 
+button.poh-faq__button {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .poh-faq__button-icon {
   width: 16px;
   height: 16px;
