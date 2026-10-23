@@ -67,6 +67,7 @@
     --hsb-items-mobile: {{ items_mobile }};
     --hsb-media-radius: {{ section.settings.media_radius }}px;
     --hsb-height-mobile: {{ section.settings.mobile_height }};
+    --hsb-image-fit-mobile: {{ section.settings.image_fit_mobile }};
     --hsb-image-position-mobile: {{ section.settings.image_mobile.presentation.focal_point | default: 'center' }};
   }
 {%- endstyle -%}
@@ -321,8 +322,20 @@
       "step": 5,
       "unit": "%",
       "label": "Alto en móvil (% de la pantalla)",
-      "info": "0 = se adapta a la imagen. Con el contenido superpuesto, la imagen se recorta para llenar el alto respetando su punto focal.",
+      "info": "0 = se adapta a la imagen.",
       "default": 80
+    },
+    {
+      "type": "select",
+      "id": "image_fit_mobile",
+      "label": "Ajuste de la imagen en móvil",
+      "info": "Se aplica cuando hay un alto en móvil y el contenido está superpuesto.",
+      "options": [
+        { "value": "fill", "label": "Estirar para llenar (sin recortes)" },
+        { "value": "cover", "label": "Recortar para llenar" },
+        { "value": "contain", "label": "Mostrar completa" }
+      ],
+      "default": "fill"
     },
     {
       "type": "header",
