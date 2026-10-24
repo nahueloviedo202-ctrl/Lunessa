@@ -1,0 +1,20 @@
+{%- doc -%}
+  Renders a line icon for the ingredients page badges.
+
+  @param {string} icon - One of: no_sugar, no_gluten, no_gmo, gmp.
+  @param {string} [class] - Class added to the svg.
+
+  @example
+  {% render 'ingredients-page-icon', icon: 'no_sugar', class: 'ipg-badge__icon' %}
+{%- enddoc -%}
+
+{%- case icon -%}
+  {%- when 'no_sugar' -%}
+    <svg class="{{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="10" width="7" height="7" rx="1"/><rect x="13" y="6" width="7" height="7" rx="1"/><line x1="2" y1="21" x2="22" y2="3"/></svg>
+  {%- when 'no_gluten' -%}
+    <svg class="{{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2c2 3 2 6 0 9-2-3-2-6-2-9z"/><path d="M12 11v10"/><line x1="2" y1="21" x2="22" y2="3"/></svg>
+  {%- when 'no_gmo' -%}
+    <svg class="{{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M10 3v5l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><line x1="2" y1="21" x2="22" y2="3"/></svg>
+  {%- when 'gmp' -%}
+    <svg class="{{ class }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/><path d="M9.5 9l1.8 1.8L15 7"/></svg>
+{%- endcase -%}

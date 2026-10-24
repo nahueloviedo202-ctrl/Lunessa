@@ -64,6 +64,11 @@
   word-break: break-word;
 }
 
+.chr .chr__heading em {
+  color: var(--chr-heading-em-color);
+  font-style: italic;
+}
+
 /* Text */
 
 .chr .chr__text {

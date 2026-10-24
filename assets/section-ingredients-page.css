@@ -1,0 +1,362 @@
+/* Ingredients page — every selector is scoped to .ipg */
+
+.ipg {
+  padding-top: var(--ipg-pt-mobile);
+  background: var(--ipg-bg);
+  color: var(--ipg-text-color);
+  font-family: var(--ipg-body-font, var(--font-body-family));
+  font-style: var(--ipg-body-style, var(--font-body-style));
+  overflow-x: hidden;
+}
+
+.ipg *,
+.ipg *::before,
+.ipg *::after {
+  box-sizing: border-box;
+}
+
+.ipg .ipg-card__name,
+.ipg .ipg-nutrition__title,
+.ipg .ipg-benefits__title {
+  margin: 0;
+  color: var(--ipg-heading-color);
+  font-family: var(--ipg-heading-font, var(--font-heading-family));
+  font-style: var(--ipg-heading-style, var(--font-heading-style));
+  font-weight: 700;
+  letter-spacing: normal;
+  word-break: break-word;
+}
+
+/* Badges */
+
+.ipg .ipg__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+  margin: 0;
+  padding: 0 20px 50px;
+}
+
+.ipg-badge {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--ipg-badge-size-mobile);
+  height: var(--ipg-badge-size-mobile);
+  padding: 6px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--ipg-badge-from), var(--ipg-badge-to));
+  color: var(--ipg-badge-color);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ipg-badge__icon {
+  width: 26px;
+  height: 26px;
+  margin-bottom: 4px;
+  object-fit: contain;
+}
+
+/* Filter */
+
+.ipg__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px 30px;
+}
+
+.ipg__tab {
+  padding: 9px 30px;
+  border: 1.5px solid var(--ipg-accent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ipg-accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.ipg__tab:hover {
+  border-color: var(--ipg-dark);
+  background: var(--ipg-dark);
+  color: #fff;
+}
+
+/* Ingredient grid */
+
+.ipg .ipg__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ipg-columns-mobile), minmax(0, 1fr));
+  gap: 18px;
+  max-width: var(--ipg-grid-max);
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+.ipg-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--ipg-card-radius);
+  background: #fff;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--ipg-shadow) var(--ipg-shadow-opacity), transparent);
+  overflow: hidden;
+}
+
+.ipg-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--ipg-image-ratio);
+  object-fit: cover;
+  background: var(--ipg-image-bg);
+}
+
+.ipg-card__body {
+  padding: 16px 18px 20px;
+}
+
+.ipg .ipg-card__name {
+  margin-bottom: 8px;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.ipg .ipg-card__description {
+  margin: 0 0 12px;
+  color: var(--ipg-desc-color);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.ipg-card__tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1.3px solid var(--ipg-accent);
+  border-radius: 999px;
+  color: var(--ipg-accent);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Nutrition table */
+
+.ipg-nutrition {
+  width: calc(100% - 32px);
+  max-width: 560px;
+  margin: 50px auto 0;
+  padding: 16px;
+  border: 1px solid var(--ipg-nutri-border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--ipg-shadow) var(--ipg-shadow-opacity), transparent);
+}
+
+.ipg .ipg-nutrition__title {
+  margin-bottom: 8px;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.ipg .ipg-nutrition__meta {
+  margin: 2px 0;
+  color: var(--ipg-text-color);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ipg .ipg-nutrition__calories {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0 0;
+  padding: 10px 4px;
+  border-top: 2px solid var(--ipg-accent);
+  border-bottom: 2px solid var(--ipg-accent);
+  color: var(--ipg-text-color);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.ipg-nutrition__scroll {
+  margin-top: 14px;
+  border: 1px solid var(--ipg-nutri-border);
+  border-radius: 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ipg .ipg-nutrition__table {
+  width: 100%;
+  min-width: 440px;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  color: var(--ipg-text-color);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ipg .ipg-nutrition__table th,
+.ipg .ipg-nutrition__table td {
+  padding: 8px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--ipg-nutri-border);
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.ipg .ipg-nutrition__table th:first-child {
+  min-width: 190px;
+  white-space: normal;
+}
+
+.ipg .ipg-nutrition__table thead th {
+  position: sticky;
+  top: 0;
+  border-bottom: 2px solid var(--ipg-accent);
+  background: #fff;
+  color: var(--ipg-nutri-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.ipg .ipg-nutrition__table tr > :nth-child(2) {
+  padding-right: 12px;
+  text-align: right;
+}
+
+.ipg .ipg-nutrition__table tr > :last-child {
+  text-align: right;
+}
+
+.ipg .ipg-nutrition__table .ipg-nutrition__group th {
+  padding-top: 10px;
+  padding-bottom: 6px;
+  background: var(--ipg-nutri-section-bg);
+  color: var(--ipg-accent);
+  font-weight: 700;
+  text-align: left;
+  white-space: normal;
+}
+
+.ipg .ipg-nutrition__footnote {
+  margin: 10px 0 0;
+  color: var(--ipg-nutri-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* Benefits */
+
+.ipg-benefits {
+  margin-top: 60px;
+  padding: var(--ipg-benefits-pb) 20px;
+  background: linear-gradient(180deg, var(--ipg-benefits-from), var(--ipg-benefits-to));
+  text-align: center;
+}
+
+.ipg .ipg-benefits__title {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  color: var(--ipg-benefits-title);
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.ipg .ipg-benefits__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+}
+
+.ipg-benefit {
+  padding-left: 16px;
+  border-left: 2px dotted color-mix(in srgb, var(--ipg-benefits-heading) 35%, transparent);
+}
+
+.ipg .ipg-benefit__title {
+  margin: 0 0 6px;
+  color: var(--ipg-benefits-heading);
+  font-family: inherit;
+  font-style: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+.ipg .ipg-benefit__text {
+  margin: 0;
+  color: var(--ipg-benefits-text);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* Tablet & desktop */
+
+@media screen and (min-width: 750px) {
+  .ipg {
+    padding-top: var(--ipg-pt);
+  }
+
+  .ipg-badge {
+    width: var(--ipg-badge-size);
+    height: var(--ipg-badge-size);
+    font-size: 11px;
+  }
+
+  .ipg .ipg__grid {
+    grid-template-columns: repeat(var(--ipg-columns-tablet), minmax(0, 1fr));
+  }
+
+  .ipg-nutrition {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .ipg .ipg-nutrition__title {
+    font-size: 22px;
+  }
+
+  .ipg .ipg-nutrition__table {
+    min-width: 480px;
+    font-size: 13.5px;
+  }
+
+  .ipg .ipg-benefits__title {
+    font-size: 26px;
+  }
+
+  .ipg .ipg-benefits__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .ipg .ipg__grid {
+    grid-template-columns: repeat(var(--ipg-columns), minmax(0, 1fr));
+  }
+}

@@ -56,7 +56,7 @@
         {%- when 'heading' -%}
           <{{ block.settings.heading_tag }}
             class="chr__heading"
-            style="--chr-block-mt: {{ block.settings.margin_top }}px; --chr-heading-color: {{ block.settings.text_color }}; --chr-heading-size: {{ block.settings.text_size }}px; --chr-heading-size-mobile: {{ block.settings.text_size_mobile }}px; --chr-heading-weight: {{ block.settings.font_weight }}; --chr-heading-lh: {{ block.settings.line_height | divided_by: 100.0 }}; --chr-heading-max: {{ block.settings.max_width }}px;"
+            style="--chr-block-mt: {{ block.settings.margin_top }}px; --chr-heading-color: {{ block.settings.text_color }}; --chr-heading-size: {{ block.settings.text_size }}px; --chr-heading-size-mobile: {{ block.settings.text_size_mobile }}px; --chr-heading-weight: {{ block.settings.font_weight }}; --chr-heading-lh: {{ block.settings.line_height | divided_by: 100.0 }}; --chr-heading-max: {{ block.settings.max_width }}px; --chr-heading-em-color: {{ block.settings.accent_color }};"
             {{ block.shopify_attributes }}
           >
             {{- block.settings.heading -}}
@@ -327,6 +327,13 @@
           "default": "#6B1626"
         },
         {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Color del texto en cursiva",
+          "info": "Se aplica a las palabras que pongas en cursiva en el título.",
+          "default": "#D9738A"
+        },
+        {
           "type": "range",
           "id": "text_size",
           "min": 16,
@@ -363,7 +370,7 @@
           "id": "line_height",
           "min": 100,
           "max": 180,
-          "step": 2,
+          "step": 1,
           "unit": "%",
           "label": "Interlineado",
           "default": 128
