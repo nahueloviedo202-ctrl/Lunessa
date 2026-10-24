@@ -3,9 +3,7 @@
 {%- liquid
   assign filter_prefix = 'IngredientFilter-' | append: section.id | append: '-'
 
-  comment
-    Filter categories, in order of first appearance, from the ingredient blocks.
-  endcomment
+  # Filter categories, in order of first appearance, from the ingredient blocks.
   assign category_list = '|'
   for b in section.blocks
     if b.type == 'ingredient'
