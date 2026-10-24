@@ -1,0 +1,551 @@
+{{ 'section-faq-page.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'drag-scroll.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'faq-page.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  {%- if section.settings.heading_font_custom -%}
+    {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if section.settings.body_font_custom -%}
+    {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .fqp--{{ section.id }} {
+    {%- if section.settings.heading_font_custom %}
+      --fqp-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --fqp-heading-style: {{ section.settings.heading_font.style }};
+    {%- endif %}
+    {%- if section.settings.body_font_custom %}
+      --fqp-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --fqp-body-style: {{ section.settings.body_font.style }};
+    {%- endif %}
+    --fqp-bg: {{ section.settings.background }};
+    --fqp-max-width: {{ section.settings.max_width }}px;
+    --fqp-heading-color: {{ section.settings.heading_color }};
+
+    --fqp-hero-pt: {{ section.settings.hero_padding_top }}px;
+    --fqp-hero-pb: {{ section.settings.hero_padding_bottom }}px;
+    --fqp-title-size: {{ section.settings.title_size }}px;
+    --fqp-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --fqp-intro-color: {{ section.settings.intro_color }};
+    --fqp-intro-size: {{ section.settings.intro_size }}px;
+    --fqp-intro-max: {{ section.settings.intro_max_width }}px;
+    --fqp-updated-color: {{ section.settings.updated_color }};
+    --fqp-updated-strong: {{ section.settings.updated_strong_color }};
+
+    --fqp-layout-pt: {{ section.settings.layout_padding_top }}px;
+    --fqp-layout-pb: {{ section.settings.layout_padding_bottom }}px;
+    --fqp-nav-width: {{ section.settings.nav_width }}px;
+    --fqp-nav-top: {{ section.settings.nav_sticky_top }}px;
+    --fqp-nav-color: {{ section.settings.nav_color }};
+    --fqp-nav-bg: {{ section.settings.nav_background }};
+    --fqp-nav-border: {{ section.settings.nav_border }};
+    --fqp-nav-active-color: {{ section.settings.nav_active_color }};
+    --fqp-nav-active-bg: {{ section.settings.nav_active_background }};
+
+    --fqp-category-size: {{ section.settings.category_size }}px;
+    --fqp-category-size-mobile: {{ section.settings.category_size_mobile }}px;
+    --fqp-question-color: {{ section.settings.question_color }};
+    --fqp-question-size: {{ section.settings.question_size }}px;
+    --fqp-answer-color: {{ section.settings.answer_color }};
+    --fqp-answer-size: {{ section.settings.answer_size }}px;
+    --fqp-link-color: {{ section.settings.link_color }};
+  }
+{%- endstyle -%}
+
+<section class="fqp fqp--{{ section.id }}">
+  {%- if section.settings.show_hero -%}
+    <div class="fqp__hero">
+      {%- if section.settings.title != blank -%}
+        <{{ section.settings.title_tag }} class="fqp__title">{{ section.settings.title }}</{{ section.settings.title_tag }}>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="fqp__intro rte">{{ section.settings.intro }}</div>
+      {%- endif -%}
+      {%- if section.settings.updated != blank -%}
+        <p class="fqp__updated">{{ section.settings.updated }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    {%- liquid
+      assign category_count = section.blocks | where: 'type', 'category' | size
+    -%}
+    <div class="fqp__layout{% if category_count == 0 %} fqp__layout--no-nav{% endif %}">
+      {%- if category_count > 0 -%}
+        <faq-scrollspy class="fqp__aside">
+          <drag-scroll class="fqp__nav-scroller" data-faq-scroller>
+            <nav class="fqp__nav" aria-label="{{ section.settings.title | strip_html | escape }}">
+              {%- assign is_first_link = true -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'category' -%}
+                  {%- assign anchor = block.settings.anchor | default: block.settings.title | handleize -%}
+                  <a
+                    href="#{{ anchor }}"
+                    class="fqp__nav-link{% if is_first_link %} is-active{% endif %}"
+                    {% if is_first_link %}
+                      aria-current="true"
+                    {% endif %}
+                  >
+                    {{- block.settings.title | escape -}}
+                  </a>
+                  {%- assign is_first_link = false -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </nav>
+          </drag-scroll>
+        </faq-scrollspy>
+      {%- endif -%}
+
+      <div class="fqp__content">
+        {%- for block in section.blocks -%}
+          {%- comment -%}
+            Questions are rendered by the category before them; only questions placed
+            before the first category are rendered here, as an untitled group.
+          {%- endcomment -%}
+          {%- if block.type == 'question' and forloop.index0 > 0 -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- liquid
+            if block.type == 'category'
+              assign questions_offset = forloop.index
+              assign anchor = block.settings.anchor | default: block.settings.title | handleize
+            else
+              assign questions_offset = 0
+              assign anchor = ''
+            endif
+          -%}
+          <div
+            class="fqp__group"
+            {% if anchor != blank %}
+              id="{{ anchor }}"
+            {% endif %}
+            {% if block.type == 'category' %}
+              {{ block.shopify_attributes }}
+            {% endif %}
+          >
+            {%- if block.type == 'category' and block.settings.title != blank -%}
+              <h2 class="fqp__category">{{ block.settings.title | escape }}</h2>
+            {%- endif -%}
+            {%- for item in section.blocks offset: questions_offset -%}
+              {%- if item.type != 'question' -%}
+                {%- break -%}
+              {%- endif -%}
+              <div class="fqp__item" {{ item.shopify_attributes }}>
+                <h3 class="fqp__question">{{ item.settings.question | escape }}</h3>
+                <div class="fqp__answer rte">{{ item.settings.answer }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "tag": "div",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 50,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Encabezado"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero",
+      "label": "Mostrar encabezado",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Título",
+      "default": "Preguntas Frecuentes"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Etiqueta HTML del título",
+      "info": "Usa h1 solo si es el título principal de la página.",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introducción",
+      "default": "<p>Encuentra respuestas claras y rápidas a las dudas más comunes sobre nuestros productos, pagos, envíos y contacto. Si tu pregunta no está aquí, no dudes en contactarnos — estaremos encantados de ayudarte.</p>"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "updated",
+      "label": "Línea de actualización",
+      "default": "Última actualización: <strong>Septiembre 2026</strong>"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 16,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 16,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (móvil)",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "intro_color",
+      "label": "Color de la introducción",
+      "default": "#5C3540"
+    },
+    {
+      "type": "range",
+      "id": "intro_size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la introducción",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "intro_max_width",
+      "min": 300,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo de la introducción",
+      "default": 640
+    },
+    {
+      "type": "color",
+      "id": "updated_color",
+      "label": "Color de la línea de actualización",
+      "default": "#A97E88"
+    },
+    {
+      "type": "color",
+      "id": "updated_strong_color",
+      "label": "Color del texto en negrita",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "hero_padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "hero_padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 34
+    },
+    {
+      "type": "header",
+      "content": "Menú de categorías"
+    },
+    {
+      "type": "paragraph",
+      "content": "En escritorio es una columna fija a la izquierda; en tablet y móvil, una fila deslizable. Marca la categoría que se está leyendo."
+    },
+    {
+      "type": "range",
+      "id": "nav_width",
+      "min": 160,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho de la columna",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "nav_sticky_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Distancia al borde superior al quedar fijo",
+      "info": "Súbelo si el encabezado fijo de la tienda tapa el menú.",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Texto",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "nav_background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "nav_border",
+      "label": "Borde",
+      "default": "#F0CDD4"
+    },
+    {
+      "type": "color",
+      "id": "nav_active_color",
+      "label": "Texto activo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "nav_active_background",
+      "label": "Fondo activo",
+      "default": "#6B1626"
+    },
+    {
+      "type": "header",
+      "content": "Preguntas"
+    },
+    {
+      "type": "range",
+      "id": "category_size",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título de categoría",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "category_size_mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título de categoría (móvil)",
+      "default": 19
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Color de la pregunta",
+      "default": "#3A1E26"
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la pregunta",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Color de la respuesta",
+      "default": "#4A2530"
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "min": 12,
+      "max": 22,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño de la respuesta",
+      "default": 14.5
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color de enlaces",
+      "default": "#B12141"
+    },
+    {
+      "type": "header",
+      "content": "Diseño general"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color de títulos",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "layout_padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior de las preguntas",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "layout_padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior de las preguntas",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en títulos",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de títulos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Las preguntas colocadas justo después de esta categoría se muestran dentro de ella."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Preguntas Generales"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Ancla",
+          "info": "Opcional. Permite enlazar a esta categoría con /pages/tu-pagina#ancla. Si se deja vacío se genera a partir del título."
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Pregunta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Pregunta?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "<p>Respuesta a la pregunta.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preguntas frecuentes",
+      "blocks": [
+        { "type": "category", "settings": { "title": "1. Preguntas Generales", "anchor": "generales" } },
+        { "type": "question", "settings": { "question": "¿Qué es Lunessa?", "answer": "<p>Lunessa es una marca especializada en productos cuidadosamente desarrollados para apoyar la belleza y el bienestar desde dentro.</p>" } },
+        { "type": "question", "settings": { "question": "¿Por qué elegir Lunessa?", "answer": "<p>Porque ofrecemos productos con fórmulas de alta calidad, desarrolladas y verificadas bajo estrictos controles, para asegurar una experiencia segura y efectiva.</p>" } },
+        { "type": "question", "settings": { "question": "¿Son seguros los productos de Lunessa?", "answer": "<p>Sí. Todos nuestros productos son debidamente verificados, monitorizados y producidos bajo rigurosos estándares de calidad.</p>" } },
+        { "type": "question", "settings": { "question": "¿Puedo usar los productos de Lunessa junto con otros suplementos?", "answer": "<p>En la mayoría de los casos, sí, pero recomendamos consultar siempre con un profesional de la salud antes de combinar suplementos.</p>" } },
+        { "type": "category", "settings": { "title": "2. Preguntas del Producto", "anchor": "producto" } },
+        { "type": "question", "settings": { "question": "¿De qué están hechos los productos de Lunessa?", "answer": "<p>Están elaborados con ingredientes cuidadosamente seleccionados y con estrictos controles de calidad para garantizar su seguridad y efectividad.</p>" } },
+        { "type": "question", "settings": { "question": "¿Los productos tienen efectos secundarios?", "answer": "<p>Nuestros productos son seguros cuando se utilizan según las indicaciones. Si tienes alguna condición médica, consulta a tu médico antes de usarlos.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cuánto tiempo tardaré en ver resultados?", "answer": "<p>Los tiempos pueden variar según cada persona, pero muchos usuarios reportan notar cambios visibles después de varias semanas de uso constante.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cómo debo conservar los productos?", "answer": "<p>Guárdalos en un lugar fresco y seco, alejado de la luz solar directa y fuera del alcance de los niños.</p>" } },
+        { "type": "question", "settings": { "question": "¿Los productos son aptos para todos?", "answer": "<p>Nuestros productos están diseñados para ser seguros y efectivos, pero siempre es recomendable leer la etiqueta y seguir las indicaciones de uso.</p>" } },
+        { "type": "category", "settings": { "title": "3. Preguntas del Pago", "anchor": "pago" } },
+        { "type": "question", "settings": { "question": "¿Qué métodos de pago aceptan?", "answer": "<p>Aceptamos pago con tarjeta, contra reembolso y PayPal.</p>" } },
+        { "type": "question", "settings": { "question": "¿El pago contra reembolso tiene coste adicional?", "answer": "<p>Sí, el pago contra reembolso puede tener un pequeño recargo, que se mostrará antes de finalizar la compra.</p>" } },
+        { "type": "question", "settings": { "question": "¿Es seguro pagar en la web de Lunessa?", "answer": "<p>Sí. Nuestra web utiliza sistemas de pago 100% seguros con encriptación avanzada, certificados SSL y protección antifraude. Además, trabajamos con pasarelas de pago reconocidas internacionalmente para garantizar la máxima seguridad de tus datos.</p>" } },
+        { "type": "question", "settings": { "question": "¿Puedo cambiar el método de pago después de hacer el pedido?", "answer": "<p>En la mayoría de los casos no es posible, pero puedes contactar con nuestro equipo lo antes posible para revisar tu caso.</p>" } },
+        { "type": "category", "settings": { "title": "4. Preguntas del Envío", "anchor": "envio" } },
+        { "type": "question", "settings": { "question": "¿A qué países envían?", "answer": "<p>Indica aquí tu mercado principal y los países a los que realizas envíos.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cuánto tarda en llegar mi pedido?", "answer": "<p>El plazo de entrega es de 6 a 12 días hábiles desde que se envía tu pedido. En periodos de alta demanda (Black Friday, Navidad, fin de año), puede extenderse hasta 15 días hábiles.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cuál es el coste del envío?", "answer": "<p>El coste del envío se calcula automáticamente al realizar la compra según la dirección de entrega. Además, ofrecemos envío gratuito en pedidos de más de 2 botes.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cómo puedo seguir mi pedido?", "answer": "<p>Una vez enviado, recibirás un email con el número de seguimiento para que puedas ver el estado en tiempo real.</p>" } },
+        { "type": "question", "settings": { "question": "¿Qué pasa si no estoy en casa para recibir el pedido?", "answer": "<p>La empresa de mensajería intentará una nueva entrega o dejará tu pedido en un punto de recogida cercano. Si tu pago es contra reembolso, recibirás un enlace por SMS y por email para que indiques el momento más conveniente para recibirlo. Si lo prefieres, nuestro equipo de atención por WhatsApp también puede ayudarte a coordinar la entrega.</p>" } },
+        { "type": "category", "settings": { "title": "5. Preguntas de Contacto", "anchor": "contacto" } },
+        { "type": "question", "settings": { "question": "¿Cómo puedo contactar con Lunessa?", "answer": "<p>Puedes escribirnos por email a <a href=\"mailto:hola@tutienda.com\">hola@tutienda.com</a>, enviarnos un mensaje de WhatsApp al +00 000 000 000, o encontrarnos en redes sociales.</p>" } },
+        { "type": "question", "settings": { "question": "¿Puedo pedir asesoría sobre qué producto comprar?", "answer": "<p>Claro, nuestro equipo de atención estará encantado de ayudarte a elegir el producto más adecuado para ti.</p>" } },
+        { "type": "question", "settings": { "question": "¿Están en redes sociales?", "answer": "<p>Sí, puedes encontrarnos en Instagram y en Facebook.</p>" } },
+        { "type": "question", "settings": { "question": "¿En qué horario responden a las consultas?", "answer": "<p>Atendemos de lunes a viernes en horario laboral, y respondemos lo antes posible a todas las solicitudes.</p>" } },
+        { "type": "question", "settings": { "question": "¿En cuánto tiempo responden los mensajes?", "answer": "<p>Generalmente respondemos en menos de 2 horas, y en muchos casos incluso antes.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
