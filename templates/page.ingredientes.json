@@ -1,24 +1,278 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
+    "hero": {
+      "type": "centered-hero",
+      "blocks": {
+        "eyebrow_0001": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "Fórmula Transparente",
+            "text_size": 13
+          }
+        },
+        "heading_0002": {
+          "type": "heading",
+          "settings": {
+            "heading": "Cada Ingrediente Tiene <em>Su Porqué</em>",
+            "heading_tag": "h1",
+            "text_size": 30,
+            "text_size_mobile": 24,
+            "line_height": 125,
+            "max_width": 720,
+            "margin_top": 14
+          }
+        },
+        "text_0003": {
+          "type": "text",
+          "settings": {
+            "text": "<p>12 nutrientes + Triple Bloqueo DHT. Descubre qué hace cada uno por tu pelo, sin letra pequeña.</p>",
+            "line_height": 150,
+            "max_width": 720,
+            "margin_top": 14
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow_0001",
+        "heading_0002",
+        "text_0003"
+      ],
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "max_width": 720,
+        "padding_top": 56,
+        "padding_bottom": 40,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "ingredients": {
+      "type": "ingredients-page",
+      "blocks": {
+        "badge_0004": {
+          "type": "badge",
+          "settings": {
+            "icon": "no_sugar",
+            "text": "Sin Azúcar"
+          }
+        },
+        "badge_0005": {
+          "type": "badge",
+          "settings": {
+            "icon": "no_gluten",
+            "text": "Sin Gluten"
+          }
+        },
+        "badge_0006": {
+          "type": "badge",
+          "settings": {
+            "icon": "no_gmo",
+            "text": "Sin OGM"
+          }
+        },
+        "badge_0007": {
+          "type": "badge",
+          "settings": {
+            "icon": "gmp",
+            "text": "Calidad\nGMP"
+          }
+        },
+        "ingredient_0008": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Extracto de Palma Enana",
+            "description": "Es el ingrediente central del Triple Bloqueo DHT. Actúa sobre la hormona que ataca tu raíz, ayudando a frenar la caída desde el origen del problema, no solo desde fuera.",
+            "tag": "Protección Folicular",
+            "category": "DHT"
+          }
+        },
+        "ingredient_0009": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Extracto de Semilla de Calabaza",
+            "description": "Complementa la Palma Enana dentro del Triple Bloqueo DHT. Ayuda a cuidar tu folículo capilar y sostiene el efecto del extracto principal a lo largo del día.",
+            "tag": "Fortalece",
+            "category": "DHT"
+          }
+        },
+        "ingredient_000a": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Beta-Sitosterol",
+            "description": "Junto a la Palma Enana, es la combinación con respaldo del estudio Prager et al. (2002) sobre el bloqueo de DHT. Refuerza el efecto principal desde la raíz.",
+            "tag": "Sinergia Clave",
+            "category": "DHT"
+          }
+        },
+        "ingredient_000b": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina A",
+            "description": "Ayuda a renovar las células de tu cuero cabelludo, manteniendo un entorno saludable para que la raíz siga produciendo pelo fuerte.",
+            "tag": "Renovación",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000c": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina C",
+            "description": "Antioxidante que protege la fibra capilar del daño diario y ayuda a tu cuerpo a absorber mejor otros nutrientes de la fórmula.",
+            "tag": "Antioxidante",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000d": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B6",
+            "description": "Apoya la producción natural de queratina, la proteína que forma la estructura de tu pelo.",
+            "tag": "Queratina",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000e": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B12",
+            "description": "Ayuda a oxigenar tu raíz capilar, para que el pelo nuevo nazca con más fuerza desde el folículo.",
+            "tag": "Oxigenación",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000f": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Biotina",
+            "description": "Apoya el crecimiento natural de tu pelo, tu piel y tus uñas — por eso muchas notan también las uñas más fuertes.",
+            "tag": "Crecimiento",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000g": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina B5",
+            "description": "Hidrata tu cuero cabelludo desde dentro y ayuda a mantener su elasticidad día a día.",
+            "tag": "Hidratación",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000h": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Vitamina E",
+            "description": "Antioxidante que protege tu cuero cabelludo del estrés oxidativo diario, cuidando el entorno donde crece tu pelo.",
+            "tag": "Protección",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000i": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Zinc",
+            "description": "Ayuda a reparar tu folículo capilar y regula la producción de grasa en el cuero cabelludo.",
+            "tag": "Reparación",
+            "category": "Vitaminas"
+          }
+        },
+        "ingredient_000j": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Selenio",
+            "description": "Protege las células de tu cuero cabelludo frente al daño externo, día tras día.",
+            "tag": "Protección Celular",
+            "category": "Vitaminas"
+          }
+        },
+        "benefit_000k": {
+          "type": "benefit",
+          "settings": {
+            "title": "Formulada Científicamente",
+            "text": "Dosis reales, no las mínimas que usa la mayoría de gominolas para ahorrar costes."
+          }
+        },
+        "benefit_000l": {
+          "type": "benefit",
+          "settings": {
+            "title": "Ataca la Causa Real",
+            "text": "El Triple Bloqueo DHT frena la hormona que ataca tu raíz — no solo tapa el síntoma."
+          }
+        },
+        "benefit_000m": {
+          "type": "benefit",
+          "settings": {
+            "title": "Mayor Absorción",
+            "text": "Comprobado: absorbe mejor que una cápsula al masticarla, no al disolverse."
+          }
+        },
+        "benefit_000n": {
+          "type": "benefit",
+          "settings": {
+            "title": "Tu Ciclo Capilar",
+            "text": "Tu pelo tarda 90 días en mostrar un cambio real — por eso nuestra garantía dura lo mismo."
+          }
+        }
+      },
+      "block_order": [
+        "badge_0004",
+        "badge_0005",
+        "badge_0006",
+        "badge_0007",
+        "ingredient_0008",
+        "ingredient_0009",
+        "ingredient_000a",
+        "ingredient_000b",
+        "ingredient_000c",
+        "ingredient_000d",
+        "ingredient_000e",
+        "ingredient_000f",
+        "ingredient_000g",
+        "ingredient_000h",
+        "ingredient_000i",
+        "ingredient_000j",
+        "benefit_000k",
+        "benefit_000l",
+        "benefit_000m",
+        "benefit_000n"
+      ],
+      "settings": {}
+    },
+    "cta": {
+      "type": "centered-hero",
+      "blocks": {
+        "heading_000o": {
+          "type": "heading",
+          "settings": {
+            "heading": "¿Lista Para Frenar Tu Caída?",
+            "heading_tag": "h2",
+            "text_size": 24,
+            "text_size_mobile": 24,
+            "margin_top": 0
+          }
+        },
+        "button_000p": {
+          "type": "button",
+          "settings": {
+            "label": "Ver Producto",
+            "margin_top": 20
+          }
+        }
+      },
+      "block_order": [
+        "heading_000o",
+        "button_000p"
+      ],
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 70,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 70
       }
     }
   },
   "order": [
-    "main"
+    "hero",
+    "ingredients",
+    "cta"
   ]
 }
