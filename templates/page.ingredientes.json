@@ -455,7 +455,7 @@
         "heading_color": "#FBE0E4",
         "heading_max_width": 600,
         "heading_margin_bottom": 40,
-        "max_width": 720,
+        "max_width": 1220,
         "columns_desktop": 2,
         "columns_mobile": "1",
         "grid_gap": 28,
@@ -485,7 +485,7 @@
       "settings": {
         "heading": "¿Lista Para Frenar Tu Caída?",
         "button_label": "Ver Producto",
-        "button_link": "",
+        "button_link": "shopify://products/lunessa-formula-capilar-completa",
         "background": "#fef5f1",
         "heading_size": 24,
         "heading_size_mobile": 24,
