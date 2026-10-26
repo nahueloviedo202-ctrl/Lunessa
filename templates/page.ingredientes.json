@@ -147,7 +147,7 @@
             "name": "Vitamina A",
             "description": "Ayuda a renovar las células de tu cuero cabelludo, manteniendo un entorno saludable para que la raíz siga produciendo pelo fuerte.&nbsp;",
             "tag": "Renovación",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_H6b4dV": {
@@ -157,7 +157,7 @@
             "name": "Vitamina C",
             "description": "Antioxidante que protege la fibra capilar del daño diario y ayuda a tu cuerpo a absorber mejor otros nutrientes de la fórmula.&nbsp;",
             "tag": "Antioxidante",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_4MkFy3": {
@@ -167,7 +167,7 @@
             "name": "Vitamina B6",
             "description": "Apoya la producción natural de queratina, la proteína que forma la estructura de tu pelo.&nbsp;",
             "tag": "Queratina",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_cqw64J": {
@@ -177,7 +177,7 @@
             "name": "Vitamina B12",
             "description": "Ayuda a oxigenar tu raíz capilar, para que el pelo nuevo nazca con más fuerza desde el folículo.&nbsp;",
             "tag": "oxigenación",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_FzDLMc": {
@@ -197,7 +197,7 @@
             "name": "Vitamina B5",
             "description": "Hidrata tu cuero cabelludo desde dentro y ayuda a mantener su elasticidad día a día.&nbsp;",
             "tag": "hidratación",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_4iHWTX": {
@@ -207,7 +207,7 @@
             "name": "Vitamina E",
             "description": "Antioxidante que protege tu cuero cabelludo del estrés oxidativo diario, cuidando el entorno donde crece tu pelo.&nbsp;",
             "tag": "Protección",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_RABzWn": {
@@ -217,7 +217,7 @@
             "name": "Zinc",
             "description": "Ayuda a reparar tu folículo capilar y regula la producción de grasa en el cuero cabelludo.&nbsp;",
             "tag": "Reparación",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         },
         "ingredient_AC4Bdc": {
@@ -227,7 +227,7 @@
             "name": "Selenio",
             "description": "Protege las células de tu cuero cabelludo frente al daño externo, día tras día.&nbsp;",
             "tag": "Protección Celular",
-            "categories": "DHT"
+            "categories": "Vitaminas"
           }
         }
       },
