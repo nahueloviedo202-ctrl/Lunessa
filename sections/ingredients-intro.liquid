@@ -1,0 +1,466 @@
+{{ 'section-ingredients-intro.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {% render 'ingredients-page-fonts', section: section %}
+
+  .ingi--{{ section.id }} {
+    --ingi-bg: {{ section.settings.background }};
+    --ingi-pt: {{ section.settings.padding_top }}px;
+    --ingi-pb: {{ section.settings.padding_bottom }}px;
+    --ingi-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ingi-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ingi-px: {{ section.settings.padding_horizontal }}px;
+    --ingi-max-width: {{ section.settings.max_width }}px;
+
+    --ingi-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --ingi-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --ingi-eyebrow-bg: {{ section.settings.eyebrow_background }};
+    --ingi-eyebrow-radius: {{ section.settings.eyebrow_radius }}px;
+
+    --ingi-heading-size: {{ section.settings.heading_size }}px;
+    --ingi-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ingi-heading-color: {{ section.settings.heading_color }};
+    --ingi-accent: {{ section.settings.accent_color }};
+
+    --ingi-text-size: {{ section.settings.text_size }}px;
+    --ingi-text-color: {{ section.settings.text_color }};
+
+    --ingi-badges-mt: {{ section.settings.badges_margin_top }}px;
+    --ingi-badge-gap: {{ section.settings.badge_gap }}px;
+    --ingi-badge-size: {{ section.settings.badge_size }}px;
+    --ingi-badge-size-mobile: {{ section.settings.badge_size_mobile }}px;
+    --ingi-badge-font-size: {{ section.settings.badge_font_size }}px;
+    --ingi-badge-font-size-mobile: {{ section.settings.badge_font_size_mobile }}px;
+    --ingi-badge-icon-size: {{ section.settings.badge_icon_size }}px;
+    --ingi-badge-angle: {{ section.settings.badge_gradient_angle }}deg;
+    --ingi-badge-start: {{ section.settings.badge_gradient_start }};
+    --ingi-badge-end: {{ section.settings.badge_gradient_end }};
+    --ingi-badge-color: {{ section.settings.badge_text_color }};
+  }
+{%- endstyle -%}
+
+{%- assign heading_tag = section.settings.heading_tag | default: 'h2' -%}
+
+<div class="ingi ingi--{{ section.id }}">
+  {%- if section.settings.eyebrow != blank
+    or section.settings.heading != blank
+    or section.settings.text != blank
+  -%}
+    <div class="ingi__hero">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="ingi__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <{{ heading_tag }} class="ingi__heading">{{ section.settings.heading }}</{{ heading_tag }}>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="ingi__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <ul class="ingi__badges list-unstyled" role="list">
+      {%- for block in section.blocks -%}
+        <li class="ingi__badge" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon_image != blank -%}
+            {{
+              block.settings.icon_image
+              | image_url: width: 96
+              | image_tag: class: 'ingi__badge-icon', loading: 'lazy', alt: ''
+            }}
+          {%- else -%}
+            {%- render 'ingredients-badge-icon', icon: block.settings.icon, class: 'ingi__badge-icon' -%}
+          {%- endif -%}
+          {%- if block.settings.label != blank -%}
+            <span class="ingi__badge-label">{{ block.settings.label | escape | newline_to_br }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Ingredientes: intro",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta superior",
+      "default": "Fórmula Transparente"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "info": "Pon en cursiva las palabras que quieras destacar con el color de acento.",
+      "default": "Cada Ingrediente Tiene <em>Su Porqué</em>"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Etiqueta HTML del título",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "12 nutrientes + Triple Bloqueo DHT. Descubre qué hace cada uno por tu pelo, sin letra pequeña."
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del texto",
+      "default": 720
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "header",
+      "content": "Etiqueta superior"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Color de texto",
+      "default": "#B12141"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_background",
+      "label": "Fondo",
+      "default": "#FBE0E4"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Título y texto"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (móvil)",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del título",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de acento (cursiva)",
+      "default": "#D9738A"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del texto",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#5C3540"
+    },
+    {
+      "type": "header",
+      "content": "Insignias"
+    },
+    {
+      "type": "range",
+      "id": "badges_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación con el texto",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "badge_gap",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre insignias",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "min": 60,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "min": 60,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño (móvil)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size_mobile",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "badge_icon_size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del icono",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "badge_gradient_start",
+      "label": "Degradado: color inicial",
+      "default": "#7A1C30"
+    },
+    {
+      "type": "color",
+      "id": "badge_gradient_end",
+      "label": "Degradado: color final",
+      "default": "#B12141"
+    },
+    {
+      "type": "range",
+      "id": "badge_gradient_angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "label": "Degradado: ángulo",
+      "default": 145
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Color de texto e icono",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "paragraph",
+      "content": "Los valores de móvil se aplican en pantallas de hasta 480px."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en títulos",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de títulos",
+      "default": "lora_n7"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "inter_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Insignia",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "none", "label": "Ninguno" },
+            { "value": "no_sugar", "label": "Sin azúcar" },
+            { "value": "no_gluten", "label": "Sin gluten" },
+            { "value": "no_gmo", "label": "Sin OGM" },
+            { "value": "gmp", "label": "Sello de calidad" },
+            { "value": "leaf", "label": "Hoja" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "no_sugar"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icono personalizado",
+          "info": "Reemplaza al icono seleccionado."
+        },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Texto",
+          "info": "Usa un salto de línea para dividir el texto.",
+          "default": "Sin Azúcar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredientes: intro",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "no_sugar", "label": "Sin Azúcar" } },
+        { "type": "badge", "settings": { "icon": "no_gluten", "label": "Sin Gluten" } },
+        { "type": "badge", "settings": { "icon": "no_gmo", "label": "Sin OGM" } },
+        { "type": "badge", "settings": { "icon": "gmp", "label": "Calidad\nGMP" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

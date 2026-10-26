@@ -1,0 +1,124 @@
+/* Ingredients intro — every selector is scoped to .ingi */
+
+.ingi {
+  padding: var(--ingi-pt-mobile) var(--ingi-px) var(--ingi-pb-mobile);
+  overflow-x: hidden;
+  background: var(--ingi-bg);
+  font-family: var(--ipg-body-font, var(--font-body-family));
+  font-style: var(--ipg-body-style, var(--font-body-style));
+  letter-spacing: normal;
+}
+
+.ingi *,
+.ingi *::before,
+.ingi *::after {
+  box-sizing: border-box;
+}
+
+/* Hero */
+
+.ingi__hero {
+  max-width: var(--ingi-max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ingi__eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 6px 16px;
+  border-radius: var(--ingi-eyebrow-radius);
+  background: var(--ingi-eyebrow-bg);
+  color: var(--ingi-eyebrow-color);
+  font-size: var(--ingi-eyebrow-size);
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ingi .ingi__heading {
+  margin: 0 0 14px;
+  color: var(--ingi-heading-color);
+  font-family: var(--ipg-heading-font, var(--font-heading-family));
+  font-style: var(--ipg-heading-style, var(--font-heading-style));
+  font-weight: var(--ipg-heading-weight);
+  font-size: var(--ingi-heading-size-mobile);
+  line-height: 1.25;
+  letter-spacing: normal;
+  word-break: break-word;
+}
+
+.ingi__heading em {
+  color: var(--ingi-accent);
+  font-style: italic;
+}
+
+.ingi__text {
+  margin: 0;
+  color: var(--ingi-text-color);
+  font-size: var(--ingi-text-size);
+  line-height: 1.5;
+}
+
+/* Badges */
+
+.ingi__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ingi-badge-gap);
+  margin: var(--ingi-badges-mt) 0 0;
+  padding: 0;
+}
+
+.ingi__badges:first-child {
+  margin-top: 0;
+}
+
+.ingi__badge {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--ingi-badge-size-mobile);
+  height: var(--ingi-badge-size-mobile);
+  padding: 6px;
+  border-radius: 50%;
+  background: linear-gradient(var(--ingi-badge-angle), var(--ingi-badge-start), var(--ingi-badge-end));
+  color: var(--ingi-badge-color);
+  font-size: var(--ingi-badge-font-size-mobile);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ingi__badge-icon {
+  flex-shrink: 0;
+  width: var(--ingi-badge-icon-size);
+  height: var(--ingi-badge-icon-size);
+  margin-bottom: 4px;
+  object-fit: contain;
+}
+
+/* Desktop and tablet — the original design only changes below 481px */
+
+@media screen and (min-width: 481px) {
+  .ingi {
+    padding-top: var(--ingi-pt);
+    padding-bottom: var(--ingi-pb);
+  }
+
+  .ingi .ingi__heading {
+    font-size: var(--ingi-heading-size);
+  }
+
+  .ingi__badge {
+    width: var(--ingi-badge-size);
+    height: var(--ingi-badge-size);
+    font-size: var(--ingi-badge-font-size);
+  }
+}

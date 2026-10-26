@@ -1,0 +1,270 @@
+{{ 'section-ingredients-cta.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {% render 'ingredients-page-fonts', section: section %}
+
+  .ingc--{{ section.id }} {
+    --ingc-bg: {{ section.settings.background }};
+    --ingc-pt: {{ section.settings.padding_top }}px;
+    --ingc-pb: {{ section.settings.padding_bottom }}px;
+    --ingc-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ingc-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ingc-px: {{ section.settings.padding_horizontal }}px;
+
+    --ingc-heading-size: {{ section.settings.heading_size }}px;
+    --ingc-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ingc-heading-color: {{ section.settings.heading_color }};
+    --ingc-heading-mb: {{ section.settings.heading_margin_bottom }}px;
+
+    --ingc-button-bg: {{ section.settings.button_background }};
+    --ingc-button-color: {{ section.settings.button_color }};
+    --ingc-button-size: {{ section.settings.button_size }}px;
+    --ingc-button-py: {{ section.settings.button_padding_vertical }}px;
+    --ingc-button-px: {{ section.settings.button_padding_horizontal }}px;
+    --ingc-button-radius: {{ section.settings.button_radius }}px;
+  }
+{%- endstyle -%}
+
+<div class="ingc ingc--{{ section.id }}">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="ingc__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  {%- if section.settings.button_label != blank -%}
+    <a
+      class="ingc__button"
+      {% if section.settings.button_link != blank %}
+        href="{{ section.settings.button_link }}"
+      {% else %}
+        role="link" aria-disabled="true"
+      {% endif %}
+    >
+      {{- section.settings.button_label | escape -}}
+    </a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Ingredientes: CTA final",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "¿Lista Para Frenar Tu Caída?"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Ver Producto"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño (móvil)",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación con el botón",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Fondo",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color de texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno horizontal",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "paragraph",
+      "content": "Los valores de móvil se aplican en pantallas de hasta 480px."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en el título",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente del título",
+      "default": "lora_n7"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en el botón",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente del botón",
+      "default": "inter_n4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredientes: CTA final"
+    }
+  ]
+}
+{% endschema %}

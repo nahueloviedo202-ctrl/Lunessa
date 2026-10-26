@@ -1,0 +1,397 @@
+{{ 'section-formula-benefits.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign divider_alpha = section.settings.divider_opacity | divided_by: 100.0
+  assign divider_color = section.settings.divider_color | color_modify: 'alpha', divider_alpha
+-%}
+
+{%- style -%}
+  {% render 'ingredients-page-fonts', section: section %}
+
+  .fben--{{ section.id }} {
+    --fben-pt: {{ section.settings.padding_top }}px;
+    --fben-pb: {{ section.settings.padding_bottom }}px;
+    --fben-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --fben-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --fben-px: {{ section.settings.padding_horizontal }}px;
+    --fben-angle: {{ section.settings.gradient_angle }}deg;
+    --fben-start: {{ section.settings.gradient_start }};
+    --fben-end: {{ section.settings.gradient_end }};
+
+    --fben-heading-size: {{ section.settings.heading_size }}px;
+    --fben-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --fben-heading-color: {{ section.settings.heading_color }};
+    --fben-heading-max-width: {{ section.settings.heading_max_width }}px;
+    --fben-heading-mb: {{ section.settings.heading_margin_bottom }}px;
+
+    --fben-max-width: {{ section.settings.max_width }}px;
+    --fben-columns: {{ section.settings.columns_desktop }};
+    --fben-columns-mobile: {{ section.settings.columns_mobile }};
+    --fben-gap: {{ section.settings.grid_gap }}px;
+
+    --fben-divider: {{ section.settings.divider_width }}px {{ section.settings.divider_style }} {{ divider_color }};
+    --fben-item-pl: {{ section.settings.item_padding_left }}px;
+    --fben-title-size: {{ section.settings.title_size }}px;
+    --fben-title-color: {{ section.settings.title_color }};
+    --fben-text-size: {{ section.settings.text_size }}px;
+    --fben-text-color: {{ section.settings.text_color }};
+  }
+{%- endstyle -%}
+
+<div class="fben fben--{{ section.id }}">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="fben__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <ul class="fben__grid list-unstyled" role="list">
+      {%- for block in section.blocks -%}
+        <li class="fben__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="fben__item-title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="fben__item-text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Beneficios de la fórmula",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Por Qué Esta Fórmula Es Diferente"
+    },
+    {
+      "type": "header",
+      "content": "Fondo"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Degradado: color inicial",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Degradado: color final",
+      "default": "#4A0F1C"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "label": "Degradado: ángulo",
+      "default": 180
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño (móvil)",
+      "default": 21
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FBE0E4"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 300,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación con los beneficios",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Beneficios"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 300,
+      "max": 1300,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo",
+      "default": 720
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas en escritorio y tablet",
+      "info": "Desde 640px.",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "label": "Columnas en móvil",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color de la línea",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "divider_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Opacidad de la línea",
+      "default": 35
+    },
+    {
+      "type": "select",
+      "id": "divider_style",
+      "label": "Estilo de la línea",
+      "options": [
+        { "value": "dotted", "label": "Punteada" },
+        { "value": "dashed", "label": "Discontinua" },
+        { "value": "solid", "label": "Continua" }
+      ],
+      "default": "dotted"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Grosor de la línea",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "item_padding_left",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación con la línea",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 20,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño del texto",
+      "default": 13.5
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#F2C9D1"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "paragraph",
+      "content": "Los valores de móvil se aplican en pantallas de hasta 480px."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en el título",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente del título",
+      "default": "lora_n7"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "inter_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Beneficio"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "Describe por qué este punto marca la diferencia."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Beneficios de la fórmula",
+      "blocks": [
+        { "type": "benefit", "settings": { "title": "Formulada Científicamente", "text": "Dosis reales, no las mínimas que usa la mayoría de gominolas para ahorrar costes." } },
+        { "type": "benefit", "settings": { "title": "Ataca la Causa Real", "text": "El Triple Bloqueo DHT frena la hormona que ataca tu raíz — no solo tapa el síntoma." } },
+        { "type": "benefit", "settings": { "title": "Mayor Absorción", "text": "Comprobado: absorbe mejor que una cápsula al masticarla, no al disolverse." } },
+        { "type": "benefit", "settings": { "title": "Tu Ciclo Capilar", "text": "Tu pelo tarda 90 días en mostrar un cambio real — por eso nuestra garantía dura lo mismo." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

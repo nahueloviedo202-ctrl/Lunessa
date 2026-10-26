@@ -1,0 +1,52 @@
+{%- comment -%}
+  Renders the optional custom fonts shared by the ingredients page sections
+  and exposes them as CSS variables on the section wrapper.
+  Must be rendered inside a {% style %} tag.
+
+  Accepts:
+  - section: {Object} The section object (needs heading_font_custom, heading_font, body_font_custom and body_font settings)
+
+  Usage:
+  {% render 'ingredients-page-fonts', section: section %}
+{%- endcomment -%}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign heading_weight = 700
+
+  if section.settings.heading_font_custom
+    assign heading_weight = heading_font.weight
+    assign heading_font_italic = heading_font | font_modify: 'style', 'italic'
+  endif
+
+  if section.settings.body_font_custom
+    assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+  endif
+-%}
+
+{%- if section.settings.heading_font_custom -%}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {%- if heading_font_italic -%}
+    {{ heading_font_italic | font_face: font_display: 'swap' }}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if section.settings.body_font_custom -%}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {%- if body_font_bold -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+  {%- endif -%}
+{%- endif %}
+
+#shopify-section-{{ section.id }} {
+  --ipg-heading-weight: {{ heading_weight }};
+  {%- if section.settings.heading_font_custom %}
+    --ipg-heading-font: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --ipg-heading-style: {{ heading_font.style }};
+  {%- endif %}
+  {%- if section.settings.body_font_custom %}
+    --ipg-body-font: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --ipg-body-style: {{ body_font.style }};
+  {%- endif %}
+}

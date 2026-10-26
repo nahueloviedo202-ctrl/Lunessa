@@ -1,0 +1,524 @@
+{{ 'section-nutrition-facts.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign shadow_alpha = section.settings.card_shadow_opacity | divided_by: 100.0
+  assign card_shadow = section.settings.card_shadow_color | color_modify: 'alpha', shadow_alpha
+-%}
+
+{%- style -%}
+  {% render 'ingredients-page-fonts', section: section %}
+
+  .nutri--{{ section.id }} {
+    --nutri-bg: {{ section.settings.background }};
+    --nutri-pt: {{ section.settings.padding_top }}px;
+    --nutri-pb: {{ section.settings.padding_bottom }}px;
+    --nutri-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --nutri-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --nutri-px: {{ section.settings.padding_horizontal }}px;
+
+    --nutri-max-width: {{ section.settings.max_width }}px;
+    --nutri-card-bg: {{ section.settings.card_background }};
+    --nutri-card-padding: {{ section.settings.card_padding }}px;
+    --nutri-card-padding-mobile: {{ section.settings.card_padding_mobile }}px;
+    --nutri-card-radius: {{ section.settings.card_radius }}px;
+    --nutri-card-radius-mobile: {{ section.settings.card_radius_mobile }}px;
+    --nutri-card-shadow: {{ card_shadow }};
+    --nutri-border: {{ section.settings.border_color }};
+
+    --nutri-title-size: {{ section.settings.title_size }}px;
+    --nutri-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --nutri-title-color: {{ section.settings.title_color }};
+    --nutri-meta-size: {{ section.settings.meta_size }}px;
+    --nutri-text-color: {{ section.settings.text_color }};
+    --nutri-muted-color: {{ section.settings.muted_color }};
+    --nutri-accent: {{ section.settings.accent_color }};
+    --nutri-group-bg: {{ section.settings.group_background }};
+    --nutri-calories-size: {{ section.settings.calories_size }}px;
+
+    --nutri-table-size: {{ section.settings.table_size }}px;
+    --nutri-table-size-mobile: {{ section.settings.table_size_mobile }}px;
+    --nutri-table-min: {{ section.settings.table_min_width }}px;
+    --nutri-table-min-mobile: {{ section.settings.table_min_width_mobile }}px;
+    --nutri-table-radius: {{ section.settings.table_radius }}px;
+  }
+{%- endstyle -%}
+
+<div class="nutri nutri--{{ section.id }}">
+  <div class="nutri__card">
+    {%- if section.settings.title != blank -%}
+      <h2 class="nutri__title">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.meta_1 != blank -%}
+      <p class="nutri__meta">{{ section.settings.meta_1 | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.meta_2 != blank -%}
+      <p class="nutri__meta">{{ section.settings.meta_2 | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.calories_label != blank or section.settings.calories_value != blank -%}
+      <div class="nutri__calories">
+        <span>{{ section.settings.calories_label | escape }}</span>
+        <span>{{ section.settings.calories_value | escape }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="nutri__table-scroll">
+        <table class="nutri__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ section.settings.column_name | escape }}</th>
+              <th scope="col">{{ section.settings.column_amount | escape }}</th>
+              <th scope="col">{{ section.settings.column_percent | escape }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'group' -%}
+                  <tr class="nutri__group" {{ block.shopify_attributes }}>
+                    <td colspan="3">{{ block.settings.title | escape }}</td>
+                  </tr>
+                {%- when 'row' -%}
+                  <tr {{ block.shopify_attributes }}>
+                    <td>{{ block.settings.name | escape }}</td>
+                    <td>{{ block.settings.amount | escape }}</td>
+                    <td>{{ block.settings.percent | escape }}</td>
+                  </tr>
+              {%- endcase -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="nutri__footnote">{{ section.settings.footnote | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Información nutricional",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Información Nutricional"
+    },
+    {
+      "type": "text",
+      "id": "meta_1",
+      "label": "Línea de información 1",
+      "default": "30 dosis por envase"
+    },
+    {
+      "type": "text",
+      "id": "meta_2",
+      "label": "Línea de información 2",
+      "default": "Dosis: 2 gominolas"
+    },
+    {
+      "type": "text",
+      "id": "calories_label",
+      "label": "Texto de calorías",
+      "default": "Calorías"
+    },
+    {
+      "type": "text",
+      "id": "calories_value",
+      "label": "Valor de calorías",
+      "default": "15"
+    },
+    {
+      "type": "text",
+      "id": "column_name",
+      "label": "Encabezado: columna 1",
+      "info": "Puede quedar vacío."
+    },
+    {
+      "type": "text",
+      "id": "column_amount",
+      "label": "Encabezado: columna 2",
+      "default": "Cantidad por dosis"
+    },
+    {
+      "type": "text",
+      "id": "column_percent",
+      "label": "Encabezado: columna 3",
+      "default": "% VRN*"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Nota al pie",
+      "default": "*Valor de Referencia de Nutrientes (VRN) no establecido"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 320,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo",
+      "default": 560
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color de bordes",
+      "default": "#E6CFD2"
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno (móvil)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_radius_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio (móvil)",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "card_shadow_color",
+      "label": "Color de sombra",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_opacity",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "label": "Opacidad de sombra",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (móvil)",
+      "default": 19
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "meta_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de las líneas de información",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "calories_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de calorías",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#4A2530"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Color de encabezados y nota",
+      "default": "#8A5560"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de acento",
+      "info": "Líneas de calorías, línea de encabezado y grupos.",
+      "default": "#B12141"
+    },
+    {
+      "type": "color",
+      "id": "group_background",
+      "label": "Fondo de grupos",
+      "default": "#FBE4E7"
+    },
+    {
+      "type": "header",
+      "content": "Tabla"
+    },
+    {
+      "type": "range",
+      "id": "table_size",
+      "min": 10,
+      "max": 20,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 13.5
+    },
+    {
+      "type": "range",
+      "id": "table_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Tamaño de texto (móvil)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "table_min_width",
+      "min": 280,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho mínimo",
+      "info": "Si no cabe, la tabla se desplaza horizontalmente.",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "table_min_width_mobile",
+      "min": 280,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho mínimo (móvil)",
+      "default": 440
+    },
+    {
+      "type": "range",
+      "id": "table_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "paragraph",
+      "content": "Los valores de móvil se aplican en pantallas de hasta 480px."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en el título",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente del título",
+      "default": "lora_n7"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "inter_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Grupo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título del grupo",
+          "default": "Nutrientes Activos"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Fila",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nutriente",
+          "default": "Nutriente"
+        },
+        {
+          "type": "text",
+          "id": "amount",
+          "label": "Cantidad por dosis",
+          "default": "0 mg"
+        },
+        {
+          "type": "text",
+          "id": "percent",
+          "label": "% VRN",
+          "default": "*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Información nutricional",
+      "blocks": [
+        { "type": "group", "settings": { "title": "Complejo Bloqueador de DHT" } },
+        { "type": "row", "settings": { "name": "Extracto de Palma Enana", "amount": "200 mg", "percent": "*" } },
+        { "type": "row", "settings": { "name": "Extracto de Semilla de Calabaza", "amount": "100 mg", "percent": "*" } },
+        { "type": "row", "settings": { "name": "Beta-Sitosterol", "amount": "50 mg", "percent": "*" } },
+        { "type": "group", "settings": { "title": "Nutrientes Activos" } },
+        { "type": "row", "settings": { "name": "Biotina", "amount": "5000 mcg", "percent": "10000%" } },
+        { "type": "row", "settings": { "name": "Zinc (Citrato de zinc)", "amount": "10 mg", "percent": "91%" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

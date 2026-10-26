@@ -1,0 +1,41 @@
+{%- comment -%}
+  Renders a line icon for the ingredients intro trust badges.
+
+  Accepts:
+  - icon: {String} no_sugar | no_gluten | no_gmo | gmp | leaf | check
+  - class: {String} CSS class for the svg (optional)
+
+  Usage:
+  {% render 'ingredients-badge-icon', icon: 'no_sugar', class: 'ingi__badge-icon' %}
+{%- endcomment -%}
+
+{%- liquid
+  case icon
+    when 'no_sugar'
+      assign paths = '<rect x="3" y="10" width="7" height="7" rx="1"/><rect x="13" y="6" width="7" height="7" rx="1"/><line x1="2" y1="21" x2="22" y2="3"/>'
+    when 'no_gluten'
+      assign paths = '<path d="M12 2c2 3 2 6 0 9-2-3-2-6-2-9z"/><path d="M12 11v10"/><line x1="2" y1="21" x2="22" y2="3"/>'
+    when 'no_gmo'
+      assign paths = '<path d="M9 3h6M10 3v5l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><line x1="2" y1="21" x2="22" y2="3"/>'
+    when 'gmp'
+      assign paths = '<circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/><path d="M9.5 9l1.8 1.8L15 7"/>'
+    when 'leaf'
+      assign paths = '<path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19l8-8"/>'
+    when 'check'
+      assign paths = '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/>'
+  endcase
+-%}
+
+{%- if paths != blank -%}
+  <svg
+    class="{{ class }}"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    aria-hidden="true"
+    focusable="false"
+  >
+    {{- paths -}}
+  </svg>
+{%- endif -%}

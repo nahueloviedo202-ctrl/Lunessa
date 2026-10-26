@@ -1,0 +1,700 @@
+{{ 'section-ingredients-filter-grid.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign radio_prefix = 'IngFilter-' | append: section.id | append: '-'
+  assign all_radio_id = radio_prefix | append: 'all'
+
+  assign filter_count = 0
+  for block in section.blocks
+    if block.type == 'filter' and block.settings.label != blank
+      assign filter_count = filter_count | plus: 1
+    endif
+  endfor
+
+  assign show_all = false
+  if section.settings.show_all and section.settings.all_label != blank
+    assign show_all = true
+  endif
+
+  assign show_filters = false
+  if filter_count > 0
+    assign show_filters = true
+  endif
+
+  assign shadow_alpha = section.settings.card_shadow_opacity | divided_by: 100.0
+  assign card_shadow = section.settings.card_shadow_color | color_modify: 'alpha', shadow_alpha
+-%}
+
+{%- style -%}
+  {% render 'ingredients-page-fonts', section: section %}
+
+  .ingf--{{ section.id }} {
+    --ingf-bg: {{ section.settings.background }};
+    --ingf-pt: {{ section.settings.padding_top }}px;
+    --ingf-pb: {{ section.settings.padding_bottom }}px;
+    --ingf-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ingf-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ingf-px: {{ section.settings.padding_horizontal }}px;
+
+    --ingf-tabs-mb: {{ section.settings.filters_margin_bottom }}px;
+    --ingf-tab-gap: {{ section.settings.filter_gap }}px;
+    --ingf-tab-px: {{ section.settings.filter_padding_horizontal }}px;
+    --ingf-tab-py: {{ section.settings.filter_padding_vertical }}px;
+    --ingf-tab-radius: {{ section.settings.filter_radius }}px;
+    --ingf-tab-size: {{ section.settings.filter_size }}px;
+    --ingf-tab-color: {{ section.settings.filter_color }};
+    --ingf-tab-active-bg: {{ section.settings.filter_active_background }};
+    --ingf-tab-active-color: {{ section.settings.filter_active_color }};
+
+    --ingf-max-width: {{ section.settings.max_width }}px;
+    --ingf-columns: {{ section.settings.columns_desktop }};
+    --ingf-columns-tablet: {{ section.settings.columns_tablet }};
+    --ingf-columns-mobile: {{ section.settings.columns_mobile }};
+    --ingf-gap: {{ section.settings.grid_gap }}px;
+
+    --ingf-card-bg: {{ section.settings.card_background }};
+    --ingf-card-radius: {{ section.settings.card_radius }}px;
+    --ingf-card-shadow: {{ card_shadow }};
+    --ingf-body-pt: {{ section.settings.card_padding_top }}px;
+    --ingf-body-pb: {{ section.settings.card_padding_bottom }}px;
+    --ingf-body-px: {{ section.settings.card_padding_horizontal }}px;
+    --ingf-image-ratio: {{ section.settings.image_ratio }};
+    --ingf-image-fit: {{ section.settings.image_fit }};
+    --ingf-image-bg: {{ section.settings.image_background }};
+
+    --ingf-name-size: {{ section.settings.name_size }}px;
+    --ingf-name-color: {{ section.settings.name_color }};
+    --ingf-desc-size: {{ section.settings.description_size }}px;
+    --ingf-desc-color: {{ section.settings.description_color }};
+    --ingf-tag-size: {{ section.settings.tag_size }}px;
+    --ingf-tag-color: {{ section.settings.tag_color }};
+    --ingf-tag-radius: {{ section.settings.tag_radius }}px;
+  }
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'filter' and block.settings.label != blank -%}
+      {%- assign filter_handle = block.settings.label | handleize %}
+      .ingf--{{ section.id }}:has([id="{{ radio_prefix }}{{ block.id }}"]:checked) .ingf-card:not([data-filters~="{{ filter_handle }}"]) {
+        display: none;
+      }
+    {%- endif -%}
+  {%- endfor %}
+{%- endstyle -%}
+
+<div class="ingf ingf--{{ section.id }}">
+  {%- if show_filters -%}
+    <div
+      class="ingf__filters"
+      role="radiogroup"
+      {% if section.settings.filters_label != blank %}
+        aria-label="{{ section.settings.filters_label | escape }}"
+      {% endif %}
+    >
+      {%- if show_all -%}
+        <input
+          type="radio"
+          class="ingf__radio visually-hidden"
+          name="IngFilter-{{ section.id }}"
+          id="{{ all_radio_id }}"
+          checked
+        >
+        <label for="{{ all_radio_id }}" class="ingf__filter">{{ section.settings.all_label | escape }}</label>
+      {%- endif -%}
+
+      {%- assign first_filter = true -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'filter' or block.settings.label == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign radio_id = radio_prefix | append: block.id -%}
+        <input
+          type="radio"
+          class="ingf__radio visually-hidden"
+          name="IngFilter-{{ section.id }}"
+          id="{{ radio_id }}"
+          {% if show_all == false and first_filter %}
+            checked
+          {% endif %}
+        >
+        <label
+          for="{{ radio_id }}"
+          class="ingf__filter"
+          data-filter-radio="{{ radio_id }}"
+          {{ block.shopify_attributes }}
+        >
+          {{- block.settings.label | escape -}}
+        </label>
+        {%- assign first_filter = false -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <ul class="ingf__grid list-unstyled" role="list">
+    {%- for block in section.blocks -%}
+      {%- if block.type != 'ingredient' -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- liquid
+        assign card_filters = ''
+        assign categories = block.settings.categories | split: ','
+        for category in categories
+          assign category_handle = category | strip | handleize
+          if category_handle != blank
+            assign card_filters = card_filters | append: category_handle | append: ' '
+          endif
+        endfor
+      -%}
+      <li
+        class="ingf-card"
+        data-filters="{{ card_filters | strip }}"
+        {% if show_filters and show_all %}
+          data-filter-radio="{{ all_radio_id }}"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
+        <div class="ingf-card__media">
+          {%- if block.settings.image != blank -%}
+            {%- assign image_alt = block.settings.image.alt | default: block.settings.name | escape -%}
+            {{
+              block.settings.image
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                widths: '300, 450, 600, 750, 900',
+                sizes: '(min-width: 1000px) 370px, (min-width: 640px) 50vw, 100vw',
+                class: 'ingf-card__image',
+                alt: image_alt
+            }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'ingf-card__image ingf-card__image--placeholder placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <div class="ingf-card__body">
+          {%- if block.settings.name != blank -%}
+            <h3 class="ingf-card__name">{{ block.settings.name | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="ingf-card__description">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.tag != blank -%}
+            <span class="ingf-card__tag">{{ block.settings.tag | escape }}</span>
+          {%- endif -%}
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{%- if request.design_mode -%}
+  <script>
+    document.addEventListener('shopify:block:select', (event) => {
+      const radioId = event.target.dataset.filterRadio;
+      const radio = radioId && document.getElementById(radioId);
+      if (radio) radio.checked = true;
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Ingredientes: filtro",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Color de fondo",
+      "default": "#FEF5F1"
+    },
+    {
+      "type": "header",
+      "content": "Filtros"
+    },
+    {
+      "type": "paragraph",
+      "content": "Agrega bloques \"Filtro\" y escribe el mismo nombre en las categorías de cada ingrediente."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all",
+      "label": "Mostrar filtro \"Todos\"",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "Texto del filtro \"Todos\"",
+      "default": "Todos"
+    },
+    {
+      "type": "text",
+      "id": "filters_label",
+      "label": "Nombre accesible de los filtros",
+      "info": "Lo leen los lectores de pantalla.",
+      "default": "Filtrar ingredientes"
+    },
+    {
+      "type": "range",
+      "id": "filters_margin_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación con la cuadrícula",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "filter_gap",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre filtros",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "filter_padding_horizontal",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno horizontal",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "filter_padding_vertical",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno vertical",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "filter_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "filter_size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "filter_color",
+      "label": "Color de texto y borde",
+      "default": "#B12141"
+    },
+    {
+      "type": "color",
+      "id": "filter_active_background",
+      "label": "Fondo activo",
+      "default": "#6B1626"
+    },
+    {
+      "type": "color",
+      "id": "filter_active_color",
+      "label": "Texto activo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Cuadrícula"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo",
+      "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Columnas en escritorio",
+      "info": "Desde 1000px.",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas en tablet",
+      "info": "De 640px a 999px.",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "label": "Columnas en móvil",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación entre tarjetas",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "card_shadow_color",
+      "label": "Color de sombra",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_opacity",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "label": "Opacidad de sombra",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_padding_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno superior del contenido",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno inferior del contenido",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral del contenido",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción de imagen",
+      "options": [
+        { "value": "1 / 1", "label": "Cuadrada (1:1)" },
+        { "value": "4 / 3", "label": "Horizontal (4:3)" },
+        { "value": "3 / 2", "label": "Horizontal (3:2)" },
+        { "value": "16 / 9", "label": "Panorámica (16:9)" },
+        { "value": "3 / 4", "label": "Vertical (3:4)" }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Ajuste de imagen",
+      "options": [
+        { "value": "cover", "label": "Rellenar" },
+        { "value": "contain", "label": "Contener" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "color",
+      "id": "image_background",
+      "label": "Fondo de imagen",
+      "default": "#F3D9DD"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del nombre",
+      "default": 19
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Color del nombre",
+      "default": "#6B1626"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la descripción",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color de la descripción",
+      "default": "#4A2530"
+    },
+    {
+      "type": "range",
+      "id": "tag_size",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la etiqueta",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Color de la etiqueta",
+      "default": "#B12141"
+    },
+    {
+      "type": "range",
+      "id": "tag_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de la etiqueta",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "paragraph",
+      "content": "Los valores de móvil se aplican en pantallas de hasta 480px."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno superior (móvil)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Relleno inferior (móvil)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Relleno lateral",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_font_custom",
+      "label": "Usar fuente personalizada en nombres",
+      "info": "Si está desactivado se usa la fuente de títulos del tema.",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente de nombres",
+      "default": "lora_n7"
+    },
+    {
+      "type": "checkbox",
+      "id": "body_font_custom",
+      "label": "Usar fuente personalizada en textos",
+      "info": "Si está desactivado se usa la fuente de cuerpo del tema.",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente de textos",
+      "default": "inter_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filtro",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre",
+          "info": "Muestra los ingredientes que tengan este nombre en sus categorías.",
+          "default": "Categoría"
+        }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Ingrediente",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Ingrediente"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Describe qué hace este ingrediente por tu pelo."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Etiqueta",
+          "default": "Beneficio"
+        },
+        {
+          "type": "text",
+          "id": "categories",
+          "label": "Categorías",
+          "info": "Nombres de filtros separados por comas. Ejemplo: DHT, Vitaminas"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredientes: filtro",
+      "blocks": [
+        { "type": "filter", "settings": { "label": "DHT" } },
+        { "type": "filter", "settings": { "label": "Vitaminas" } },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Extracto de Palma Enana",
+            "description": "Es el ingrediente central del Triple Bloqueo DHT. Actúa sobre la hormona que ataca tu raíz, ayudando a frenar la caída desde el origen del problema, no solo desde fuera.",
+            "tag": "Protección Folicular",
+            "categories": "DHT"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Beta-Sitosterol",
+            "description": "Junto a la Palma Enana, es la combinación con respaldo del estudio Prager et al. (2002) sobre el bloqueo de DHT. Refuerza el efecto principal desde la raíz.",
+            "tag": "Sinergia Clave",
+            "categories": "DHT"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Biotina",
+            "description": "Apoya el crecimiento natural de tu pelo, tu piel y tus uñas — por eso muchas notan también las uñas más fuertes.",
+            "tag": "Crecimiento",
+            "categories": "Vitaminas"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

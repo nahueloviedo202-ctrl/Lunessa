@@ -1,0 +1,148 @@
+/* Ingredients filter grid — every selector is scoped to .ingf */
+
+.ingf {
+  padding: var(--ingf-pt-mobile) var(--ingf-px) var(--ingf-pb-mobile);
+  overflow-x: hidden;
+  background: var(--ingf-bg);
+  font-family: var(--ipg-body-font, var(--font-body-family));
+  font-style: var(--ipg-body-style, var(--font-body-style));
+  letter-spacing: normal;
+}
+
+.ingf *,
+.ingf *::before,
+.ingf *::after {
+  box-sizing: border-box;
+}
+
+/* Filters */
+
+.ingf__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ingf-tab-gap);
+  margin: 0 auto var(--ingf-tabs-mb);
+}
+
+.ingf__filter {
+  display: inline-block;
+  padding: var(--ingf-tab-py) var(--ingf-tab-px);
+  border: 1.5px solid var(--ingf-tab-color);
+  border-radius: var(--ingf-tab-radius);
+  background: transparent;
+  color: var(--ingf-tab-color);
+  font-size: var(--ingf-tab-size);
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.ingf__radio:checked + .ingf__filter,
+.ingf__filter:hover {
+  border-color: var(--ingf-tab-active-bg);
+  background: var(--ingf-tab-active-bg);
+  color: var(--ingf-tab-active-color);
+}
+
+.ingf__radio:focus-visible + .ingf__filter {
+  outline: 2px solid var(--ingf-tab-active-bg);
+  outline-offset: 2px;
+}
+
+/* Grid */
+
+.ingf__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ingf-columns-mobile), minmax(0, 1fr));
+  gap: var(--ingf-gap);
+  max-width: var(--ingf-max-width);
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Card */
+
+.ingf-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--ingf-card-radius);
+  background: var(--ingf-card-bg);
+  box-shadow: 0 6px 18px var(--ingf-card-shadow);
+}
+
+.ingf-card__media {
+  aspect-ratio: var(--ingf-image-ratio);
+  overflow: hidden;
+  background: var(--ingf-image-bg);
+}
+
+.ingf-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--ingf-image-fit);
+}
+
+.ingf-card__image--placeholder {
+  fill: var(--ingf-name-color);
+  opacity: 0.4;
+}
+
+.ingf-card__body {
+  padding: var(--ingf-body-pt) var(--ingf-body-px) var(--ingf-body-pb);
+}
+
+.ingf .ingf-card__name {
+  margin: 0 0 8px;
+  color: var(--ingf-name-color);
+  font-family: var(--ipg-heading-font, var(--font-heading-family));
+  font-style: var(--ipg-heading-style, var(--font-heading-style));
+  font-weight: var(--ipg-heading-weight);
+  font-size: var(--ingf-name-size);
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+
+.ingf-card__description {
+  margin: 0 0 12px;
+  color: var(--ingf-desc-color);
+  font-size: var(--ingf-desc-size);
+  line-height: 1.55;
+}
+
+.ingf-card__tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1.3px solid var(--ingf-tag-color);
+  border-radius: var(--ingf-tag-radius);
+  color: var(--ingf-tag-color);
+  font-size: var(--ingf-tag-size);
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Breakpoints follow the original design: 481px, 640px and 1000px */
+
+@media screen and (min-width: 481px) {
+  .ingf {
+    padding-top: var(--ingf-pt);
+    padding-bottom: var(--ingf-pb);
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .ingf__grid {
+    grid-template-columns: repeat(var(--ingf-columns-tablet), minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .ingf__grid {
+    grid-template-columns: repeat(var(--ingf-columns), minmax(0, 1fr));
+  }
+}
