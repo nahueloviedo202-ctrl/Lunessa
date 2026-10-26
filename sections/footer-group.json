@@ -45,7 +45,7 @@
           "type": "link_list",
           "settings": {
             "heading": "Ayuda",
-            "menu": ""
+            "menu": "footer-ayuda"
           }
         }
       },
