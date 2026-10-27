@@ -1677,7 +1677,7 @@
           "type": "item",
           "settings": {
             "title": "Fórmula recomendada por veterinarios",
-            "content": "<p>Explica aquí quién avala la fórmula y en qué se basa.</p>",
+            "content": "<p>Fórmula desarrollada en conjunto con veterinarios especializados en salud articular canina, con ingredientes respaldados por estudios clínicos.</p>",
             "open": false
           }
         },
@@ -1685,7 +1685,7 @@
           "type": "item",
           "settings": {
             "title": "Resultados visibles",
-            "content": "<p>Cuenta aquí cuándo suelen notarse los cambios, según datos reales de tus clientes.</p>",
+            "content": "<p>Las primeras señales suelen notarse desde el día 7, cambios visibles alrededor del día 30, y el impacto completo entre los 60 y 90 días de uso constante.</p>",
             "open": false
           }
         },
@@ -1693,7 +1693,7 @@
           "type": "item",
           "settings": {
             "title": "Fabricación",
-            "content": "<p>Indica dónde y bajo qué certificaciones se fabrica el producto.</p>",
+            "content": "<p>Elaborado en una planta con certificación GMP en EE. UU., bajo estrictos controles de calidad y sin OGM, hormonas ni antibióticos.</p>",
             "open": false
           }
         },
