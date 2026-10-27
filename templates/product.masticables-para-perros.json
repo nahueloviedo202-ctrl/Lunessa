@@ -820,7 +820,7 @@
       ],
       "name": "Datos y estadísticas",
       "settings": {
-        "background_color": "#17443D",
+        "background_color": "#17443d",
         "max_width": 1064,
         "stack_gap": 24,
         "stack_gap_mobile": 24,
@@ -831,14 +831,14 @@
         "padding_bottom_mobile": 40,
         "padding_x_mobile": 16,
         "heading": "Datos reales de dueños reales",
-        "heading_color": "#FFFFFF",
+        "heading_color": "#ffffff",
         "heading_size": 30,
         "heading_line_height": 38,
         "heading_size_mobile": 24,
         "heading_line_height_mobile": 32,
         "header_gap": 12,
         "subheading": "Esto es lo que cuentan otros dueños después de 90 días de uso constante*",
-        "subheading_color": "#FFFFFF",
+        "subheading_color": "#ffffff",
         "subheading_size": 16,
         "subheading_line_height": 24,
         "subheading_max_width": 1016,
@@ -853,16 +853,144 @@
         "grid_gap": 40,
         "grid_gap_mobile": 24,
         "stat_gap": 8,
-        "number_color": "#C5FA56",
+        "number_color": "#c5fa56",
         "number_font_weight": "700",
         "number_size": 60,
         "number_size_mobile": 60,
         "number_letter_spacing": -2,
-        "label_color": "#FFFFFF",
+        "label_color": "#ffffff",
         "label_size": 16,
         "label_line_height": 24,
         "label_max_width": 200,
         "button_label": "PRUÉBALO AHORA",
+        "button_link": "",
+        "button_background": "#c5fa56",
+        "button_color": "#212427",
+        "button_border": "#212427",
+        "button_background_hover": "#17443d",
+        "button_color_hover": "#ffffff",
+        "button_border_hover": "#123530",
+        "button_size": 16,
+        "button_height": 48,
+        "button_max_width": 343,
+        "button_radius": 50,
+        "disclaimer": "*Según una encuesta a nuestros clientes. Indica aquí cuándo y cómo se recogieron los datos.",
+        "disclaimer_color": "#f1fdf0",
+        "disclaimer_size": 12,
+        "disclaimer_max_width": 771,
+        "disclaimer_italic": false,
+        "footer_gap": 12
+      }
+    },
+    "video_reels_bVU4VK": {
+      "type": "video-reels",
+      "blocks": {
+        "reel_wgAipr": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_pxFQMT": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_Fa3yBM": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_GP6waN": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_f9GXGW": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_qX6dtH": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_t97UQn": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        },
+        "reel_BiqCWY": {
+          "type": "reel",
+          "settings": {
+            "media_alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "reel_wgAipr",
+        "reel_pxFQMT",
+        "reel_Fa3yBM",
+        "reel_GP6waN",
+        "reel_f9GXGW",
+        "reel_qX6dtH",
+        "reel_t97UQn",
+        "reel_BiqCWY"
+      ],
+      "name": "Carril de videos",
+      "settings": {
+        "background_color": "#FFFAF7",
+        "max_width": 1440,
+        "stack_gap": 24,
+        "stack_gap_mobile": 24,
+        "padding_top": 86,
+        "padding_bottom": 86,
+        "padding_x": 0,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24,
+        "padding_x_mobile": 16,
+        "heading": "Resultados que cambian vidas, contados por veterinarios y clientes",
+        "heading_color": "#212427",
+        "heading_size": 30,
+        "heading_line_height": 38,
+        "heading_size_mobile": 24,
+        "heading_line_height_mobile": 32,
+        "header_gap": 12,
+        "subheading": "Únete a la manada: descubre por qué confían en nosotros",
+        "subheading_color": "#212427",
+        "subheading_size": 16,
+        "subheading_line_height": 24,
+        "subheading_max_width": 1016,
+        "heading_font_source": "custom",
+        "heading_font": "inter_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "tile_width": 252,
+        "gap": 24,
+        "snap": "proximity",
+        "show_arrows": false,
+        "arrow_color": "#212427",
+        "columns_tablet": "3",
+        "columns_mobile": "3",
+        "gap_mobile": 10,
+        "ratio": "323 / 468",
+        "radius": 20,
+        "radius_mobile": 8,
+        "icon_color": "#FFFFFF",
+        "icon_size": 48,
+        "icon_size_mobile": 32,
+        "focus_color": "#C5FA56",
+        "play_label": "Reproducir video",
+        "pause_label": "Pausar video",
+        "button_label": "¡AHORRA 65% AHORA!",
         "button_link": "",
         "button_background": "#C5FA56",
         "button_color": "#212427",
@@ -874,12 +1002,11 @@
         "button_height": 48,
         "button_max_width": 343,
         "button_radius": 50,
-        "disclaimer": "*Según una encuesta a nuestros clientes. Indica aquí cuándo y cómo se recogieron los datos.",
-        "disclaimer_color": "#F1FDF0",
+        "disclaimer": "",
+        "disclaimer_color": "#57534E",
         "disclaimer_size": 12,
-        "disclaimer_max_width": 771,
         "disclaimer_italic": false,
-        "footer_gap": 12
+        "footer_gap": 16
       }
     }
   },
@@ -890,6 +1017,7 @@
     "related-products",
     "video_testimonials_grid_rFhUdH",
     "results_checklist_8Xbrnx",
-    "stats_data_UhwfxB"
+    "stats_data_UhwfxB",
+    "video_reels_bVU4VK"
   ]
 }
