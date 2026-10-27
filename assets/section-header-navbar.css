@@ -157,10 +157,17 @@
   color: inherit;
 }
 
-.header-navbar .header__icon .icon,
-.header-navbar .header__icon--cart .icon {
+.header-navbar .header__icon .icon {
   width: var(--hn-icon-size);
   height: var(--hn-icon-size);
+}
+
+/* Dawn's cart glyph only fills ~55% of its 40×40 viewBox (and ~78% of that height in width),
+   so the SVG is scaled up until the visible bag matches --hn-cart-size. */
+.header-navbar .header__icon--cart .icon {
+  flex: none;
+  width: calc(var(--hn-cart-size) / 0.555);
+  height: calc(var(--hn-cart-size) / 0.555);
 }
 
 .header-navbar__icons .header__icon,
@@ -172,13 +179,17 @@
   margin: 0;
 }
 
+.header-navbar__icons .header__icon--cart {
+  margin-inline: calc((var(--hn-cart-size) * 0.78 - 4.4rem) / 2);
+}
+
 .header-navbar .header__icon--cart[hidden] {
   display: none;
 }
 
 .header-navbar .cart-count-bubble {
-  top: calc((4.4rem - var(--hn-icon-size)) / 2 - 6px);
-  right: calc((4.4rem - var(--hn-icon-size)) / 2 - 6px);
+  top: calc(16px - var(--hn-cart-size) * 0.608);
+  right: calc(16px - var(--hn-cart-size) * 0.39);
   bottom: auto;
   left: auto;
   box-sizing: border-box;

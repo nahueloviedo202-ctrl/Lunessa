@@ -135,6 +135,7 @@
     --hn-logo-width: {{ section.settings.logo_width }}px;
     --hn-logo-width-mobile: {{ section.settings.logo_width_mobile }}px;
     --hn-icon-size: {{ section.settings.icon_size }}px;
+    --hn-cart-size: {{ section.settings.cart_icon_size }}px;
     --hn-radius: {{ section.settings.radius }}px;
     --hn-item-ff: {{ item_ff }};
     --hn-item-fs: {{ item_fs }};
@@ -716,6 +717,16 @@
       "unit": "px",
       "label": "Tamaño de iconos",
       "default": 21
+    },
+    {
+      "type": "range",
+      "id": "cart_icon_size",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del icono del carrito",
+      "default": 24
     },
     {
       "type": "header",

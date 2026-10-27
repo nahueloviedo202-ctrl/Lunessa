@@ -1,0 +1,666 @@
+{{ 'section-mark-strip.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'drag-scroll.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign font = section.settings.font
+
+  case section.settings.font_source
+    when 'theme_heading'
+      assign font_ff = 'var(--font-heading-family)'
+      assign font_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign font_ff = 'var(--font-body-family)'
+      assign font_fs = 'var(--font-body-style)'
+    else
+      assign font_ff = font.family | append: ', ' | append: font.fallback_families
+      assign font_fs = font.style
+  endcase
+
+  assign is_marquee = false
+  if section.settings.layout == 'marquee'
+    assign is_marquee = true
+  endif
+-%}
+
+{%- style -%}
+  {%- if section.settings.font_source == 'custom' -%}
+    {{ font | font_face: font_display: 'swap' }}
+    {%- assign font_weighted = font | font_modify: 'weight', section.settings.title_weight -%}
+    {%- if font_weighted -%}
+      {{ font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .mark-strip-{{ section.id }} {
+    --ms-bg: {{ section.settings.background }};
+    --ms-color: {{ section.settings.text_color }};
+    --ms-focus: {{ section.settings.focus_color }};
+    --ms-py: {{ section.settings.padding_vertical }}px;
+    --ms-py-mobile: {{ section.settings.padding_vertical_mobile }}px;
+    --ms-px: {{ section.settings.padding_x }}px;
+    --ms-gap: {{ section.settings.item_gap }}px;
+    --ms-gap-mobile: {{ section.settings.item_gap_mobile }}px;
+    --ms-icon-gap: {{ section.settings.icon_gap }}px;
+    --ms-icon-size: {{ section.settings.icon_size }}px;
+    --ms-icon-size-mobile: {{ section.settings.icon_size_mobile }}px;
+    --ms-ff: {{ font_ff }};
+    --ms-fs: {{ font_fs }};
+    --ms-title-size: {{ section.settings.title_size }}px;
+    --ms-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --ms-title-weight: {{ section.settings.title_weight }};
+    --ms-caption-size: {{ section.settings.caption_size }}px;
+    --ms-ls: {{ section.settings.letter_spacing | divided_by: 1000.0 }}em;
+    --ms-duration: {{ section.settings.duration }}s;
+    --ms-duration-mobile: {{ section.settings.duration_mobile }}s;
+  }
+{%- endstyle -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="mark-strip-section mark-strip-{{ section.id }}">
+    <drag-scroll
+      class="mark-strip mark-strip--{{ section.settings.layout }}{% if is_marquee %} mark-strip--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} mark-strip--pause{% endif %}{% endif %}"
+      role="group"
+      {% if section.settings.aria_label != blank %}
+        aria-label="{{ section.settings.aria_label | escape }}"
+      {% endif %}
+      {% if is_marquee %}
+        tabindex="0"
+      {% endif %}
+    >
+      <div class="mark-strip__belt">
+        {%- liquid
+          if is_marquee
+            assign run_count = 2
+          else
+            assign run_count = 1
+          endif
+        -%}
+        {%- for run in (1..run_count) -%}
+          {%- assign is_clone = forloop.last -%}
+          {%- if run_count == 1 -%}
+            {%- assign is_clone = false -%}
+          {%- endif -%}
+          <ul
+            class="mark-strip__run list-unstyled{% if is_clone %} mark-strip__clone{% endif %}"
+            role="list"
+            {% if is_clone %}
+              aria-hidden="true"
+            {% endif %}
+          >
+            {%- for i in (1..section.settings.repeat_count) -%}
+              {%- assign is_repeat = false -%}
+              {%- if is_clone or i > 1 -%}
+                {%- assign is_repeat = true -%}
+              {%- endif -%}
+              {%- if is_marquee or i == 1 -%}
+                {%- for block in section.blocks -%}
+                  {%- render 'mark-strip-item', block: block, is_clone: is_repeat -%}
+                {%- endfor -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </drag-scroll>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Franja de sellos",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Nombre para lectores de pantalla",
+      "default": "Beneficios del producto"
+    },
+    {
+      "type": "header",
+      "content": "Comportamiento"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Diseño",
+      "options": [
+        {
+          "value": "marquee",
+          "label": "Desplazamiento automático"
+        },
+        {
+          "value": "wrap",
+          "label": "Estático (centrado)"
+        }
+      ],
+      "default": "marquee"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Dirección",
+      "options": [
+        {
+          "value": "left",
+          "label": "Hacia la izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Hacia la derecha"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "s",
+      "label": "Duración de una vuelta (desktop)",
+      "info": "Más segundos = más lento.",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "duration_mobile",
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "s",
+      "label": "Duración de una vuelta (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "repeat_count",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Repeticiones de los ítems",
+      "info": "Subilo si quedan espacios vacíos en pantallas anchas.",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pausar al pasar el mouse o enfocar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#F0FEC9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Texto e iconos",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Anillo de foco",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "checkbox",
+      "id": "tint_icons",
+      "label": "Teñir imágenes de iconos con el color del texto",
+      "info": "Usá PNG o SVG con fondo transparente.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "font_source",
+      "label": "Fuente",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "font",
+      "label": "Fuente personalizada",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "500",
+          "label": "500"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "caption_size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": -50,
+      "max": 100,
+      "step": 2,
+      "label": "Espaciado entre letras (milésimas de em)",
+      "default": -22
+    },
+    {
+      "type": "header",
+      "content": "Tamaños y espaciado"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 16,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de iconos (desktop)",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "min": 16,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de iconos (mobile)",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "icon_gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre icono y texto",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 8,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre ítems (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "item_gap_mobile",
+      "min": 8,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre ítems (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado vertical (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado vertical (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral",
+      "default": 18
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Sello",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icono (imagen)",
+          "info": "Si está vacío se usa el icono del theme."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono del theme",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__1.label"
+            },
+            {
+              "value": "apple",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__2.label"
+            },
+            {
+              "value": "banana",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__3.label"
+            },
+            {
+              "value": "bottle",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__4.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__5.label"
+            },
+            {
+              "value": "carrot",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__6.label"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__7.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__8.label"
+            },
+            {
+              "value": "clipboard",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__9.label"
+            },
+            {
+              "value": "dairy",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__10.label"
+            },
+            {
+              "value": "dairy_free",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__11.label"
+            },
+            {
+              "value": "dryer",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__12.label"
+            },
+            {
+              "value": "eye",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__13.label"
+            },
+            {
+              "value": "fire",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__14.label"
+            },
+            {
+              "value": "gluten_free",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__15.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__16.label"
+            },
+            {
+              "value": "iron",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__17.label"
+            },
+            {
+              "value": "leaf",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__18.label"
+            },
+            {
+              "value": "leather",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__19.label"
+            },
+            {
+              "value": "lightning_bolt",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__20.label"
+            },
+            {
+              "value": "lipstick",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__21.label"
+            },
+            {
+              "value": "lock",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__22.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__23.label"
+            },
+            {
+              "value": "nut_free",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__24.label"
+            },
+            {
+              "value": "pants",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__25.label"
+            },
+            {
+              "value": "paw_print",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__26.label"
+            },
+            {
+              "value": "pepper",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__27.label"
+            },
+            {
+              "value": "perfume",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__28.label"
+            },
+            {
+              "value": "plane",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__29.label"
+            },
+            {
+              "value": "plant",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__30.label"
+            },
+            {
+              "value": "price_tag",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__31.label"
+            },
+            {
+              "value": "question_mark",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__32.label"
+            },
+            {
+              "value": "recycle",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__33.label"
+            },
+            {
+              "value": "return",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__34.label"
+            },
+            {
+              "value": "ruler",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__35.label"
+            },
+            {
+              "value": "serving_dish",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__36.label"
+            },
+            {
+              "value": "shirt",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__37.label"
+            },
+            {
+              "value": "shoe",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__38.label"
+            },
+            {
+              "value": "silhouette",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__39.label"
+            },
+            {
+              "value": "snowflake",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__40.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__41.label"
+            },
+            {
+              "value": "stopwatch",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__42.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__43.label"
+            },
+            {
+              "value": "washing",
+              "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.icon.options__44.label"
+            }
+          ],
+          "default": "check_mark"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Título",
+          "default": "Hecho en Argentina"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "caption",
+          "label": "Subtítulo (opcional)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Franja de sellos",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "star",
+            "title": "Hecho en Argentina*",
+            "caption": "*con ingredientes de todo el mundo"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "clipboard",
+            "title": "Formulado científicamente"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "check_mark",
+            "title": "Testeado por terceros"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "title": "Garantía de 90 días"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "leaf",
+            "title": "Sin colorantes artificiales"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "plant",
+            "title": "Sin conservantes artificiales"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

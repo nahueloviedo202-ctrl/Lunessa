@@ -1,0 +1,65 @@
+{% doc %}
+  Renders one item of the mark strip section: icon + title + optional caption.
+
+  @param {object} block - An `item` block of the mark-strip section.
+  @param {boolean} [is_clone] - Whether the item belongs to the duplicated (aria-hidden) run. Defaults to `false`.
+  @param {object} [section] - The mark-strip section, supplied implicitly; used for icon settings.
+
+  @example
+  {% render 'mark-strip-item', block: block, is_clone: false %}
+{% enddoc %}
+
+{%- liquid
+  if block.settings.link != blank
+    assign item_tag = 'a'
+  else
+    assign item_tag = 'div'
+  endif
+-%}
+<li
+  class="mark-strip__item"
+  {% unless is_clone %}
+    {{ block.shopify_attributes }}
+  {% endunless %}
+>
+  <{{ item_tag }}
+    class="mark-strip__mark{% if item_tag == 'a' %} mark-strip__link{% endif %}"
+    {% if item_tag == 'a' %}
+      href="{{ block.settings.link }}"
+      {% if is_clone %}
+        tabindex="-1"
+      {% endif %}
+    {% endif %}
+  >
+    {%- if block.settings.image != blank -%}
+      {%- if section.settings.tint_icons -%}
+        <span
+          class="mark-strip__ink"
+          style="--mask: url('{{ block.settings.image | image_url: width: 160 }}');"
+          aria-hidden="true"
+        ></span>
+      {%- else -%}
+        {{
+          block.settings.image
+          | image_url: width: 160
+          | image_tag:
+            class: 'mark-strip__icon',
+            widths: '80, 160',
+            sizes: '80px',
+            loading: 'lazy',
+            alt: ''
+        }}
+      {%- endif -%}
+    {%- elsif block.settings.icon != 'none' -%}
+      <span class="mark-strip__icon mark-strip__icon--theme" aria-hidden="true">
+        {%- render 'icon-accordion', icon: block.settings.icon -%}
+      </span>
+    {%- endif -%}
+    <span class="mark-strip__copy">
+      <span class="mark-strip__title">{{ block.settings.title }}</span>
+      {%- if block.settings.caption != blank -%}
+        <span class="mark-strip__caption">{{ block.settings.caption }}</span>
+      {%- endif -%}
+    </span>
+  </{{ item_tag }}>
+</li>

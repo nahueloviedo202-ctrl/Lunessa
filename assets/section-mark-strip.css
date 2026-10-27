@@ -1,0 +1,221 @@
+/* Mark strip — every rule is scoped under .mark-strip-section / .mark-strip */
+
+.mark-strip-section {
+  padding-block: var(--ms-py-mobile);
+  background-color: var(--ms-bg);
+  color: var(--ms-color);
+}
+
+.mark-strip {
+  display: block;
+  box-sizing: border-box;
+  padding-inline: var(--ms-px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.mark-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.mark-strip:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ms-focus) 75%, transparent);
+}
+
+.mark-strip.is-draggable {
+  cursor: grab;
+}
+
+.mark-strip.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.mark-strip__belt {
+  display: flex;
+  width: 100%;
+  min-width: max-content;
+}
+
+.mark-strip .mark-strip__run {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ms-gap-mobile);
+  min-width: max-content;
+  margin: 0;
+  padding: 0;
+}
+
+/* Marquee */
+.mark-strip--marquee .mark-strip__belt {
+  width: max-content;
+  animation: mark-strip-scroll var(--ms-duration-mobile) linear infinite;
+  will-change: transform;
+}
+
+.mark-strip--marquee .mark-strip__run {
+  flex: 0 0 auto;
+  padding-inline-end: var(--ms-gap-mobile);
+}
+
+.mark-strip--right .mark-strip__belt {
+  animation-direction: reverse;
+}
+
+.mark-strip--pause:hover .mark-strip__belt,
+.mark-strip--pause:focus-within .mark-strip__belt {
+  animation-play-state: paused;
+}
+
+/* Static wrap */
+.mark-strip--wrap {
+  overflow: visible;
+}
+
+.mark-strip--wrap .mark-strip__belt {
+  min-width: 0;
+}
+
+.mark-strip--wrap .mark-strip__run {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Item */
+.mark-strip__item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin: 0;
+}
+
+.mark-strip__mark {
+  display: flex;
+  align-items: center;
+  gap: var(--ms-icon-gap);
+  color: inherit;
+  text-decoration: none;
+}
+
+.mark-strip__link {
+  border-radius: 5px;
+}
+
+.mark-strip__link:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ms-focus) 75%, transparent);
+}
+
+.mark-strip__icon,
+.mark-strip__ink {
+  display: block;
+  flex: none;
+  width: var(--ms-icon-size-mobile);
+  height: var(--ms-icon-size-mobile);
+}
+
+.mark-strip__icon {
+  object-fit: contain;
+}
+
+.mark-strip__icon--theme .svg-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.mark-strip__ink {
+  background-color: currentColor;
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+.mark-strip__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-family: var(--ms-ff);
+  font-style: var(--ms-fs);
+  white-space: nowrap;
+}
+
+.mark-strip__title {
+  font-size: var(--ms-title-size-mobile);
+  font-weight: var(--ms-title-weight);
+  line-height: 1.1;
+  letter-spacing: var(--ms-ls);
+}
+
+.mark-strip__caption {
+  font-size: var(--ms-caption-size);
+  font-weight: var(--ms-title-weight);
+  line-height: 1.2;
+  letter-spacing: var(--ms-ls);
+}
+
+@keyframes mark-strip-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .mark-strip-section {
+    padding-block: var(--ms-py);
+  }
+
+  .mark-strip .mark-strip__run {
+    gap: var(--ms-gap);
+  }
+
+  .mark-strip--marquee .mark-strip__belt {
+    animation-duration: var(--ms-duration);
+  }
+
+  .mark-strip--marquee .mark-strip__run {
+    padding-inline-end: var(--ms-gap);
+  }
+
+  .mark-strip--wrap .mark-strip__run {
+    gap: 32px;
+  }
+
+  .mark-strip__icon,
+  .mark-strip__ink {
+    width: var(--ms-icon-size);
+    height: var(--ms-icon-size);
+  }
+
+  .mark-strip__title {
+    font-size: var(--ms-title-size);
+    line-height: 1.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-strip--marquee .mark-strip__belt {
+    width: 100%;
+    animation: none;
+  }
+
+  .mark-strip--marquee .mark-strip__clone {
+    display: none;
+  }
+
+  .mark-strip--marquee .mark-strip__run {
+    flex: 1 0 auto;
+    padding-inline-end: 0;
+  }
+}
