@@ -1,0 +1,933 @@
+{{ 'section-image-accordion.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign accordion_name = 'Accordion-' | append: section.id
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic' -%}
+    {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .iac--{{ section.id }} {
+    --iac-bg: {{ section.settings.background_color }};
+    --iac-max-width: {{ section.settings.max_width }}px;
+    --iac-pt: {{ section.settings.padding_top }}px;
+    --iac-pb: {{ section.settings.padding_bottom }}px;
+    --iac-px: {{ section.settings.padding_x }}px;
+    --iac-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --iac-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --iac-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --iac-stack-gap: {{ section.settings.stack_gap }}px;
+    --iac-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+    --iac-column-gap: {{ section.settings.column_gap }}px;
+    --iac-column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+    --iac-align: {{ section.settings.vertical_alignment }};
+    --iac-content-gap: {{ section.settings.content_gap }}px;
+
+    --iac-image-max-width: {{ section.settings.image_max_width }}px;
+    --iac-image-ratio: {{ section.settings.image_ratio }};
+    --iac-image-ratio-mobile: {{ section.settings.image_ratio_mobile }};
+    --iac-image-radius: {{ section.settings.image_radius }}px;
+
+    --iac-heading-ff: {{ heading_ff }};
+    --iac-heading-fs: {{ heading_fs }};
+    --iac-heading-fw: {{ section.settings.heading_font_weight }};
+    --iac-heading-color: {{ section.settings.heading_color }};
+    --iac-heading-size: {{ section.settings.heading_size }}px;
+    --iac-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --iac-heading-lh: {{ section.settings.heading_line_height }}px;
+    --iac-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --iac-header-gap: {{ section.settings.header_gap }}px;
+    --iac-subheading-color: {{ section.settings.subheading_color }};
+    --iac-subheading-max-width: {{ section.settings.subheading_max_width }}px;
+    --iac-body-ff: {{ body_ff }};
+    --iac-body-fs: {{ body_fs }};
+
+    --iac-text-color: {{ section.settings.text_color }};
+    --iac-text-size: {{ section.settings.text_size }}px;
+    --iac-text-lh: {{ section.settings.text_line_height }}px;
+    --iac-text-max-width: {{ section.settings.text_max_width }}px;
+    --iac-text-align: {{ section.settings.text_alignment }};
+
+    --iac-row-gap: {{ section.settings.row_gap }}px;
+    --iac-row-padding: {{ section.settings.row_padding }}px;
+    --iac-list-padding: {{ section.settings.list_padding }}px;
+    --iac-divider-color: {{ section.settings.divider_color }};
+    --iac-title-color: {{ section.settings.title_color }};
+    --iac-title-fw: {{ section.settings.title_font_weight }};
+    --iac-title-size: {{ section.settings.title_size }}px;
+    --iac-title-lh: {{ section.settings.title_line_height }}px;
+    --iac-icon-color: {{ section.settings.icon_color }};
+    --iac-icon-size: {{ section.settings.icon_size }}px;
+    --iac-body-color: {{ section.settings.body_color }};
+    --iac-body-size: {{ section.settings.body_size }}px;
+    --iac-body-lh: {{ section.settings.body_line_height }}px;
+    --iac-link-color: {{ section.settings.link_color }};
+
+    --iac-button-bg: {{ section.settings.button_background }};
+    --iac-button-color: {{ section.settings.button_color }};
+    --iac-button-border: {{ section.settings.button_border }};
+    --iac-button-bg-hover: {{ section.settings.button_background_hover }};
+    --iac-button-color-hover: {{ section.settings.button_color_hover }};
+    --iac-button-border-hover: {{ section.settings.button_border_hover }};
+    --iac-button-size: {{ section.settings.button_size }}px;
+    --iac-button-height: {{ section.settings.button_height }}px;
+    --iac-button-max-width: {{ section.settings.button_max_width }}px;
+    --iac-button-radius: {{ section.settings.button_radius }}px;
+  }
+{%- endstyle -%}
+
+<section
+  class="iac iac--{{ section.id }}{% if section.settings.image_position == 'right' %} iac--media-right{% endif %}{% unless section.settings.image_first_mobile %} iac--media-last-mobile{% endunless %}"
+>
+  <div class="iac__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="iac__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="iac__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="iac__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="iac__split">
+      <div class="iac__media{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1000
+            | image_tag:
+              loading: 'lazy',
+              widths: '320, 480, 640, 828, 1000',
+              sizes: '(min-width: 1024px) 488px, calc(100vw - 32px)',
+              class: 'iac__image'
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'iac__image placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="iac__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {%- if section.settings.text != blank -%}
+          <div class="iac__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="iac__list">
+            {%- for block in section.blocks -%}
+              <details
+                class="iac-item"
+                {% if section.settings.exclusive %}
+                  name="{{ accordion_name }}"
+                {% endif %}
+                {% if block.settings.open %}
+                  open
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
+                <summary
+                  id="Summary-{{ block.id }}"
+                  class="iac-item__summary"
+                  aria-controls="Details-{{ block.id }}"
+                >
+                  <span class="iac-item__title">{{ block.settings.title | escape }}</span>
+                  <svg
+                    class="iac-item__icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                    focusable="false"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M2.75 8.25L12 17.5L21.25 8.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <div
+                  id="Details-{{ block.id }}"
+                  class="iac-item__body"
+                  role="region"
+                  aria-labelledby="Summary-{{ block.id }}"
+                >
+                  {{ block.settings.content }}
+                </div>
+              </details>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        class="iac__button"
+        {% if section.settings.button_link != blank %}
+          href="{{ section.settings.button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+      >
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Imagen con acordeón",
+  "tag": "div",
+  "class": "section-image-accordion",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#F7ECE1"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1064
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título, contenido y botón en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título, contenido y botón en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Separación entre imagen y contenido en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Separación entre imagen y contenido en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Alineación vertical en escritorio",
+      "options": [
+        { "value": "start", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "end", "label": "Abajo" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Separación entre texto y acordeón",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posición en escritorio",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_first_mobile",
+      "label": "Mostrar la imagen primero en móvil y tablet",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "label": "Ancho máximo",
+      "min": 188,
+      "max": 788,
+      "step": 6,
+      "unit": "px",
+      "default": 488
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción en escritorio",
+      "options": [
+        { "value": "488 / 448", "label": "Casi cuadrada" },
+        { "value": "1 / 1", "label": "Cuadrada" },
+        { "value": "4 / 5", "label": "Vertical 4:5" },
+        { "value": "4 / 3", "label": "Horizontal 4:3" },
+        { "value": "3 / 2", "label": "Horizontal 3:2" },
+        { "value": "auto", "label": "Adaptar a la imagen" }
+      ],
+      "default": "488 / 448"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "Proporción en móvil y tablet",
+      "options": [
+        { "value": "343 / 300", "label": "Horizontal 8:7" },
+        { "value": "1 / 1", "label": "Cuadrada" },
+        { "value": "4 / 5", "label": "Vertical 4:5" },
+        { "value": "4 / 3", "label": "Horizontal 4:3" },
+        { "value": "3 / 2", "label": "Horizontal 3:2" },
+        { "value": "auto", "label": "Adaptar a la imagen" }
+      ],
+      "default": "343 / 300"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Expertos en articulaciones"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Separación entre título y subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Cuidado avanzado de cadera y articulaciones para perros. <strong>El suplemento articular que recomiendan los veterinarios</strong>"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color del subtítulo",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "label": "Ancho máximo del subtítulo",
+      "min": 236,
+      "max": 1436,
+      "step": 12,
+      "unit": "px",
+      "default": 1016
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>No es solo un suplemento. Es un <strong>masticable potente</strong> que ayuda a cuidar la <strong>movilidad, la flexibilidad y el bienestar.</strong> Respaldado por ciencia <em>real</em> y opiniones <em>reales</em>.</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto y del subtítulo",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Interlineado del texto y del subtítulo",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "label": "Ancho máximo del texto",
+      "min": 188,
+      "max": 788,
+      "step": 6,
+      "unit": "px",
+      "default": 488
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Acordeón"
+    },
+    {
+      "type": "checkbox",
+      "id": "exclusive",
+      "label": "Permitir solo un elemento abierto a la vez",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Separación entre elementos",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "row_padding",
+      "label": "Espacio sobre la línea y bajo el título",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "list_padding",
+      "label": "Relleno del acordeón en escritorio",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color de la línea",
+      "default": "#D7D3D0"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#212427"
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Interlineado del título",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color de la flecha",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño de la flecha",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Color del contenido",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Tamaño del contenido",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "body_line_height",
+      "label": "Interlineado del contenido",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color de los enlaces",
+      "default": "#17443D"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "EMPIEZA CON 65% DE DESCUENTO"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Elemento",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Título del elemento"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Contenido",
+          "default": "<p>Escribe aquí el detalle que se muestra al abrir el elemento.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Abierto por defecto",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Imagen con acordeón",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "title": "Ingredientes estudiados",
+            "content": "<p>Indica aquí los ingredientes principales de tu fórmula y qué aporta cada uno.</p>",
+            "open": true
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Fórmula recomendada por veterinarios",
+            "content": "<p>Explica aquí quién avala la fórmula y en qué se basa.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Resultados visibles",
+            "content": "<p>Cuenta aquí cuándo suelen notarse los cambios, según datos reales de tus clientes.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Fabricación",
+            "content": "<p>Indica dónde y bajo qué certificaciones se fabrica el producto.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Planes personalizados",
+            "content": "<p>La cantidad diaria se adapta al tamaño y las necesidades de cada perro.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

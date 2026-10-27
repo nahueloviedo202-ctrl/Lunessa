@@ -1,0 +1,287 @@
+/* Image with accordion — every selector is scoped to .iac */
+
+.iac {
+  padding: var(--iac-pt-mobile) 0 var(--iac-pb-mobile);
+  background: var(--iac-bg);
+  letter-spacing: normal;
+}
+
+.iac .iac__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--iac-stack-gap-mobile);
+  box-sizing: border-box;
+  max-width: var(--iac-max-width);
+  margin: 0 auto;
+  padding: 0 var(--iac-px-mobile);
+}
+
+/* Header */
+
+.iac .iac__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--iac-header-gap);
+  text-align: center;
+}
+
+.iac .iac__heading {
+  margin: 0;
+  color: var(--iac-heading-color);
+  font-family: var(--iac-heading-ff);
+  font-style: var(--iac-heading-fs);
+  font-weight: var(--iac-heading-fw);
+  font-size: var(--iac-heading-size-mobile);
+  line-height: var(--iac-heading-lh-mobile);
+  letter-spacing: normal;
+  word-break: break-word;
+}
+
+.iac .iac__subheading {
+  max-width: var(--iac-subheading-max-width);
+  margin: 0;
+  color: var(--iac-subheading-color);
+  font-family: var(--iac-body-ff);
+  font-style: var(--iac-body-fs);
+  font-weight: 400;
+  font-size: var(--iac-text-size);
+  line-height: var(--iac-text-lh);
+  letter-spacing: normal;
+}
+
+.iac .iac__subheading strong {
+  font-weight: 700;
+}
+
+.iac .iac__subheading a {
+  color: inherit;
+}
+
+/* Split */
+
+.iac .iac__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: var(--iac-align);
+  gap: var(--iac-column-gap-mobile);
+  width: 100%;
+}
+
+.iac .iac__media {
+  width: 100%;
+  max-width: var(--iac-image-max-width);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--iac-image-radius);
+  aspect-ratio: var(--iac-image-ratio-mobile);
+}
+
+.iac .iac__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iac--media-last-mobile .iac__media {
+  order: 2;
+}
+
+.iac .iac__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iac-content-gap);
+  min-width: 0;
+}
+
+.iac .iac__text {
+  max-width: var(--iac-text-max-width);
+  color: var(--iac-text-color);
+  font-family: var(--iac-body-ff);
+  font-style: var(--iac-body-fs);
+  font-weight: 400;
+  font-size: var(--iac-text-size);
+  line-height: var(--iac-text-lh);
+  letter-spacing: normal;
+  text-align: var(--iac-text-align);
+}
+
+.iac .iac__text > * {
+  margin: 0;
+}
+
+.iac .iac__text > * + * {
+  margin-top: 12px;
+}
+
+.iac .iac__text strong {
+  font-weight: 700;
+}
+
+.iac .iac__text a {
+  color: inherit;
+}
+
+/* Accordion (native details/summary, Dawn base-details-summary) */
+
+.iac .iac__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iac-row-gap);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.iac .iac-item__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 19px;
+  padding: 0 0 var(--iac-row-padding);
+  border-bottom: 1px solid var(--iac-divider-color);
+}
+
+.iac .iac-item__summary:focus-visible {
+  outline: 2px solid var(--iac-title-color);
+  outline-offset: 2px;
+}
+
+.iac .iac-item__title {
+  min-width: 0;
+  color: var(--iac-title-color);
+  font-family: var(--iac-body-ff);
+  font-style: var(--iac-body-fs);
+  font-weight: var(--iac-title-fw);
+  font-size: var(--iac-title-size);
+  line-height: var(--iac-title-lh);
+  letter-spacing: normal;
+  word-break: break-word;
+}
+
+.iac .iac-item__icon {
+  flex: 0 0 auto;
+  display: block;
+  width: var(--iac-icon-size);
+  height: var(--iac-icon-size);
+  color: var(--iac-icon-color);
+  transition: transform 0.18s ease;
+}
+
+.iac .iac-item[open] .iac-item__icon {
+  transform: rotate(180deg);
+}
+
+.iac .iac-item__body {
+  padding-top: var(--iac-row-padding);
+  color: var(--iac-body-color);
+  font-family: var(--iac-body-ff);
+  font-style: var(--iac-body-fs);
+  font-weight: 400;
+  font-size: var(--iac-body-size);
+  line-height: var(--iac-body-lh);
+  letter-spacing: normal;
+}
+
+.iac .iac-item__body > * {
+  margin: 0;
+}
+
+.iac .iac-item__body > * + * {
+  margin-top: 12px;
+}
+
+.iac .iac-item__body a {
+  color: var(--iac-link-color);
+  text-decoration: underline;
+}
+
+/* Button */
+
+.iac .iac__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--iac-button-max-width);
+  min-height: var(--iac-button-height);
+  padding: 12px 18px;
+  border: 0;
+  border-radius: var(--iac-button-radius);
+  box-shadow: inset 0 0 0 1.5px var(--iac-button-border), 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  background: var(--iac-button-bg);
+  color: var(--iac-button-color);
+  font-family: var(--iac-body-ff);
+  font-style: var(--iac-body-fs);
+  font-weight: 700;
+  font-size: var(--iac-button-size);
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.iac .iac__button:hover {
+  box-shadow: inset 0 0 0 1.5px var(--iac-button-border-hover), 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  background: var(--iac-button-bg-hover);
+  color: var(--iac-button-color-hover);
+  text-decoration: none;
+}
+
+.iac .iac__button:focus-visible {
+  outline: 2px solid var(--iac-button-border);
+  outline-offset: 3px;
+}
+
+.iac .iac__button[aria-disabled='true'] {
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iac .iac-item__icon {
+    transition: none;
+  }
+}
+
+/* Desktop — matches the reference layout breakpoint */
+
+@media screen and (min-width: 1024px) {
+  .iac {
+    padding-top: var(--iac-pt);
+    padding-bottom: var(--iac-pb);
+  }
+
+  .iac .iac__inner {
+    gap: var(--iac-stack-gap);
+    padding: 0 var(--iac-px);
+  }
+
+  .iac .iac__heading {
+    font-size: var(--iac-heading-size);
+    line-height: var(--iac-heading-lh);
+  }
+
+  .iac .iac__split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--iac-column-gap);
+  }
+
+  .iac .iac__media {
+    order: 0;
+    aspect-ratio: var(--iac-image-ratio);
+  }
+
+  .iac--media-right .iac__media {
+    order: 2;
+  }
+
+  .iac .iac__list {
+    padding: var(--iac-list-padding);
+  }
+}
