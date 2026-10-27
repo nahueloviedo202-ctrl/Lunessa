@@ -9,118 +9,103 @@
  */
 {
   "sections": {
-    "hero_split_banner_QHjKfa": {
-      "type": "hero-split-banner",
+    "page_hero_zFrrBb": {
+      "type": "page-hero",
       "blocks": {
-        "rating_hchJyd": {
-          "type": "rating",
-          "settings": {
-            "stars": 5,
-            "star_color": "#7f1426",
-            "star_size": 16,
-            "star_size_mobile": 15,
-            "star_gap": 3,
-            "text": "2434 Reseñas• 45000 Clientes Felices",
-            "text_color": "#7f1525",
-            "text_size": 16,
-            "text_size_mobile": 13,
-            "font_weight": "500",
-            "layout_mobile": "stacked",
-            "spacing_bottom": 20,
-            "spacing_bottom_mobile": 12,
-            "visibility": "all"
-          }
-        },
-        "heading_9QWnth": {
+        "heading_pYjwmV": {
           "type": "heading",
           "settings": {
-            "heading": "frena tu caída y consigue un\npelo más grueso en 90 días",
-            "heading_tag": "h1",
-            "text_size": 48,
-            "text_size_tablet": 32,
-            "text_size_mobile": 32,
-            "line_height": 120,
-            "font_weight": "700",
-            "text_transform": "capitalize",
-            "text_color": "#7f1525",
-            "spacing_bottom": 20,
-            "spacing_bottom_mobile": 0,
-            "visibility": "all"
+            "heading": "Un suplemento diferente para tu perro",
+            "tag": "h1",
+            "font_size": 60,
+            "font_size_mobile": 36,
+            "line_height": 82,
+            "letter_spacing": -2,
+            "uppercase": true,
+            "color": "#FFFFFF",
+            "max_width": 600
           }
         },
-        "text_RdpzLN": {
+        "text_LCCwVm": {
           "type": "text",
           "settings": {
-            "text": "<p>Fórmula Exclusiva con 12 Ingredientes Naturales Que Actúa Desde La Raíz Capilar</p>",
-            "text_size": 16,
-            "text_size_mobile": 14,
-            "line_height": 180,
-            "text_color": "#7f1525",
-            "spacing_bottom": 0,
-            "spacing_bottom_mobile": 0,
-            "visibility": "desktop"
+            "text": "Suplementos aprobados por veterinarios para devolverle sus mejores días.",
+            "font_size": 18,
+            "font_size_mobile": 16,
+            "line_height": 120,
+            "line_height_mobile": 110,
+            "font_weight": "500",
+            "color": "#FFFFFF",
+            "max_width": 576
           }
         },
-        "button_RyGt6L": {
+        "button_8FQ6rR": {
           "type": "button",
           "settings": {
-            "label": "Descubre Cómo",
+            "label": "Hacé el quiz",
             "link": "",
-            "anchor": "MediaGallery-template--28114661998741__product_offer_hero_dcPhAM",
-            "background": "#7f1525",
-            "text_color": "#feebeb",
-            "radius": 4,
-            "text_size": 16,
-            "text_size_mobile": 15,
-            "font_weight": "700",
-            "padding_vertical": 14,
-            "padding_horizontal": 40,
-            "padding_vertical_mobile": 12,
-            "padding_horizontal_mobile": 26,
-            "full_width_mobile": true,
-            "spacing_top": 20,
-            "spacing_top_mobile": 20,
-            "visibility": "all"
+            "style": "primary",
+            "width": 0,
+            "padding_x": 24
+          }
+        },
+        "button_TjrFjX": {
+          "type": "button",
+          "settings": {
+            "label": "Comprar ahora",
+            "link": "",
+            "style": "secondary",
+            "width": 280,
+            "padding_x": 60
           }
         }
       },
       "block_order": [
-        "rating_hchJyd",
-        "heading_9QWnth",
-        "text_RdpzLN",
-        "button_RyGt6L"
+        "heading_pYjwmV",
+        "text_LCCwVm",
+        "button_8FQ6rR",
+        "button_TjrFjX"
       ],
-      "name": "Banner hero dividido",
+      "name": "Hero de página",
       "settings": {
-        "visibility": "all",
-        "image": "shopify://shop_images/Gemini_Generated_Image_7d2xup7d2xup7d2x.webp",
-        "media_radius": 0,
-        "show_media_tablet": true,
-        "show_media_mobile": false,
-        "background": "#dcd2c8",
-        "background_tablet": "#f3f3f3",
-        "background_mobile": "#e7f0f0",
-        "image_mobile": "shopify://shop_images/Gemini_Generated_Image_t88s86t88s86t88s.webp",
-        "mobile_layout": "above",
-        "mobile_height": 100,
-        "image_fit_mobile": "fill",
-        "content_width": 50,
-        "column_gap": 32,
-        "vertical_alignment": "center",
-        "padding_left": 180,
-        "padding_right": 0,
+        "video": "shopify://files/videos/aec2fcc4cf5544b3ac01e17f2c075236.HD-720p-3.0Mbps-96566666.mp4",
+        "video_description": "",
+        "autoplay": true,
+        "media_position": "center",
+        "background": "#000000",
+        "scrim": "none",
+        "scrim_color": "#000000",
+        "scrim_opacity": 60,
+        "content_alignment": "left",
+        "vertical_position": "center",
+        "vertical_position_mobile": "center",
+        "min_height": 720,
+        "min_height_mobile": 720,
+        "max_width": 1200,
+        "content_gap": 24,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
         "padding_top": 0,
         "padding_bottom": 0,
-        "padding_vertical_tablet": 24,
-        "padding_horizontal_tablet": 20,
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 0,
-        "padding_horizontal_mobile": 20,
-        "text_alignment_mobile": "left",
-        "heading_font_custom": false,
-        "heading_font": "lato_n4",
-        "body_font_custom": false,
-        "body_font": "assistant_n4"
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "button_height": 42,
+        "button_radius": 5,
+        "button_font_size": 16,
+        "button_letter_spacing": 2,
+        "button_uppercase": true,
+        "button_border_width": 1.5,
+        "primary_background": "#CDFC4B",
+        "primary_text": "#075007",
+        "primary_background_hover": "#FFFFFF",
+        "primary_text_hover": "#075007",
+        "secondary_color": "#CDFC4B",
+        "secondary_color_hover": "#FFFFFF"
       }
     },
     "marquee_bar_gpUcqY": {
@@ -1522,7 +1507,7 @@
     }
   },
   "order": [
-    "hero_split_banner_QHjKfa",
+    "page_hero_zFrrBb",
     "marquee_bar_gpUcqY",
     "image_panel_banner_8Er6k9",
     "image_checklist_9X9r6M",
