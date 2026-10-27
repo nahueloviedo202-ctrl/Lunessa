@@ -1,0 +1,893 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'section-video-reels.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'video-reels.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign tile_width = section.settings.tile_width | append: 'px'
+  capture sizes
+    echo '(min-width: 990px) ' | append: tile_width | append: ', '
+    echo '(min-width: 750px) calc((100vw - 64px) / ' | append: section.settings.columns_tablet | append: '), '
+    echo 'calc((100vw - 52px) / ' | append: section.settings.columns_mobile | append: ')'
+  endcapture
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .vrl--{{ section.id }} {
+    --vrl-bg: {{ section.settings.background_color }};
+    --vrl-max-width: {{ section.settings.max_width }}px;
+    --vrl-pt: {{ section.settings.padding_top }}px;
+    --vrl-pb: {{ section.settings.padding_bottom }}px;
+    --vrl-px: {{ section.settings.padding_x }}px;
+    --vrl-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --vrl-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --vrl-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --vrl-stack-gap: {{ section.settings.stack_gap }}px;
+    --vrl-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+
+    --vrl-heading-ff: {{ heading_ff }};
+    --vrl-heading-fs: {{ heading_fs }};
+    --vrl-heading-fw: {{ section.settings.heading_font_weight }};
+    --vrl-heading-color: {{ section.settings.heading_color }};
+    --vrl-heading-size: {{ section.settings.heading_size }}px;
+    --vrl-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --vrl-heading-lh: {{ section.settings.heading_line_height }}px;
+    --vrl-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --vrl-header-gap: {{ section.settings.header_gap }}px;
+    --vrl-subheading-color: {{ section.settings.subheading_color }};
+    --vrl-subheading-size: {{ section.settings.subheading_size }}px;
+    --vrl-subheading-lh: {{ section.settings.subheading_line_height }}px;
+    --vrl-subheading-max-width: {{ section.settings.subheading_max_width }}px;
+    --vrl-body-ff: {{ body_ff }};
+    --vrl-body-fs: {{ body_fs }};
+
+    --vrl-tile-width: {{ tile_width }};
+    --vrl-gap: {{ section.settings.gap }}px;
+    --vrl-gap-mobile: {{ section.settings.gap_mobile }}px;
+    --vrl-columns-tablet: {{ section.settings.columns_tablet }};
+    --vrl-columns-mobile: {{ section.settings.columns_mobile }};
+    --vrl-snap: {{ section.settings.snap }};
+    --vrl-ratio: {{ section.settings.ratio }};
+    --vrl-radius: {{ section.settings.radius }}px;
+    --vrl-radius-mobile: {{ section.settings.radius_mobile }}px;
+    --vrl-icon-color: {{ section.settings.icon_color }};
+    --vrl-icon-size: {{ section.settings.icon_size }}px;
+    --vrl-icon-size-mobile: {{ section.settings.icon_size_mobile }}px;
+    --vrl-focus-color: {{ section.settings.focus_color }};
+    --vrl-arrow-color: {{ section.settings.arrow_color }};
+
+    --vrl-footer-gap: {{ section.settings.footer_gap }}px;
+    --vrl-button-bg: {{ section.settings.button_background }};
+    --vrl-button-color: {{ section.settings.button_color }};
+    --vrl-button-border: {{ section.settings.button_border }};
+    --vrl-button-bg-hover: {{ section.settings.button_background_hover }};
+    --vrl-button-color-hover: {{ section.settings.button_color_hover }};
+    --vrl-button-border-hover: {{ section.settings.button_border_hover }};
+    --vrl-button-size: {{ section.settings.button_size }}px;
+    --vrl-button-height: {{ section.settings.button_height }}px;
+    --vrl-button-max-width: {{ section.settings.button_max_width }}px;
+    --vrl-button-radius: {{ section.settings.button_radius }}px;
+    --vrl-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --vrl-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+    --vrl-disclaimer-style: {% if section.settings.disclaimer_italic %}italic{% else %}normal{% endif %};
+  }
+{%- endstyle -%}
+
+<section class="vrl vrl--{{ section.id }}">
+  <div class="vrl__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="vrl__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vrl__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="vrl__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <video-reels
+        data-play-label="{{ section.settings.play_label | escape }}"
+        data-pause-label="{{ section.settings.pause_label | escape }}"
+      >
+        <slider-component class="vrl__rail">
+          <ul
+            id="Slider-{{ section.id }}"
+            class="vrl__track slider slider--desktop"
+            role="list"
+            {% if section.settings.heading != blank %}
+              aria-label="{{ section.settings.heading | strip_html | escape }}"
+            {% endif %}
+          >
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign video = block.settings.video
+                assign media_alt = block.settings.media_alt | default: section.settings.play_label
+                if block.settings.image != blank
+                  assign poster_image = block.settings.image
+                elsif video != blank and video.preview_image != blank
+                  assign poster_image = video.preview_image
+                else
+                  assign poster_image = nil
+                endif
+              -%}
+              <li
+                id="Slide-{{ section.id }}-{{ forloop.index }}"
+                class="vrl-tile slider__slide"
+                data-reel
+                {{ block.shopify_attributes }}
+              >
+                <div class="vrl-tile__frame">
+                  {%- if poster_image -%}
+                    {{
+                      poster_image
+                      | image_url: width: 600
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '252, 320, 480, 504, 600',
+                        sizes: sizes,
+                        alt: media_alt,
+                        class: 'vrl-tile__media'
+                    }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'vrl-tile__media placeholder-svg' }}
+                  {%- endif -%}
+
+                  {%- if video != blank -%}
+                    {%- liquid
+                      assign mp4_sources = video.sources | where: 'format', 'mp4' | sort: 'width'
+                      assign mp4_source = mp4_sources.last
+                      for source in mp4_sources
+                        if source.width >= 720
+                          assign mp4_source = source
+                          break
+                        endif
+                      endfor
+                      assign hls_source = video.sources | where: 'format', 'm3u8' | first
+                    -%}
+                    <video
+                      class="vrl-tile__video"
+                      data-revealed="false"
+                      aria-label="{{ media_alt | escape }}"
+                      aria-hidden="true"
+                      loop
+                      playsinline
+                      preload="none"
+                    >
+                      {%- if mp4_source -%}
+                        <source src="{{ mp4_source.url }}" type="{{ mp4_source.mime_type }}">
+                      {%- endif -%}
+                      {%- if hls_source -%}
+                        <source src="{{ hls_source.url }}" type="{{ hls_source.mime_type }}">
+                      {%- endif -%}
+                    </video>
+                    <button
+                      type="button"
+                      class="vrl-tile__toggle"
+                      data-reel-toggle
+                      aria-label="{{ section.settings.play_label | escape }}: {{ media_alt | escape }}"
+                    >
+                      {%- render 'play-square-icon', icon: 'play', class: 'vrl-tile__icon vrl-tile__icon--play' -%}
+                      {%- render 'play-square-icon', icon: 'pause', class: 'vrl-tile__icon vrl-tile__icon--pause' -%}
+                    </button>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          {%- if section.settings.show_arrows -%}
+            <div class="slider-buttons vrl__buttons">
+              <button
+                type="button"
+                class="slider-button slider-button--prev"
+                name="previous"
+                aria-label="{{ 'general.slider.previous_slide' | t }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+              </button>
+              <div class="slider-counter caption">
+                <span class="slider-counter--current">1</span>
+                <span aria-hidden="true"> / </span>
+                <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+                <span class="slider-counter--total">{{ section.blocks.size }}</span>
+              </div>
+              <button
+                type="button"
+                class="slider-button slider-button--next"
+                name="next"
+                aria-label="{{ 'general.slider.next_slide' | t }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+              </button>
+            </div>
+          {%- endif -%}
+        </slider-component>
+      </video-reels>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank or section.settings.disclaimer != blank -%}
+      <div class="vrl__footer">
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="vrl__button"
+            {% if section.settings.button_link != blank %}
+              href="{{ section.settings.button_link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="vrl__disclaimer">{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carril de videos",
+  "tag": "div",
+  "class": "section-video-reels",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#FFFAF7"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 640,
+      "max": 2040,
+      "step": 20,
+      "unit": "px",
+      "default": 1440
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título, videos y botón en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título, videos y botón en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Resultados que cambian vidas, contados por veterinarios y clientes"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Separación entre título y subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Subtítulo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Únete a la manada: descubre por qué confían en nosotros"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "label": "Ancho máximo del subtítulo y del texto bajo el botón",
+      "min": 236,
+      "max": 1436,
+      "step": 12,
+      "unit": "px",
+      "default": 1016
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Carril en escritorio"
+    },
+    {
+      "type": "paragraph",
+      "content": "Desde 990 px los videos se muestran en un carril con desplazamiento horizontal."
+    },
+    {
+      "type": "range",
+      "id": "tile_width",
+      "label": "Ancho de cada video",
+      "min": 152,
+      "max": 452,
+      "step": 4,
+      "unit": "px",
+      "default": 252
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Separación entre videos",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "snap",
+      "label": "Ajuste al desplazar",
+      "options": [
+        { "value": "proximity", "label": "Suave" },
+        { "value": "mandatory", "label": "Exacto" }
+      ],
+      "default": "proximity"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Mostrar flechas",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Color de las flechas",
+      "default": "#212427"
+    },
+    {
+      "type": "header",
+      "content": "Cuadrícula en móvil y tablet"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columnas en tablet",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columnas en móvil",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Separación entre videos",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Videos"
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Proporción",
+      "options": [
+        { "value": "323 / 468", "label": "Vertical 2:3" },
+        { "value": "9 / 16", "label": "Vertical 9:16" },
+        { "value": "4 / 5", "label": "Vertical 4:5" },
+        { "value": "1 / 1", "label": "Cuadrada" }
+      ],
+      "default": "323 / 468"
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Radio de las esquinas en escritorio",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "radius_mobile",
+      "label": "Radio de las esquinas en móvil y tablet",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color del botón de reproducir",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño del botón en escritorio",
+      "min": 16,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Tamaño del botón en móvil y tablet",
+      "min": 16,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Color del contorno al navegar con teclado",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "text",
+      "id": "play_label",
+      "label": "Texto accesible para reproducir",
+      "info": "Lo leen los lectores de pantalla; no se muestra.",
+      "default": "Reproducir video"
+    },
+    {
+      "type": "text",
+      "id": "pause_label",
+      "label": "Texto accesible para pausar",
+      "default": "Pausar video"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "¡AHORRA 65% AHORA!"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Texto bajo el botón"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "disclaimer",
+      "label": "Texto",
+      "info": "Opcional."
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color",
+      "default": "#57534E"
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "disclaimer_italic",
+      "label": "Cursiva",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "footer_gap",
+      "label": "Separación entre botón y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Se reproduce con sonido al pulsar el botón."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portada",
+          "info": "Opcional. Si está vacía se usa la miniatura del video."
+        },
+        {
+          "type": "text",
+          "id": "media_alt",
+          "label": "Descripción del video",
+          "info": "Para lectores de pantalla."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carril de videos",
+      "blocks": [
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" }
+      ]
+    }
+  ]
+}
+{% endschema %}
