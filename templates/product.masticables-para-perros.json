@@ -699,6 +699,7 @@
         "testimonial_LRFfFm": {
           "type": "testimonial",
           "settings": {
+            "video": "shopify://files/videos/labrador-before-after.473d978a.mp4",
             "media_alt": "",
             "name": "Nombre A.",
             "verified": true,
@@ -708,6 +709,7 @@
         "testimonial_BBG9MA": {
           "type": "testimonial",
           "settings": {
+            "video": "shopify://files/videos/black-and-white-dog-before-after.ddfc3f2a.mp4",
             "media_alt": "",
             "name": "Nombre B.",
             "verified": true,
@@ -717,6 +719,7 @@
         "testimonial_7t8jxq": {
           "type": "testimonial",
           "settings": {
+            "video": "shopify://files/videos/tan-senior-dog-before-after.1607ccd7.mp4",
             "media_alt": "",
             "name": "Nombre C.",
             "verified": true,
@@ -1146,6 +1149,7 @@
         "ingredient_UpXLAt": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/glucosamine-photo.ebb7fef8_20X4Xk.webp",
             "image_alt": "",
             "dose": "2500 mg",
             "name": "Glucosamina HCl",
@@ -1155,6 +1159,7 @@
         "ingredient_bkDPYE": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/green-lipped-mussels-photo.3b47e8e9_Z1A71wo.webp",
             "image_alt": "",
             "dose": "200 mg",
             "name": "Mejillón de labio verde",
@@ -1164,6 +1169,7 @@
         "ingredient_LprzJY": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/chondroitin-photo.f179ccd4_RltuA.webp",
             "image_alt": "",
             "dose": "300 mg",
             "name": "Sulfato de condroitina",
@@ -1173,6 +1179,7 @@
         "ingredient_rVTyib": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/fish-oil-photo.471f0b06_1EvITw.webp",
             "image_alt": "",
             "dose": "32 mg",
             "name": "Omega-3",
@@ -1182,6 +1189,7 @@
         "ingredient_HMhy6f": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/msm-photo.8bc25cae_1gMd5P.webp",
             "image_alt": "",
             "dose": "800 mg",
             "name": "MSM",
@@ -1191,6 +1199,7 @@
         "ingredient_yAwQtt": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/yucca-schidigera-photo.031ace10_2l5jgH.webp",
             "image_alt": "",
             "dose": "20 mg",
             "name": "Yucca schidigera",
@@ -1200,6 +1209,7 @@
         "ingredient_nLNeQg": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/vitamin-c-photo.647427b1_Zvgd7n.webp",
             "image_alt": "",
             "dose": "100 mg",
             "name": "Vitamina C",
@@ -1209,6 +1219,7 @@
         "ingredient_M9xKk3": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/hyaluronic-acid-photo.913d4713_Z1yFvs6.webp",
             "image_alt": "",
             "dose": "42 mg",
             "name": "Ácido hialurónico",
