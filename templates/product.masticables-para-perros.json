@@ -502,6 +502,7 @@
         "item_d8Hm96",
         "item_6pmf7a"
       ],
+      "disabled": true,
       "name": "Marquesina",
       "settings": {
         "duration": 35,
@@ -559,6 +560,107 @@
         "show_rating": false,
         "padding_top": 36,
         "padding_bottom": 28
+      }
+    },
+    "video_testimonials_grid_rFhUdH": {
+      "type": "video-testimonials-grid",
+      "blocks": {
+        "testimonial_LRFfFm": {
+          "type": "testimonial",
+          "settings": {
+            "media_alt": "",
+            "name": "Nombre A.",
+            "verified": true,
+            "text": "Escribe aquí la experiencia real de un cliente: cómo estaba su perro antes y qué cambió después de empezar a usar el producto."
+          }
+        },
+        "testimonial_BBG9MA": {
+          "type": "testimonial",
+          "settings": {
+            "media_alt": "",
+            "name": "Nombre B.",
+            "verified": true,
+            "text": "Escribe aquí la experiencia real de un cliente: cómo estaba su perro antes y qué cambió después de empezar a usar el producto."
+          }
+        },
+        "testimonial_7t8jxq": {
+          "type": "testimonial",
+          "settings": {
+            "media_alt": "",
+            "name": "Nombre C.",
+            "verified": true,
+            "text": "Escribe aquí la experiencia real de un cliente: cómo estaba su perro antes y qué cambió después de empezar a usar el producto."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_LRFfFm",
+        "testimonial_BBG9MA",
+        "testimonial_7t8jxq"
+      ],
+      "name": "Testimonios en video",
+      "settings": {
+        "background_color": "#17443D",
+        "max_width": 1064,
+        "stack_gap": 40,
+        "stack_gap_mobile": 24,
+        "padding_top": 86,
+        "padding_bottom": 86,
+        "padding_x": 24,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 16,
+        "heading": "Únete a los miles de dueños que ayudan a sus perros a recuperar la movilidad",
+        "heading_color": "#FFFFFF",
+        "heading_size": 30,
+        "heading_line_height": 38,
+        "heading_size_mobile": 24,
+        "heading_line_height_mobile": 32,
+        "heading_max_width": 786,
+        "heading_font_source": "custom",
+        "heading_font": "inter_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "columns_desktop": 3,
+        "columns_tablet": 1,
+        "columns_mobile": "1",
+        "grid_gap": 24,
+        "grid_gap_mobile": 24,
+        "card_background": "#FFFFFF",
+        "card_radius": 24,
+        "card_padding": 16,
+        "card_gap": 16,
+        "card_body_gap": 8,
+        "media_ratio": "291 / 290",
+        "media_radius": 0,
+        "video_autoplay": true,
+        "name_color": "#212427",
+        "name_size": 20,
+        "name_line_height": 30,
+        "quote_color": "#212427",
+        "quote_size": 16,
+        "quote_line_height": 24,
+        "verified_label": "Compra verificada",
+        "badge_fill": "#C5FA56",
+        "badge_stroke": "#212427",
+        "badge_size": 20,
+        "button_label": "DEVUÉLVELE SU ENERGÍA",
+        "button_link": "",
+        "button_background": "#C5FA56",
+        "button_color": "#212427",
+        "button_border": "#212427",
+        "button_background_hover": "#17443D",
+        "button_color_hover": "#FFFFFF",
+        "button_border_hover": "#123530",
+        "button_size": 16,
+        "button_height": 48,
+        "button_max_width": 343,
+        "button_radius": 50,
+        "disclaimer": "Pruébalo sin riesgo con nuestra garantía de devolución de 90 días",
+        "disclaimer_color": "#F1FDF0",
+        "disclaimer_size": 12,
+        "footer_gap": 12
       }
     },
     "video_text_highlight_fGRqpD": {
@@ -1681,6 +1783,7 @@
     "marquee_bar_mz4PWC",
     "disclosures",
     "related-products",
+    "video_testimonials_grid_rFhUdH",
     "video_text_highlight_fGRqpD",
     "product_callouts_qmQnjw",
     "ingredients_tabs_zaWgjM",
