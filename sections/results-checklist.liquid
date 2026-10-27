@@ -27,6 +27,34 @@
       assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
       assign body_fs = body_font.style
   endcase
+
+  # object-fit: cover enlarges the image when the box is narrower than the photo,
+  # so the requested width must grow by the same factor to stay sharp.
+  assign image_cover_desktop = 1.0
+  assign image_cover_mobile = 1.0
+  if section.settings.image != blank
+    assign image_ar = section.settings.image.aspect_ratio | times: 1.0
+    if section.settings.image_ratio != 'auto'
+      assign ratio_parts = section.settings.image_ratio | split: '/'
+      assign box_ar = ratio_parts[0] | strip | times: 1.0 | divided_by: ratio_parts[1]
+      if image_ar > box_ar
+        assign image_cover_desktop = image_ar | divided_by: box_ar
+      endif
+    endif
+    if section.settings.image_ratio_mobile != 'auto'
+      assign ratio_parts = section.settings.image_ratio_mobile | split: '/'
+      assign box_ar = ratio_parts[0] | strip | times: 1.0 | divided_by: ratio_parts[1]
+      if image_ar > box_ar
+        assign image_cover_mobile = image_ar | divided_by: box_ar
+      endif
+    endif
+  endif
+  assign image_sizes_desktop = section.settings.image_max_width | times: image_cover_desktop | ceil
+  assign image_gutter_mobile = section.settings.padding_x_mobile | times: 2
+  assign image_cover_mobile = image_cover_mobile | round: 3
+  capture image_sizes
+    echo '(min-width: 1024px) ' | append: image_sizes_desktop | append: 'px, calc((100vw - ' | append: image_gutter_mobile | append: 'px) * ' | append: image_cover_mobile | append: ')'
+  endcapture
 -%}
 
 {%- style -%}
@@ -127,11 +155,11 @@
       {%- if section.settings.image != blank -%}
         {{
           section.settings.image
-          | image_url: width: 1000
+          | image_url: width: 2400
           | image_tag:
             loading: 'lazy',
-            widths: '320, 480, 640, 828, 1000',
-            sizes: '(min-width: 1024px) 492px, calc(100vw - 32px)',
+            widths: '360, 540, 720, 960, 1200, 1500, 1800, 2400',
+            sizes: image_sizes,
             class: 'rcl__image'
         }}
       {%- else -%}
