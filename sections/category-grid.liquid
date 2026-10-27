@@ -1,0 +1,700 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-rail-controls.css' | asset_url | stylesheet_tag }}
+{{ 'section-category-grid.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign slider_id = 'Slider-' | append: section.id
+  assign is_mobile_slider = false
+  if section.settings.mobile_layout == 'slider'
+    assign is_mobile_slider = true
+  endif
+
+  assign show_arrows = false
+  if is_mobile_slider and section.settings.show_arrows and section.blocks.size > 1
+    assign show_arrows = true
+  endif
+
+  assign grid_label = section.settings.heading | strip_html
+  if grid_label == blank
+    assign grid_label = 'general.slider.name' | t
+  endif
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '700' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .category-grid-{{ section.id }} {
+    --cg-bg: {{ section.settings.background }};
+    --cg-color: {{ section.settings.text_color }};
+    --cg-pt: {{ section.settings.padding_top }}px;
+    --cg-pb: {{ section.settings.padding_bottom }}px;
+    --cg-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --cg-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --cg-max-width: {{ section.settings.max_width }}px;
+    --cg-px: {{ section.settings.padding_x }}px;
+    --cg-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --cg-stack-gap: {{ section.settings.stack_gap }}px;
+    --cg-heading-ff: {{ heading_ff }};
+    --cg-heading-fs: {{ heading_fs }};
+    --cg-heading-fw: {{ section.settings.heading_font_weight }};
+    --cg-heading-size: {{ section.settings.heading_size }}px;
+    --cg-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --cg-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --cg-body-ff: {{ body_ff }};
+    --cg-body-fs: {{ body_fs }};
+    --cg-columns: {{ section.settings.columns_desktop }};
+    --cg-columns-mobile: {{ section.settings.columns_mobile }};
+    --cg-card-width-mobile: {{ section.settings.card_width_mobile }}px;
+    --cg-gap: {{ section.settings.card_gap }}px;
+    --cg-gap-mobile: {{ section.settings.card_gap_mobile }}px;
+    --cg-card-height: {{ section.settings.card_height }}px;
+    --cg-card-height-mobile: {{ section.settings.card_height_mobile }}px;
+    --cg-footer-height: {{ section.settings.footer_height }}px;
+    --cg-title-size: {{ section.settings.title_size }}px;
+    --cg-arrow-size: {{ section.settings.arrow_size }}px;
+    --cg-radius: {{ section.settings.radius }}px;
+    --cg-border: {{ section.settings.card_border }};
+    --cg-border-hover: {{ section.settings.card_border_hover }};
+    --cg-footer-bg: {{ section.settings.footer_background }};
+    --cg-footer-bg-hover: {{ section.settings.footer_background_hover }};
+    --rail-arrow-bg: {{ section.settings.arrow_background }};
+    --rail-arrow-color: {{ section.settings.arrow_color }};
+    --rail-arrow-bg-hover: {{ section.settings.arrow_background_hover }};
+    --rail-arrow-color-hover: {{ section.settings.arrow_color_hover }};
+    --rail-focus: {{ section.settings.focus_color }};
+    --rail-subheading-ff: {{ body_ff }};
+    --rail-subheading-fs: {{ body_fs }};
+    --rail-subheading-size: {{ section.settings.subheading_size }}px;
+    --rail-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+  }
+{%- endstyle -%}
+
+<div class="category-grid category-grid-{{ section.id }}{% if is_mobile_slider %} category-grid--mobile-slider{% if section.settings.peek %} category-grid--peek{% endif %}{% endif %}">
+  <div class="category-grid__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="category-grid__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <slider-component class="category-grid__slider">
+      {%- render 'rail-controls',
+        slider_id: slider_id,
+        subheading: section.settings.subheading,
+        show_arrows: show_arrows,
+        arrows_mobile_only: true
+      -%}
+
+      <ul
+        id="{{ slider_id }}"
+        class="category-grid__list list-unstyled{% if is_mobile_slider %} slider slider--mobile{% endif %}"
+        role="list"
+        aria-label="{{ grid_label | escape }}"
+        {% if is_mobile_slider %}
+          tabindex="0"
+        {% endif %}
+      >
+        {%- for block in section.blocks -%}
+          <li
+            id="Slide-{{ section.id }}-{{ forloop.index }}"
+            class="category-grid__item{% if is_mobile_slider %} slider__slide{% endif %}"
+          >
+            {%- render 'category-card', block: block -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </slider-component>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Comprar por necesidad",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Comprar por necesidad"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Cada situación tiene un suplemento. Encontrá el indicado."
+    },
+    {
+      "type": "header",
+      "content": "Grilla"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columnas (desktop)",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Diseño en mobile",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Carrusel"
+        },
+        {
+          "value": "grid",
+          "label": "Grilla"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "label": "Columnas (mobile, en grilla)",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Mostrar flechas (mobile, en carrusel)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "peek",
+      "label": "Extender el carrusel hasta el borde (mobile)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 180,
+      "max": 380,
+      "step": 2,
+      "unit": "px",
+      "label": "Ancho de tarjeta (mobile, en carrusel)",
+      "default": 282
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas (mobile)",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 162,
+      "max": 562,
+      "step": 4,
+      "unit": "px",
+      "label": "Alto de tarjeta (desktop)",
+      "default": 278
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "min": 162,
+      "max": 562,
+      "step": 4,
+      "unit": "px",
+      "label": "Alto de tarjeta (mobile)",
+      "default": 278
+    },
+    {
+      "type": "range",
+      "id": "footer_height",
+      "min": 48,
+      "max": 140,
+      "step": 1,
+      "unit": "px",
+      "label": "Alto del pie de tarjeta",
+      "default": 79
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título de tarjeta",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la flecha de tarjeta",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de bordes",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Textos",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Borde de tarjeta",
+      "default": "#F0F0F0"
+    },
+    {
+      "type": "color",
+      "id": "card_border_hover",
+      "label": "Borde de tarjeta al pasar el mouse",
+      "default": "#B4CBB4"
+    },
+    {
+      "type": "color",
+      "id": "footer_background",
+      "label": "Fondo del pie de tarjeta",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "footer_background_hover",
+      "label": "Fondo del pie al pasar el mouse",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Flechas: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Flechas: icono",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background_hover",
+      "label": "Flechas: fondo al pasar el mouse",
+      "default": "#C6FA41"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color_hover",
+      "label": "Flechas: icono al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Anillo de foco",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos y tarjetas",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (mobile)",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre título, subtítulo y tarjetas",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Título",
+          "default": "Articulaciones y movilidad"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "color",
+          "id": "media_color",
+          "label": "Color de fondo de la imagen",
+          "default": "#CDFC4B"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen",
+          "info": "Usá el punto focal de la imagen para elegir qué parte se ve."
+        },
+        {
+          "type": "range",
+          "id": "zoom",
+          "min": 100,
+          "max": 300,
+          "step": 5,
+          "unit": "%",
+          "label": "Zoom de la imagen",
+          "default": 100
+        },
+        {
+          "type": "image_picker",
+          "id": "hover_image",
+          "label": "Imagen al pasar el mouse",
+          "info": "Opcional."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comprar por necesidad",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Articulaciones y movilidad",
+            "media_color": "#CDFC4B"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Dientes y encías",
+            "media_color": "#9DD1FF"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Alergias y picazón",
+            "media_color": "#A3FCFF"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Digestión",
+            "media_color": "#F6A3FF"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Piel y pelaje",
+            "media_color": "#F9B22D"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Estrés y ansiedad",
+            "media_color": "#C5A9FF"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Vitalidad y bienestar",
+            "media_color": "#FFFC49"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

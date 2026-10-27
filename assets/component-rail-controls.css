@@ -1,0 +1,115 @@
+/* Rail controls (subheading + Dawn slider arrows) — scoped under .rail-controls.
+   The calling section sets: --rail-arrow-bg, --rail-arrow-color, --rail-arrow-bg-hover,
+   --rail-arrow-color-hover, --rail-focus, --rail-subheading-ff, --rail-subheading-fs,
+   --rail-subheading-size, --rail-subheading-size-mobile. */
+
+.rail-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.rail-controls--arrows {
+  justify-content: space-between;
+}
+
+.rail-controls__subheading {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  color: inherit;
+  font-family: var(--rail-subheading-ff);
+  font-style: var(--rail-subheading-fs);
+  font-weight: 500;
+  font-size: var(--rail-subheading-size-mobile);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  text-align: center;
+}
+
+.rail-controls .slider-button.rail-controls__arrow {
+  flex: none;
+  width: 34px;
+  height: 31px;
+  padding: 0 8px;
+  border-radius: 3px;
+  background-color: var(--rail-arrow-bg);
+  color: var(--rail-arrow-color);
+  transition: background-color 0.16s cubic-bezier(0.4, 0, 0.2, 1), color 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rail-controls .slider-button.rail-controls__arrow:not([disabled]):hover {
+  background-color: var(--rail-arrow-bg-hover);
+  color: var(--rail-arrow-color-hover);
+}
+
+.rail-controls .slider-button.rail-controls__arrow[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rail-controls .slider-button.rail-controls__arrow:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--rail-focus) 75%, transparent);
+}
+
+.rail-controls .rail-controls__arrow .svg-wrapper {
+  width: 18px;
+  height: 18px;
+}
+
+.rail-controls .slider-button.rail-controls__arrow .icon,
+.rail-controls .slider-button.rail-controls__arrow[disabled] .icon,
+.rail-controls .slider-button--next.rail-controls__arrow:not([disabled]):hover .icon {
+  width: 18px;
+  height: auto;
+  color: inherit;
+  transform: none;
+}
+
+.rail-controls .slider-button--prev.rail-controls__arrow .icon,
+.rail-controls .slider-button--prev.rail-controls__arrow:not([disabled]):hover .icon {
+  transform: scaleX(-1);
+}
+
+@media screen and (min-width: 750px) {
+  .rail-controls__subheading {
+    font-size: var(--rail-subheading-size);
+    line-height: 1.2;
+  }
+
+  /* Subheading centered, both arrows grouped on the right (148px = 40 + 34 + 40 + 34). */
+  .rail-controls--arrows:not(.rail-controls--mobile-only) {
+    display: grid;
+    grid-template-columns: 148px minmax(0, 1fr) 148px;
+    column-gap: 0;
+  }
+
+  .rail-controls--arrows:not(.rail-controls--mobile-only) > .rail-controls__subheading {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .rail-controls--arrows:not(.rail-controls--mobile-only) > .rail-controls__arrow {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .rail-controls--arrows:not(.rail-controls--mobile-only) > .rail-controls__arrow:first-child {
+    justify-self: start;
+    margin-inline-start: 40px;
+  }
+
+  .rail-controls--mobile-only .slider-button.rail-controls__arrow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-controls .slider-button.rail-controls__arrow {
+    transition: none;
+  }
+}

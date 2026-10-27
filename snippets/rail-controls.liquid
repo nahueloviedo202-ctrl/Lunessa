@@ -1,0 +1,44 @@
+{% doc %}
+  Renders the subheading + prev/next arrows row used above Dawn `slider-component` rails.
+  The buttons use Dawn's slider markup (`slider-button`, `name="previous"` / `name="next"`)
+  so SliderComponent in global.js drives them. Styles live in component-rail-controls.css and
+  read the `--rail-*` custom properties set by the calling section.
+
+  @param {string} slider_id - The id of the `[id^="Slider-"]` element the arrows control.
+  @param {string} [subheading] - Text shown between the arrows.
+  @param {boolean} [show_arrows] - Whether to render the arrows. Defaults to `false`.
+  @param {boolean} [arrows_mobile_only] - Hide the arrows from 750px up. Defaults to `false`.
+
+  @example
+  {% render 'rail-controls', slider_id: 'Slider-123', subheading: 'Texto', show_arrows: true %}
+{% enddoc %}
+
+{%- if show_arrows or subheading != blank -%}
+  <div class="rail-controls{% if show_arrows %} rail-controls--arrows{% endif %}{% if arrows_mobile_only %} rail-controls--mobile-only{% endif %}">
+    {%- if show_arrows -%}
+      <button
+        type="button"
+        class="slider-button slider-button--prev rail-controls__arrow"
+        name="previous"
+        aria-label="{{ 'general.slider.previous_slide' | t }}"
+        aria-controls="{{ slider_id }}"
+      >
+        <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+      </button>
+    {%- endif -%}
+    {%- if subheading != blank -%}
+      <p class="rail-controls__subheading">{{ subheading }}</p>
+    {%- endif -%}
+    {%- if show_arrows -%}
+      <button
+        type="button"
+        class="slider-button slider-button--next rail-controls__arrow"
+        name="next"
+        aria-label="{{ 'general.slider.next_slide' | t }}"
+        aria-controls="{{ slider_id }}"
+      >
+        <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+      </button>
+    {%- endif -%}
+  </div>
+{%- endif -%}

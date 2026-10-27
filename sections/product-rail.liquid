@@ -1,5 +1,6 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'component-rail-controls.css' | asset_url | stylesheet_tag }}
 {{ 'section-product-rail.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -34,6 +35,8 @@
   if rail_label == blank
     assign rail_label = 'general.slider.name' | t
   endif
+
+  assign slider_id = 'Slider-' | append: section.id
 
   assign show_arrows = false
   if section.settings.show_arrows and section.blocks.size > 1
@@ -76,8 +79,6 @@
     --pr-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
     --pr-body-ff: {{ body_ff }};
     --pr-body-fs: {{ body_fs }};
-    --pr-subheading-size: {{ section.settings.subheading_size }}px;
-    --pr-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
     --pr-card-width: {{ section.settings.card_width }}px;
     --pr-card-width-mobile: {{ section.settings.card_width_mobile }}px;
     --pr-gap: {{ section.settings.card_gap }}px;
@@ -93,11 +94,16 @@
     --pr-button-color: {{ section.settings.button_text }};
     --pr-button-bg-hover: {{ section.settings.button_background_hover }};
     --pr-button-color-hover: {{ section.settings.button_text_hover }};
-    --pr-arrow-bg: {{ section.settings.arrow_background }};
-    --pr-arrow-color: {{ section.settings.arrow_color }};
-    --pr-arrow-bg-hover: {{ section.settings.arrow_background_hover }};
-    --pr-arrow-color-hover: {{ section.settings.arrow_color_hover }};
     --pr-focus: {{ section.settings.focus_color }};
+    --rail-arrow-bg: {{ section.settings.arrow_background }};
+    --rail-arrow-color: {{ section.settings.arrow_color }};
+    --rail-arrow-bg-hover: {{ section.settings.arrow_background_hover }};
+    --rail-arrow-color-hover: {{ section.settings.arrow_color_hover }};
+    --rail-focus: {{ section.settings.focus_color }};
+    --rail-subheading-ff: {{ body_ff }};
+    --rail-subheading-fs: {{ body_fs }};
+    --rail-subheading-size: {{ section.settings.subheading_size }}px;
+    --rail-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
   }
 {%- endstyle -%}
 
@@ -108,38 +114,14 @@
     {%- endif -%}
 
     <slider-component class="product-rail__slider">
-      {%- if show_arrows or section.settings.subheading != blank -%}
-        <div class="product-rail__controls{% if show_arrows %} product-rail__controls--arrows{% endif %}">
-          {%- if show_arrows -%}
-            <button
-              type="button"
-              class="slider-button slider-button--prev product-rail__arrow"
-              name="previous"
-              aria-label="{{ 'general.slider.previous_slide' | t }}"
-              aria-controls="Slider-{{ section.id }}"
-            >
-              <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
-            </button>
-          {%- endif -%}
-          {%- if section.settings.subheading != blank -%}
-            <p class="product-rail__subheading">{{ section.settings.subheading }}</p>
-          {%- endif -%}
-          {%- if show_arrows -%}
-            <button
-              type="button"
-              class="slider-button slider-button--next product-rail__arrow"
-              name="next"
-              aria-label="{{ 'general.slider.next_slide' | t }}"
-              aria-controls="Slider-{{ section.id }}"
-            >
-              <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
-            </button>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+      {%- render 'rail-controls',
+        slider_id: slider_id,
+        subheading: section.settings.subheading,
+        show_arrows: show_arrows
+      -%}
 
       <ul
-        id="Slider-{{ section.id }}"
+        id="{{ slider_id }}"
         class="slider slider--everywhere product-rail__track list-unstyled"
         role="list"
         aria-label="{{ rail_label | escape }}"

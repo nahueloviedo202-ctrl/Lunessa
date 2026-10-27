@@ -1,0 +1,544 @@
+{{ 'section-rating-bar.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign rating = section.settings.rating
+  assign heading_id = 'RatingBar-Heading-' | append: section.id
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  .rating-bar-{{ section.id }} {
+    --rb-bg: {{ section.settings.background }};
+    --rb-color: {{ section.settings.text_color }};
+    --rb-pt: {{ section.settings.padding_top }}px;
+    --rb-pb: {{ section.settings.padding_bottom }}px;
+    --rb-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --rb-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --rb-max-width: {{ section.settings.max_width }}px;
+    --rb-px: {{ section.settings.padding_x }}px;
+    --rb-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --rb-column-gap: {{ section.settings.column_gap }}px;
+    --rb-row-gap: {{ section.settings.row_gap }}px;
+    --rb-row-gap-mobile: {{ section.settings.row_gap_mobile }}px;
+    --rb-heading-ff: {{ heading_ff }};
+    --rb-heading-fs: {{ heading_fs }};
+    --rb-heading-fw: {{ section.settings.heading_font_weight }};
+    --rb-heading-size: {{ section.settings.heading_size }}px;
+    --rb-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --rb-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --rb-heading-max: {{ section.settings.heading_max_width }}px;
+    --rb-heading-max-mobile: {{ section.settings.heading_max_width_mobile }}px;
+    --rb-body-ff: {{ body_ff }};
+    --rb-body-fs: {{ body_fs }};
+    --rb-caption-size: {{ section.settings.caption_size }}px;
+    --rb-logo-width: {{ section.settings.logo_width }}px;
+    --rb-logo-width-mobile: {{ section.settings.logo_width_mobile }}px;
+    --rb-star-size: {{ section.settings.star_size }}px;
+    --rb-star-fill: {{ section.settings.star_color }};
+    --rb-star-empty: {{ section.settings.star_empty_color }};
+    --rb-star-icon: {{ section.settings.star_icon_color }};
+    --rb-rule-height: {{ section.settings.rule_height }}px;
+  }
+{%- endstyle -%}
+
+<div
+  class="rating-bar rating-bar-{{ section.id }}"
+  {% if section.settings.heading != blank %}
+    role="region" aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="rating-bar__container{% unless section.settings.show_rule %} rating-bar__container--no-rule{% endunless %}">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="{{ heading_id }}" class="rating-bar__claim">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="rating-bar__lockup">
+      {%- if section.settings.logo != blank -%}
+        {%- capture logo_image -%}
+          {{
+            section.settings.logo
+            | image_url: width: 360
+            | image_tag:
+              class: 'rating-bar__logo',
+              widths: '180, 270, 360',
+              sizes: '(min-width: 750px) 180px, 145px',
+              loading: 'lazy',
+              alt: section.settings.logo.alt
+          }}
+        {%- endcapture -%}
+        {%- if section.settings.logo_link != blank -%}
+          <a href="{{ section.settings.logo_link }}" class="rating-bar__logo-link">{{ logo_image }}</a>
+        {%- else -%}
+          {{ logo_image }}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if section.settings.show_rating_value -%}
+        <p class="rating-bar__value">{{ rating }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.show_stars -%}
+        <span
+          class="rating-bar__stars"
+          role="img"
+          aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating, rating_max: 5 }}"
+        >
+          {%- for i in (1..5) -%}
+            {%- liquid
+              assign fill = rating | minus: forloop.index0
+              if fill > 1
+                assign fill = 1
+              elsif fill < 0
+                assign fill = 0
+              endif
+              assign fill_percent = fill | times: 100 | round
+            -%}
+            <svg
+              class="rating-bar__star"
+              style="--fill: {{ fill_percent }}%;"
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 18 17"
+              preserveAspectRatio="none"
+            >
+              <path d="M18 6.4969H11.1264L9.00332 0L6.87357 6.4969L0 6.49031L5.56653 10.5097L3.43679 17L9.00332 12.9872L14.5632 17L12.4401 10.5097L18 6.4969Z" fill="currentColor"/>
+            </svg>
+          {%- endfor -%}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_rule -%}
+      <hr class="rating-bar__rule" aria-orientation="vertical">
+    {%- endif -%}
+
+    {%- if section.settings.note != blank -%}
+      <p class="rating-bar__note">{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Franja de puntaje",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Frase principal",
+      "default": "Más reseñas de 5 estrellas que nadie. Así somos."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "note",
+      "label": "Aclaración",
+      "default": "*Según reseñas de 5 estrellas verificadas. Fuente: tu plataforma de reseñas."
+    },
+    {
+      "type": "header",
+      "content": "Puntaje"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo de la plataforma de reseñas"
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "Enlace del logo",
+      "info": "Opcional. Por ejemplo, tu perfil de reseñas."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 79,
+      "max": 279,
+      "step": 2,
+      "unit": "px",
+      "label": "Ancho del logo (desktop)",
+      "default": 179
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 45,
+      "max": 245,
+      "step": 2,
+      "unit": "px",
+      "label": "Ancho del logo (mobile)",
+      "default": 145
+    },
+    {
+      "type": "range",
+      "id": "rating",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "label": "Puntaje",
+      "info": "Usá tu puntaje real en la plataforma.",
+      "default": 4.5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_value",
+      "label": "Mostrar número del puntaje",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Mostrar estrellas",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de estrellas",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Estrellas: fondo lleno",
+      "default": "#00B67A"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Estrellas: fondo vacío",
+      "default": "#DCDCE6"
+    },
+    {
+      "type": "color",
+      "id": "star_icon_color",
+      "label": "Estrellas: icono",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rule",
+      "label": "Mostrar línea divisoria (desktop)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rule_height",
+      "min": 17,
+      "max": 157,
+      "step": 2,
+      "unit": "px",
+      "label": "Alto de la línea divisoria",
+      "default": 77
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Texto",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente de la frase",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada de la frase",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso de la frase",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la frase (desktop)",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 14,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la frase (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Frase en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 200,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo de la frase (desktop)",
+      "default": 460
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width_mobile",
+      "min": 160,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo de la frase (mobile)",
+      "default": 320
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos chicos",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos chicos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "caption_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de textos chicos",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre columnas (desktop)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre filas (desktop)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre elementos (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Franja de puntaje"
+    }
+  ]
+}
+{% endschema %}

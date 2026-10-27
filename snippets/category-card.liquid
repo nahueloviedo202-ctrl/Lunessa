@@ -1,0 +1,65 @@
+{% doc %}
+  Renders one card of the category grid section: colored media panel with an
+  image (optional hover image) and a footer with the title and an arrow.
+
+  @param {object} block - A `category` block of the category-grid section.
+
+  @example
+  {% render 'category-card', block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign image = block.settings.image
+  assign hover_image = block.settings.hover_image
+  assign zoom = block.settings.zoom | divided_by: 100.0
+
+  assign focal = image.presentation.focal_point | default: '50% 50%'
+  assign image_style = 'object-position: ' | append: focal | append: '; transform-origin: ' | append: focal | append: ';'
+
+  assign hover_focal = hover_image.presentation.focal_point | default: '50% 50%'
+  assign hover_style = 'object-position: ' | append: hover_focal | append: '; transform-origin: ' | append: hover_focal | append: ';'
+-%}
+
+<a
+  href="{{ block.settings.link | default: '#' }}"
+  class="category-card{% if hover_image != blank %} category-card--swaps-media{% endif %}"
+  style="--media-bg: {{ block.settings.media_color }}; --zoom: {{ zoom }};"
+  {{ block.shopify_attributes }}
+>
+  <span class="category-card__media">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'category-card__image',
+          widths: '300, 450, 600, 900, 1200',
+          sizes: '(min-width: 750px) 25vw, 80vw',
+          loading: 'lazy',
+          alt: '',
+          style: image_style
+      }}
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag: 'category-card__image placeholder-svg' }}
+    {%- endif -%}
+    {%- if hover_image != blank -%}
+      {{
+        hover_image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'category-card__image category-card__image--hover',
+          widths: '300, 450, 600, 900, 1200',
+          sizes: '(min-width: 750px) 25vw, 80vw',
+          loading: 'lazy',
+          alt: '',
+          style: hover_style
+      }}
+    {%- endif -%}
+  </span>
+  <span class="category-card__footer">
+    <span class="category-card__title">{{ block.settings.title }}</span>
+    <span class="category-card__arrow svg-wrapper" aria-hidden="true">
+      {{- 'icon-arrow.svg' | inline_asset_content -}}
+    </span>
+  </span>
+</a>
