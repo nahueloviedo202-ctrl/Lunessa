@@ -50,6 +50,13 @@
     assign overlay = true
   endif
 
+  # The markup stays in the DOM when hidden so the cart drawer/notification keep finding #cart-icon-bubble.
+  assign hide_header = false
+  if section.settings.hide_on_product and request.page_type == 'product'
+    assign hide_header = true
+    assign overlay = false
+  endif
+
   assign bar_total = section.settings.padding_top | plus: section.settings.bar_height | plus: section.settings.padding_bottom
   assign bar_total_mobile = section.settings.padding_top_mobile | plus: section.settings.bar_height_mobile | plus: section.settings.padding_bottom_mobile
 
@@ -149,7 +156,7 @@
 {%- endstyle -%}
 
 <header-navbar
-  class="header-wrapper header-navbar header-navbar-{{ section.id }} color-{{ section.settings.color_scheme }}"
+  class="header-wrapper header-navbar header-navbar-{{ section.id }} color-{{ section.settings.color_scheme }}{% if hide_header %} header-navbar--hidden{% endif %}"
   {% if overlay %}
     data-overlay
   {% endif %}
@@ -359,6 +366,12 @@
       "id": "sticky",
       "label": "Header fijo al hacer scroll",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_product",
+      "label": "Ocultar en páginas de producto",
+      "default": false
     },
     {
       "type": "select",

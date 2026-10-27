@@ -12,6 +12,10 @@
     box-shadow 0.16s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.header-wrapper.header-navbar--hidden {
+  display: none;
+}
+
 .header-navbar[data-overlay]:not([data-solid]):not(:has(details[open])) {
   --hn-surface-bg: transparent;
   --hn-surface-color: var(--hn-overlay-color);
