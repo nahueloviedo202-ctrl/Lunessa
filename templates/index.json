@@ -321,12 +321,12 @@
         "show_rating_value": true,
         "show_stars": true,
         "star_size": 18,
-        "star_color": "#00B67A",
-        "star_empty_color": "#DCDCE6",
-        "star_icon_color": "#FFFFFF",
+        "star_color": "#00b67a",
+        "star_empty_color": "#dcdce6",
+        "star_icon_color": "#ffffff",
         "show_rule": true,
         "rule_height": 77,
-        "background": "#CDFC4B",
+        "background": "#cdfc4b",
         "text_color": "#075007",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
@@ -350,12 +350,138 @@
         "padding_top_mobile": 64,
         "padding_bottom_mobile": 64
       }
+    },
+    "category_grid_qnfEK4": {
+      "type": "category-grid",
+      "blocks": {
+        "category_f6CpUq": {
+          "type": "category",
+          "settings": {
+            "title": "Articulaciones y movilidad",
+            "link": "",
+            "media_color": "#cdfc4b",
+            "zoom": 100
+          }
+        },
+        "category_bQT3FU": {
+          "type": "category",
+          "settings": {
+            "title": "Dientes y encías",
+            "link": "",
+            "media_color": "#9dd1ff",
+            "zoom": 100
+          }
+        },
+        "category_Fb7rjc": {
+          "type": "category",
+          "settings": {
+            "title": "Alergias y picazón",
+            "link": "",
+            "media_color": "#a3fcff",
+            "zoom": 100
+          }
+        },
+        "category_Ndxkp7": {
+          "type": "category",
+          "settings": {
+            "title": "Digestión",
+            "link": "",
+            "media_color": "#f6a3ff",
+            "zoom": 100
+          }
+        },
+        "category_BjbJcz": {
+          "type": "category",
+          "settings": {
+            "title": "Piel y pelaje",
+            "link": "",
+            "media_color": "#f9b22d",
+            "zoom": 100
+          }
+        },
+        "category_YMafdT": {
+          "type": "category",
+          "settings": {
+            "title": "Estrés y ansiedad",
+            "link": "",
+            "media_color": "#c5a9ff",
+            "zoom": 100
+          }
+        },
+        "category_EzRWCe": {
+          "type": "category",
+          "settings": {
+            "title": "Vitalidad y bienestar",
+            "link": "",
+            "media_color": "#fffc49",
+            "zoom": 100
+          }
+        }
+      },
+      "block_order": [
+        "category_f6CpUq",
+        "category_bQT3FU",
+        "category_Fb7rjc",
+        "category_Ndxkp7",
+        "category_BjbJcz",
+        "category_YMafdT",
+        "category_EzRWCe"
+      ],
+      "name": "Comprar por necesidad",
+      "settings": {
+        "heading": "Comprar por necesidad",
+        "subheading": "Cada situación tiene un suplemento. Encontrá el indicado.",
+        "columns_desktop": 4,
+        "mobile_layout": "slider",
+        "columns_mobile": "1",
+        "show_arrows": true,
+        "peek": true,
+        "card_width_mobile": 282,
+        "card_gap": 24,
+        "card_gap_mobile": 12,
+        "card_height": 278,
+        "card_height_mobile": 278,
+        "footer_height": 79,
+        "title_size": 18,
+        "arrow_size": 17,
+        "radius": 5,
+        "background": "#FFFFFF",
+        "text_color": "#075007",
+        "card_border": "#F0F0F0",
+        "card_border_hover": "#B4CBB4",
+        "footer_background": "#F4F4F4",
+        "footer_background_hover": "#FFFFFF",
+        "arrow_background": "#075007",
+        "arrow_color": "#CDFC4B",
+        "arrow_background_hover": "#C6FA41",
+        "arrow_color_hover": "#075007",
+        "focus_color": "#CDFC4B",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "subheading_size": 18,
+        "subheading_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
     }
   },
   "order": [
     "page_hero_zFrrBb",
     "mark_strip_a66Jbr",
     "product_rail_cRG7DE",
-    "rating_bar_MyQaeW"
+    "rating_bar_MyQaeW",
+    "category_grid_qnfEK4"
   ]
 }
