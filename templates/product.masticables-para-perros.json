@@ -979,7 +979,7 @@
         "point_GYKnEt": {
           "type": "point",
           "settings": {
-            "text": "Describe aquí un resultado real de tus clientes"
+            "text": "Los dueños empiezan a notar que su perro sube las escaleras o se levanta con más facilidad&nbsp;"
           }
         },
         "stage_wwWY6U": {
@@ -1011,7 +1011,7 @@
         "point_A4iBGy": {
           "type": "point",
           "settings": {
-            "text": "Describe aquí un resultado real de tus clientes"
+            "text": "El 87% de los dueños reporta que su perro volvió a jugar y moverse como antes&nbsp;"
           }
         }
       },
@@ -1063,7 +1063,7 @@
         "body_font": "inter_n4",
         "columns_desktop": "3",
         "columns_tablet": "1",
-        "stage_gap": 20,
+        "stage_gap": 30,
         "stage_gap_mobile": 20,
         "stage_inner_gap": 16,
         "head_gap": 12,
@@ -1071,7 +1071,7 @@
         "icon_color": "#000000",
         "label_color": "#212427",
         "title_color": "#212427",
-        "title_gap": 12,
+        "title_gap": 20,
         "title_size": 24,
         "title_line_height": 32,
         "title_size_mobile": 24,
@@ -1081,7 +1081,7 @@
         "point_color": "#212427",
         "point_size": 16,
         "point_line_height": 24,
-        "point_gap": 0,
+        "point_gap": 10,
         "button_label": "PRUÉBALO AHORA -->",
         "button_link": "",
         "button_background": "#BF4342",
