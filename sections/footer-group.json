@@ -11,89 +11,72 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "footer_brand_HQrmWx": {
-      "type": "footer-brand",
+    "footer_split_RnWgWY": {
+      "type": "footer-split",
       "blocks": {
-        "brand_9gJUdR": {
-          "type": "brand",
-          "settings": {
-            "logo": "shopify://shop_images/Gemini_Generated_Image_julerwjulerwjule-removebg-preview_1e139d21-69f8-4d0a-ba35-d29a5b406efc.png",
-            "logo_width": 35,
-            "logo_width_mobile": 28,
-            "tagline": "<p>Fórmula clinicamente estudiada para<br/>frenar la caída del cabello desde dentro</p>",
-            "tagline_size": 18,
-            "tagline_size_mobile": 17,
-            "tagline_margin_bottom": 48,
-            "tagline_margin_bottom_mobile": 0
-          }
-        },
-        "link_list_KEJapC": {
+        "link_list_nnLh9h": {
           "type": "link_list",
           "settings": {
-            "heading": "Comprar",
-            "menu": "productos"
+            "heading": "Nosotros",
+            "menu": "footer",
+            "first_on_desktop": false
           }
         },
-        "link_list_RP6Lq8": {
+        "link_list_nMpnQ4": {
           "type": "link_list",
           "settings": {
-            "heading": "Aprender",
-            "menu": "footer"
+            "heading": "¿Cómo te ayudamos?",
+            "menu": "footer",
+            "first_on_desktop": false
           }
         },
-        "link_list_XKKria": {
+        "link_list_CkpDtb": {
           "type": "link_list",
           "settings": {
-            "heading": "Ayuda",
-            "menu": "footer-ayuda"
+            "heading": "Productos",
+            "menu": "footer",
+            "first_on_desktop": true
           }
         }
       },
       "block_order": [
-        "brand_9gJUdR",
-        "link_list_KEJapC",
-        "link_list_RP6Lq8",
-        "link_list_XKKria"
+        "link_list_nnLh9h",
+        "link_list_nMpnQ4",
+        "link_list_CkpDtb"
       ],
-      "name": "Footer de marca",
+      "name": "Footer completo",
       "settings": {
-        "background": "#7f1525",
-        "text_color": "#ffffff",
-        "brand_column_width": 50,
-        "column_gap": 32,
-        "column_gap_mobile": 28,
-        "top_margin_bottom": 32,
-        "top_margin_bottom_mobile": 40,
-        "padding_top": 80,
-        "padding_bottom": 24,
-        "padding_horizontal": 50,
-        "padding_horizontal_tablet": 16,
-        "padding_top_mobile": 34,
-        "padding_bottom_mobile": 24,
-        "padding_horizontal_mobile": 22,
-        "heading_size": 19,
-        "heading_size_mobile": 17,
-        "heading_margin_bottom": 24,
-        "heading_margin_bottom_mobile": 14,
-        "link_size": 16,
-        "link_size_mobile": 14,
-        "link_spacing": 8,
-        "copyright": "Copyright © Lunessa",
+        "show_newsletter": true,
+        "newsletter_heading": "Recibí el contenido que los dueños de perros sí leen",
+        "newsletter_placeholder": "tu correo electrónico",
+        "show_socials": true,
+        "socials_heading": "Redes",
+        "social_size": 54,
+        "lockup_width": 100,
+        "show_copyright": true,
+        "disclaimer": "<p>Estas afirmaciones no fueron evaluadas por la autoridad sanitaria. Este producto no está destinado a diagnosticar, tratar, curar ni prevenir enfermedades.</p>",
         "legal_menu": "",
-        "legal_columns_mobile": 2,
-        "disclaimer": "<p>*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
-        "show_border": true,
-        "border_color": "#ececec",
-        "disclaimer_color": "#cb9d9d",
-        "copyright_size": 13,
-        "copyright_size_mobile": 12,
+        "background": "#075007",
+        "text_color": "#FFFFFF",
+        "accent_color": "#CDFC4B",
+        "accent_text_color": "#075007",
+        "input_background": "#FFFFFF",
+        "input_text_color": "#2E2E2E",
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "heading_size": 18,
+        "link_size": 14,
+        "link_gap": 20,
         "legal_size": 12,
-        "legal_size_mobile": 12,
-        "disclaimer_size": 12,
-        "heading_font_custom": false,
-        "heading_font": "assistant_n4",
-        "body_font_custom": false,
-        "body_font": "assistant_n4"
+        "disclaimer_size": 10,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "block_gap": 64,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 46,
+        "padding_bottom_mobile": 46
       }
     },
     "footer": {
@@ -116,7 +99,7 @@
     }
   },
   "order": [
-    "footer_brand_HQrmWx",
+    "footer_split_RnWgWY",
     "footer"
   ]
 }

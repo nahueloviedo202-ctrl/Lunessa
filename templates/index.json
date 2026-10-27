@@ -1165,7 +1165,7 @@
         "pause_on_hover": true,
         "background": "#075007",
         "text_color": "#ffffff",
-        "focus_color": "#CDFC4B",
+        "focus_color": "#cdfc4b",
         "tint_icons": false,
         "font_source": "theme_body",
         "font": "assistant_n4",
@@ -1258,10 +1258,10 @@
         "heading_color": "#075007",
         "text_color": "#2e2e2e",
         "button_color": "#075007",
-        "button_background_hover": "#C6FA41",
+        "button_background_hover": "#c6fa41",
         "button_color_hover": "#075007",
-        "accordion_background": "#FFFFFF",
-        "accordion_border": "#E3E3E3",
+        "accordion_background": "#ffffff",
+        "accordion_border": "#e3e3e3",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
         "heading_font_weight": "900",
@@ -1273,6 +1273,146 @@
         "body_font": "assistant_n4",
         "body_size": 18,
         "body_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "cta_banner_D7WM6K": {
+      "type": "cta-banner",
+      "blocks": {
+        "button_UdYnBr": {
+          "type": "button",
+          "settings": {
+            "label": "Encontrar su fórmula",
+            "link": "",
+            "style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "button_UdYnBr"
+      ],
+      "name": "Llamado a la acción",
+      "settings": {
+        "heading": "¿No sabés por dónde empezar? Te ayudamos.",
+        "text": "<p>Cada perro es distinto. Contanos sobre el tuyo y te recomendamos la fórmula indicada. Te lleva menos de un minuto.</p>",
+        "alignment": "center",
+        "background": "#CDFC4B",
+        "text_color": "#075007",
+        "button_background": "#075007",
+        "button_text": "#FFFFFF",
+        "button_background_hover": "#FFFFFF",
+        "button_text_hover": "#075007",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "text_size": 18,
+        "text_size_mobile": 16,
+        "heading_max_width": 860,
+        "text_max_width": 750,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "faq_list_9epqtN": {
+      "type": "faq-list",
+      "blocks": {
+        "question_NP7bKi": {
+          "type": "question",
+          "settings": {
+            "question": "¿Dónde se fabrican sus productos?",
+            "answer": "<p>Escribí acá la respuesta.</p>",
+            "open": false
+          }
+        },
+        "question_G6UxU3": {
+          "type": "question",
+          "settings": {
+            "question": "¿Cuánto tarda en llegar mi pedido?",
+            "answer": "<p>Escribí acá la respuesta.</p>",
+            "open": false
+          }
+        },
+        "question_Th9wcc": {
+          "type": "question",
+          "settings": {
+            "question": "¿Desde dónde se envían los productos?",
+            "answer": "<p>Escribí acá la respuesta.</p>",
+            "open": false
+          }
+        },
+        "question_bWnrFf": {
+          "type": "question",
+          "settings": {
+            "question": "¿Puedo darle los suplementos a una perra preñada?",
+            "answer": "<p>Escribí acá la respuesta.</p>",
+            "open": false
+          }
+        },
+        "question_Gr7r8U": {
+          "type": "question",
+          "settings": {
+            "question": "¿Mi perro puede tomar de más?",
+            "answer": "<p>Escribí acá la respuesta.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "question_NP7bKi",
+        "question_G6UxU3",
+        "question_Th9wcc",
+        "question_bWnrFf",
+        "question_Gr7r8U"
+      ],
+      "name": "Preguntas destacadas",
+      "settings": {
+        "heading": "Preguntas frecuentes",
+        "subheading": "Para ver todas las preguntas sobre productos, visitá nuestra página de preguntas frecuentes.",
+        "button_label": "Ver todos",
+        "button_link": "",
+        "background": "#FFFFFF",
+        "heading_color": "#075007",
+        "text_color": "#2E2E2E",
+        "question_color": "#075007",
+        "border_color": "#E3E3E3",
+        "toggle_background": "#075007",
+        "toggle_color": "#FFFFFF",
+        "button_background": "#075007",
+        "button_text": "#FFFFFF",
+        "button_background_hover": "#C6FA41",
+        "button_text_hover": "#075007",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": false,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "subheading_size": 18,
+        "subheading_size_mobile": 16,
+        "question_size": 16,
+        "answer_size": 14,
+        "list_max_width": 1200,
+        "item_spacing": 24,
         "max_width": 1200,
         "padding_x": 64,
         "padding_x_mobile": 16,
@@ -1297,6 +1437,8 @@
     "video_stories_UFFAMn",
     "media_text_split_MHTgtx",
     "mark_strip_pDVdrY",
-    "media_text_split_dzRn6t"
+    "media_text_split_dzRn6t",
+    "cta_banner_D7WM6K",
+    "faq_list_9epqtN"
   ]
 }
