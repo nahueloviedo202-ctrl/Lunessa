@@ -205,7 +205,6 @@
   font-weight: 800;
   font-size: var(--fs-heading-size);
   line-height: 1;
-  white-space: nowrap;
   text-transform: uppercase;
 }
 
@@ -393,6 +392,7 @@
 
   .footer-split__column-heading {
     letter-spacing: 0.02em;
+    white-space: nowrap;
   }
 
   .footer-split__legal-row {
