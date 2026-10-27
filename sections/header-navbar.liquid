@@ -1,0 +1,974 @@
+{{ 'section-header-navbar.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link
+  rel="stylesheet"
+  href="{{ 'component-cart-notification.css' | asset_url }}"
+  media="print"
+  onload="this.media='all'"
+>
+
+{%- if settings.predictive_search_enabled -%}
+  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign item_font = section.settings.item_font
+  assign panel_font = section.settings.panel_font
+
+  case section.settings.item_font_source
+    when 'theme_heading'
+      assign item_ff = 'var(--font-heading-family)'
+      assign item_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign item_ff = 'var(--font-body-family)'
+      assign item_fs = 'var(--font-body-style)'
+    else
+      assign item_ff = item_font.family | append: ', ' | append: item_font.fallback_families
+      assign item_fs = item_font.style
+  endcase
+
+  case section.settings.panel_font_source
+    when 'theme_heading'
+      assign panel_ff = 'var(--font-heading-family)'
+      assign panel_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign panel_ff = 'var(--font-body-family)'
+      assign panel_fs = 'var(--font-body-style)'
+    else
+      assign panel_ff = panel_font.family | append: ', ' | append: panel_font.fallback_families
+      assign panel_fs = panel_font.style
+  endcase
+
+  assign overlay = false
+  if section.settings.overlay_mode == 'all'
+    assign overlay = true
+  elsif section.settings.overlay_mode == 'home' and request.page_type == 'index'
+    assign overlay = true
+  endif
+
+  assign bar_total = section.settings.padding_top | plus: section.settings.bar_height | plus: section.settings.padding_bottom
+  assign bar_total_mobile = section.settings.padding_top_mobile | plus: section.settings.bar_height_mobile | plus: section.settings.padding_bottom_mobile
+
+  assign country_selector = false
+  if section.settings.enable_country_selector and localization.available_countries.size > 1
+    assign country_selector = true
+  endif
+
+  assign language_selector = false
+  if section.settings.enable_language_selector and localization.available_languages.size > 1
+    assign language_selector = true
+  endif
+
+  assign social_links = false
+  if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank
+    assign social_links = true
+  endif
+
+  assign logo = section.settings.logo | default: settings.logo
+-%}
+
+{%- style -%}
+  {%- if section.settings.item_font_source == 'custom' -%}
+    {{ item_font | font_face: font_display: 'swap' }}
+    {%- assign item_font_weighted = item_font | font_modify: 'weight', section.settings.item_font_weight -%}
+    {%- if item_font_weighted -%}
+      {{ item_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.panel_font_source == 'custom' -%}
+    {{ panel_font | font_face: font_display: 'swap' }}
+    {%- assign panel_font_bold = panel_font | font_modify: 'weight', section.settings.panel_heading_weight -%}
+    {%- if panel_font_bold -%}
+      {{ panel_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  #shopify-section-{{ section.id }} {
+    {%- if section.settings.sticky %}
+      position: sticky;
+      top: 0;
+    {%- endif %}
+    {%- if overlay %}
+      margin-bottom: -{{ bar_total_mobile }}px;
+    {%- endif %}
+  }
+
+  {%- if overlay %}
+    @media screen and (min-width: 990px) {
+      #shopify-section-{{ section.id }} {
+        margin-bottom: -{{ bar_total }}px;
+      }
+    }
+  {%- endif %}
+
+  .header-navbar-{{ section.id }} {
+    --hn-bg: {{ section.settings.background }};
+    --hn-color: {{ section.settings.text_color }};
+    --hn-overlay-color: {{ section.settings.overlay_text_color }};
+    --hn-accent: {{ section.settings.accent_color }};
+    --hn-accent-text: {{ section.settings.accent_text_color }};
+    --hn-shadow: {% if section.settings.show_shadow %}0 2px 4.9px 0 rgba(0, 0, 0, 0.1){% else %}none{% endif %};
+    --hn-panel-bg: {{ section.settings.panel_background }};
+    --hn-panel-color: {{ section.settings.panel_text_color }};
+    --hn-max-width: {{ section.settings.max_width }}px;
+    --hn-px: {{ section.settings.padding_x }}px;
+    --hn-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --hn-pt: {{ section.settings.padding_top }}px;
+    --hn-pb: {{ section.settings.padding_bottom }}px;
+    --hn-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --hn-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --hn-height: {{ section.settings.bar_height }}px;
+    --hn-height-mobile: {{ section.settings.bar_height_mobile }}px;
+    --hn-gap: {{ section.settings.group_gap }}px;
+    --hn-gap-laptop: {{ section.settings.group_gap_laptop }}px;
+    --hn-logo-width: {{ section.settings.logo_width }}px;
+    --hn-logo-width-mobile: {{ section.settings.logo_width_mobile }}px;
+    --hn-icon-size: {{ section.settings.icon_size }}px;
+    --hn-radius: {{ section.settings.radius }}px;
+    --hn-item-ff: {{ item_ff }};
+    --hn-item-fs: {{ item_fs }};
+    --hn-item-fw: {{ section.settings.item_font_weight }};
+    --hn-item-size: {{ section.settings.item_font_size }}px;
+    --hn-item-ls: {{ section.settings.item_letter_spacing | divided_by: 100.0 }}em;
+    --hn-item-tt: {{ section.settings.item_text_transform }};
+    --hn-panel-ff: {{ panel_ff }};
+    --hn-panel-fs: {{ panel_fs }};
+    --hn-panel-heading-fw: {{ section.settings.panel_heading_weight }};
+    --hn-panel-heading-size: {{ section.settings.panel_heading_size }}px;
+    --hn-panel-item-size: {{ section.settings.panel_item_size }}px;
+    --hn-panel-item-gap: {{ section.settings.panel_item_gap }}px;
+    --hn-panel-column-gap: {{ section.settings.panel_column_gap }}px;
+    --hn-panel-pb: {{ section.settings.panel_padding_bottom }}px;
+    --hn-promo-width: {{ section.settings.promo_width }}px;
+    --hn-promo-height: {{ section.settings.promo_height }}px;
+  }
+{%- endstyle -%}
+
+<header-navbar
+  class="header-wrapper header-navbar header-navbar-{{ section.id }} color-{{ section.settings.color_scheme }}"
+  {% if overlay %}
+    data-overlay
+  {% endif %}
+>
+  <header class="header-navbar__bar">
+    <div class="header-navbar__container header-navbar__inner">
+      <div class="header-navbar__group">
+        {%- if section.settings.menu != blank -%}
+          {%- render 'header-drawer',
+            show_country_selector: country_selector,
+            show_language_selector: language_selector,
+            show_social_links: social_links
+          -%}
+        {%- endif -%}
+        <nav class="header-navbar__nav" aria-label="{{ 'sections.header.menu' | t }}">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.position == 'left' -%}
+              {%- render 'header-navbar-item', block: block -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      </div>
+
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header-navbar__heading">
+      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="header-navbar__logo">
+        {%- if logo != blank -%}
+          {%- liquid
+            assign logo_alt = logo.alt | default: shop.name | escape
+            assign logo_height = section.settings.logo_width | divided_by: logo.aspect_ratio | round
+            assign logo_width_2x = section.settings.logo_width | times: 2
+            assign logo_sizes = '(min-width: 990px) ' | append: section.settings.logo_width | append: 'px, ' | append: section.settings.logo_width_mobile | append: 'px'
+            assign logo_widths = section.settings.logo_width_mobile | append: ', ' | append: section.settings.logo_width | append: ', ' | append: logo_width_2x
+          -%}
+          {{
+            logo
+            | image_url: width: 600
+            | image_tag:
+              class: 'header-navbar__logo-image',
+              widths: logo_widths,
+              height: logo_height,
+              width: section.settings.logo_width,
+              alt: logo_alt,
+              sizes: logo_sizes,
+              preload: true
+          }}
+        {%- else -%}
+          <span class="header-navbar__logo-text h2">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+
+      <div class="header-navbar__group header-navbar__group--end">
+        <nav class="header-navbar__nav" aria-label="{{ 'sections.header.menu' | t }}">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.position == 'right' -%}
+              {%- render 'header-navbar-item', block: block -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+
+        <div class="header-navbar__icons">
+          {%- if section.settings.show_search -%}
+            {%- render 'header-search', input_id: 'Search-In-Modal' -%}
+          {%- endif -%}
+
+          {%- if section.settings.show_account and shop.customer_accounts_enabled -%}
+            <shopify-account
+              menu="{{ settings.customer_account_menu | default: 'customer-account-main-menu' }}"
+              class="header__icon header__icon--account link focus-inset"
+            >
+              <span slot="signed-out-avatar" class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+              <span slot="signed-out-avatar" class="visually-hidden">{{ 'customer.log_in' | t }}</span>
+            </shopify-account>
+          {%- endif -%}
+
+          <a
+            href="{{ routes.cart_url }}"
+            class="header__icon header__icon--cart link focus-inset"
+            id="cart-icon-bubble"
+            {% unless section.settings.show_cart %}
+              hidden
+            {% endunless %}
+          >
+            {% if cart == empty %}
+              <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+            {% else %}
+              <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+            {% endif %}
+            <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+            {%- if cart != empty -%}
+              <div class="cart-count-bubble">
+                {%- if cart.item_count < 100 -%}
+                  <span aria-hidden="true">{{ cart.item_count }}</span>
+                {%- endif -%}
+                <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+              </div>
+            {%- endif -%}
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+</header-navbar>
+
+{%- if settings.cart_type == 'notification' -%}
+  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: 'dropdown' -%}
+{%- endif -%}
+
+{% javascript %}
+  class HeaderNavbar extends HTMLElement {
+    connectedCallback() {
+      this.section = this.closest('.section-header') || this;
+      this.setHeaderHeight = this.setHeaderHeight.bind(this);
+      this.onScroll = this.onScroll.bind(this);
+
+      this.resizeObserver = new ResizeObserver(this.setHeaderHeight);
+      this.resizeObserver.observe(this.section);
+
+      if (Shopify.designMode) {
+        this.onBlockSelect = this.onBlockSelect.bind(this);
+        document.addEventListener('shopify:block:select', this.onBlockSelect);
+        document.addEventListener('shopify:block:deselect', this.onBlockSelect);
+      }
+
+      if (this.hasAttribute('data-overlay')) {
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+        this.onScroll();
+      }
+    }
+
+    disconnectedCallback() {
+      this.resizeObserver.disconnect();
+      window.removeEventListener('scroll', this.onScroll);
+      if (this.onBlockSelect) {
+        document.removeEventListener('shopify:block:select', this.onBlockSelect);
+        document.removeEventListener('shopify:block:deselect', this.onBlockSelect);
+      }
+    }
+
+    onBlockSelect(event) {
+      const details = event.target.closest('header-menu')?.querySelector('details');
+      if (!details || !this.contains(details)) return;
+      details.open = event.type === 'shopify:block:select';
+    }
+
+    setHeaderHeight() {
+      document.documentElement.style.setProperty('--header-height', `${this.section.offsetHeight}px`);
+    }
+
+    onScroll() {
+      this.toggleAttribute('data-solid', window.scrollY > 0);
+    }
+  }
+
+  customElements.define('header-navbar', HeaderNavbar);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header navbar",
+  "class": "section-header",
+  "max_blocks": 10,
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Si está vacío se usa el logo del theme."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 40,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "label": "Ancho del logo (desktop)",
+      "default": 116
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 40,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Ancho del logo (mobile)",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Comportamiento"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Header fijo al hacer scroll",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "overlay_mode",
+      "label": "Header transparente sobre el contenido",
+      "options": [
+        {
+          "value": "none",
+          "label": "Nunca"
+        },
+        {
+          "value": "home",
+          "label": "Solo en la página de inicio"
+        },
+        {
+          "value": "all",
+          "label": "En todas las páginas"
+        }
+      ],
+      "default": "none",
+      "info": "Se vuelve sólido al hacer scroll o al abrir un menú."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Mostrar búsqueda",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Mostrar cuenta",
+      "default": true,
+      "info": "Requiere cuentas de cliente activas."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Mostrar carrito",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color (búsqueda y notificación)",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Texto e iconos",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Texto e iconos (modo transparente)",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Acento (línea del menú, contador del carrito, foco)",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "accent_text_color",
+      "label": "Texto sobre acento",
+      "default": "#075007"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shadow",
+      "label": "Mostrar sombra",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Fondo del mega menú",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "panel_text_color",
+      "label": "Texto del mega menú",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía del menú"
+    },
+    {
+      "type": "select",
+      "id": "item_font_source",
+      "label": "Fuente de los enlaces",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "item_font",
+      "label": "Fuente personalizada de los enlaces",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "item_font_weight",
+      "label": "Peso de los enlaces",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "500",
+          "label": "500"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "item_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de los enlaces",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_letter_spacing",
+      "min": -10,
+      "max": 20,
+      "step": 1,
+      "label": "Espaciado entre letras (centésimas de em)",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "item_text_transform",
+      "label": "Mayúsculas",
+      "options": [
+        {
+          "value": "none",
+          "label": "Normal"
+        },
+        {
+          "value": "uppercase",
+          "label": "MAYÚSCULAS"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Mega menú"
+    },
+    {
+      "type": "select",
+      "id": "panel_font_source",
+      "label": "Fuente del mega menú",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "panel_font",
+      "label": "Fuente personalizada del mega menú",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "panel_heading_weight",
+      "label": "Peso de los títulos de columna",
+      "options": [
+        {
+          "value": "500",
+          "label": "500"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        }
+      ],
+      "default": "800"
+    },
+    {
+      "type": "range",
+      "id": "panel_heading_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de los títulos de columna",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "panel_item_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de los enlaces",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "panel_item_gap",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre enlaces",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "panel_column_gap",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre columnas e imagen",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "promo_width",
+      "min": 179,
+      "max": 679,
+      "step": 5,
+      "unit": "px",
+      "label": "Ancho de la imagen promocional",
+      "default": 379,
+      "info": "La imagen se oculta en pantallas menores a 1180px."
+    },
+    {
+      "type": "range",
+      "id": "promo_height",
+      "min": 147,
+      "max": 497,
+      "step": 5,
+      "unit": "px",
+      "label": "Alto de la imagen promocional",
+      "default": 297
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de bordes",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Iconos"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de iconos",
+      "default": 21
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "group_gap",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre enlaces (≥1280px)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "group_gap_laptop",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre enlaces (hasta 1279px)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "min": 32,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Alto de la barra (desktop)",
+      "default": 53
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "bar_height_mobile",
+      "min": 32,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Alto de la barra (mobile y tablet)",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado superior (mobile y tablet)",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile y tablet)",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Menú mobile"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú del drawer (mobile y tablet)",
+      "default": "main-menu"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "Esquema de color del drawer",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Selector de país en el drawer",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Selector de idioma en el drawer",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Enlace",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Enlace"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Posición",
+          "options": [
+            {
+              "value": "left",
+              "label": "Izquierda del logo"
+            },
+            {
+              "value": "right",
+              "label": "Derecha del logo"
+            }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "mega_menu",
+      "name": "Mega menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Tienda"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Posición",
+          "options": [
+            {
+              "value": "left",
+              "label": "Izquierda del logo"
+            },
+            {
+              "value": "right",
+              "label": "Derecha del logo"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú",
+          "info": "Cada enlace principal es una columna y sus sub-enlaces, los ítems."
+        },
+        {
+          "type": "range",
+          "id": "columns",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "label": "Columnas",
+          "default": 2
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image",
+          "label": "Imagen promocional"
+        },
+        {
+          "type": "url",
+          "id": "promo_link",
+          "label": "Enlace de la imagen"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header navbar",
+      "blocks": [
+        {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Tienda",
+            "position": "left"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "Nuestro estándar",
+            "position": "left"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "Ingredientes",
+            "position": "right"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "Nosotros",
+            "position": "right"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

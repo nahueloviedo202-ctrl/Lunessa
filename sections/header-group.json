@@ -90,11 +90,63 @@
         "margin_bottom": 0,
         "padding_top": 20,
         "padding_bottom": 20
+      },
+      "disabled": true
+    },
+    "header_navbar": {
+      "type": "header-navbar",
+      "blocks": {
+        "mega_tienda": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Tienda",
+            "position": "left",
+            "columns": 2
+          }
+        },
+        "link_ciencia": {
+          "type": "link",
+          "settings": {
+            "label": "Ciencia",
+            "link": "/pages/ciencia-por-detras",
+            "position": "left"
+          }
+        },
+        "link_ingredientes": {
+          "type": "link",
+          "settings": {
+            "label": "Ingredientes",
+            "link": "/pages/ingredientes",
+            "position": "right"
+          }
+        },
+        "link_faqs": {
+          "type": "link",
+          "settings": {
+            "label": "Preguntas frecuentes",
+            "link": "/pages/faqs",
+            "position": "right"
+          }
+        }
+      },
+      "block_order": [
+        "mega_tienda",
+        "link_ciencia",
+        "link_ingredientes",
+        "link_faqs"
+      ],
+      "settings": {
+        "color_scheme": "scheme-6",
+        "menu": "main-menu",
+        "menu_color_scheme": "scheme-6",
+        "sticky": true,
+        "overlay_mode": "none"
       }
     }
   },
   "order": [
     "offer_bar_AgXdNM",
+    "header_navbar",
     "header"
   ]
 }

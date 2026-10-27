@@ -1,0 +1,136 @@
+{% doc %}
+  Renders a single navigation item of the header navbar section: a plain link
+  or a mega menu trigger with its panel (columns from a menu + promo image).
+
+  @param {object} block - A `link` or `mega_menu` block of the header-navbar section.
+  @param {object} [section] - The header-navbar section, supplied implicitly; used for the promo image width.
+
+  @example
+  {% render 'header-navbar-item', block: block %}
+{% enddoc %}
+
+{%- case block.type -%}
+  {%- when 'link' -%}
+    {%- liquid
+      assign is_current = false
+      if block.settings.link != blank and block.settings.link == request.path
+        assign is_current = true
+      endif
+    -%}
+    <a
+      href="{{ block.settings.link | default: '#' }}"
+      class="header-navbar__item"
+      {% if is_current %}
+        aria-current="page"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {{- block.settings.label | escape -}}
+    </a>
+
+  {%- when 'mega_menu' -%}
+    {%- assign menu = block.settings.menu -%}
+    <header-menu class="header-navbar__menu" {{ block.shopify_attributes }}>
+      <details id="Details-HeaderNavbar-{{ block.id }}">
+        <summary class="header-navbar__item header-navbar__item--trigger">
+          {{- block.settings.label | escape -}}
+          <svg
+            class="header-navbar__chevron"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div
+          id="HeaderNavbar-Panel-{{ block.id }}"
+          class="header-navbar__panel"
+          role="region"
+          aria-label="{{ block.settings.label | escape }}"
+          tabindex="-1"
+          style="--hn-columns: {{ block.settings.columns }};"
+        >
+          <div class="header-navbar__panel-line" aria-hidden="true"></div>
+          <div class="header-navbar__container header-navbar__panel-inner">
+            <div class="header-navbar__columns">
+              {%- for link in menu.links -%}
+                <div class="header-navbar__column">
+                  {%- if link.url != blank and link.url != '#' -%}
+                    <a
+                      id="HeaderNavbar-{{ block.id }}-{{ link.handle }}"
+                      href="{{ link.url }}"
+                      class="header-navbar__column-heading header-navbar__column-link"
+                    >
+                      <span class="header-navbar__column-label">{{ link.title | escape }}</span>
+                    </a>
+                  {%- else -%}
+                    <p id="HeaderNavbar-{{ block.id }}-{{ link.handle }}" class="header-navbar__column-heading">
+                      {{- link.title | escape -}}
+                    </p>
+                  {%- endif -%}
+                  {%- if link.links != blank -%}
+                    <ul
+                      class="header-navbar__column-list list-unstyled"
+                      role="list"
+                      aria-labelledby="HeaderNavbar-{{ block.id }}-{{ link.handle }}"
+                    >
+                      {%- for childlink in link.links -%}
+                        <li>
+                          <a
+                            href="{{ childlink.url }}"
+                            class="header-navbar__column-link"
+                            {% if childlink.current %}
+                              aria-current="page"
+                            {% endif %}
+                          >
+                            <span class="header-navbar__column-label">{{ childlink.title | escape }}</span>
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+              {%- else -%}
+                {%- if request.design_mode -%}
+                  <p class="header-navbar__column-heading">Seleccioná un menú en este bloque.</p>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+
+            {%- if block.settings.promo_image != blank -%}
+              {%- liquid
+                assign promo_alt = block.settings.promo_image.alt | default: block.settings.label | escape
+                if block.settings.promo_link != blank
+                  assign promo_tag = 'a'
+                else
+                  assign promo_tag = 'div'
+                endif
+                assign promo_sizes = '(min-width: 1180px) ' | append: section.settings.promo_width | append: 'px, 0px'
+              -%}
+              <{{ promo_tag }}
+                class="header-navbar__promo"
+                {% if promo_tag == 'a' %}
+                  href="{{ block.settings.promo_link }}" aria-label="{{ promo_alt }}"
+                {% endif %}
+              >
+                {{
+                  block.settings.promo_image
+                  | image_url: width: 1140
+                  | image_tag:
+                    class: 'header-navbar__promo-image',
+                    widths: '380, 570, 760, 1140',
+                    sizes: promo_sizes,
+                    loading: 'lazy',
+                    alt: promo_alt
+                }}
+              </{{ promo_tag }}>
+            {%- endif -%}
+          </div>
+        </div>
+      </details>
+    </header-menu>
+{%- endcase -%}
