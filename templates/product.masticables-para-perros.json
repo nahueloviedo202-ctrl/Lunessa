@@ -1270,7 +1270,7 @@
       ],
       "name": "Estándares de calidad",
       "settings": {
-        "background_color": "#17443D",
+        "background_color": "#17443d",
         "max_width": 1016,
         "stack_gap": 40,
         "stack_gap_mobile": 24,
@@ -1290,14 +1290,14 @@
         "image_ratio_mobile": "359 / 314",
         "image_radius": 8,
         "heading": "Nuestros estándares van más allá de lo que exige la industria",
-        "heading_color": "#FFFFFF",
+        "heading_color": "#ffffff",
         "heading_size": 30,
         "heading_line_height": 38,
         "heading_size_mobile": 24,
         "heading_line_height_mobile": 32,
         "header_gap": 12,
         "subheading": "La salud de tu perro es demasiado importante para tomar atajos. Por eso cada lote se elabora con los controles de calidad más exigentes.",
-        "subheading_color": "#FFFFFF",
+        "subheading_color": "#ffffff",
         "subheading_size": 16,
         "subheading_line_height": 24,
         "subheading_max_width": 464,
@@ -1315,10 +1315,133 @@
         "badge_size_mobile": 80,
         "badge_inner_gap": 12,
         "badge_inner_gap_mobile": 6,
-        "badge_icon_color": "#C5FA56",
-        "badge_label_color": "#FFFFFF",
+        "badge_icon_color": "#c5fa56",
+        "badge_label_color": "#ffffff",
         "badge_label_size": 12,
         "button_label": "PRUÉBALO CON 65% DE DESCUENTO",
+        "button_link": "",
+        "button_background": "#c5fa56",
+        "button_color": "#212427",
+        "button_border": "#212427",
+        "button_background_hover": "#17443d",
+        "button_color_hover": "#ffffff",
+        "button_border_hover": "#123530",
+        "button_size": 16,
+        "button_height": 48,
+        "button_max_width": 343,
+        "button_radius": 50
+      }
+    },
+    "image_accordion_bgTB63": {
+      "type": "image-accordion",
+      "blocks": {
+        "item_y7Emaw": {
+          "type": "item",
+          "settings": {
+            "title": "Ingredientes estudiados",
+            "content": "<p>Indica aquí los ingredientes principales de tu fórmula y qué aporta cada uno.</p>",
+            "open": true
+          }
+        },
+        "item_zcEqPF": {
+          "type": "item",
+          "settings": {
+            "title": "Fórmula recomendada por veterinarios",
+            "content": "<p>Explica aquí quién avala la fórmula y en qué se basa.</p>",
+            "open": false
+          }
+        },
+        "item_YGmmPi": {
+          "type": "item",
+          "settings": {
+            "title": "Resultados visibles",
+            "content": "<p>Cuenta aquí cuándo suelen notarse los cambios, según datos reales de tus clientes.</p>",
+            "open": false
+          }
+        },
+        "item_dGaeTx": {
+          "type": "item",
+          "settings": {
+            "title": "Fabricación",
+            "content": "<p>Indica dónde y bajo qué certificaciones se fabrica el producto.</p>",
+            "open": false
+          }
+        },
+        "item_6ixype": {
+          "type": "item",
+          "settings": {
+            "title": "Planes personalizados",
+            "content": "<p>La cantidad diaria se adapta al tamaño y las necesidades de cada perro.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "item_y7Emaw",
+        "item_zcEqPF",
+        "item_YGmmPi",
+        "item_dGaeTx",
+        "item_6ixype"
+      ],
+      "name": "Imagen con acordeón",
+      "settings": {
+        "background_color": "#F7ECE1",
+        "max_width": 1064,
+        "stack_gap": 40,
+        "stack_gap_mobile": 24,
+        "column_gap": 40,
+        "column_gap_mobile": 24,
+        "vertical_alignment": "start",
+        "content_gap": 24,
+        "padding_top": 86,
+        "padding_bottom": 86,
+        "padding_x": 24,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 16,
+        "image_position": "left",
+        "image_first_mobile": true,
+        "image_max_width": 488,
+        "image_ratio": "488 / 448",
+        "image_ratio_mobile": "343 / 300",
+        "image_radius": 8,
+        "heading": "Expertos en articulaciones",
+        "heading_color": "#212427",
+        "heading_size": 30,
+        "heading_line_height": 38,
+        "heading_size_mobile": 24,
+        "heading_line_height_mobile": 32,
+        "header_gap": 12,
+        "subheading": "Cuidado avanzado de cadera y articulaciones para perros. <strong>El suplemento articular que recomiendan los veterinarios</strong>",
+        "subheading_color": "#212427",
+        "subheading_max_width": 1016,
+        "text": "<p>No es solo un suplemento. Es un <strong>masticable potente</strong> que ayuda a cuidar la <strong>movilidad, la flexibilidad y el bienestar.</strong> Respaldado por ciencia <em>real</em> y opiniones <em>reales</em>.</p>",
+        "text_color": "#212427",
+        "text_size": 16,
+        "text_line_height": 24,
+        "text_max_width": 488,
+        "text_alignment": "left",
+        "heading_font_source": "custom",
+        "heading_font": "inter_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "exclusive": false,
+        "row_gap": 12,
+        "row_padding": 12,
+        "list_padding": 10,
+        "divider_color": "#D7D3D0",
+        "title_color": "#212427",
+        "title_font_weight": "700",
+        "title_size": 16,
+        "title_line_height": 24,
+        "icon_color": "#212427",
+        "icon_size": 20,
+        "body_color": "#212427",
+        "body_size": 16,
+        "body_line_height": 24,
+        "link_color": "#17443D",
+        "button_label": "EMPIEZA CON 65% DE DESCUENTO",
         "button_link": "",
         "button_background": "#C5FA56",
         "button_color": "#212427",
@@ -1343,6 +1466,7 @@
     "stats_data_UhwfxB",
     "video_reels_bVU4VK",
     "ingredient_tiles_HM663M",
-    "quality_standards_H7kzXP"
+    "quality_standards_H7kzXP",
+    "image_accordion_bgTB63"
   ]
 }
