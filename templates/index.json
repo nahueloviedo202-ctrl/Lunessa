@@ -945,13 +945,13 @@
         "media_height_active": 482,
         "radius": 5,
         "background": "#075007",
-        "heading_color": "#FFFFFF",
-        "highlight_color": "#CDFC4B",
-        "panel_background": "#F4F4F4",
+        "heading_color": "#ffffff",
+        "highlight_color": "#cdfc4b",
+        "panel_background": "#f4f4f4",
         "panel_text_color": "#075007",
         "button_background": "#075007",
-        "button_text": "#FFFFFF",
-        "button_background_hover": "#C6FA41",
+        "button_text": "#ffffff",
+        "button_background_hover": "#c6fa41",
         "button_text_hover": "#075007",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
@@ -1055,6 +1055,209 @@
         "heading_color": "#075007",
         "text_color": "#075007",
         "button_color": "#075007",
+        "button_background_hover": "#c6fa41",
+        "button_color_hover": "#075007",
+        "accordion_background": "#ffffff",
+        "accordion_border": "#e3e3e3",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "feature_heading_size": 20,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "mark_strip_pDVdrY": {
+      "type": "mark-strip",
+      "blocks": {
+        "item_Up3rbc": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_E3fiDL": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_zMq8Gm": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_PWBXPc": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_zqKjX3": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_e4yxhz": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_Up3rbc",
+        "item_E3fiDL",
+        "item_zMq8Gm",
+        "item_PWBXPc",
+        "item_zqKjX3",
+        "item_e4yxhz"
+      ],
+      "name": "Sellos de calidad",
+      "settings": {
+        "heading": "Los estándares detrás de cada suplemento",
+        "aria_label": "",
+        "layout": "wrap",
+        "direction": "left",
+        "duration": 32,
+        "duration_mobile": 32,
+        "repeat_count": 1,
+        "item_alignment": "between",
+        "pause_on_hover": true,
+        "background": "#075007",
+        "text_color": "#ffffff",
+        "focus_color": "#CDFC4B",
+        "tint_icons": false,
+        "font_source": "theme_body",
+        "font": "assistant_n4",
+        "title_size": 18,
+        "title_size_mobile": 16,
+        "title_weight": "500",
+        "caption_size": 12,
+        "letter_spacing": -22,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "heading_gap": 32,
+        "min_height": 0,
+        "icon_size": 38,
+        "icon_size_mobile": 38,
+        "icon_gap": 8,
+        "item_gap": 64,
+        "item_gap_mobile": 64,
+        "padding_vertical": 64,
+        "padding_vertical_mobile": 64,
+        "padding_x": 16
+      }
+    },
+    "media_text_split_dzRn6t": {
+      "type": "media-text-split",
+      "blocks": {
+        "text_eNftag": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Tu perro no es el problema. Ya es perfecto.</p>"
+          }
+        },
+        "text_8nmMrE": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hacemos suplementos para devolverle sus días más salvajes, ruidosos y felices.</p>"
+          }
+        },
+        "text_rfhH47": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Travieso, inquieto o mimoso: cada versión de él es tu perro, al máximo.</p>"
+          }
+        },
+        "text_miJAmY": {
+          "type": "text",
+          "settings": {
+            "text": "<p>¿Te sumás?</p>"
+          }
+        },
+        "button_QpXaRK": {
+          "type": "button",
+          "settings": {
+            "label": "Leer nuestro manifiesto",
+            "link": "",
+            "style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "text_eNftag",
+        "text_8nmMrE",
+        "text_rfhH47",
+        "text_miJAmY",
+        "button_QpXaRK"
+      ],
+      "name": "Nuestra filosofía",
+      "settings": {
+        "heading": "Lo que creemos",
+        "heading_position": "copy",
+        "footer_button_label": "",
+        "footer_button_link": "",
+        "media_position": "start",
+        "media_position_mobile": "start",
+        "media_ratio": 84,
+        "media_ratio_mobile": 84,
+        "media_radius": 0,
+        "sticky_media": false,
+        "media_width": 512,
+        "copy_width": 492,
+        "vertical_alignment": "center",
+        "column_gap": 64,
+        "column_gap_mobile": 32,
+        "copy_gap": 24,
+        "copy_gap_mobile": 24,
+        "background": "#ffffff",
+        "heading_color": "#075007",
+        "text_color": "#2e2e2e",
+        "button_color": "#075007",
         "button_background_hover": "#C6FA41",
         "button_color_hover": "#075007",
         "accordion_background": "#FFFFFF",
@@ -1062,8 +1265,8 @@
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
         "heading_font_weight": "900",
-        "heading_size": 40,
-        "heading_size_mobile": 28,
+        "heading_size": 32,
+        "heading_size_mobile": 24,
         "heading_uppercase": true,
         "feature_heading_size": 20,
         "body_font_source": "theme_body",
@@ -1092,6 +1295,8 @@
     "vet_board_iCcBDW",
     "review_photos_JHJCq6",
     "video_stories_UFFAMn",
-    "media_text_split_MHTgtx"
+    "media_text_split_MHTgtx",
+    "mark_strip_pDVdrY",
+    "media_text_split_dzRn6t"
   ]
 }
