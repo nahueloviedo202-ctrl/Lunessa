@@ -706,7 +706,7 @@
       ],
       "name": "Resultados con lista",
       "settings": {
-        "background_color": "#F7ECE1",
+        "background_color": "#f7ece1",
         "max_width": 1064,
         "column_gap": 32,
         "column_gap_mobile": 32,
@@ -724,15 +724,15 @@
         "image_ratio_mobile": "359 / 239",
         "image_radius": 8,
         "heading": "¡Resultados en solo <em>3 semanas!</em>",
-        "heading_color": "#17443D",
-        "highlight_color": "#006C5B",
+        "heading_color": "#17443d",
+        "highlight_color": "#006c5b",
         "heading_size": 30,
         "heading_line_height": 38,
         "heading_size_mobile": 24,
         "heading_line_height_mobile": 32,
         "header_gap": 12,
         "subheading": "Si no estás conforme tras 3 meses de uso constante, te devolvemos el dinero.",
-        "subheading_color": "#17443D",
+        "subheading_color": "#17443d",
         "subheading_size": 16,
         "subheading_line_height": 24,
         "heading_font_source": "custom",
@@ -743,7 +743,7 @@
         "list_max_width": 492,
         "list_columns": "1",
         "item_gap": 8,
-        "item_background": "#FFFFFF",
+        "item_background": "#ffffff",
         "item_border_color": "#212427",
         "item_border_width": 1,
         "item_radius": 8,
@@ -758,10 +758,196 @@
         "item_line_height": 20,
         "item_size_mobile": 16,
         "item_line_height_mobile": 24,
-        "icon_fill": "#17443D",
-        "icon_color": "#FFFFFF",
+        "icon_fill": "#17443d",
+        "icon_color": "#ffffff",
         "icon_size": 22,
         "button_label": "OBTÉN 65% DE DESCUENTO -->",
+        "button_link": "",
+        "button_background": "#c5fa56",
+        "button_color": "#212427",
+        "button_border": "#212427",
+        "button_background_hover": "#17443d",
+        "button_color_hover": "#ffffff",
+        "button_border_hover": "#123530",
+        "button_size": 16,
+        "button_height": 48,
+        "button_max_width": 343,
+        "button_radius": 50,
+        "disclaimer": "Llega en 3-5 días | Garantía de devolución de 90 días",
+        "disclaimer_color": "#57534e",
+        "disclaimer_size": 12,
+        "disclaimer_italic": false,
+        "footer_gap": 12
+      }
+    },
+    "how_it_works_mpe3mG": {
+      "type": "how-it-works",
+      "blocks": {
+        "stage_7kBLy6": {
+          "type": "stage",
+          "settings": {
+            "icon": "bolt",
+            "label": "DÍA 7",
+            "title": "Primeras señales"
+          }
+        },
+        "point_E467j6": {
+          "type": "point",
+          "settings": {
+            "text": "El MSM favorece el flujo sanguíneo hacia las articulaciones rígidas"
+          }
+        },
+        "point_ktx7yy": {
+          "type": "point",
+          "settings": {
+            "text": "El ácido hialurónico empieza a lubricar para dar pasos más suaves"
+          }
+        },
+        "point_qzxY4J": {
+          "type": "point",
+          "settings": {
+            "text": "La yuca empieza a aliviar la rigidez ocasional"
+          }
+        },
+        "point_dQYe9a": {
+          "type": "point",
+          "settings": {
+            "text": "Primeras señales de más energía y ganas de moverse"
+          }
+        },
+        "stage_Mdx89V": {
+          "type": "stage",
+          "settings": {
+            "icon": "trend_up",
+            "label": "DÍA 30",
+            "title": "Cambios visibles"
+          }
+        },
+        "point_YPhxyM": {
+          "type": "point",
+          "settings": {
+            "text": "La glucosamina y la condroitina refuerzan el cartílago y los tejidos conectivos"
+          }
+        },
+        "point_MLqKpL": {
+          "type": "point",
+          "settings": {
+            "text": "El mejillón de labio verde aporta omega-3 para la flexibilidad"
+          }
+        },
+        "point_bFbzPa": {
+          "type": "point",
+          "settings": {
+            "text": "La vitamina C ayuda a la absorción para que los resultados se noten más"
+          }
+        },
+        "point_yB3t6r": {
+          "type": "point",
+          "settings": {
+            "text": "Describe aquí un resultado real de tus clientes"
+          }
+        },
+        "stage_bFEf4R": {
+          "type": "stage",
+          "settings": {
+            "icon": "paw",
+            "label": "DÍA 90",
+            "title": "Impacto completo"
+          }
+        },
+        "point_TtwtNJ": {
+          "type": "point",
+          "settings": {
+            "text": "Todos los ingredientes trabajando juntos"
+          }
+        },
+        "point_tfhete": {
+          "type": "point",
+          "settings": {
+            "text": "Articulaciones protegidas, flexibilidad mantenida y menos rigidez"
+          }
+        },
+        "point_yhWUx7": {
+          "type": "point",
+          "settings": {
+            "text": "Recuperan la confianza para correr, saltar y jugar"
+          }
+        },
+        "point_fYVpkJ": {
+          "type": "point",
+          "settings": {
+            "text": "Describe aquí un resultado real de tus clientes"
+          }
+        }
+      },
+      "block_order": [
+        "stage_7kBLy6",
+        "point_E467j6",
+        "point_ktx7yy",
+        "point_qzxY4J",
+        "point_dQYe9a",
+        "stage_Mdx89V",
+        "point_YPhxyM",
+        "point_MLqKpL",
+        "point_bFbzPa",
+        "point_yB3t6r",
+        "stage_bFEf4R",
+        "point_TtwtNJ",
+        "point_tfhete",
+        "point_yhWUx7",
+        "point_fYVpkJ"
+      ],
+      "name": "Cómo funciona",
+      "settings": {
+        "background_color": "#FFFAF7",
+        "max_width": 1064,
+        "stack_gap": 40,
+        "stack_gap_mobile": 40,
+        "text_max_width": 1016,
+        "padding_top": 86,
+        "padding_bottom": 86,
+        "padding_x": 24,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 16,
+        "heading": "¿Cómo funciona?",
+        "heading_color": "#212427",
+        "heading_size": 30,
+        "heading_line_height": 38,
+        "heading_size_mobile": 24,
+        "heading_line_height_mobile": 32,
+        "header_gap": 12,
+        "subheading": "Día a día, ayudamos a que tu perro se mantenga móvil, activo y con ganas de jugar.",
+        "subheading_color": "#212427",
+        "subheading_size": 16,
+        "subheading_line_height": 24,
+        "heading_font_source": "custom",
+        "heading_font": "inter_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "columns_desktop": "3",
+        "columns_tablet": "1",
+        "stage_gap": 20,
+        "stage_gap_mobile": 20,
+        "stage_inner_gap": 16,
+        "head_gap": 12,
+        "icon_size": 36,
+        "icon_color": "#000000",
+        "label_color": "#212427",
+        "title_color": "#212427",
+        "title_gap": 12,
+        "title_size": 24,
+        "title_line_height": 32,
+        "title_size_mobile": 24,
+        "title_line_height_mobile": 32,
+        "bullet": "•",
+        "bullet_color": "#212427",
+        "point_color": "#212427",
+        "point_size": 16,
+        "point_line_height": 24,
+        "point_gap": 0,
+        "button_label": "PRUÉBALO AHORA -->",
         "button_link": "",
         "button_background": "#C5FA56",
         "button_color": "#212427",
@@ -773,10 +959,10 @@
         "button_height": 48,
         "button_max_width": 343,
         "button_radius": 50,
-        "disclaimer": "Llega en 3-5 días | Garantía de devolución de 90 días",
+        "disclaimer": "*Según una encuesta a nuestros clientes. Los resultados reflejan opiniones de clientes y pueden variar.",
         "disclaimer_color": "#57534E",
         "disclaimer_size": 12,
-        "disclaimer_italic": false,
+        "disclaimer_italic": true,
         "footer_gap": 12
       }
     }
@@ -787,6 +973,7 @@
     "disclosures",
     "related-products",
     "video_testimonials_grid_rFhUdH",
-    "results_checklist_8Xbrnx"
+    "results_checklist_8Xbrnx",
+    "how_it_works_mpe3mG"
   ]
 }
