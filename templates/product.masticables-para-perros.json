@@ -600,7 +600,7 @@
       ],
       "name": "Testimonios en video",
       "settings": {
-        "background_color": "#17443D",
+        "background_color": "#17443d",
         "max_width": 1064,
         "stack_gap": 40,
         "stack_gap_mobile": 24,
@@ -611,7 +611,7 @@
         "padding_bottom_mobile": 40,
         "padding_x_mobile": 16,
         "heading": "Únete a los miles de dueños que ayudan a sus perros a recuperar la movilidad",
-        "heading_color": "#FFFFFF",
+        "heading_color": "#ffffff",
         "heading_size": 30,
         "heading_line_height": 38,
         "heading_size_mobile": 24,
@@ -627,7 +627,7 @@
         "columns_mobile": "1",
         "grid_gap": 24,
         "grid_gap_mobile": 24,
-        "card_background": "#FFFFFF",
+        "card_background": "#ffffff",
         "card_radius": 24,
         "card_padding": 16,
         "card_gap": 16,
@@ -642,23 +642,23 @@
         "quote_size": 16,
         "quote_line_height": 24,
         "verified_label": "Compra verificada",
-        "badge_fill": "#C5FA56",
+        "badge_fill": "#c5fa56",
         "badge_stroke": "#212427",
         "badge_size": 20,
         "button_label": "DEVUÉLVELE SU ENERGÍA",
         "button_link": "",
-        "button_background": "#C5FA56",
+        "button_background": "#c5fa56",
         "button_color": "#212427",
         "button_border": "#212427",
-        "button_background_hover": "#17443D",
-        "button_color_hover": "#FFFFFF",
+        "button_background_hover": "#17443d",
+        "button_color_hover": "#ffffff",
         "button_border_hover": "#123530",
         "button_size": 16,
         "button_height": 48,
         "button_max_width": 343,
         "button_radius": 50,
         "disclaimer": "Pruébalo sin riesgo con nuestra garantía de devolución de 90 días",
-        "disclaimer_color": "#F1FDF0",
+        "disclaimer_color": "#f1fdf0",
         "disclaimer_size": 12,
         "footer_gap": 12
       }
@@ -1776,6 +1776,123 @@
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
       }
+    },
+    "results_checklist_8Xbrnx": {
+      "type": "results-checklist",
+      "blocks": {
+        "benefit_nDKEeL": {
+          "type": "benefit",
+          "settings": {
+            "text": "Mejora la <strong><em>salud de huesos y articulaciones</em></strong>"
+          }
+        },
+        "benefit_UBjEAV": {
+          "type": "benefit",
+          "settings": {
+            "text": "Aporta <strong><em>factores que refuerzan los huesos</em></strong>"
+          }
+        },
+        "benefit_pKfAPt": {
+          "type": "benefit",
+          "settings": {
+            "text": "Alivia la <strong><em>rigidez articular</em></strong> por la actividad diaria"
+          }
+        },
+        "benefit_EHTrW9": {
+          "type": "benefit",
+          "settings": {
+            "text": "Mejora la <strong><em>flexibilidad de los tejidos</em></strong>"
+          }
+        },
+        "benefit_htFwkR": {
+          "type": "benefit",
+          "settings": {
+            "text": "Aporta los componentes del <strong><em>líquido sinovial, el cartílago y los tejidos conectivos</em></strong>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_nDKEeL",
+        "benefit_UBjEAV",
+        "benefit_pKfAPt",
+        "benefit_EHTrW9",
+        "benefit_htFwkR"
+      ],
+      "name": "Resultados con lista",
+      "settings": {
+        "background_color": "#F7ECE1",
+        "max_width": 1064,
+        "column_gap": 32,
+        "column_gap_mobile": 32,
+        "content_gap": 24,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_x": 24,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 16,
+        "image_position": "left",
+        "image_first_mobile": true,
+        "image_max_width": 492,
+        "image_ratio": "492 / 445",
+        "image_ratio_mobile": "359 / 239",
+        "image_radius": 8,
+        "heading": "¡Resultados en solo <em>3 semanas!</em>",
+        "heading_color": "#17443D",
+        "highlight_color": "#006C5B",
+        "heading_size": 30,
+        "heading_line_height": 38,
+        "heading_size_mobile": 24,
+        "heading_line_height_mobile": 32,
+        "header_gap": 12,
+        "subheading": "Si no estás conforme tras 3 meses de uso constante, te devolvemos el dinero.",
+        "subheading_color": "#17443D",
+        "subheading_size": 16,
+        "subheading_line_height": 24,
+        "heading_font_source": "custom",
+        "heading_font": "inter_n4",
+        "heading_font_weight": "700",
+        "body_font_source": "custom",
+        "body_font": "inter_n4",
+        "list_max_width": 492,
+        "list_columns": "1",
+        "item_gap": 8,
+        "item_background": "#FFFFFF",
+        "item_border_color": "#212427",
+        "item_border_width": 1,
+        "item_radius": 8,
+        "item_min_height": 40,
+        "item_padding_y": 8,
+        "item_padding_x": 11,
+        "item_padding_y_mobile": 12,
+        "item_padding_x_mobile": 16,
+        "item_icon_gap": 12,
+        "item_color": "#212427",
+        "item_size": 14,
+        "item_line_height": 20,
+        "item_size_mobile": 16,
+        "item_line_height_mobile": 24,
+        "icon_fill": "#17443D",
+        "icon_color": "#FFFFFF",
+        "icon_size": 22,
+        "button_label": "OBTÉN 65% DE DESCUENTO -->",
+        "button_link": "",
+        "button_background": "#C5FA56",
+        "button_color": "#212427",
+        "button_border": "#212427",
+        "button_background_hover": "#17443D",
+        "button_color_hover": "#FFFFFF",
+        "button_border_hover": "#123530",
+        "button_size": 16,
+        "button_height": 48,
+        "button_max_width": 343,
+        "button_radius": 50,
+        "disclaimer": "Llega en 3-5 días | Garantía de devolución de 90 días",
+        "disclaimer_color": "#57534E",
+        "disclaimer_size": 12,
+        "disclaimer_italic": false,
+        "footer_gap": 12
+      }
     }
   },
   "order": [
@@ -1784,6 +1901,7 @@
     "disclosures",
     "related-products",
     "video_testimonials_grid_rFhUdH",
+    "results_checklist_8Xbrnx",
     "video_text_highlight_fGRqpD",
     "product_callouts_qmQnjw",
     "ingredients_tabs_zaWgjM",
