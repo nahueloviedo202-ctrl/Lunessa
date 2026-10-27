@@ -1,0 +1,818 @@
+{{ 'section-quality-standards.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .qst--{{ section.id }} {
+    --qst-bg: {{ section.settings.background_color }};
+    --qst-max-width: {{ section.settings.max_width }}px;
+    --qst-pt: {{ section.settings.padding_top }}px;
+    --qst-pb: {{ section.settings.padding_bottom }}px;
+    --qst-px: {{ section.settings.padding_x }}px;
+    --qst-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --qst-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --qst-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --qst-stack-gap: {{ section.settings.stack_gap }}px;
+    --qst-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+    --qst-column-gap: {{ section.settings.column_gap }}px;
+    --qst-column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+    --qst-content-gap: {{ section.settings.content_gap }}px;
+
+    --qst-image-max-width: {{ section.settings.image_max_width }}px;
+    --qst-image-ratio: {{ section.settings.image_ratio }};
+    --qst-image-ratio-mobile: {{ section.settings.image_ratio_mobile }};
+    --qst-image-radius: {{ section.settings.image_radius }}px;
+
+    --qst-heading-ff: {{ heading_ff }};
+    --qst-heading-fs: {{ heading_fs }};
+    --qst-heading-fw: {{ section.settings.heading_font_weight }};
+    --qst-heading-color: {{ section.settings.heading_color }};
+    --qst-heading-size: {{ section.settings.heading_size }}px;
+    --qst-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --qst-heading-lh: {{ section.settings.heading_line_height }}px;
+    --qst-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --qst-header-gap: {{ section.settings.header_gap }}px;
+    --qst-subheading-color: {{ section.settings.subheading_color }};
+    --qst-subheading-size: {{ section.settings.subheading_size }}px;
+    --qst-subheading-lh: {{ section.settings.subheading_line_height }}px;
+    --qst-subheading-max-width: {{ section.settings.subheading_max_width }}px;
+    --qst-body-ff: {{ body_ff }};
+    --qst-body-fs: {{ body_fs }};
+
+    --qst-badge-columns: {{ section.settings.badge_columns }};
+    --qst-badge-columns-mobile: {{ section.settings.badge_columns_mobile }};
+    --qst-badge-column-width: {{ section.settings.badge_column_width }}px;
+    --qst-badge-gap: {{ section.settings.badge_gap }}px;
+    --qst-badge-gap-mobile: {{ section.settings.badge_gap_mobile }}px;
+    --qst-badge-inner-gap: {{ section.settings.badge_inner_gap }}px;
+    --qst-badge-inner-gap-mobile: {{ section.settings.badge_inner_gap_mobile }}px;
+    --qst-badge-size: {{ section.settings.badge_size }}px;
+    --qst-badge-size-mobile: {{ section.settings.badge_size_mobile }}px;
+    --qst-badge-icon-color: {{ section.settings.badge_icon_color }};
+    --qst-badge-label-color: {{ section.settings.badge_label_color }};
+    --qst-badge-label-size: {{ section.settings.badge_label_size }}px;
+
+    --qst-button-bg: {{ section.settings.button_background }};
+    --qst-button-color: {{ section.settings.button_color }};
+    --qst-button-border: {{ section.settings.button_border }};
+    --qst-button-bg-hover: {{ section.settings.button_background_hover }};
+    --qst-button-color-hover: {{ section.settings.button_color_hover }};
+    --qst-button-border-hover: {{ section.settings.button_border_hover }};
+    --qst-button-size: {{ section.settings.button_size }}px;
+    --qst-button-height: {{ section.settings.button_height }}px;
+    --qst-button-max-width: {{ section.settings.button_max_width }}px;
+    --qst-button-radius: {{ section.settings.button_radius }}px;
+  }
+{%- endstyle -%}
+
+<section
+  class="qst qst--{{ section.id }}{% if section.settings.image_position == 'right' %} qst--media-right{% endif %}{% unless section.settings.image_first_mobile %} qst--media-last-mobile{% endunless %}"
+>
+  <div class="qst__inner">
+    <div class="qst__split">
+      <div class="qst__media{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1000
+            | image_tag:
+              loading: 'lazy',
+              widths: '320, 480, 640, 828, 1000',
+              sizes: '(min-width: 1024px) 464px, calc(100vw - 32px)',
+              class: 'qst__image'
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'qst__image placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="qst__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+          <div class="qst__header">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="qst__heading">{{ section.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if section.settings.subheading != blank -%}
+              <p class="qst__subheading">{{ section.settings.subheading }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="qst__badges" role="list">
+            {%- for block in section.blocks -%}
+              <li class="qst-badge" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 200
+                    | image_tag: loading: 'lazy', alt: '', class: 'qst-badge__mark'
+                  }}
+                {%- else -%}
+                  <span class="qst-badge__mark qst-badge__roundel" aria-hidden="true">
+                    {%- render 'stage-icon', icon: block.settings.icon, class: 'qst-badge__icon' -%}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <p class="qst-badge__label">{{ block.settings.label | escape }}</p>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        class="qst__button"
+        {% if section.settings.button_link != blank %}
+          href="{{ section.settings.button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+      >
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Estándares de calidad",
+  "tag": "div",
+  "class": "section-quality-standards",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#17443D"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1016
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre contenido y botón en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre contenido y botón en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Separación entre imagen y contenido en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Separación entre imagen y contenido en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Separación entre título y sellos",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posición en escritorio",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_first_mobile",
+      "label": "Mostrar la imagen primero en móvil y tablet",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "label": "Ancho máximo",
+      "min": 164,
+      "max": 764,
+      "step": 6,
+      "unit": "px",
+      "default": 464
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción en escritorio",
+      "options": [
+        { "value": "464 / 469", "label": "Casi cuadrada" },
+        { "value": "1 / 1", "label": "Cuadrada" },
+        { "value": "4 / 5", "label": "Vertical 4:5" },
+        { "value": "4 / 3", "label": "Horizontal 4:3" },
+        { "value": "3 / 2", "label": "Horizontal 3:2" },
+        { "value": "auto", "label": "Adaptar a la imagen" }
+      ],
+      "default": "464 / 469"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "Proporción en móvil y tablet",
+      "options": [
+        { "value": "359 / 314", "label": "Horizontal 8:7" },
+        { "value": "1 / 1", "label": "Cuadrada" },
+        { "value": "4 / 5", "label": "Vertical 4:5" },
+        { "value": "4 / 3", "label": "Horizontal 4:3" },
+        { "value": "3 / 2", "label": "Horizontal 3:2" },
+        { "value": "auto", "label": "Adaptar a la imagen" }
+      ],
+      "default": "359 / 314"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Nuestros estándares van más allá de lo que exige la industria"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Separación entre título y subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Subtítulo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "La salud de tu perro es demasiado importante para tomar atajos. Por eso cada lote se elabora con los controles de calidad más exigentes."
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "label": "Ancho máximo",
+      "min": 164,
+      "max": 764,
+      "step": 6,
+      "unit": "px",
+      "default": 464
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Sellos"
+    },
+    {
+      "type": "select",
+      "id": "badge_columns",
+      "label": "Columnas en escritorio",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "badge_columns_mobile",
+      "label": "Columnas en móvil y tablet",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "badge_column_width",
+      "label": "Ancho de cada sello en escritorio",
+      "min": 72,
+      "max": 272,
+      "step": 2,
+      "unit": "px",
+      "default": 122
+    },
+    {
+      "type": "range",
+      "id": "badge_gap",
+      "label": "Separación entre sellos en escritorio",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "badge_gap_mobile",
+      "label": "Separación entre sellos en móvil y tablet",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Tamaño del icono en escritorio",
+      "min": 24,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "label": "Tamaño del icono en móvil y tablet",
+      "min": 24,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "badge_inner_gap",
+      "label": "Separación entre icono y texto en escritorio",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "badge_inner_gap_mobile",
+      "label": "Separación entre icono y texto en móvil y tablet",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Color de los iconos incluidos",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "badge_label_color",
+      "label": "Color del texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "badge_label_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "PRUÉBALO CON 65% DE DESCUENTO"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Sello",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del sello",
+          "info": "Opcional. Si está vacía se usa el icono elegido."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "check_circle", "label": "Check" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "paw", "label": "Huella" },
+            { "value": "bolt", "label": "Rayo" },
+            { "value": "trend_up", "label": "Tendencia" }
+          ],
+          "default": "check_circle"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Analizado por lote"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Estándares de calidad",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "star", "label": "Ingredientes seleccionados" } },
+        { "type": "badge", "settings": { "icon": "check_circle", "label": "Analizado por lote" } },
+        { "type": "badge", "settings": { "icon": "heart", "label": "Sin colorantes ni saborizantes artificiales" } },
+        { "type": "badge", "settings": { "icon": "shield", "label": "Sin OGM, hormonas ni antibióticos" } },
+        { "type": "badge", "settings": { "icon": "check_circle", "label": "Certificación de calidad" } },
+        { "type": "badge", "settings": { "icon": "paw", "label": "Cumple la normativa veterinaria" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
