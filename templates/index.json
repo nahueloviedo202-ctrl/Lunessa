@@ -653,6 +653,9 @@
       "name": "Imagen y texto dividido",
       "settings": {
         "heading": "Nuestro estándar",
+        "heading_position": "above",
+        "footer_button_label": "",
+        "footer_button_link": "",
         "media_position": "start",
         "media_position_mobile": "start",
         "media_ratio": 84,
@@ -665,12 +668,15 @@
         "column_gap": 64,
         "column_gap_mobile": 32,
         "copy_gap": 24,
+        "copy_gap_mobile": 24,
         "background": "#f4f4f4",
         "heading_color": "#075007",
         "text_color": "#075007",
         "button_color": "#075007",
         "button_background_hover": "#c6fa41",
         "button_color_hover": "#075007",
+        "accordion_background": "#ffffff",
+        "accordion_border": "#e3e3e3",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
         "heading_font_weight": "900",
@@ -685,95 +691,6 @@
         "max_width": 1200,
         "padding_x": 64,
         "padding_x_mobile": 16,
-        "stack_gap": 32,
-        "padding_top": 64,
-        "padding_bottom": 64,
-        "padding_top_mobile": 64,
-        "padding_bottom_mobile": 64
-      }
-    },
-    "review_photos_JHJCq6": {
-      "type": "review-photos",
-      "blocks": {
-        "review_tUMxf8": {
-          "type": "review",
-          "settings": {
-            "badge": "Masticables para articulaciones",
-            "pet_name": "Nombre",
-            "pet_age": "7 años",
-            "quote": "<p>Pegá acá la reseña real del cliente.</p>",
-            "rating": 5,
-            "author": "Nombre A."
-          }
-        },
-        "review_kT7rWP": {
-          "type": "review",
-          "settings": {
-            "badge": "Masticables para articulaciones",
-            "pet_name": "Nombre",
-            "pet_age": "7 años",
-            "quote": "<p>Pegá acá la reseña real del cliente.</p>",
-            "rating": 5,
-            "author": "Nombre A."
-          }
-        },
-        "review_AMwgzA": {
-          "type": "review",
-          "settings": {
-            "badge": "Masticables para articulaciones",
-            "pet_name": "Nombre",
-            "pet_age": "7 años",
-            "quote": "<p>Pegá acá la reseña real del cliente.</p>",
-            "rating": 5,
-            "author": "Nombre A."
-          }
-        }
-      },
-      "block_order": [
-        "review_tUMxf8",
-        "review_kT7rWP",
-        "review_AMwgzA"
-      ],
-      "name": "Reseñas con foto",
-      "settings": {
-        "heading": "Perros reales. Resultados reales.",
-        "subheading": "Ese momento en que notás que tu perro volvió a ser el de siempre: nunca nos cansamos de escucharlo.",
-        "button_label": "Ver todos",
-        "button_link": "",
-        "columns_desktop": "3",
-        "card_min_height": 400,
-        "overlay_opacity": 35,
-        "radius": 5,
-        "background": "#FFFFFF",
-        "heading_color": "#075007",
-        "card_frame": "#CDFC4B",
-        "card_text_color": "#CDFC4B",
-        "overlay_color": "#000000",
-        "badge_background": "#CDFC4B",
-        "badge_text_color": "#075007",
-        "button_background": "#075007",
-        "button_text": "#FFFFFF",
-        "button_background_hover": "#C6FA41",
-        "button_text_hover": "#075007",
-        "heading_font_source": "theme_heading",
-        "heading_font": "assistant_n4",
-        "heading_font_weight": "900",
-        "heading_size": 40,
-        "heading_size_mobile": 28,
-        "heading_uppercase": true,
-        "body_font_source": "theme_body",
-        "body_font": "assistant_n4",
-        "subheading_size": 18,
-        "subheading_size_mobile": 16,
-        "script_font": "assistant_n4",
-        "script_size": 40,
-        "quote_size": 16,
-        "max_width": 1200,
-        "cards_max_width": 1032,
-        "padding_x": 64,
-        "padding_x_mobile": 16,
-        "card_gap": 24,
-        "card_gap_mobile": 12,
         "stack_gap": 32,
         "padding_top": 64,
         "padding_bottom": 64,
@@ -844,14 +761,14 @@
         "card_radius": 10,
         "card_shadow": true,
         "background": "#075007",
-        "heading_color": "#CDFC4B",
-        "highlight_color": "#FFFFFF",
-        "subheading_color": "#CDFC4B",
-        "card_background": "#FFFFFF",
-        "card_text_color": "#2E2E2E",
-        "arrow_background": "#CDFC4B",
+        "heading_color": "#cdfc4b",
+        "highlight_color": "#ffffff",
+        "subheading_color": "#cdfc4b",
+        "card_background": "#ffffff",
+        "card_text_color": "#2e2e2e",
+        "arrow_background": "#cdfc4b",
         "arrow_color": "#075007",
-        "arrow_background_hover": "#FFFFFF",
+        "arrow_background_hover": "#ffffff",
         "arrow_color_hover": "#075007",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
@@ -876,6 +793,292 @@
         "padding_top_mobile": 64,
         "padding_bottom_mobile": 64
       }
+    },
+    "review_photos_JHJCq6": {
+      "type": "review-photos",
+      "blocks": {
+        "review_tUMxf8": {
+          "type": "review",
+          "settings": {
+            "badge": "Masticables para articulaciones",
+            "pet_name": "Nombre",
+            "pet_age": "7 años",
+            "quote": "<p>Pegá acá la reseña real del cliente.</p>",
+            "rating": 5,
+            "author": "Nombre A."
+          }
+        },
+        "review_kT7rWP": {
+          "type": "review",
+          "settings": {
+            "badge": "Masticables para articulaciones",
+            "pet_name": "Nombre",
+            "pet_age": "7 años",
+            "quote": "<p>Pegá acá la reseña real del cliente.</p>",
+            "rating": 5,
+            "author": "Nombre A."
+          }
+        },
+        "review_AMwgzA": {
+          "type": "review",
+          "settings": {
+            "badge": "Masticables para articulaciones",
+            "pet_name": "Nombre",
+            "pet_age": "7 años",
+            "quote": "<p>Pegá acá la reseña real del cliente.</p>",
+            "rating": 5,
+            "author": "Nombre A."
+          }
+        }
+      },
+      "block_order": [
+        "review_tUMxf8",
+        "review_kT7rWP",
+        "review_AMwgzA"
+      ],
+      "name": "Reseñas con foto",
+      "settings": {
+        "heading": "Perros reales. Resultados reales.",
+        "subheading": "Ese momento en que notás que tu perro volvió a ser el de siempre: nunca nos cansamos de escucharlo.",
+        "button_label": "Ver todos",
+        "button_link": "",
+        "columns_desktop": "3",
+        "card_min_height": 400,
+        "overlay_opacity": 35,
+        "radius": 5,
+        "background": "#ffffff",
+        "heading_color": "#075007",
+        "card_frame": "#cdfc4b",
+        "card_text_color": "#cdfc4b",
+        "overlay_color": "#000000",
+        "badge_background": "#cdfc4b",
+        "badge_text_color": "#075007",
+        "button_background": "#075007",
+        "button_text": "#ffffff",
+        "button_background_hover": "#c6fa41",
+        "button_text_hover": "#075007",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "subheading_size": 18,
+        "subheading_size_mobile": 16,
+        "script_font": "assistant_n4",
+        "script_size": 40,
+        "quote_size": 16,
+        "max_width": 1200,
+        "cards_max_width": 1032,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "card_gap": 24,
+        "card_gap_mobile": 12,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "video_stories_UFFAMn": {
+      "type": "video-stories",
+      "blocks": {
+        "story_LnPRMn": {
+          "type": "story",
+          "settings": {
+            "video_description": "",
+            "product": "",
+            "link": ""
+          }
+        },
+        "story_tkayCk": {
+          "type": "story",
+          "settings": {
+            "video_description": "",
+            "product": "",
+            "link": ""
+          }
+        },
+        "story_UzWxM9": {
+          "type": "story",
+          "settings": {
+            "video_description": "",
+            "product": "",
+            "link": ""
+          }
+        },
+        "story_rzR74i": {
+          "type": "story",
+          "settings": {
+            "video_description": "",
+            "product": "",
+            "link": ""
+          }
+        },
+        "story_D6LLFf": {
+          "type": "story",
+          "settings": {
+            "video_description": "",
+            "product": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "story_LnPRMn",
+        "story_tkayCk",
+        "story_UzWxM9",
+        "story_rzR74i",
+        "story_D6LLFf"
+      ],
+      "name": "Historias en video",
+      "settings": {
+        "heading": "La eligen <strong>miles de</strong> familias con perro. <strong>Estás en buena compañía.</strong>",
+        "button_label": "Comprar ahora",
+        "show_arrows": false,
+        "card_width": 328,
+        "card_gap": 16,
+        "media_height": 340,
+        "media_height_active": 482,
+        "radius": 5,
+        "background": "#075007",
+        "heading_color": "#FFFFFF",
+        "highlight_color": "#CDFC4B",
+        "panel_background": "#F4F4F4",
+        "panel_text_color": "#075007",
+        "button_background": "#075007",
+        "button_text": "#FFFFFF",
+        "button_background_hover": "#C6FA41",
+        "button_text_hover": "#075007",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "heading_max_width": 820,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "media_text_split_MHTgtx": {
+      "type": "media-text-split",
+      "blocks": {
+        "accordion_CJqain": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Certificación de calidad",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_Y9Q7Pm": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Nuestro estándar",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_3JmRpY": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Testeado por terceros",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_UAjgVi": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Ingrediente activo verificado",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_gbBRkH": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Integridad de ingredientes",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_nmUz4V": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Probado por la comunidad",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "accordion_CJqain",
+        "accordion_Y9Q7Pm",
+        "accordion_3JmRpY",
+        "accordion_UAjgVi",
+        "accordion_gbBRkH",
+        "accordion_nmUz4V"
+      ],
+      "name": "Certificaciones",
+      "settings": {
+        "heading": "Certificados con el estándar más alto",
+        "heading_position": "copy",
+        "footer_button_label": "Ver todos",
+        "footer_button_link": "",
+        "media_position": "end",
+        "media_position_mobile": "start",
+        "media_ratio": 80,
+        "media_ratio_mobile": 80,
+        "media_radius": 0,
+        "sticky_media": true,
+        "media_width": 517,
+        "copy_width": 482,
+        "vertical_alignment": "start",
+        "column_gap": 64,
+        "column_gap_mobile": 32,
+        "copy_gap": 32,
+        "copy_gap_mobile": 24,
+        "background": "#ffffff",
+        "heading_color": "#075007",
+        "text_color": "#075007",
+        "button_color": "#075007",
+        "button_background_hover": "#C6FA41",
+        "button_color_hover": "#075007",
+        "accordion_background": "#FFFFFF",
+        "accordion_border": "#E3E3E3",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "feature_heading_size": 20,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
     }
   },
   "order": [
@@ -887,6 +1090,8 @@
     "mark_strip_DmcAfc",
     "media_text_split_k9mYGz",
     "vet_board_iCcBDW",
-    "review_photos_JHJCq6"
+    "review_photos_JHJCq6",
+    "video_stories_UFFAMn",
+    "media_text_split_MHTgtx"
   ]
 }
