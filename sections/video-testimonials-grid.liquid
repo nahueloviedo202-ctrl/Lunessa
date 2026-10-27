@@ -1,0 +1,869 @@
+{{ 'section-video-testimonials-grid.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'video-testimonials-grid.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .vtg--{{ section.id }} {
+    --vtg-bg: {{ section.settings.background_color }};
+    --vtg-max-width: {{ section.settings.max_width }}px;
+    --vtg-pt: {{ section.settings.padding_top }}px;
+    --vtg-pb: {{ section.settings.padding_bottom }}px;
+    --vtg-px: {{ section.settings.padding_x }}px;
+    --vtg-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --vtg-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --vtg-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --vtg-stack-gap: {{ section.settings.stack_gap }}px;
+    --vtg-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+
+    --vtg-heading-ff: {{ heading_ff }};
+    --vtg-heading-fs: {{ heading_fs }};
+    --vtg-heading-fw: {{ section.settings.heading_font_weight }};
+    --vtg-heading-color: {{ section.settings.heading_color }};
+    --vtg-heading-size: {{ section.settings.heading_size }}px;
+    --vtg-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --vtg-heading-lh: {{ section.settings.heading_line_height }}px;
+    --vtg-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --vtg-heading-max-width: {{ section.settings.heading_max_width }}px;
+    --vtg-body-ff: {{ body_ff }};
+    --vtg-body-fs: {{ body_fs }};
+
+    --vtg-columns: {{ section.settings.columns_desktop }};
+    --vtg-columns-tablet: {{ section.settings.columns_tablet }};
+    --vtg-columns-mobile: {{ section.settings.columns_mobile }};
+    --vtg-grid-gap: {{ section.settings.grid_gap }}px;
+    --vtg-grid-gap-mobile: {{ section.settings.grid_gap_mobile }}px;
+
+    --vtg-card-bg: {{ section.settings.card_background }};
+    --vtg-card-radius: {{ section.settings.card_radius }}px;
+    --vtg-card-padding: {{ section.settings.card_padding }}px;
+    --vtg-card-gap: {{ section.settings.card_gap }}px;
+    --vtg-card-body-gap: {{ section.settings.card_body_gap }}px;
+    --vtg-media-ratio: {{ section.settings.media_ratio }};
+    --vtg-media-radius: {{ section.settings.media_radius }}px;
+    --vtg-name-color: {{ section.settings.name_color }};
+    --vtg-name-size: {{ section.settings.name_size }}px;
+    --vtg-name-lh: {{ section.settings.name_line_height }}px;
+    --vtg-badge-fill: {{ section.settings.badge_fill }};
+    --vtg-badge-stroke: {{ section.settings.badge_stroke }};
+    --vtg-badge-size: {{ section.settings.badge_size }}px;
+    --vtg-quote-color: {{ section.settings.quote_color }};
+    --vtg-quote-size: {{ section.settings.quote_size }}px;
+    --vtg-quote-lh: {{ section.settings.quote_line_height }}px;
+
+    --vtg-footer-gap: {{ section.settings.footer_gap }}px;
+    --vtg-button-bg: {{ section.settings.button_background }};
+    --vtg-button-color: {{ section.settings.button_color }};
+    --vtg-button-border: {{ section.settings.button_border }};
+    --vtg-button-bg-hover: {{ section.settings.button_background_hover }};
+    --vtg-button-color-hover: {{ section.settings.button_color_hover }};
+    --vtg-button-border-hover: {{ section.settings.button_border_hover }};
+    --vtg-button-size: {{ section.settings.button_size }}px;
+    --vtg-button-height: {{ section.settings.button_height }}px;
+    --vtg-button-max-width: {{ section.settings.button_max_width }}px;
+    --vtg-button-radius: {{ section.settings.button_radius }}px;
+    --vtg-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --vtg-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+  }
+{%- endstyle -%}
+
+<section class="vtg vtg--{{ section.id }}">
+  <div class="vtg__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="vtg__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <video-testimonials-grid class="vtg__grid" data-autoplay="{{ section.settings.video_autoplay }}">
+        {%- for block in section.blocks -%}
+          <div
+            class="vtg__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <article class="vtg-card">
+              {%- liquid
+                assign video = block.settings.video
+                assign media_alt = block.settings.media_alt | default: block.settings.name
+              -%}
+              {%- if video != blank -%}
+                {%- liquid
+                  assign mp4_sources = video.sources | where: 'format', 'mp4' | sort: 'width'
+                  assign mp4_source = mp4_sources.last
+                  for source in mp4_sources
+                    if source.width >= 720
+                      assign mp4_source = source
+                      break
+                    endif
+                  endfor
+                  assign hls_source = video.sources | where: 'format', 'm3u8' | first
+
+                  if block.settings.image != blank
+                    assign poster = block.settings.image | image_url: width: 720
+                  elsif video.preview_image != blank
+                    assign poster = video.preview_image | image_url: width: 720
+                  else
+                    assign poster = nil
+                  endif
+                -%}
+                <video
+                  class="vtg-card__media"
+                  {% if poster != blank %}
+                    poster="{{ poster }}"
+                  {% endif %}
+                  aria-label="{{ media_alt | escape }}"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                >
+                  {%- if mp4_source -%}
+                    <source src="{{ mp4_source.url }}" type="{{ mp4_source.mime_type }}">
+                  {%- endif -%}
+                  {%- if hls_source -%}
+                    <source src="{{ hls_source.url }}" type="{{ hls_source.mime_type }}">
+                  {%- endif -%}
+                </video>
+              {%- elsif block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '300, 450, 600, 720, 900',
+                    sizes: '(min-width: 1024px) 340px, (min-width: 750px) 90vw, calc(100vw - 32px)',
+                    alt: media_alt,
+                    class: 'vtg-card__media'
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'vtg-card__media placeholder-svg' }}
+              {%- endif -%}
+
+              <div class="vtg-card__body">
+                {%- if block.settings.name != blank or block.settings.verified -%}
+                  <p class="vtg-card__name">
+                    <span>{{ block.settings.name | escape }}</span>
+                    {%- if block.settings.verified -%}
+                      <span class="vtg-card__badge" role="img" aria-label="{{ section.settings.verified_label | escape }}">
+                        {%- render 'verified-badge-icon' -%}
+                      </span>
+                    {%- endif -%}
+                  </p>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="vtg-card__quote">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+            </article>
+          </div>
+        {%- endfor -%}
+      </video-testimonials-grid>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank or section.settings.disclaimer != blank -%}
+      <div class="vtg__footer">
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="vtg__button"
+            {% if section.settings.button_link != blank %}
+              href="{{ section.settings.button_link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="vtg__disclaimer">{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonios en video",
+  "tag": "div",
+  "class": "section-video-testimonials-grid",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#17443D"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1064
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título, tarjetas y botón en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título, tarjetas y botón en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Únete a los miles de dueños que ayudan a sus perros a recuperar la movilidad"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Ancho máximo del título",
+      "min": 186,
+      "max": 1186,
+      "step": 10,
+      "unit": "px",
+      "default": 786
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Cuadrícula"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columnas en escritorio",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columnas en tablet",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columnas en móvil",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Separación entre tarjetas en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_mobile",
+      "label": "Separación entre tarjetas en móvil y tablet",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Color de fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Relleno interior",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Separación entre video y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_body_gap",
+      "label": "Separación entre nombre y testimonio",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Proporción del video",
+      "options": [
+        { "value": "291 / 290", "label": "Cuadrado" },
+        { "value": "4 / 5", "label": "Vertical 4:5" },
+        { "value": "3 / 4", "label": "Vertical 3:4" },
+        { "value": "9 / 16", "label": "Vertical 9:16" },
+        { "value": "4 / 3", "label": "Horizontal 4:3" },
+        { "value": "16 / 9", "label": "Horizontal 16:9" }
+      ],
+      "default": "291 / 290"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "label": "Radio de las esquinas del video",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Reproducir videos automáticamente",
+      "info": "Se reproducen sin sonido cuando entran en pantalla y se pausan al salir. Se desactiva si el visitante tiene activada la opción de reducir movimiento.",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Color del nombre",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "label": "Tamaño del nombre",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "name_line_height",
+      "label": "Interlineado del nombre",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Color del testimonio",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "quote_size",
+      "label": "Tamaño del testimonio",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "quote_line_height",
+      "label": "Interlineado del testimonio",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Sello de verificado"
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Texto accesible",
+      "info": "Lo leen los lectores de pantalla; no se muestra.",
+      "default": "Compra verificada"
+    },
+    {
+      "type": "color",
+      "id": "badge_fill",
+      "label": "Color de relleno",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "badge_stroke",
+      "label": "Color del borde y el check",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Tamaño",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "DEVUÉLVELE SU ENERGÍA"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Texto bajo el botón"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "disclaimer",
+      "label": "Texto",
+      "default": "Pruébalo sin riesgo con nuestra garantía de devolución de 90 días"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color",
+      "default": "#F1FDF0"
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "footer_gap",
+      "label": "Separación entre botón y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Se reproduce sin sonido y en bucle."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen",
+          "info": "Portada del video. Si no hay video, se muestra esta imagen."
+        },
+        {
+          "type": "text",
+          "id": "media_alt",
+          "label": "Descripción del video o la imagen",
+          "info": "Para lectores de pantalla. Si está vacía se usa el nombre."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Nombre A."
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Mostrar sello de verificado",
+          "default": true
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Testimonio",
+          "default": "Escribe aquí la experiencia real de un cliente: cómo estaba su perro antes y qué cambió después de empezar a usar el producto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonios en video",
+      "blocks": [
+        { "type": "testimonial" },
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "Nombre B."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "name": "Nombre C."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
