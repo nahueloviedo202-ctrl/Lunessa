@@ -1,0 +1,914 @@
+{{ 'section-how-it-works.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign stage_blocks = section.blocks | where: 'type', 'stage'
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .hiw--{{ section.id }} {
+    --hiw-bg: {{ section.settings.background_color }};
+    --hiw-max-width: {{ section.settings.max_width }}px;
+    --hiw-pt: {{ section.settings.padding_top }}px;
+    --hiw-pb: {{ section.settings.padding_bottom }}px;
+    --hiw-px: {{ section.settings.padding_x }}px;
+    --hiw-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --hiw-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --hiw-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --hiw-stack-gap: {{ section.settings.stack_gap }}px;
+    --hiw-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+    --hiw-text-max-width: {{ section.settings.text_max_width }}px;
+
+    --hiw-heading-ff: {{ heading_ff }};
+    --hiw-heading-fs: {{ heading_fs }};
+    --hiw-heading-fw: {{ section.settings.heading_font_weight }};
+    --hiw-heading-color: {{ section.settings.heading_color }};
+    --hiw-heading-size: {{ section.settings.heading_size }}px;
+    --hiw-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --hiw-heading-lh: {{ section.settings.heading_line_height }}px;
+    --hiw-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --hiw-header-gap: {{ section.settings.header_gap }}px;
+    --hiw-subheading-color: {{ section.settings.subheading_color }};
+    --hiw-subheading-size: {{ section.settings.subheading_size }}px;
+    --hiw-subheading-lh: {{ section.settings.subheading_line_height }}px;
+    --hiw-body-ff: {{ body_ff }};
+    --hiw-body-fs: {{ body_fs }};
+
+    --hiw-columns: {{ section.settings.columns_desktop }};
+    --hiw-columns-tablet: {{ section.settings.columns_tablet }};
+    --hiw-stage-gap: {{ section.settings.stage_gap }}px;
+    --hiw-stage-gap-mobile: {{ section.settings.stage_gap_mobile }}px;
+    --hiw-stage-inner-gap: {{ section.settings.stage_inner_gap }}px;
+    --hiw-head-gap: {{ section.settings.head_gap }}px;
+    --hiw-icon-size: {{ section.settings.icon_size }}px;
+    --hiw-icon-color: {{ section.settings.icon_color }};
+    --hiw-title-gap: {{ section.settings.title_gap }}px;
+    --hiw-label-color: {{ section.settings.label_color }};
+    --hiw-title-color: {{ section.settings.title_color }};
+    --hiw-title-size: {{ section.settings.title_size }}px;
+    --hiw-title-lh: {{ section.settings.title_line_height }}px;
+    --hiw-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --hiw-title-lh-mobile: {{ section.settings.title_line_height_mobile }}px;
+    --hiw-point-color: {{ section.settings.point_color }};
+    --hiw-point-size: {{ section.settings.point_size }}px;
+    --hiw-point-lh: {{ section.settings.point_line_height }}px;
+    --hiw-point-gap: {{ section.settings.point_gap }}px;
+    --hiw-bullet-color: {{ section.settings.bullet_color }};
+
+    --hiw-footer-gap: {{ section.settings.footer_gap }}px;
+    --hiw-button-bg: {{ section.settings.button_background }};
+    --hiw-button-color: {{ section.settings.button_color }};
+    --hiw-button-border: {{ section.settings.button_border }};
+    --hiw-button-bg-hover: {{ section.settings.button_background_hover }};
+    --hiw-button-color-hover: {{ section.settings.button_color_hover }};
+    --hiw-button-border-hover: {{ section.settings.button_border_hover }};
+    --hiw-button-size: {{ section.settings.button_size }}px;
+    --hiw-button-height: {{ section.settings.button_height }}px;
+    --hiw-button-max-width: {{ section.settings.button_max_width }}px;
+    --hiw-button-radius: {{ section.settings.button_radius }}px;
+    --hiw-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --hiw-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+    --hiw-disclaimer-style: {% if section.settings.disclaimer_italic %}italic{% else %}normal{% endif %};
+  }
+{%- endstyle -%}
+
+<section class="hiw hiw--{{ section.id }}">
+  <div class="hiw__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="hiw__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="hiw__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="hiw__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if stage_blocks.size > 0 -%}
+      <ol class="hiw__stages" role="list">
+        {%- liquid
+          # Point blocks belong to the closest stage block above them.
+          assign stage_open = false
+          assign list_open = false
+        -%}
+        {%- for block in section.blocks -%}
+          {%- assign next_block = section.blocks[forloop.index] -%}
+          {%- case block.type -%}
+            {%- when 'stage' -%}
+              {%- if list_open %}</ul>{% endif -%}
+              {%- if stage_open %}</li>{% endif -%}
+              <li
+                class="hiw-stage{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {% if settings.animations_reveal_on_scroll %}
+                  data-cascade
+                  style="--animation-order: {{ forloop.index }};"
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
+                <div class="hiw-stage__head">
+                  {%- if block.settings.icon_image != blank -%}
+                    {{
+                      block.settings.icon_image
+                      | image_url: width: 120
+                      | image_tag: loading: 'lazy', alt: '', class: 'hiw-stage__icon'
+                    }}
+                  {%- elsif block.settings.icon != 'none' -%}
+                    {%- render 'stage-icon', icon: block.settings.icon, class: 'hiw-stage__icon' -%}
+                  {%- endif -%}
+                  <h3 class="hiw-stage__title">
+                    {%- if block.settings.label != blank -%}
+                      <span class="hiw-stage__label">{{ block.settings.label | escape }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.title != blank -%}
+                      <span>{{ block.settings.title | escape }}</span>
+                    {%- endif -%}
+                  </h3>
+                </div>
+              {%- liquid
+                assign stage_open = true
+                assign list_open = false
+                if next_block.type == 'point'
+                  assign list_open = true
+                endif
+              -%}
+              {%- if list_open -%}
+                <ul class="hiw-stage__list" role="list">
+              {%- endif -%}
+            {%- when 'point' -%}
+              {%- if list_open -%}
+                <li class="hiw-stage__point" {{ block.shopify_attributes }}>
+                  {%- if section.settings.bullet != blank -%}
+                    <span class="hiw-stage__bullet" aria-hidden="true">{{ section.settings.bullet | escape }}</span>
+                  {%- endif -%}
+                  <span class="hiw-stage__point-text">{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+        {%- if list_open %}</ul>{% endif -%}
+        {%- if stage_open %}</li>{% endif -%}
+      </ol>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank or section.settings.disclaimer != blank -%}
+      <div class="hiw__footer">
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="hiw__button"
+            {% if section.settings.button_link != blank %}
+              href="{{ section.settings.button_link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="hiw__disclaimer">{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cómo funciona",
+  "tag": "div",
+  "class": "section-how-it-works",
+  "max_blocks": 40,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#FFFAF7"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1064
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título, etapas y botón en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título, etapas y botón en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "label": "Ancho máximo del subtítulo y del texto bajo el botón",
+      "min": 236,
+      "max": 1436,
+      "step": 12,
+      "unit": "px",
+      "default": 1016
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "¿Cómo funciona?"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Separación entre título y subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Subtítulo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Día a día, ayudamos a que tu perro se mantenga móvil, activo y con ganas de jugar."
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente de los títulos",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada de los títulos",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor de los títulos",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Etapas"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas en escritorio",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columnas en tablet",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "stage_gap",
+      "label": "Separación entre etapas en escritorio",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "stage_gap_mobile",
+      "label": "Separación entre etapas en móvil y tablet",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "stage_inner_gap",
+      "label": "Separación entre encabezado y puntos",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "head_gap",
+      "label": "Separación entre icono y título",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño del icono",
+      "min": 16,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color del icono",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color de la etiqueta",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "title_gap",
+      "label": "Separación entre etiqueta y título",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título en escritorio",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Interlineado del título en escritorio",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamaño del título en móvil y tablet",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_line_height_mobile",
+      "label": "Interlineado del título en móvil y tablet",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Puntos"
+    },
+    {
+      "type": "text",
+      "id": "bullet",
+      "label": "Viñeta",
+      "default": "•"
+    },
+    {
+      "type": "color",
+      "id": "bullet_color",
+      "label": "Color de la viñeta",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "point_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "point_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "point_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "point_gap",
+      "label": "Separación entre puntos",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "PRUÉBALO AHORA -->"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Texto bajo el botón"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "disclaimer",
+      "label": "Texto",
+      "default": "*Según una encuesta a nuestros clientes. Los resultados reflejan opiniones de clientes y pueden variar."
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color",
+      "default": "#57534E"
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "disclaimer_italic",
+      "label": "Cursiva",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "footer_gap",
+      "label": "Separación entre botón y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stage",
+      "name": "Etapa",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Los bloques «Punto» que coloques debajo de esta etapa forman su lista."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "bolt", "label": "Rayo" },
+            { "value": "trend_up", "label": "Tendencia" },
+            { "value": "paw", "label": "Huella" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "check_circle", "label": "Check" },
+            { "value": "none", "label": "Ninguno" }
+          ],
+          "default": "bolt"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icono personalizado",
+          "info": "Opcional. Reemplaza al icono elegido."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta",
+          "default": "DÍA 7"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Primeras señales"
+        }
+      ]
+    },
+    {
+      "type": "point",
+      "name": "Punto",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Se muestra dentro de la etapa más cercana que tenga encima."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "Describe aquí un efecto de esta etapa"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cómo funciona",
+      "blocks": [
+        { "type": "stage" },
+        { "type": "point", "settings": { "text": "El MSM favorece el flujo sanguíneo hacia las articulaciones rígidas" } },
+        { "type": "point", "settings": { "text": "El ácido hialurónico empieza a lubricar para dar pasos más suaves" } },
+        { "type": "point", "settings": { "text": "La yuca empieza a aliviar la rigidez ocasional" } },
+        { "type": "point", "settings": { "text": "Primeras señales de más energía y ganas de moverse" } },
+        {
+          "type": "stage",
+          "settings": { "icon": "trend_up", "label": "DÍA 30", "title": "Cambios visibles" }
+        },
+        { "type": "point", "settings": { "text": "La glucosamina y la condroitina refuerzan el cartílago y los tejidos conectivos" } },
+        { "type": "point", "settings": { "text": "El mejillón de labio verde aporta omega-3 para la flexibilidad" } },
+        { "type": "point", "settings": { "text": "La vitamina C ayuda a la absorción para que los resultados se noten más" } },
+        { "type": "point", "settings": { "text": "Describe aquí un resultado real de tus clientes" } },
+        {
+          "type": "stage",
+          "settings": { "icon": "paw", "label": "DÍA 90", "title": "Impacto completo" }
+        },
+        { "type": "point", "settings": { "text": "Todos los ingredientes trabajando juntos" } },
+        { "type": "point", "settings": { "text": "Articulaciones protegidas, flexibilidad mantenida y menos rigidez" } },
+        { "type": "point", "settings": { "text": "Recuperan la confianza para correr, saltar y jugar" } },
+        { "type": "point", "settings": { "text": "Describe aquí un resultado real de tus clientes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

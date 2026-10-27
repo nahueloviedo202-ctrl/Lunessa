@@ -1,0 +1,47 @@
+{%- comment -%}
+  Outline icons (36×36, 2px stroke) drawn with currentColor.
+
+  Accepts:
+  - icon: {String} bolt | trend_up | paw | heart | star | shield | check_circle
+  - class: {String} Optional class for the <svg>.
+
+  Usage:
+  {% render 'stage-icon', icon: 'bolt', class: 'my-icon' %}
+{%- endcomment -%}
+<svg
+  class="{{ class }}"
+  viewBox="0 0 36 36"
+  width="36"
+  height="36"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {%- case icon -%}
+    {%- when 'bolt' -%}
+      <path d="M19.5 3L6.14 19.03C5.62 19.66 5.36 19.97 5.35 20.24C5.35 20.47 5.45 20.69 5.63 20.83C5.84 21 6.24 21 7.06 21H18L16.5 33L29.86 16.97C30.38 16.34 30.64 16.03 30.65 15.76C30.65 15.53 30.55 15.31 30.37 15.17C30.16 15 29.76 15 28.94 15H18L19.5 3Z"/>
+    {%- when 'trend_up' -%}
+      <path d="M33 10.5L21.2 22.3C20.6 22.9 20.31 23.19 19.96 23.31C19.66 23.4 19.34 23.4 19.04 23.31C18.69 23.19 18.4 22.9 17.8 22.3L13.7 18.2C13.1 17.6 12.81 17.31 12.46 17.19C12.16 17.1 11.84 17.1 11.54 17.19C11.19 17.31 10.9 17.6 10.3 18.2L3 25.5M33 10.5H22.5M33 10.5V21"/>
+    {%- when 'paw' -%}
+      <ellipse cx="18" cy="24.5" rx="7" ry="5.5"/>
+      <circle cx="8.5" cy="16" r="2.75"/>
+      <circle cx="14" cy="9.5" r="2.75"/>
+      <circle cx="22" cy="9.5" r="2.75"/>
+      <circle cx="27.5" cy="16" r="2.75"/>
+    {%- when 'heart' -%}
+      <path d="M18 31C18 31 6 23.8 6 14.8A6.6 6.6 0 0 1 18 11A6.6 6.6 0 0 1 30 14.8C30 23.8 18 31 18 31Z"/>
+    {%- when 'star' -%}
+      <path d="M18 4.5L21.29 13.97L31.31 14.17L23.33 20.23L26.23 29.83L18 24.1L9.77 29.83L12.67 20.23L4.69 14.17L14.71 13.97Z"/>
+    {%- when 'shield' -%}
+      <path d="M18 4L29 8.5V17C29 24 24.2 29 18 32C11.8 29 7 24 7 17V8.5L18 4Z"/>
+      <path d="M13 18L16.5 21.5L23 15"/>
+    {%- else -%}
+      <circle cx="18" cy="18" r="14"/>
+      <path d="M11.5 18.5L16 23L25 14"/>
+  {%- endcase -%}
+</svg>
