@@ -1,0 +1,679 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-rail.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign rail_label = section.settings.heading | strip_html
+  if rail_label == blank
+    assign rail_label = 'general.slider.name' | t
+  endif
+
+  assign show_arrows = false
+  if section.settings.show_arrows and section.blocks.size > 1
+    assign show_arrows = true
+  endif
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '800' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .product-rail-{{ section.id }} {
+    --pr-bg: {{ section.settings.background }};
+    --pr-color: {{ section.settings.text_color }};
+    --pr-pt: {{ section.settings.padding_top }}px;
+    --pr-pb: {{ section.settings.padding_bottom }}px;
+    --pr-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --pr-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --pr-max-width: {{ section.settings.max_width }}px;
+    --pr-px: {{ section.settings.padding_x }}px;
+    --pr-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --pr-stack-gap: {{ section.settings.stack_gap }}px;
+    --pr-heading-ff: {{ heading_ff }};
+    --pr-heading-fs: {{ heading_fs }};
+    --pr-heading-fw: {{ section.settings.heading_font_weight }};
+    --pr-heading-size: {{ section.settings.heading_size }}px;
+    --pr-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --pr-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --pr-body-ff: {{ body_ff }};
+    --pr-body-fs: {{ body_fs }};
+    --pr-subheading-size: {{ section.settings.subheading_size }}px;
+    --pr-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --pr-card-width: {{ section.settings.card_width }}px;
+    --pr-card-width-mobile: {{ section.settings.card_width_mobile }}px;
+    --pr-gap: {{ section.settings.card_gap }}px;
+    --pr-gap-mobile: {{ section.settings.card_gap_mobile }}px;
+    --pr-media-ratio: {{ section.settings.media_ratio | divided_by: 100.0 }};
+    --pr-media-ratio-mobile: {{ section.settings.media_ratio_mobile | divided_by: 100.0 }};
+    --pr-radius: {{ section.settings.radius }}px;
+    --pr-border: {{ section.settings.card_border }};
+    --pr-info-bg: {{ section.settings.info_background }};
+    --pr-badge-bg: {{ section.settings.badge_background }};
+    --pr-badge-color: {{ section.settings.badge_color }};
+    --pr-button-bg: {{ section.settings.button_background }};
+    --pr-button-color: {{ section.settings.button_text }};
+    --pr-button-bg-hover: {{ section.settings.button_background_hover }};
+    --pr-button-color-hover: {{ section.settings.button_text_hover }};
+    --pr-arrow-bg: {{ section.settings.arrow_background }};
+    --pr-arrow-color: {{ section.settings.arrow_color }};
+    --pr-arrow-bg-hover: {{ section.settings.arrow_background_hover }};
+    --pr-arrow-color-hover: {{ section.settings.arrow_color_hover }};
+    --pr-focus: {{ section.settings.focus_color }};
+  }
+{%- endstyle -%}
+
+<div class="product-rail product-rail-{{ section.id }}{% if section.settings.peek %} product-rail--peek{% endif %}">
+  <div class="product-rail__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="product-rail__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <slider-component class="product-rail__slider">
+      {%- if show_arrows or section.settings.subheading != blank -%}
+        <div class="product-rail__controls{% if show_arrows %} product-rail__controls--arrows{% endif %}">
+          {%- if show_arrows -%}
+            <button
+              type="button"
+              class="slider-button slider-button--prev product-rail__arrow"
+              name="previous"
+              aria-label="{{ 'general.slider.previous_slide' | t }}"
+              aria-controls="Slider-{{ section.id }}"
+            >
+              <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+            </button>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="product-rail__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+          {%- if show_arrows -%}
+            <button
+              type="button"
+              class="slider-button slider-button--next product-rail__arrow"
+              name="next"
+              aria-label="{{ 'general.slider.next_slide' | t }}"
+              aria-controls="Slider-{{ section.id }}"
+            >
+              <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <ul
+        id="Slider-{{ section.id }}"
+        class="slider slider--everywhere product-rail__track list-unstyled"
+        role="list"
+        aria-label="{{ rail_label | escape }}"
+        tabindex="0"
+      >
+        {%- for block in section.blocks -%}
+          <li
+            id="Slide-{{ section.id }}-{{ forloop.index }}"
+            class="slider__slide product-rail__slide"
+          >
+            {%- render 'product-rail-card', block: block -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </slider-component>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Carrusel de productos",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Más vendidos"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Los suplementos que los dueños de perros vuelven a elegir, una y otra vez."
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "text",
+      "id": "price_label",
+      "label": "Texto antes del precio",
+      "default": "Desde"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Comprar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Mostrar precio",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Mostrar calificación",
+      "info": "Usa las reseñas del producto (metacampo reviews.rating) de tu app de reseñas.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "media_ratio",
+      "min": 40,
+      "max": 140,
+      "step": 1,
+      "unit": "%",
+      "label": "Alto de la imagen respecto al ancho (desktop)",
+      "default": 74
+    },
+    {
+      "type": "range",
+      "id": "media_ratio_mobile",
+      "min": 90,
+      "max": 190,
+      "step": 1,
+      "unit": "%",
+      "label": "Alto de la imagen respecto al ancho (mobile)",
+      "default": 181
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de bordes",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Carrusel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Mostrar flechas",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "peek",
+      "label": "Extender el carrusel hasta el borde derecho",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 221,
+      "max": 521,
+      "step": 3,
+      "unit": "px",
+      "label": "Ancho mínimo de tarjeta (desktop)",
+      "default": 419
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 120,
+      "max": 320,
+      "step": 2,
+      "unit": "px",
+      "label": "Ancho mínimo de tarjeta (mobile)",
+      "default": 166
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas (mobile)",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Títulos, textos y estrellas",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Borde de la tarjeta",
+      "default": "#F0F0F0"
+    },
+    {
+      "type": "color",
+      "id": "info_background",
+      "label": "Fondo de la información",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Etiqueta: fondo",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Etiqueta: texto y borde",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Botón: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Botón: texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Botón: fondo al pasar el mouse",
+      "default": "#C6FA41"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover",
+      "label": "Botón: texto al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Flechas: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Flechas: icono",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background_hover",
+      "label": "Flechas: fondo al pasar el mouse",
+      "default": "#C6FA41"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color_hover",
+      "label": "Flechas: icono al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Anillo de foco",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos y tarjetas",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (mobile)",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre título, subtítulo y carrusel",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Producto",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        },
+        {
+          "type": "color",
+          "id": "media_color",
+          "label": "Color de fondo de la imagen",
+          "default": "#CDFC4B"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Etiqueta",
+          "default": "Aprobado por veterinarios"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del producto",
+          "info": "Opcional. Si está vacía se usa la imagen principal del producto. Recomendado: PNG sin fondo."
+        },
+        {
+          "type": "image_picker",
+          "id": "seal",
+          "label": "Sello / premio",
+          "info": "Opcional. Se ubica arriba a la derecha."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrusel de productos",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "media_color": "#CDFC4B"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "media_color": "#9DD1FF"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "media_color": "#A3FCFF"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "media_color": "#F6A3FF"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "media_color": "#C5A9FF"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

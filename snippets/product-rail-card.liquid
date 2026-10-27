@@ -1,0 +1,115 @@
+{% doc %}
+  Renders one product card of the product rail section: colored media panel
+  (badge, pack image, seal) + info panel (title, rating, price, CTA).
+
+  @param {object} block - A `product` block of the product-rail section.
+  @param {object} [section] - The product-rail section, supplied implicitly; used for labels and toggles.
+
+  @example
+  {% render 'product-rail-card', block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign card_product = block.settings.product
+  assign pack_image = block.settings.image | default: card_product.featured_media.preview_image
+
+  if card_product != blank
+    assign card_url = card_product.url
+    assign card_title = card_product.title
+  else
+    assign card_url = routes.all_products_collection_url
+    assign card_title = 'onboarding.product_title' | t
+  endif
+
+  assign title_id = 'ProductRailCard-' | append: block.id
+-%}
+
+<div class="product-rail-card" style="--media-bg: {{ block.settings.media_color }};" {{ block.shopify_attributes }}>
+  <div class="product-rail-card__media">
+    {%- if block.settings.badge != blank -%}
+      <span class="product-rail-card__badge">{{ block.settings.badge | escape }}</span>
+    {%- endif -%}
+
+    {%- if pack_image != blank -%}
+      {{
+        pack_image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'product-rail-card__pack',
+          widths: '330, 450, 660, 850, 1200',
+          sizes: '(min-width: 750px) 425px, 45vw',
+          loading: 'lazy',
+          alt: pack_image.alt
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product-rail-card__pack placeholder-svg' }}
+    {%- endif -%}
+
+    {%- if block.settings.seal != blank -%}
+      {{
+        block.settings.seal
+        | image_url: width: 240
+        | image_tag:
+          class: 'product-rail-card__seal',
+          widths: '120, 240',
+          sizes: '(min-width: 750px) 80px, 15vw',
+          loading: 'lazy',
+          alt: block.settings.seal.alt
+      }}
+    {%- endif -%}
+  </div>
+
+  <div class="product-rail-card__info">
+    <div class="product-rail-card__text">
+      <h3 id="{{ title_id }}" class="product-rail-card__title">{{ card_title | escape }}</h3>
+
+      {%- if section.settings.show_rating and card_product.metafields.reviews.rating.value != blank -%}
+        {%- liquid
+          assign rating = card_product.metafields.reviews.rating.value
+          assign rating_decimal = 0
+          assign decimal = rating.rating | modulo: 1
+          if decimal >= 0.3 and decimal <= 0.7
+            assign rating_decimal = 0.5
+          elsif decimal > 0.7
+            assign rating_decimal = 1
+          endif
+        -%}
+        <div
+          class="rating product-rail-card__rating"
+          role="img"
+          aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating, rating_max: rating.scale_max }}"
+        >
+          <span
+            aria-hidden="true"
+            class="rating-star"
+            style="--rating: {{ rating.rating | floor }}; --rating-max: {{ rating.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+          ></span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_price and card_product != blank -%}
+        <div class="product-rail-card__price">
+          {%- if section.settings.price_label != blank -%}
+            <span class="product-rail-card__price-label">{{ section.settings.price_label | escape }}</span>
+          {%- endif -%}
+          <span class="product-rail-card__price-values">
+            {%- if card_product.compare_at_price_min > card_product.price_min -%}
+              <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+              <s class="product-rail-card__price-compare">{{ card_product.compare_at_price_min | money }}</s>
+              <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+            {%- endif -%}
+            <span class="product-rail-card__price-value">{{ card_product.price_min | money }}</span>
+          </span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <a
+      href="{{ card_url }}"
+      class="product-rail-card__cta"
+      aria-describedby="{{ title_id }}"
+    >
+      {{- section.settings.button_label | escape -}}
+    </a>
+  </div>
+</div>
