@@ -1541,6 +1541,7 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
         "padding_x_mobile": 16,
+        "image": "shopify://shop_images/8d4c5ae7-a391-4735-8f72-5d6b4a05b79c.webp",
         "image_position": "left",
         "image_first_mobile": true,
         "image_max_width": 488,
