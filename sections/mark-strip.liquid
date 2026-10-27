@@ -16,6 +16,24 @@
       assign font_fs = font.style
   endcase
 
+  assign heading_font = section.settings.heading_font
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  assign strip_label = section.settings.aria_label
+  if strip_label == blank
+    assign strip_label = section.settings.heading | strip_html
+  endif
+
   assign is_marquee = false
   if section.settings.layout == 'marquee'
     assign is_marquee = true
@@ -28,6 +46,13 @@
     {%- assign font_weighted = font | font_modify: 'weight', section.settings.title_weight -%}
     {%- if font_weighted -%}
       {{ font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
     {%- endif -%}
   {%- endif -%}
 
@@ -52,16 +77,27 @@
     --ms-ls: {{ section.settings.letter_spacing | divided_by: 1000.0 }}em;
     --ms-duration: {{ section.settings.duration }}s;
     --ms-duration-mobile: {{ section.settings.duration_mobile }}s;
+    --ms-min-height: {{ section.settings.min_height }}px;
+    --ms-heading-ff: {{ heading_ff }};
+    --ms-heading-fs: {{ heading_fs }};
+    --ms-heading-fw: {{ section.settings.heading_font_weight }};
+    --ms-heading-size: {{ section.settings.heading_size }}px;
+    --ms-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ms-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --ms-heading-gap: {{ section.settings.heading_gap }}px;
   }
 {%- endstyle -%}
 
 {%- if section.blocks.size > 0 -%}
   <div class="mark-strip-section mark-strip-{{ section.id }}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="mark-strip__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
     <drag-scroll
-      class="mark-strip mark-strip--{{ section.settings.layout }}{% if is_marquee %} mark-strip--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} mark-strip--pause{% endif %}{% endif %}"
+      class="mark-strip mark-strip--{{ section.settings.layout }} mark-strip--pack-{{ section.settings.item_alignment }}{% if is_marquee %} mark-strip--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} mark-strip--pause{% endif %}{% endif %}"
       role="group"
-      {% if section.settings.aria_label != blank %}
-        aria-label="{{ section.settings.aria_label | escape }}"
+      {% if strip_label != blank %}
+        aria-label="{{ strip_label | escape }}"
       {% endif %}
       {% if is_marquee %}
         tabindex="0"
@@ -110,12 +146,19 @@
   "name": "Franja de sellos",
   "tag": "section",
   "class": "section",
-  "max_blocks": 12,
+  "max_blocks": 20,
   "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "info": "Opcional. Por ejemplo: Nos vieron en"
+    },
     {
       "type": "text",
       "id": "aria_label",
       "label": "Nombre para lectores de pantalla",
+      "info": "Si está vacío se usa el título.",
       "default": "Beneficios del producto"
     },
     {
@@ -184,6 +227,22 @@
       "label": "Repeticiones de los ítems",
       "info": "Subilo si quedan espacios vacíos en pantallas anchas.",
       "default": 1
+    },
+    {
+      "type": "select",
+      "id": "item_alignment",
+      "label": "Distribución de los ítems",
+      "options": [
+        {
+          "value": "between",
+          "label": "Repartidos a lo ancho"
+        },
+        {
+          "value": "start",
+          "label": "Juntos al inicio"
+        }
+      ],
+      "default": "between"
     },
     {
       "type": "checkbox",
@@ -315,7 +374,111 @@
     },
     {
       "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 14,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "heading_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre título y franja",
+      "default": 32
+    },
+    {
+      "type": "header",
       "content": "Tamaños y espaciado"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Alto mínimo de la franja",
+      "default": 0
     },
     {
       "type": "range",
@@ -408,6 +571,17 @@
           "id": "image",
           "label": "Icono (imagen)",
           "info": "Si está vacío se usa el icono del theme."
+        },
+        {
+          "type": "range",
+          "id": "logo_height",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Alto como logo",
+          "info": "0 = icono cuadrado. Para logos de medios, dejá el título vacío y elegí un alto (p. ej. 36px).",
+          "default": 0
         },
         {
           "type": "select",
@@ -597,6 +771,7 @@
           "type": "inline_richtext",
           "id": "title",
           "label": "Título",
+          "info": "Opcional si cargás una imagen.",
           "default": "Hecho en Argentina"
         },
         {
@@ -657,6 +832,73 @@
           "settings": {
             "icon": "plant",
             "title": "Sin conservantes artificiales"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Nos vieron en",
+      "settings": {
+        "heading": "Nos vieron en",
+        "aria_label": "",
+        "background": "#CDFC4B",
+        "text_color": "#075007",
+        "tint_icons": false,
+        "item_alignment": "start",
+        "min_height": 60,
+        "duration": 50,
+        "duration_mobile": 50,
+        "padding_vertical": 64,
+        "padding_vertical_mobile": 64,
+        "padding_x": 64
+      },
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "logo_height": 36
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "logo_height": 36
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "logo_height": 36
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "logo_height": 36
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "logo_height": 36
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "logo_height": 36
           }
         }
       ]

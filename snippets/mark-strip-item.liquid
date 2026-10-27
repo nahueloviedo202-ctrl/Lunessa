@@ -1,5 +1,6 @@
 {% doc %}
-  Renders one item of the mark strip section: icon + title + optional caption.
+  Renders one item of the mark strip section: icon + title + optional caption,
+  or a standalone logo when the title is blank.
 
   @param {object} block - An `item` block of the mark-strip section.
   @param {boolean} [is_clone] - Whether the item belongs to the duplicated (aria-hidden) run. Defaults to `false`.
@@ -14,6 +15,24 @@
     assign item_tag = 'a'
   else
     assign item_tag = 'div'
+  endif
+
+  assign image = block.settings.image
+  assign has_copy = false
+  if block.settings.title != blank or block.settings.caption != blank
+    assign has_copy = true
+  endif
+
+  # A logo without text carries the meaning, so it gets alt text (except in the aria-hidden clone).
+  assign image_alt = ''
+  unless has_copy or is_clone
+    assign image_alt = image.alt | escape
+  endunless
+
+  assign logo_style = ''
+  if block.settings.logo_height > 0 and image != blank
+    assign logo_width = block.settings.logo_height | times: image.aspect_ratio | round: 2
+    assign logo_style = '--logo-h: ' | append: block.settings.logo_height | append: 'px; --logo-w: ' | append: logo_width | append: 'px;'
   endif
 -%}
 <li
@@ -31,23 +50,34 @@
       {% endif %}
     {% endif %}
   >
-    {%- if block.settings.image != blank -%}
+    {%- if image != blank -%}
       {%- if section.settings.tint_icons -%}
         <span
-          class="mark-strip__ink"
-          style="--mask: url('{{ block.settings.image | image_url: width: 160 }}');"
-          aria-hidden="true"
+          class="mark-strip__ink{% if logo_style != blank %} mark-strip__logo{% endif %}"
+          style="--mask: url('{{ image | image_url: width: 480 }}'); {{ logo_style }}"
+          {% if image_alt != blank %}
+            role="img" aria-label="{{ image_alt }}"
+          {% else %}
+            aria-hidden="true"
+          {% endif %}
         ></span>
       {%- else -%}
+        {%- liquid
+          assign image_class = 'mark-strip__icon'
+          if logo_style != blank
+            assign image_class = 'mark-strip__icon mark-strip__logo'
+          endif
+        -%}
         {{
-          block.settings.image
-          | image_url: width: 160
+          image
+          | image_url: width: 480
           | image_tag:
-            class: 'mark-strip__icon',
-            widths: '80, 160',
-            sizes: '80px',
+            class: image_class,
+            widths: '120, 240, 480',
+            sizes: '240px',
             loading: 'lazy',
-            alt: ''
+            alt: image_alt,
+            style: logo_style
         }}
       {%- endif -%}
     {%- elsif block.settings.icon != 'none' -%}
@@ -55,11 +85,15 @@
         {%- render 'icon-accordion', icon: block.settings.icon -%}
       </span>
     {%- endif -%}
-    <span class="mark-strip__copy">
-      <span class="mark-strip__title">{{ block.settings.title }}</span>
-      {%- if block.settings.caption != blank -%}
-        <span class="mark-strip__caption">{{ block.settings.caption }}</span>
-      {%- endif -%}
-    </span>
+    {%- if has_copy -%}
+      <span class="mark-strip__copy">
+        {%- if block.settings.title != blank -%}
+          <span class="mark-strip__title">{{ block.settings.title }}</span>
+        {%- endif -%}
+        {%- if block.settings.caption != blank -%}
+          <span class="mark-strip__caption">{{ block.settings.caption }}</span>
+        {%- endif -%}
+      </span>
+    {%- endif -%}
   </{{ item_tag }}>
 </li>
