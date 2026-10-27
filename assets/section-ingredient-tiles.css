@@ -90,6 +90,7 @@
 }
 
 .igr .igr-tile__scrim {
+  display: block; /* overrides Dawn's div:empty { display: none } */
   position: absolute;
   inset: 0;
   pointer-events: none;
