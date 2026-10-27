@@ -1,0 +1,635 @@
+{{ 'section-review-photos.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign script_font = section.settings.script_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign script_ff = script_font.family | append: ', ' | append: script_font.fallback_families
+  assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0
+  assign overlay = section.settings.overlay_color | color_modify: 'alpha', overlay_alpha
+  assign heading_id = 'ReviewPhotos-Heading-' | append: section.id
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '800' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {{ script_font | font_face: font_display: 'swap' }}
+
+  .review-photos-{{ section.id }} {
+    --rp-bg: {{ section.settings.background }};
+    --rp-heading-color: {{ section.settings.heading_color }};
+    --rp-card-frame: {{ section.settings.card_frame }};
+    --rp-card-color: {{ section.settings.card_text_color }};
+    --rp-badge-bg: {{ section.settings.badge_background }};
+    --rp-badge-color: {{ section.settings.badge_text_color }};
+    --rp-overlay: {{ overlay }};
+    --rp-button-bg: {{ section.settings.button_background }};
+    --rp-button-color: {{ section.settings.button_text }};
+    --rp-button-bg-hover: {{ section.settings.button_background_hover }};
+    --rp-button-color-hover: {{ section.settings.button_text_hover }};
+    --rp-pt: {{ section.settings.padding_top }}px;
+    --rp-pb: {{ section.settings.padding_bottom }}px;
+    --rp-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --rp-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --rp-max-width: {{ section.settings.max_width }}px;
+    --rp-cards-max-width: {{ section.settings.cards_max_width }}px;
+    --rp-px: {{ section.settings.padding_x }}px;
+    --rp-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --rp-stack-gap: {{ section.settings.stack_gap }}px;
+    --rp-gap: {{ section.settings.card_gap }}px;
+    --rp-gap-mobile: {{ section.settings.card_gap_mobile }}px;
+    --rp-columns: {{ section.settings.columns_desktop }};
+    --rp-card-min-height: {{ section.settings.card_min_height }}px;
+    --rp-radius: {{ section.settings.radius }}px;
+    --rp-heading-ff: {{ heading_ff }};
+    --rp-heading-fs: {{ heading_fs }};
+    --rp-heading-fw: {{ section.settings.heading_font_weight }};
+    --rp-heading-size: {{ section.settings.heading_size }}px;
+    --rp-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --rp-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --rp-body-ff: {{ body_ff }};
+    --rp-body-fs: {{ body_fs }};
+    --rp-subheading-size: {{ section.settings.subheading_size }}px;
+    --rp-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --rp-script-ff: {{ script_ff }};
+    --rp-script-fs: {{ script_font.style }};
+    --rp-script-fw: {{ script_font.weight }};
+    --rp-script-size: {{ section.settings.script_size }}px;
+    --rp-quote-size: {{ section.settings.quote_size }}px;
+  }
+{%- endstyle -%}
+
+<div
+  class="review-photos review-photos-{{ section.id }}"
+  {% if section.settings.heading != blank %}
+    role="region" aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="review-photos__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="{{ heading_id }}" class="review-photos__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="review-photos__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="review-photos__list list-unstyled" role="list">
+        {%- for block in section.blocks -%}
+          <li class="review-photos__item">
+            {%- render 'review-photo-card', block: block -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        {% if section.settings.button_link != blank %}
+          href="{{ section.settings.button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        class="review-photos__button"
+      >
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Reseñas con foto",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Perros reales. Resultados reales."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Ese momento en que notás que tu perro volvió a ser el de siempre: nunca nos cansamos de escucharlo."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Ver todos"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas (desktop)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "card_min_height",
+      "min": 240,
+      "max": 640,
+      "step": 4,
+      "unit": "px",
+      "label": "Alto mínimo de la tarjeta",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Oscurecer la foto",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de bordes",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título y subtítulo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "card_frame",
+      "label": "Marco de la tarjeta",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Textos y estrellas de la tarjeta",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Color para oscurecer la foto",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Etiqueta: fondo",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Etiqueta: texto",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Botón: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Botón: texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Botón: fondo al pasar el mouse",
+      "default": "#C6FA41"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover",
+      "label": "Botón: texto al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente de títulos y etiquetas",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada de títulos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso de títulos",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (mobile)",
+      "default": 16
+    },
+    {
+      "type": "font_picker",
+      "id": "script_font",
+      "label": "Fuente manuscrita (nombre y edad)",
+      "info": "Elegí una fuente manuscrita de la biblioteca de Shopify.",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "script_size",
+      "min": 20,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la fuente manuscrita",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "quote_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la reseña",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "cards_max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 12,
+      "unit": "px",
+      "label": "Ancho máximo de las tarjetas",
+      "default": 1032
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre elementos",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto del perro",
+          "info": "Vertical, preferentemente. Usá el punto focal para encuadrar."
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Etiqueta (producto)",
+          "default": "Masticables para articulaciones"
+        },
+        {
+          "type": "text",
+          "id": "pet_name",
+          "label": "Nombre del perro",
+          "default": "Nombre"
+        },
+        {
+          "type": "text",
+          "id": "pet_age",
+          "label": "Edad",
+          "default": "7 años"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Reseña",
+          "default": "<p>Pegá acá la reseña real del cliente.</p>"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Estrellas",
+          "info": "0 = ocultar.",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Cliente",
+          "default": "Nombre A."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reseñas con foto",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

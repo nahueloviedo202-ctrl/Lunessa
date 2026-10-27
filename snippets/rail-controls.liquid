@@ -8,13 +8,14 @@
   @param {string} [subheading] - Text shown between the arrows.
   @param {boolean} [show_arrows] - Whether to render the arrows. Defaults to `false`.
   @param {boolean} [arrows_mobile_only] - Hide the arrows from 750px up. Defaults to `false`.
+  @param {string} [class] - Extra classes for the wrapper (e.g. `slider-buttons` for Dawn's SlideshowComponent).
 
   @example
   {% render 'rail-controls', slider_id: 'Slider-123', subheading: 'Texto', show_arrows: true %}
 {% enddoc %}
 
 {%- if show_arrows or subheading != blank -%}
-  <div class="rail-controls{% if show_arrows %} rail-controls--arrows{% endif %}{% if arrows_mobile_only %} rail-controls--mobile-only{% endif %}">
+  <div class="rail-controls{% if show_arrows %} rail-controls--arrows{% endif %}{% if arrows_mobile_only %} rail-controls--mobile-only{% endif %}{% if class != blank %} {{ class }}{% endif %}">
     {%- if show_arrows -%}
       <button
         type="button"

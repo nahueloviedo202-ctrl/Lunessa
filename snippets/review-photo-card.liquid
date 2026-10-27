@@ -1,0 +1,82 @@
+{% doc %}
+  Renders one review card of the review-photos section: photo background,
+  product pill, pet name/age in script type, quote, star rating and author.
+
+  @param {object} block - A `review` block of the review-photos section.
+
+  @example
+  {% render 'review-photo-card', block: block %}
+{% enddoc %}
+
+{%- assign rating = block.settings.rating -%}
+
+<article class="review-photo-card" {{ block.shopify_attributes }}>
+  <div class="review-photo-card__panel">
+    {%- if block.settings.image != blank -%}
+      {%- assign focal = block.settings.image.presentation.focal_point | default: '50% 50%' -%}
+      {%- assign image_style = 'object-position: ' | append: focal | append: ';' -%}
+      {{
+        block.settings.image
+        | image_url: width: 900
+        | image_tag:
+          class: 'review-photo-card__image',
+          widths: '320, 450, 600, 900',
+          sizes: '(min-width: 1024px) 330px, (min-width: 750px) 50vw, calc(100vw - 56px)',
+          loading: 'lazy',
+          alt: block.settings.image.alt,
+          style: image_style
+      }}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'review-photo-card__image placeholder-svg' }}
+    {%- endif -%}
+    <span class="review-photo-card__overlay" aria-hidden="true"></span>
+
+    <div class="review-photo-card__content">
+      {%- if block.settings.badge != blank -%}
+        <span class="review-photo-card__badge">{{ block.settings.badge | escape }}</span>
+      {%- else -%}
+        <span></span>
+      {%- endif -%}
+
+      {%- if block.settings.pet_name != blank or block.settings.pet_age != blank -%}
+        <div class="review-photo-card__pet">
+          {%- if block.settings.pet_name != blank -%}
+            <p class="review-photo-card__script">{{ block.settings.pet_name | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.pet_age != blank -%}
+            <p class="review-photo-card__script">{{ block.settings.pet_age | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="review-photo-card__footer">
+        {%- if block.settings.quote != blank -%}
+          <blockquote class="review-photo-card__quote">{{ block.settings.quote }}</blockquote>
+        {%- endif -%}
+        <div class="review-photo-card__meta">
+          {%- if rating > 0 -%}
+            <span
+              class="review-photo-card__stars"
+              role="img"
+              aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating, rating_max: 5 }}"
+            >
+              {%- for i in (1..5) -%}
+                <svg
+                  class="review-photo-card__star{% if i > rating %} review-photo-card__star--empty{% endif %}"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M12 2.489L14.361 9.755H22L15.82 14.245L18.18 21.511L12 17.02L5.82 21.511L8.18 14.245L2 9.755H9.639L12 2.489Z" fill="currentColor"/>
+                </svg>
+              {%- endfor -%}
+            </span>
+          {%- endif -%}
+          {%- if block.settings.author != blank -%}
+            <p class="review-photo-card__author">{{ block.settings.author | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,651 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-rail-controls.css' | asset_url | stylesheet_tag }}
+{{ 'section-vet-board.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'coverflow-slider.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign slider_id = 'Slider-' | append: section.id
+  assign show_arrows = false
+  if section.blocks.size > 1
+    assign show_arrows = true
+  endif
+
+  assign carousel_label = section.settings.heading | strip_html
+  if carousel_label == blank
+    assign carousel_label = 'general.slider.name' | t
+  endif
+
+  assign neighbour_shift = section.settings.slide_width | minus: section.settings.neighbour_offset
+  assign image_sizes = '(min-width: 750px) ' | append: section.settings.slide_width | append: 'px, calc(100vw - 32px)'
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '800' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .vet-board-{{ section.id }} {
+    --vb-bg: {{ section.settings.background }};
+    --vb-heading-color: {{ section.settings.heading_color }};
+    --vb-highlight-color: {{ section.settings.highlight_color }};
+    --vb-subheading-color: {{ section.settings.subheading_color }};
+    --vb-card-bg: {{ section.settings.card_background }};
+    --vb-card-color: {{ section.settings.card_text_color }};
+    --vb-card-radius: {{ section.settings.card_radius }}px;
+    --vb-card-shadow: {% if section.settings.card_shadow %}0 4px 4px 0 rgba(0, 0, 0, 0.25){% else %}none{% endif %};
+    --vb-pt: {{ section.settings.padding_top }}px;
+    --vb-pb: {{ section.settings.padding_bottom }}px;
+    --vb-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --vb-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --vb-max-width: {{ section.settings.max_width }}px;
+    --vb-px: {{ section.settings.padding_x }}px;
+    --vb-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --vb-stack-gap: {{ section.settings.stack_gap }}px;
+    --vb-heading-ff: {{ heading_ff }};
+    --vb-heading-fs: {{ heading_fs }};
+    --vb-heading-fw: {{ section.settings.heading_font_weight }};
+    --vb-heading-size: {{ section.settings.heading_size }}px;
+    --vb-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --vb-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --vb-heading-max: {{ section.settings.heading_max_width }}px;
+    --vb-subheading-max: {{ section.settings.subheading_max_width }}px;
+    --vb-body-ff: {{ body_ff }};
+    --vb-body-fs: {{ body_fs }};
+    --vb-subheading-size: {{ section.settings.subheading_size }}px;
+    --vb-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --vb-name-size: {{ section.settings.name_size }}px;
+    --vb-bio-size: {{ section.settings.bio_size }}px;
+    --vb-slide-width: {{ section.settings.slide_width }}px;
+    --vb-neighbour-shift: {{ neighbour_shift }}px;
+    --vb-neighbour-offset: {{ section.settings.neighbour_offset }}px;
+    --vb-neighbour-scale: {{ section.settings.neighbour_scale | divided_by: 100.0 }};
+    --vb-neighbour-opacity: {{ section.settings.neighbour_opacity | divided_by: 100.0 }};
+    --vb-image-ratio: {{ section.settings.image_ratio | divided_by: 100.0 }};
+    --rail-arrow-bg: {{ section.settings.arrow_background }};
+    --rail-arrow-color: {{ section.settings.arrow_color }};
+    --rail-arrow-bg-hover: {{ section.settings.arrow_background_hover }};
+    --rail-arrow-color-hover: {{ section.settings.arrow_color_hover }};
+    --rail-focus: {{ section.settings.arrow_background }};
+  }
+{%- endstyle -%}
+
+<div class="vet-board vet-board-{{ section.id }}">
+  <div class="vet-board__container">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="vet-board__intro">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vet-board__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="vet-board__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <coverflow-slider class="vet-board__carousel">
+        <ul
+          id="{{ slider_id }}"
+          class="slider slider--everywhere vet-board__track list-unstyled"
+          role="list"
+          aria-label="{{ carousel_label | escape }}"
+          tabindex="0"
+        >
+          {%- for block in section.blocks -%}
+            <li
+              id="Slide-{{ section.id }}-{{ forloop.index }}"
+              class="slider__slide slideshow__slide vet-board__slide"
+              {% if forloop.first %}
+                data-state="centre"
+              {% elsif forloop.index == 2 %}
+                data-state="next"
+              {% else %}
+                data-state="off"
+              {% endif %}
+              aria-label="{{ 'general.slider.of' | t | prepend: ' ' | prepend: forloop.index | append: ' ' | append: forloop.length }}"
+            >
+              <figure class="vet-board__card" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {%- assign focal = block.settings.image.presentation.focal_point | default: '50% 26%' -%}
+                  {%- assign image_style = 'object-position: ' | append: focal | append: ';' -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 900
+                    | image_tag:
+                      class: 'vet-board__image',
+                      widths: '320, 400, 600, 800, 900',
+                      sizes: image_sizes,
+                      loading: 'lazy',
+                      alt: block.settings.image.alt,
+                      style: image_style
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'vet-board__image placeholder-svg' }}
+                {%- endif -%}
+                <figcaption class="vet-board__name">
+                  {{- block.settings.name | escape -}}
+                  {%- if block.settings.credential != blank -%}
+                    <span class="vet-board__credential">{{ block.settings.credential | escape }}</span>
+                  {%- endif -%}
+                </figcaption>
+                {%- if block.settings.bio != blank -%}
+                  <div class="vet-board__bio">{{ block.settings.bio }}</div>
+                {%- endif -%}
+              </figure>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- render 'rail-controls',
+          slider_id: slider_id,
+          show_arrows: show_arrows,
+          class: 'slider-buttons vet-board__arrows'
+        -%}
+      </coverflow-slider>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Equipo de veterinarios",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "info": "Lo que pongas en negrita se muestra con el color de resaltado.",
+      "default": "El equipo veterinario que <strong>realmente asesora</strong>"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Nuestros veterinarios no solo recomiendan los suplementos: conocen los problemas reales de cada día y ese conocimiento guía todo lo que hacemos."
+    },
+    {
+      "type": "header",
+      "content": "Carrusel"
+    },
+    {
+      "type": "range",
+      "id": "slide_width",
+      "min": 280,
+      "max": 520,
+      "step": 5,
+      "unit": "px",
+      "label": "Ancho de la tarjeta central (desktop)",
+      "default": 395
+    },
+    {
+      "type": "range",
+      "id": "neighbour_offset",
+      "min": 100,
+      "max": 400,
+      "step": 3,
+      "unit": "px",
+      "label": "Distancia de las tarjetas vecinas (desktop)",
+      "default": 217
+    },
+    {
+      "type": "range",
+      "id": "neighbour_scale",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tamaño de las tarjetas vecinas",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "neighbour_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad de las tarjetas vecinas",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "image_ratio",
+      "min": 60,
+      "max": 160,
+      "step": 1,
+      "unit": "%",
+      "label": "Alto de la foto respecto al ancho",
+      "default": 114
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de la tarjeta",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "card_shadow",
+      "label": "Sombra en la tarjeta",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Resaltado del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subtítulo",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fondo de la tarjeta",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Texto de la tarjeta",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Flechas: fondo",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Flechas: icono",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background_hover",
+      "label": "Flechas: fondo al pasar el mouse",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color_hover",
+      "label": "Flechas: icono al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del nombre",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "bio_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la biografía",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del título",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del subtítulo",
+      "default": 750
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre textos y carrusel",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vet",
+      "name": "Veterinario",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto",
+          "info": "Usá el punto focal para encuadrar la cara."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Dra. Nombre Apellido"
+        },
+        {
+          "type": "text",
+          "id": "credential",
+          "label": "Título y especialidad",
+          "default": "Médica Veterinaria | Nutrición canina"
+        },
+        {
+          "type": "richtext",
+          "id": "bio",
+          "label": "Biografía",
+          "default": "<p>Contá en pocas líneas su formación y experiencia.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Equipo de veterinarios",
+      "blocks": [
+        {
+          "type": "vet"
+        },
+        {
+          "type": "vet"
+        },
+        {
+          "type": "vet"
+        },
+        {
+          "type": "vet"
+        },
+        {
+          "type": "vet"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
