@@ -123,6 +123,7 @@
         "logo_width": 140,
         "logo_width_mobile": 80,
         "sticky": true,
+        "hide_on_product": true,
         "overlay_mode": "all",
         "show_search": true,
         "show_account": true,
