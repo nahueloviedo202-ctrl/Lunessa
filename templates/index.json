@@ -114,6 +114,7 @@
         "item_KbBppm": {
           "type": "item",
           "settings": {
+            "logo_height": 0,
             "icon": "star",
             "title": "Hecho en Mexico",
             "caption": "*con ingredientes de todo el mundo",
@@ -123,6 +124,7 @@
         "item_Jzae7y": {
           "type": "item",
           "settings": {
+            "logo_height": 0,
             "icon": "clipboard",
             "title": "Formulado científicamente",
             "caption": "",
@@ -132,6 +134,7 @@
         "item_gCHGGL": {
           "type": "item",
           "settings": {
+            "logo_height": 0,
             "icon": "check_mark",
             "title": "Testeado por terceros",
             "caption": "",
@@ -141,6 +144,7 @@
         "item_8z7FxL": {
           "type": "item",
           "settings": {
+            "logo_height": 0,
             "icon": "return",
             "title": "Garantía de 90 días",
             "caption": "",
@@ -150,6 +154,7 @@
         "item_BcaC9F": {
           "type": "item",
           "settings": {
+            "logo_height": 0,
             "icon": "leaf",
             "title": "Sin colorantes artificiales",
             "caption": "",
@@ -159,6 +164,7 @@
         "item_Ykw8WX": {
           "type": "item",
           "settings": {
+            "logo_height": 0,
             "icon": "plant",
             "title": "Sin conservantes artificiales",
             "caption": "",
@@ -176,12 +182,14 @@
       ],
       "name": "Franja de sellos",
       "settings": {
+        "heading": "",
         "aria_label": "Beneficios del producto",
         "layout": "marquee",
         "direction": "left",
         "duration": 32,
         "duration_mobile": 32,
         "repeat_count": 1,
+        "item_alignment": "between",
         "pause_on_hover": true,
         "background": "#f0fec9",
         "text_color": "#075007",
@@ -194,6 +202,14 @@
         "title_weight": "500",
         "caption_size": 12,
         "letter_spacing": -22,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 36,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "heading_gap": 32,
+        "min_height": 0,
         "icon_size": 38,
         "icon_size_mobile": 38,
         "icon_gap": 8,
@@ -445,17 +461,17 @@
         "title_size": 18,
         "arrow_size": 17,
         "radius": 5,
-        "background": "#FFFFFF",
+        "background": "#ffffff",
         "text_color": "#075007",
-        "card_border": "#F0F0F0",
-        "card_border_hover": "#B4CBB4",
-        "footer_background": "#F4F4F4",
-        "footer_background_hover": "#FFFFFF",
+        "card_border": "#f0f0f0",
+        "card_border_hover": "#b4cbb4",
+        "footer_background": "#f4f4f4",
+        "footer_background_hover": "#ffffff",
         "arrow_background": "#075007",
-        "arrow_color": "#CDFC4B",
-        "arrow_background_hover": "#C6FA41",
+        "arrow_color": "#cdfc4b",
+        "arrow_background_hover": "#c6fa41",
         "arrow_color_hover": "#075007",
-        "focus_color": "#CDFC4B",
+        "focus_color": "#cdfc4b",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
         "heading_font_weight": "900",
@@ -475,6 +491,206 @@
         "padding_top_mobile": 64,
         "padding_bottom_mobile": 64
       }
+    },
+    "media_text_split_k9mYGz": {
+      "type": "media-text-split",
+      "blocks": {
+        "lead_DrVWpf": {
+          "type": "lead",
+          "settings": {
+            "text": "Cada producto cumple el mismo estándar antes de llegar a tu perro."
+          }
+        },
+        "feature_U6zmVn": {
+          "type": "feature",
+          "settings": {
+            "heading": "1. Los ingredientes correctos.",
+            "text": "<p>Cada ingrediente está respaldado por la ciencia. Si está en la fórmula, es porque funciona.</p>"
+          }
+        },
+        "feature_h8CqCa": {
+          "type": "feature",
+          "settings": {
+            "heading": "2. Las concentraciones correctas.",
+            "text": "<p>Las dosis mínimas no hacen nada. Formulamos en niveles que marcan una diferencia real.</p>"
+          }
+        },
+        "feature_Fwt7H7": {
+          "type": "feature",
+          "settings": {
+            "heading": "3. Las combinaciones correctas.",
+            "text": "<p>Algunos ingredientes funcionan mejor juntos. Cada parte de la fórmula cumple su función.</p>"
+          }
+        },
+        "button_ixJQLq": {
+          "type": "button",
+          "settings": {
+            "label": "Ver ingredientes",
+            "link": "",
+            "style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "lead_DrVWpf",
+        "feature_U6zmVn",
+        "feature_h8CqCa",
+        "feature_Fwt7H7",
+        "button_ixJQLq"
+      ],
+      "name": "Imagen y texto dividido",
+      "settings": {
+        "heading": "Nuestro estándar",
+        "media_position": "start",
+        "media_position_mobile": "start",
+        "media_ratio": 84,
+        "media_ratio_mobile": 84,
+        "media_radius": 0,
+        "sticky_media": false,
+        "media_width": 512,
+        "copy_width": 512,
+        "vertical_alignment": "center",
+        "column_gap": 64,
+        "column_gap_mobile": 32,
+        "copy_gap": 24,
+        "background": "#F4F4F4",
+        "heading_color": "#075007",
+        "text_color": "#075007",
+        "button_color": "#075007",
+        "button_background_hover": "#C6FA41",
+        "button_color_hover": "#075007",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 36,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "feature_heading_size": 20,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "mark_strip_DmcAfc": {
+      "type": "mark-strip",
+      "blocks": {
+        "item_JkTNhR": {
+          "type": "item",
+          "settings": {
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_mmYJeY": {
+          "type": "item",
+          "settings": {
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_GcyL3P": {
+          "type": "item",
+          "settings": {
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_66etnd": {
+          "type": "item",
+          "settings": {
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_yqP4RP": {
+          "type": "item",
+          "settings": {
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_FJFfyV": {
+          "type": "item",
+          "settings": {
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_JkTNhR",
+        "item_mmYJeY",
+        "item_GcyL3P",
+        "item_66etnd",
+        "item_yqP4RP",
+        "item_FJFfyV"
+      ],
+      "name": "Nos vieron en",
+      "settings": {
+        "heading": "Nos vieron en",
+        "aria_label": "",
+        "layout": "marquee",
+        "direction": "left",
+        "duration": 50,
+        "duration_mobile": 50,
+        "repeat_count": 1,
+        "item_alignment": "start",
+        "pause_on_hover": true,
+        "background": "#cdfc4b",
+        "text_color": "#075007",
+        "focus_color": "#CDFC4B",
+        "tint_icons": false,
+        "font_source": "theme_body",
+        "font": "assistant_n4",
+        "title_size": 18,
+        "title_size_mobile": 16,
+        "title_weight": "500",
+        "caption_size": 12,
+        "letter_spacing": -22,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 36,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "heading_gap": 32,
+        "min_height": 60,
+        "icon_size": 38,
+        "icon_size_mobile": 38,
+        "icon_gap": 8,
+        "item_gap": 64,
+        "item_gap_mobile": 64,
+        "padding_vertical": 64,
+        "padding_vertical_mobile": 64,
+        "padding_x": 64
+      }
     }
   },
   "order": [
@@ -482,6 +698,8 @@
     "mark_strip_a66Jbr",
     "product_rail_cRG7DE",
     "rating_bar_MyQaeW",
-    "category_grid_qnfEK4"
+    "category_grid_qnfEK4",
+    "mark_strip_DmcAfc",
+    "media_text_split_k9mYGz"
   ]
 }
