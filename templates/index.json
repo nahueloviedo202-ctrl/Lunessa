@@ -22,7 +22,7 @@
             "line_height": 82,
             "letter_spacing": -2,
             "uppercase": true,
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "max_width": 600
           }
         },
@@ -35,7 +35,7 @@
             "line_height": 120,
             "line_height_mobile": 110,
             "font_weight": "500",
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "max_width": 576
           }
         },
@@ -100,74 +100,108 @@
         "button_letter_spacing": 2,
         "button_uppercase": true,
         "button_border_width": 1.5,
-        "primary_background": "#CDFC4B",
+        "primary_background": "#cdfc4b",
         "primary_text": "#075007",
-        "primary_background_hover": "#FFFFFF",
+        "primary_background_hover": "#ffffff",
         "primary_text_hover": "#075007",
-        "secondary_color": "#CDFC4B",
-        "secondary_color_hover": "#FFFFFF"
+        "secondary_color": "#cdfc4b",
+        "secondary_color_hover": "#ffffff"
       }
     },
-    "marquee_bar_gpUcqY": {
-      "type": "marquee-bar",
+    "mark_strip_a66Jbr": {
+      "type": "mark-strip",
       "blocks": {
-        "item_AQdbmf": {
+        "item_KbBppm": {
           "type": "item",
           "settings": {
-            "text": "ENVÍO GRATIS"
+            "icon": "star",
+            "title": "Hecho en Argentina*",
+            "caption": "*con ingredientes de todo el mundo",
+            "link": ""
           }
         },
-        "item_tDTk4e": {
+        "item_Jzae7y": {
           "type": "item",
           "settings": {
-            "text": "GARANTÍA 90 DÍAS"
+            "icon": "clipboard",
+            "title": "Formulado científicamente",
+            "caption": "",
+            "link": ""
           }
         },
-        "item_4NxCKn": {
+        "item_gCHGGL": {
           "type": "item",
           "settings": {
-            "text": "CLINICAMENTE ESTUDIADO"
+            "icon": "check_mark",
+            "title": "Testeado por terceros",
+            "caption": "",
+            "link": ""
           }
         },
-        "item_ytV7Dh": {
+        "item_8z7FxL": {
           "type": "item",
           "settings": {
-            "text": "SIN AZÚCAR"
+            "icon": "return",
+            "title": "Garantía de 90 días",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_BcaC9F": {
+          "type": "item",
+          "settings": {
+            "icon": "leaf",
+            "title": "Sin colorantes artificiales",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_Ykw8WX": {
+          "type": "item",
+          "settings": {
+            "icon": "plant",
+            "title": "Sin conservantes artificiales",
+            "caption": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "item_AQdbmf",
-        "item_tDTk4e",
-        "item_4NxCKn",
-        "item_ytV7Dh"
+        "item_KbBppm",
+        "item_Jzae7y",
+        "item_gCHGGL",
+        "item_8z7FxL",
+        "item_BcaC9F",
+        "item_Ykw8WX"
       ],
-      "name": "Marquesina",
+      "name": "Franja de sellos",
       "settings": {
-        "duration": 30,
-        "duration_mobile": 40,
+        "aria_label": "Beneficios del producto",
+        "layout": "marquee",
         "direction": "left",
+        "duration": 32,
+        "duration_mobile": 32,
+        "repeat_count": 1,
         "pause_on_hover": true,
-        "repeat_count": 3,
-        "background": "#7f1525",
-        "text_color": "#feebeb",
-        "text_size": 12,
-        "text_size_tablet": 16,
-        "text_size_mobile": 14,
-        "font_weight": "600",
-        "letter_spacing": 2,
-        "letter_spacing_mobile": 1,
-        "text_transform": "none",
-        "item_gap": 60,
-        "item_gap_mobile": 60,
-        "padding_vertical": 7,
-        "padding_vertical_mobile": 5,
-        "item_padding_vertical": 8,
-        "show_separator": false,
-        "separator_color": "#feebeb",
-        "separator_size": 16,
-        "font_custom": false,
-        "font": "assistant_n4"
+        "background": "#F0FEC9",
+        "text_color": "#075007",
+        "focus_color": "#CDFC4B",
+        "tint_icons": true,
+        "font_source": "theme_body",
+        "font": "assistant_n4",
+        "title_size": 18,
+        "title_size_mobile": 16,
+        "title_weight": "500",
+        "caption_size": 12,
+        "letter_spacing": -22,
+        "icon_size": 38,
+        "icon_size_mobile": 38,
+        "icon_gap": 8,
+        "item_gap": 64,
+        "item_gap_mobile": 64,
+        "padding_vertical": 16,
+        "padding_vertical_mobile": 16,
+        "padding_x": 18
       }
     },
     "image_panel_banner_8Er6k9": {
@@ -1508,7 +1542,7 @@
   },
   "order": [
     "page_hero_zFrrBb",
-    "marquee_bar_gpUcqY",
+    "mark_strip_a66Jbr",
     "image_panel_banner_8Er6k9",
     "image_checklist_9X9r6M",
     "ingredients_tabs_e8BwbD",
