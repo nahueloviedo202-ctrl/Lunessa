@@ -1,0 +1,92 @@
+{% doc %}
+  Renders one card of the video-stories section: muted looping video (with poster)
+  and a product panel with thumbnail, title, price and CTA.
+
+  @param {object} block - A `story` block of the video-stories section.
+  @param {object} [section] - The video-stories section, supplied implicitly; used for the button label.
+
+  @example
+  {% render 'video-story-card', block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign story_product = block.settings.product
+  assign poster = block.settings.poster | default: block.settings.video.preview_image
+
+  if story_product != blank
+    assign product_url = story_product.url
+    assign product_title = story_product.title
+  else
+    assign product_url = routes.all_products_collection_url
+    assign product_title = 'onboarding.product_title' | t
+  endif
+
+  assign link = block.settings.link | default: product_url
+  assign title_id = 'VideoStory-' | append: block.id
+-%}
+
+<article class="video-story" {{ block.shopify_attributes }}>
+  <div class="video-story__media">
+    {%- if poster != blank -%}
+      {{
+        poster
+        | image_url: width: 900
+        | image_tag:
+          class: 'video-story__poster',
+          widths: '330, 450, 660, 900',
+          sizes: '(min-width: 750px) 330px, calc(100vw - 32px)',
+          loading: 'lazy',
+          alt: ''
+      }}
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'video-story__poster placeholder-svg' }}
+    {%- endif -%}
+    {%- if block.settings.video != blank -%}
+      {{
+        block.settings.video
+        | video_tag:
+          image_size: '900x',
+          autoplay: false,
+          loop: true,
+          controls: false,
+          muted: true,
+          playsinline: true,
+          preload: 'none',
+          title: block.settings.video_description,
+          class: 'video-story__video'
+      }}
+    {%- endif -%}
+  </div>
+
+  <div class="video-story__panel">
+    <div class="video-story__product">
+      <div class="video-story__thumb">
+        {%- if story_product.featured_media != blank -%}
+          {{
+            story_product.featured_media.preview_image
+            | image_url: width: 140
+            | image_tag: widths: '70, 140', sizes: '70px', loading: 'lazy', alt: ''
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="video-story__info">
+        <p id="{{ title_id }}" class="video-story__title">{{ product_title | escape }}</p>
+        {%- if story_product != blank -%}
+          <p class="video-story__price">
+            {%- if story_product.compare_at_price_min > story_product.price_min -%}
+              <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+              <s>{{ story_product.compare_at_price_min | money }}</s>
+              <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+            {%- endif -%}
+            {{ story_product.price_min | money }}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+    <a href="{{ link }}" class="video-story__button" aria-describedby="{{ title_id }}">
+      {{- section.settings.button_label | escape -}}
+    </a>
+  </div>
+</article>

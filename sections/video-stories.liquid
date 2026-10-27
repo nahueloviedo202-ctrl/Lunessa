@@ -1,0 +1,542 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-rail-controls.css' | asset_url | stylesheet_tag }}
+{{ 'section-video-stories.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'centered-rail.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign slider_id = 'Slider-' | append: section.id
+  assign show_arrows = false
+  if section.settings.show_arrows and section.blocks.size > 1
+    assign show_arrows = true
+  endif
+
+  assign rail_label = section.settings.heading | strip_html
+  if rail_label == blank
+    assign rail_label = 'general.slider.name' | t
+  endif
+
+  assign media_offset = section.settings.media_height_active | minus: section.settings.media_height | divided_by: 2.0
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '800' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .video-stories-{{ section.id }} {
+    --vs-bg: {{ section.settings.background }};
+    --vs-heading-color: {{ section.settings.heading_color }};
+    --vs-highlight-color: {{ section.settings.highlight_color }};
+    --vs-panel-bg: {{ section.settings.panel_background }};
+    --vs-panel-color: {{ section.settings.panel_text_color }};
+    --vs-button-bg: {{ section.settings.button_background }};
+    --vs-button-color: {{ section.settings.button_text }};
+    --vs-button-bg-hover: {{ section.settings.button_background_hover }};
+    --vs-button-color-hover: {{ section.settings.button_text_hover }};
+    --vs-pt: {{ section.settings.padding_top }}px;
+    --vs-pb: {{ section.settings.padding_bottom }}px;
+    --vs-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --vs-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --vs-max-width: {{ section.settings.max_width }}px;
+    --vs-px: {{ section.settings.padding_x }}px;
+    --vs-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --vs-stack-gap: {{ section.settings.stack_gap }}px;
+    --vs-card-width: {{ section.settings.card_width }}px;
+    --vs-gap: {{ section.settings.card_gap }}px;
+    --vs-media-height: {{ section.settings.media_height }}px;
+    --vs-media-height-active: {{ section.settings.media_height_active }}px;
+    --vs-media-offset: {{ media_offset }}px;
+    --vs-radius: {{ section.settings.radius }}px;
+    --vs-heading-ff: {{ heading_ff }};
+    --vs-heading-fs: {{ heading_fs }};
+    --vs-heading-fw: {{ section.settings.heading_font_weight }};
+    --vs-heading-size: {{ section.settings.heading_size }}px;
+    --vs-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --vs-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --vs-heading-max: {{ section.settings.heading_max_width }}px;
+    --vs-body-ff: {{ body_ff }};
+    --vs-body-fs: {{ body_fs }};
+    --rail-arrow-bg: {{ section.settings.button_background_hover }};
+    --rail-arrow-color: {{ section.settings.button_text_hover }};
+    --rail-arrow-bg-hover: {{ section.settings.panel_background }};
+    --rail-arrow-color-hover: {{ section.settings.button_text_hover }};
+    --rail-focus: {{ section.settings.highlight_color }};
+  }
+{%- endstyle -%}
+
+<div class="video-stories video-stories-{{ section.id }}">
+  <div class="video-stories__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="video-stories__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <centered-rail class="video-stories__rail">
+        {%- render 'rail-controls', slider_id: slider_id, show_arrows: show_arrows -%}
+
+        <ul
+          id="{{ slider_id }}"
+          class="slider slider--everywhere video-stories__track list-unstyled"
+          role="list"
+          aria-label="{{ rail_label | escape }}"
+          tabindex="0"
+        >
+          {%- for block in section.blocks -%}
+            <li
+              id="Slide-{{ section.id }}-{{ forloop.index }}"
+              class="slider__slide video-stories__slide"
+              {% if forloop.first %}
+                data-state="centre"
+              {% endif %}
+            >
+              {%- render 'video-story-card', block: block -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </centered-rail>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Historias en video",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "info": "Lo que pongas en negrita se muestra con el color de resaltado.",
+      "default": "La eligen <strong>miles de</strong> familias con perro. <strong>Estás en buena compañía.</strong>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Comprar ahora"
+    },
+    {
+      "type": "header",
+      "content": "Carrusel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Mostrar flechas",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 220,
+      "max": 520,
+      "step": 4,
+      "unit": "px",
+      "label": "Ancho de tarjeta (desktop)",
+      "default": 328
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre tarjetas",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "media_height",
+      "min": 200,
+      "max": 700,
+      "step": 5,
+      "unit": "px",
+      "label": "Alto del video (desktop)",
+      "default": 340
+    },
+    {
+      "type": "range",
+      "id": "media_height_active",
+      "min": 200,
+      "max": 800,
+      "step": 6,
+      "unit": "px",
+      "label": "Alto del video central y en mobile",
+      "default": 482
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de bordes",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Resaltado del título",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Fondo del panel de producto",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "panel_text_color",
+      "label": "Texto del panel de producto",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Botón: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Botón: texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Botón y flechas: fondo al pasar el mouse",
+      "default": "#C6FA41"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover",
+      "label": "Botón y flechas: texto al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del título",
+      "default": 820
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre título y carrusel",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Historia",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Vertical (9:16). Se reproduce sin sonido y en bucle."
+        },
+        {
+          "type": "text",
+          "id": "video_description",
+          "label": "Descripción del video",
+          "info": "Para lectores de pantalla."
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Imagen de portada",
+          "info": "Opcional. Si está vacía se usa la portada del video."
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace del botón",
+          "info": "Opcional. Si está vacío lleva al producto."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Historias en video",
+      "blocks": [
+        {
+          "type": "story"
+        },
+        {
+          "type": "story"
+        },
+        {
+          "type": "story"
+        },
+        {
+          "type": "story"
+        },
+        {
+          "type": "story"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

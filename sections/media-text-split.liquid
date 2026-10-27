@@ -67,6 +67,9 @@
     --mts-column-gap: {{ section.settings.column_gap }}px;
     --mts-column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
     --mts-copy-gap: {{ section.settings.copy_gap }}px;
+    --mts-copy-gap-mobile: {{ section.settings.copy_gap_mobile }}px;
+    --mts-accordion-bg: {{ section.settings.accordion_background }};
+    --mts-accordion-border: {{ section.settings.accordion_border }};
     --mts-media-width: {{ section.settings.media_width }}px;
     --mts-copy-width: {{ section.settings.copy_width }}px;
     --mts-media-ratio: {{ section.settings.media_ratio | divided_by: 100.0 }};
@@ -88,7 +91,7 @@
 
 <div class="media-text-split media-text-split-{{ section.id }}">
   <div class="media-text-split__container">
-    {%- if section.settings.heading != blank -%}
+    {%- if section.settings.heading != blank and section.settings.heading_position == 'above' -%}
       <h2 class="media-text-split__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
 
@@ -122,6 +125,9 @@
       </div>
 
       <div class="media-text-split__copy">
+        {%- if section.settings.heading != blank and section.settings.heading_position == 'copy' -%}
+          <h2 class="media-text-split__heading media-text-split__heading--copy">{{ section.settings.heading }}</h2>
+        {%- endif -%}
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'lead' -%}
@@ -152,10 +158,49 @@
               >
                 {{- block.settings.label | escape -}}
               </a>
+
+            {%- when 'accordion' -%}
+              {%- liquid
+                assign prev_index = forloop.index0 | minus: 1
+                assign prev_block = section.blocks[prev_index]
+                assign next_block = section.blocks[forloop.index]
+              -%}
+              {%- if forloop.first or prev_block.type != 'accordion' -%}
+                <div class="media-text-split__accordion">
+              {%- endif -%}
+              <details class="media-text-split__accordion-item" {{ block.shopify_attributes }}>
+                <summary class="media-text-split__accordion-summary">
+                  {%- if block.settings.show_icon -%}
+                    <svg class="media-text-split__accordion-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                      <path d="M12 1.0195C18.0641 1.0195 22.9805 5.9359 22.9805 12C22.9805 18.0641 18.0641 22.9805 12 22.9805C5.9359 22.9805 1.0195 18.0641 1.0195 12C1.0195 5.9359 5.9359 1.0195 12 1.0195Z" fill="var(--mts-accordion-bg)" stroke="currentColor" stroke-width="2.04"/>
+                      <path d="M6.6663 13.1653L8.4876 16.0138C8.9075 16.6703 9.8418 16.7358 10.3491 16.1441L17.333 7.9987" stroke="currentColor" stroke-width="2.04" stroke-linecap="round"/>
+                    </svg>
+                  {%- endif -%}
+                  <h3 class="media-text-split__accordion-title">{{ block.settings.heading }}</h3>
+                  <span class="media-text-split__accordion-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="media-text-split__accordion-content">{{ block.settings.text }}</div>
+              </details>
+              {%- if forloop.last or next_block.type != 'accordion' -%}
+                </div>
+              {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
       </div>
     </div>
+
+    {%- if section.settings.footer_button_label != blank -%}
+      <a
+        {% if section.settings.footer_button_link != blank %}
+          href="{{ section.settings.footer_button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        class="media-text-split__button media-text-split__button--solid media-text-split__button--footer"
+      >
+        {{- section.settings.footer_button_label | escape -}}
+      </a>
+    {%- endif -%}
   </div>
 </div>
 
@@ -164,13 +209,40 @@
   "name": "Imagen y texto dividido",
   "tag": "section",
   "class": "section",
-  "max_blocks": 12,
+  "max_blocks": 16,
   "settings": [
     {
       "type": "inline_richtext",
       "id": "heading",
       "label": "Título",
       "default": "Nuestro estándar"
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Posición del título",
+      "options": [
+        {
+          "value": "above",
+          "label": "Arriba, centrado"
+        },
+        {
+          "value": "copy",
+          "label": "En la columna de texto"
+        }
+      ],
+      "default": "above"
+    },
+    {
+      "type": "text",
+      "id": "footer_button_label",
+      "label": "Botón inferior: texto",
+      "info": "Opcional. Se muestra centrado debajo de todo."
+    },
+    {
+      "type": "url",
+      "id": "footer_button_link",
+      "label": "Botón inferior: enlace"
     },
     {
       "type": "header",
@@ -323,7 +395,17 @@
       "max": 64,
       "step": 2,
       "unit": "px",
-      "label": "Espacio entre bloques de texto",
+      "label": "Espacio entre bloques de texto (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "copy_gap_mobile",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre bloques de texto (mobile)",
       "default": 24
     },
     {
@@ -366,6 +448,18 @@
       "id": "button_color_hover",
       "label": "Botón: texto al pasar el mouse",
       "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "accordion_background",
+      "label": "Desplegables: fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accordion_border",
+      "label": "Desplegables: borde",
+      "default": "#E3E3E3"
     },
     {
       "type": "header",
@@ -668,6 +762,30 @@
           "default": "outline"
         }
       ]
+    },
+    {
+      "type": "accordion",
+      "name": "Desplegable",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Título",
+          "default": "Certificación de calidad"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Contenido",
+          "default": "<p>Contá en qué consiste y por qué importa.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Mostrar ícono de check",
+          "default": true
+        }
+      ]
     }
   ],
   "presets": [
@@ -700,6 +818,63 @@
         },
         {
           "type": "button"
+        }
+      ]
+    },
+    {
+      "name": "Certificaciones",
+      "settings": {
+        "heading": "Certificados con el estándar más alto",
+        "heading_position": "copy",
+        "background": "#FFFFFF",
+        "media_position": "end",
+        "vertical_alignment": "start",
+        "sticky_media": true,
+        "media_width": 517,
+        "copy_width": 482,
+        "media_ratio": 80,
+        "media_ratio_mobile": 80,
+        "copy_gap": 32,
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "footer_button_label": "Ver todos"
+      },
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Certificación de calidad"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Nuestro estándar"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Testeado por terceros"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Ingrediente activo verificado"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Integridad de ingredientes"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Probado por la comunidad"
+          }
         }
       ]
     }
