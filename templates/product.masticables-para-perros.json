@@ -1080,7 +1080,7 @@
       ],
       "name": "Carril de videos",
       "settings": {
-        "background_color": "#B9BAA3",
+        "background_color": "#D6D5C9",
         "max_width": 1440,
         "stack_gap": 24,
         "stack_gap_mobile": 24,
