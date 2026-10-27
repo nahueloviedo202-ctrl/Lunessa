@@ -119,7 +119,8 @@
         "link_faqs"
       ],
       "settings": {
-        "logo_width": 116,
+        "logo": "shopify://shop_images/4d508c30-45fb-43aa-b182-59f481e87210.webp",
+        "logo_width": 140,
         "logo_width_mobile": 80,
         "sticky": true,
         "overlay_mode": "all",
