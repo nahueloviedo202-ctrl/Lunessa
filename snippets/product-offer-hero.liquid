@@ -18,11 +18,23 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign product_form_id = 'product-form-' | append: section.id
-  assign grouped_types = 'badge,highlight,benefit,offer,trust,faq,before_after' | split: ','
+  assign grouped_types = 'badge,highlight,benefit,offer,trust,faq,before_after,choice' | split: ','
+  assign extra_types = 'step,choice,stock,guarantee' | split: ','
 
   assign first_offer_id = ''
   assign selected_offer_id = ''
+  assign load_extras_css = false
+  assign step_count = 0
   for b in section.blocks
+    if extra_types contains b.type
+      assign load_extras_css = true
+    elsif b.type == 'title' and b.settings.accent_color != blank
+      assign load_extras_css = true
+    elsif b.type == 'buy_buttons'
+      if b.settings.show_price or b.settings.custom_style
+        assign load_extras_css = true
+      endif
+    endif
     if b.type == 'offer'
       if first_offer_id == ''
         assign first_offer_id = b.id
@@ -42,6 +54,10 @@
     assign first_image_loading = 'eager'
   endif
 -%}
+
+{%- if load_extras_css -%}
+  {{ 'component-product-offer-steps.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 
 {%- style -%}
   {%- if section.settings.heading_font_custom -%}
@@ -393,8 +409,8 @@
 
             {%- when 'title' -%}
               <{{ block.settings.heading_tag }}
-                class="poh-title poh-visibility--{{ visibility }}"
-                style="--poh-title-size: {{ block.settings.text_size }}px; --poh-title-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-title-color: {{ block.settings.text_color }}; --poh-title-weight: {{ block.settings.font_weight }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                class="poh-title poh-visibility--{{ visibility }}{% if block.settings.accent_color != blank %} poh-title--accent{% endif %}"
+                style="--poh-title-size: {{ block.settings.text_size }}px; --poh-title-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-title-color: {{ block.settings.text_color }}; --poh-title-weight: {{ block.settings.font_weight }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;{% if block.settings.accent_color != blank %} --poh-title-accent: {{ block.settings.accent_color }};{% endif %}"
                 {{ block.shopify_attributes }}
               >
                 {%- if block.settings.title != blank -%}
@@ -625,6 +641,97 @@
                 {%- endfor -%}
               </fieldset>
 
+            {%- when 'step' -%}
+              {%- assign step_count = step_count | plus: 1 -%}
+              <p
+                class="poh-step poh-visibility--{{ visibility }}"
+                style="--poh-step-color: {{ block.settings.text_color }}; --poh-step-size: {{ block.settings.text_size }}px; --poh-step-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-step-weight: {{ block.settings.font_weight }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.show_number -%}
+                  <span class="poh-step__number">{{ step_count }}.</span>
+                {%- endif -%}
+                <span>{{ block.settings.text | escape }}</span>
+              </p>
+
+            {%- when 'choice' -%}
+              {%- liquid
+                assign choice_name = section.settings.choice_property | default: 'Opción'
+                assign choice_selected_id = ''
+                for item in section.blocks offset: block_index
+                  if item.type != 'choice'
+                    break
+                  endif
+                  if item.settings.selected and choice_selected_id == ''
+                    assign choice_selected_id = item.id
+                  endif
+                endfor
+                if choice_selected_id == '' and section.settings.choice_preselect
+                  assign choice_selected_id = block.id
+                endif
+              -%}
+              <fieldset
+                class="poh-choices"
+                style="--poh-choice-columns: {{ section.settings.choice_columns }}; --poh-choice-columns-mobile: {{ section.settings.choice_columns_mobile }}; --poh-choice-gap: {{ section.settings.choice_gap }}px; --poh-choice-bg: {{ section.settings.choice_background }}; --poh-choice-color: {{ section.settings.choice_text_color }}; --poh-choice-border: {{ section.settings.choice_border_color }}; --poh-choice-active-bg: {{ section.settings.choice_active_background }}; --poh-choice-active-color: {{ section.settings.choice_active_text_color }}; --poh-choice-size: {{ section.settings.choice_text_size }}px; --poh-choice-radius: {{ section.settings.choice_radius }}px; --poh-block-mb: {{ section.settings.choice_spacing_bottom }}px; --poh-block-mb-mobile: {{ section.settings.choice_spacing_bottom_mobile }}px;"
+              >
+                <legend class="visually-hidden">{{ choice_name | escape }}</legend>
+                {%- for item in section.blocks offset: block_index -%}
+                  {%- if item.type != 'choice' -%}
+                    {%- break -%}
+                  {%- endif -%}
+                  <label class="poh-choice" {{ item.shopify_attributes }}>
+                    <input
+                      class="poh-choice__input visually-hidden"
+                      type="radio"
+                      name="properties[{{ choice_name | escape }}]"
+                      value="{{ item.settings.label | escape }}"
+                      form="{{ product_form_id }}"
+                      {% if item.id == choice_selected_id %}
+                        checked
+                      {% endif %}
+                    >
+                    <span class="poh-choice__label">{{ item.settings.label | escape }}</span>
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+
+            {%- when 'stock' -%}
+              {%- liquid
+                if variant.available
+                  assign stock_text = block.settings.text
+                  assign stock_dot = block.settings.dot_color
+                else
+                  assign stock_text = block.settings.sold_out_text
+                  assign stock_dot = block.settings.sold_out_dot_color
+                endif
+              -%}
+              {%- if stock_text != blank -%}
+                <p
+                  class="poh-stock poh-stock--{{ block.settings.alignment }} poh-visibility--{{ visibility }}"
+                  style="--poh-stock-dot: {{ stock_dot }}; --poh-stock-color: {{ block.settings.text_color }}; --poh-stock-size: {{ block.settings.text_size }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                  {{ block.shopify_attributes }}
+                >
+                  <span class="poh-stock__dot" aria-hidden="true"></span>
+                  <span>{{ stock_text | escape }}</span>
+                </p>
+              {%- endif -%}
+
+            {%- when 'guarantee' -%}
+              <div
+                class="poh-guarantee poh-visibility--{{ visibility }}"
+                style="--poh-guarantee-bg: {{ block.settings.background }}; --poh-guarantee-border: {{ block.settings.border_color }}; --poh-guarantee-radius: {{ block.settings.radius }}px; --poh-guarantee-seal: {{ block.settings.image_size }}px; --poh-guarantee-color: {{ block.settings.text_color }}; --poh-guarantee-size: {{ block.settings.text_size }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 240
+                    | image_tag: loading: 'lazy', widths: '120, 240', sizes: '120px', alt: '', class: 'poh-guarantee__seal'
+                  }}
+                {%- endif -%}
+                <div class="poh-guarantee__text">{{ block.settings.text }}</div>
+              </div>
+
             {%- when 'buy_buttons' -%}
               {%- liquid
                 if block.settings.label != blank
@@ -634,8 +741,8 @@
                 endif
               -%}
               <div
-                class="poh-buy poh-visibility--{{ visibility }}"
-                style="--poh-buy-bg: {{ block.settings.background }}; --poh-buy-color: {{ block.settings.text_color }}; --poh-buy-disabled-bg: {{ block.settings.sold_out_background }}; --poh-buy-radius: {{ block.settings.radius }}px; --poh-buy-size: {{ block.settings.text_size }}px; --poh-buy-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-buy-py: {{ block.settings.padding_vertical }}px; --poh-buy-py-mobile: {{ block.settings.padding_vertical_mobile }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                class="poh-buy poh-visibility--{{ visibility }}{% if block.settings.custom_style %} poh-buy--custom{% endif %}"
+                style="--poh-buy-bg: {{ block.settings.background }}; --poh-buy-color: {{ block.settings.text_color }}; --poh-buy-disabled-bg: {{ block.settings.sold_out_background }}; --poh-buy-radius: {{ block.settings.radius }}px; --poh-buy-size: {{ block.settings.text_size }}px; --poh-buy-size-mobile: {{ block.settings.text_size_mobile }}px; --poh-buy-py: {{ block.settings.padding_vertical }}px; --poh-buy-py-mobile: {{ block.settings.padding_vertical_mobile }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;{% if block.settings.custom_style %} --poh-buy-border: {{ block.settings.border_color | default: 'transparent' }}; --poh-buy-weight: {{ block.settings.font_weight }}; --poh-buy-ls: {{ block.settings.letter_spacing | divided_by: 10.0 }}px;{% endif %}"
                 {{ block.shopify_attributes }}
               >
                 {%- if product != blank -%}
@@ -676,6 +783,14 @@
                         <span class="poh-buy__label">
                           {%- if variant.available -%}
                             {{ buy_label }}
+                            {%- if block.settings.show_price -%}
+                              <span class="poh-buy__separator" aria-hidden="true">|</span>
+                              <span class="poh-buy__price">{{ variant.price | money }}</span>
+                              {%- if variant.compare_at_price > variant.price -%}
+                                <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                <s class="poh-buy__compare">{{ variant.compare_at_price | money }}</s>
+                              {%- endif -%}
+                            {%- endif -%}
                           {%- elsif block.settings.sold_out_label != blank -%}
                             {{ block.settings.sold_out_label | escape }}
                           {%- else -%}

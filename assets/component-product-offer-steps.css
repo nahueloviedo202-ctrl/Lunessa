@@ -1,0 +1,188 @@
+/* Product offer extras: numbered steps, selectable options, stock, guarantee box,
+   title accent and price-in-button. Loaded only when a section uses one of them. */
+
+/* Title accent */
+
+.poh .poh-title--accent em {
+  color: var(--poh-title-accent);
+  font-style: normal;
+}
+
+/* Numbered step */
+
+.poh .poh-step {
+  margin: 0 0 var(--poh-block-mb-mobile);
+  color: var(--poh-step-color);
+  font-size: var(--poh-step-size-mobile);
+  font-weight: var(--poh-step-weight);
+  line-height: 1.43;
+  letter-spacing: normal;
+}
+
+.poh .poh-step__number {
+  margin-right: 0.3em;
+}
+
+/* Selectable options (saved as line item property) */
+
+.poh .poh-choices {
+  display: grid;
+  grid-template-columns: repeat(var(--poh-choice-columns-mobile), minmax(0, 1fr));
+  gap: var(--poh-choice-gap);
+  min-width: 0;
+  margin: 0 0 var(--poh-block-mb-mobile);
+  padding: 0;
+  border: 0;
+}
+
+.poh .poh-choice {
+  display: block;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.poh .poh-choice__label {
+  display: block;
+  box-sizing: border-box;
+  padding: 8px 4px;
+  border: 1px solid var(--poh-choice-border);
+  border-radius: var(--poh-choice-radius);
+  background: var(--poh-choice-bg);
+  color: var(--poh-choice-color);
+  font-size: var(--poh-choice-size);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.poh .poh-choice__input:checked + .poh-choice__label {
+  border-color: var(--poh-choice-active-bg);
+  background: var(--poh-choice-active-bg);
+  color: var(--poh-choice-active-color);
+}
+
+.poh .poh-choice__input:focus-visible + .poh-choice__label {
+  outline: 2px solid var(--poh-choice-active-bg);
+  outline-offset: 2px;
+}
+
+/* Stock */
+
+.poh .poh-stock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 var(--poh-block-mb-mobile);
+  color: var(--poh-stock-color);
+  font-size: var(--poh-stock-size);
+  font-weight: 600;
+  line-height: 1.43;
+  letter-spacing: normal;
+}
+
+.poh .poh-stock--center {
+  justify-content: center;
+}
+
+.poh .poh-stock--right {
+  justify-content: flex-end;
+}
+
+.poh .poh-stock__dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--poh-stock-dot);
+}
+
+/* Guarantee box */
+
+.poh .poh-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 var(--poh-block-mb-mobile);
+  padding: 12px;
+  border: 1px solid var(--poh-guarantee-border);
+  border-radius: var(--poh-guarantee-radius);
+  background: var(--poh-guarantee-bg);
+}
+
+.poh .poh-guarantee__seal {
+  display: block;
+  flex: 0 0 auto;
+  width: var(--poh-guarantee-seal);
+  height: var(--poh-guarantee-seal);
+  object-fit: contain;
+}
+
+.poh .poh-guarantee__text {
+  min-width: 0;
+  color: var(--poh-guarantee-color);
+  font-size: var(--poh-guarantee-size);
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.poh .poh-guarantee__text p {
+  margin: 0;
+}
+
+.poh .poh-guarantee__text p + p {
+  margin-top: 0.5em;
+}
+
+.poh .poh-guarantee__text strong {
+  font-weight: 700;
+}
+
+/* Buy button: custom style and price */
+
+.poh .poh-buy--custom .poh-buy__button {
+  box-shadow: inset 0 0 0 1.5px var(--poh-buy-border), 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  font-weight: var(--poh-buy-weight);
+  letter-spacing: var(--poh-buy-ls);
+}
+
+.poh .poh-buy--custom .poh-buy__button:disabled {
+  box-shadow: none;
+}
+
+.poh .poh-buy__label {
+  white-space: nowrap;
+}
+
+.poh .poh-buy__separator {
+  margin: 0 0.35em;
+}
+
+.poh .poh-buy__compare {
+  margin-left: 0.4em;
+  opacity: 0.6;
+}
+
+/* Tablet & desktop */
+
+@media screen and (min-width: 750px) {
+  .poh .poh-step {
+    margin-bottom: var(--poh-block-mb);
+    font-size: var(--poh-step-size);
+    line-height: 1.5;
+  }
+
+  .poh .poh-choices {
+    grid-template-columns: repeat(var(--poh-choice-columns), minmax(0, 1fr));
+    margin-bottom: var(--poh-block-mb);
+  }
+
+  .poh .poh-stock,
+  .poh .poh-guarantee {
+    margin-bottom: var(--poh-block-mb);
+  }
+}

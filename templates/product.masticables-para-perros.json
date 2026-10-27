@@ -16,14 +16,14 @@
           "type": "rating",
           "settings": {
             "stars": 5,
-            "star_color": "#93433d",
-            "star_size": 18,
+            "star_color": "#17443D",
+            "star_size": 17,
             "text": "2.432 Reseñas",
-            "text_color": "#50020b",
-            "text_size": 15,
-            "text_size_mobile": 14,
+            "text_color": "#212427",
+            "text_size": 14,
+            "text_size_mobile": 12,
             "spacing_bottom": 0,
-            "spacing_bottom_mobile": 8,
+            "spacing_bottom_mobile": 0,
             "visibility": "all"
           }
         },
@@ -32,13 +32,14 @@
           "settings": {
             "title": "{{ product.title }}",
             "heading_tag": "h1",
-            "text_size": 32,
-            "text_size_mobile": 25,
-            "font_weight": "500",
-            "text_color": "#151515",
-            "spacing_bottom": 0,
-            "spacing_bottom_mobile": 2,
-            "visibility": "all"
+            "text_size": 30,
+            "text_size_mobile": 24,
+            "font_weight": "700",
+            "text_color": "#212427",
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 20,
+            "visibility": "all",
+            "accent_color": "#17443D"
           }
         },
         "badge_AfcDHz": {
@@ -48,7 +49,8 @@
             "background": "#fba691",
             "text_color": "#ffffff",
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "badge_ktkx64": {
           "type": "badge",
@@ -57,19 +59,20 @@
             "background": "#f2756b",
             "text_color": "#ffffff",
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "text_6TX7q6": {
           "type": "text",
           "settings": {
             "text": "{{ product.description }}",
             "text_size": 16,
-            "text_size_mobile": 14,
-            "text_color": "#000000",
-            "spacing_top": 5,
-            "spacing_top_mobile": 12,
-            "spacing_bottom": 16,
-            "spacing_bottom_mobile": 24,
+            "text_size_mobile": 16,
+            "text_color": "#212427",
+            "spacing_top": 26,
+            "spacing_top_mobile": 26,
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 20,
             "visibility": "all"
           }
         },
@@ -79,7 +82,8 @@
             "image": "shopify://shop_images/1_bfd71465-b24c-4bee-9e1e-80eacfaa2370.webp",
             "text": "Detiene la Caída Desde la Raíz",
             "visibility": "mobile_tablet"
-          }
+          },
+          "disabled": true
         },
         "highlight_AxLFML": {
           "type": "highlight",
@@ -87,7 +91,8 @@
             "image": "shopify://shop_images/2_84e7b92f-3974-40f2-83e9-79b21a17bb59.webp",
             "text": "Pelo Más Grueso Desde Dentro",
             "visibility": "mobile_tablet"
-          }
+          },
+          "disabled": true
         },
         "heading_KpLTmB": {
           "type": "heading",
@@ -99,7 +104,8 @@
             "spacing_bottom": 4,
             "spacing_bottom_mobile": 6,
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "benefit_LhdtUU": {
           "type": "benefit",
@@ -107,7 +113,8 @@
             "icon": "check_circle",
             "text": "Frena la caída",
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "benefit_EgA6XN": {
           "type": "benefit",
@@ -115,7 +122,8 @@
             "icon": "check_circle",
             "text": "Menos entradas",
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "benefit_TiRHjf": {
           "type": "benefit",
@@ -123,7 +131,8 @@
             "icon": "check_circle",
             "text": "Raya más fina",
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "benefit_ApgNWB": {
           "type": "benefit",
@@ -131,7 +140,8 @@
             "icon": "check_circle",
             "text": "Menos cuero visible",
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "benefit_MrgjiD": {
           "type": "benefit",
@@ -139,7 +149,8 @@
             "icon": "check_circle",
             "text": "Coleta más gruesa",
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "benefit_CrntT8": {
           "type": "benefit",
@@ -147,7 +158,8 @@
             "icon": "check_circle",
             "text": "Pelo más fuerte",
             "visibility": "desktop"
-          }
+          },
+          "disabled": true
         },
         "gift_JTbTtq": {
           "type": "gift",
@@ -155,25 +167,31 @@
             "title": "Planner de Progreso 90 Días",
             "badge": "GRATIS",
             "value": "€15,00"
-          }
+          },
+          "disabled": true
         },
         "buy_buttons_QeAxBD": {
           "type": "buy_buttons",
           "settings": {
-            "label": "Añadir Al Carrito",
+            "label": "PRUÉBALO SIN RIESGO",
             "sold_out_label": "Agotado",
             "show_dynamic_checkout": false,
-            "background": "#731122",
-            "text_color": "#f3f6f2",
+            "background": "#C5FA56",
+            "text_color": "#212427",
             "sold_out_background": "#b7b7b7",
             "radius": 100,
-            "text_size": 20,
-            "text_size_mobile": 18,
-            "padding_vertical": 12,
-            "padding_vertical_mobile": 16,
-            "spacing_bottom": 0,
-            "spacing_bottom_mobile": 0,
-            "visibility": "all"
+            "text_size": 15,
+            "text_size_mobile": 15,
+            "padding_vertical": 17,
+            "padding_vertical_mobile": 17,
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 20,
+            "visibility": "all",
+            "show_price": true,
+            "custom_style": true,
+            "border_color": "#212427",
+            "font_weight": "700",
+            "letter_spacing": 10
           }
         },
         "trust_6G7gKL": {
@@ -182,7 +200,8 @@
             "icon": "leaf",
             "text": "<p>Sin Azúcar &amp;</p><p>100% Natural</p>",
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "trust_AFMRtU": {
           "type": "trust",
@@ -190,7 +209,8 @@
             "icon": "shield",
             "text": "<p>90 días</p><p>de Garantía</p>",
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "trust_yBY4Ri": {
           "type": "trust",
@@ -198,7 +218,8 @@
             "icon": "sparkle",
             "text": "<p>Orgullosamente Mexicano</p>",
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "testimonial_pPpf9j": {
           "type": "testimonial",
@@ -216,7 +237,8 @@
             "line_height_mobile": 150,
             "spacing_top": 16,
             "visibility": "mobile"
-          }
+          },
+          "disabled": true
         },
         "faq_jCJr36": {
           "type": "faq",
@@ -227,7 +249,8 @@
             "button_link": "",
             "open": false,
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "faq_z4B6zF": {
           "type": "faq",
@@ -238,7 +261,8 @@
             "button_link": "",
             "open": false,
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "faq_f6YJAk": {
           "type": "faq",
@@ -249,7 +273,8 @@
             "button_link": "",
             "open": false,
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "faq_aMx8Qx": {
           "type": "faq",
@@ -260,7 +285,8 @@
             "button_link": "",
             "open": false,
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "faq_LGDBqa": {
           "type": "faq",
@@ -271,7 +297,8 @@
             "button_link": "",
             "open": false,
             "visibility": "all"
-          }
+          },
+          "disabled": true
         },
         "before_after_GMGwmd": {
           "type": "before_after",
@@ -280,7 +307,8 @@
             "label_before": "ANTES (DÍA 0)",
             "image_after": "shopify://shop_images/Despues1.webp",
             "label_after": "DESPUÉS (3 MESES)"
-          }
+          },
+          "disabled": true
         },
         "before_after_MRBHbj": {
           "type": "before_after",
@@ -289,7 +317,8 @@
             "label_before": "ANTES (DÍA 0)",
             "image_after": "shopify://shop_images/Despues2.webp",
             "label_after": "DESPUÉS (2 MESES)"
-          }
+          },
+          "disabled": true
         },
         "before_after_yi6EGC": {
           "type": "before_after",
@@ -298,15 +327,104 @@
             "label_before": "ANTES (DÍA 0)",
             "image_after": "shopify://shop_images/Despues3.webp",
             "label_after": "DESPUÉS (5 MESES)"
+          },
+          "disabled": true
+        },
+        "step_1lgshl": {
+          "type": "step",
+          "settings": {
+            "text": "Elige el peso de tu perro:",
+            "show_number": true,
+            "text_color": "#212427",
+            "font_weight": "600",
+            "text_size": 16,
+            "text_size_mobile": 14,
+            "spacing_bottom": 16,
+            "spacing_bottom_mobile": 16,
+            "visibility": "all"
+          }
+        },
+        "choice_ripxil": {
+          "type": "choice",
+          "settings": {
+            "label": "0-16 kg",
+            "selected": false
+          }
+        },
+        "choice_zu0fot": {
+          "type": "choice",
+          "settings": {
+            "label": "16-30 kg",
+            "selected": false
+          }
+        },
+        "choice_ye2d2n": {
+          "type": "choice",
+          "settings": {
+            "label": "30-45 kg",
+            "selected": false
+          }
+        },
+        "choice_3zrgk5": {
+          "type": "choice",
+          "settings": {
+            "label": "45-55 kg",
+            "selected": false
+          }
+        },
+        "choice_8j4aov": {
+          "type": "choice",
+          "settings": {
+            "label": "Más de 55 kg",
+            "selected": false
+          }
+        },
+        "stock_480f8y": {
+          "type": "stock",
+          "settings": {
+            "text": "En stock, listo para enviar",
+            "sold_out_text": "Agotado temporalmente",
+            "dot_color": "#006C5B",
+            "sold_out_dot_color": "#B42318",
+            "text_color": "#212427",
+            "text_size": 14,
+            "alignment": "center",
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 20,
+            "visibility": "all"
+          }
+        },
+        "guarantee_nfg876": {
+          "type": "guarantee",
+          "settings": {
+            "text": "<p>Cada masticable cumple un papel en el cuidado de sus articulaciones. <strong>La constancia es clave, por eso te ofrecemos una garantía de devolución.</strong></p>",
+            "image_size": 57,
+            "background": "#FFFFFF",
+            "border_color": "#212427",
+            "radius": 8,
+            "text_color": "#212427",
+            "text_size": 12,
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 20,
+            "visibility": "all"
           }
         }
       },
       "block_order": [
-        "rating_ib6Um9",
         "title_Mm9FwJ",
+        "rating_ib6Um9",
+        "text_6TX7q6",
+        "step_1lgshl",
+        "choice_ripxil",
+        "choice_zu0fot",
+        "choice_ye2d2n",
+        "choice_3zrgk5",
+        "choice_8j4aov",
+        "buy_buttons_QeAxBD",
+        "stock_480f8y",
+        "guarantee_nfg876",
         "badge_AfcDHz",
         "badge_ktkx64",
-        "text_6TX7q6",
         "highlight_JzgDat",
         "highlight_AxLFML",
         "heading_KpLTmB",
@@ -317,7 +435,6 @@
         "benefit_MrgjiD",
         "benefit_CrntT8",
         "gift_JTbTtq",
-        "buy_buttons_QeAxBD",
         "trust_6G7gKL",
         "trust_AFMRtU",
         "trust_yBY4Ri",
@@ -465,7 +582,21 @@
         "ba_autoplay": false,
         "ba_speed": 5,
         "ba_margin_top": 16,
-        "ba_margin_bottom": 16
+        "ba_margin_bottom": 16,
+        "choice_property": "Peso del perro",
+        "choice_preselect": true,
+        "choice_columns": "3",
+        "choice_columns_mobile": "3",
+        "choice_gap": 11,
+        "choice_background": "#FFFFFF",
+        "choice_text_color": "#212427",
+        "choice_border_color": "#212427",
+        "choice_active_background": "#17443D",
+        "choice_active_text_color": "#FFFFFF",
+        "choice_text_size": 14,
+        "choice_radius": 50,
+        "choice_spacing_bottom": 20,
+        "choice_spacing_bottom_mobile": 20
       }
     },
     "marquee_bar_mz4PWC": {

@@ -1195,6 +1195,129 @@
       "unit": "px",
       "label": "Margen inferior",
       "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Opciones seleccionables"
+    },
+    {
+      "type": "paragraph",
+      "content": "Estilo de los bloques «Opción seleccionable». La opción elegida se guarda en el pedido y no cambia el precio."
+    },
+    {
+      "type": "text",
+      "id": "choice_property",
+      "label": "Nombre del dato en el pedido",
+      "default": "Peso del perro"
+    },
+    {
+      "type": "checkbox",
+      "id": "choice_preselect",
+      "label": "Seleccionar la primera opción si ninguna está marcada",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "choice_columns",
+      "label": "Columnas",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "choice_columns_mobile",
+      "label": "Columnas (móvil)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "choice_gap",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Separación",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "choice_background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "choice_text_color",
+      "label": "Color de texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "choice_border_color",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "choice_active_background",
+      "label": "Fondo seleccionado",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "choice_active_text_color",
+      "label": "Color de texto seleccionado",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "choice_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de texto",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "choice_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "choice_spacing_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen inferior",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "choice_spacing_bottom_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Margen inferior (móvil)",
+      "default": 20
     }
   ],
   "blocks": [
@@ -1357,6 +1480,12 @@
           "id": "text_color",
           "label": "Color",
           "default": "#151515"
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Color del texto destacado",
+          "info": "Se aplica al texto en cursiva del título. Déjalo vacío para no usarlo."
         },
         {
           "type": "range",
@@ -1784,6 +1913,46 @@
           "default": false
         },
         {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Mostrar el precio en el botón",
+          "info": "Muestra el precio de una unidad y, si existe, el precio comparado tachado.",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_style",
+          "label": "Usar borde, grosor y espaciado personalizados",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Color del borde"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor del texto",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Semi negrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "range",
+          "id": "letter_spacing",
+          "min": -10,
+          "max": 30,
+          "step": 1,
+          "label": "Espaciado entre letras",
+          "info": "En décimas de píxel.",
+          "default": -2
+        },
+        {
           "type": "color",
           "id": "background",
           "label": "Fondo",
@@ -1870,6 +2039,306 @@
           "unit": "px",
           "label": "Margen inferior (móvil)",
           "default": 0
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Paso numerado",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Elige el peso de tu perro:"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_number",
+          "label": "Numerar automáticamente",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#212427"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Semi negrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 12,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "text_size_mobile",
+          "min": 12,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño (móvil)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 16
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "name": "Opción seleccionable",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Las opciones seguidas forman un grupo. El estilo y el nombre del dato se editan en los ajustes de la sección, en «Opciones seleccionables»."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "0-16 kg"
+        },
+        {
+          "type": "checkbox",
+          "id": "selected",
+          "label": "Seleccionada por defecto",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "stock",
+      "name": "Disponibilidad",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto con stock",
+          "default": "En stock, listo para enviar"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_text",
+          "label": "Texto sin stock",
+          "default": "Agotado temporalmente"
+        },
+        {
+          "type": "color",
+          "id": "dot_color",
+          "label": "Color del punto con stock",
+          "default": "#006C5B"
+        },
+        {
+          "type": "color",
+          "id": "sold_out_dot_color",
+          "label": "Color del punto sin stock",
+          "default": "#B42318"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#212427"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto",
+          "default": 14
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alineación",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "right", "label": "Derecha" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 20
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "guarantee",
+      "name": "Caja de garantía",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Sello"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Cada masticable cumple un papel en el cuidado de sus articulaciones. <strong>La constancia es clave, por eso te ofrecemos una garantía de devolución.</strong></p>"
+        },
+        {
+          "type": "range",
+          "id": "image_size",
+          "min": 24,
+          "max": 120,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño del sello",
+          "default": 57
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Fondo",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Color del borde",
+          "default": "#212427"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Radio",
+          "default": 8
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#212427"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de texto",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 20
         },
         {
           "type": "select",
