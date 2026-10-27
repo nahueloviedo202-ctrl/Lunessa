@@ -1,0 +1,784 @@
+{{ 'section-stats-data.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- unless section.settings.number_font_weight == section.settings.heading_font_weight -%}
+      {%- assign number_font_weighted = heading_font | font_modify: 'weight', section.settings.number_font_weight -%}
+      {{ number_font_weighted | font_face: font_display: 'swap' }}
+    {%- endunless -%}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .sdt--{{ section.id }} {
+    --sdt-bg: {{ section.settings.background_color }};
+    --sdt-max-width: {{ section.settings.max_width }}px;
+    --sdt-pt: {{ section.settings.padding_top }}px;
+    --sdt-pb: {{ section.settings.padding_bottom }}px;
+    --sdt-px: {{ section.settings.padding_x }}px;
+    --sdt-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --sdt-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --sdt-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --sdt-stack-gap: {{ section.settings.stack_gap }}px;
+    --sdt-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+
+    --sdt-heading-ff: {{ heading_ff }};
+    --sdt-heading-fs: {{ heading_fs }};
+    --sdt-heading-fw: {{ section.settings.heading_font_weight }};
+    --sdt-heading-color: {{ section.settings.heading_color }};
+    --sdt-heading-size: {{ section.settings.heading_size }}px;
+    --sdt-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --sdt-heading-lh: {{ section.settings.heading_line_height }}px;
+    --sdt-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --sdt-header-gap: {{ section.settings.header_gap }}px;
+    --sdt-subheading-color: {{ section.settings.subheading_color }};
+    --sdt-subheading-size: {{ section.settings.subheading_size }}px;
+    --sdt-subheading-lh: {{ section.settings.subheading_line_height }}px;
+    --sdt-subheading-max-width: {{ section.settings.subheading_max_width }}px;
+    --sdt-body-ff: {{ body_ff }};
+    --sdt-body-fs: {{ body_fs }};
+
+    --sdt-columns: {{ section.settings.columns_desktop }};
+    --sdt-columns-tablet: {{ section.settings.columns_tablet }};
+    --sdt-columns-mobile: {{ section.settings.columns_mobile }};
+    --sdt-grid-gap: {{ section.settings.grid_gap }}px;
+    --sdt-grid-gap-mobile: {{ section.settings.grid_gap_mobile }}px;
+    --sdt-stat-gap: {{ section.settings.stat_gap }}px;
+    --sdt-number-color: {{ section.settings.number_color }};
+    --sdt-number-fw: {{ section.settings.number_font_weight }};
+    --sdt-number-size: {{ section.settings.number_size }}px;
+    --sdt-number-size-mobile: {{ section.settings.number_size_mobile }}px;
+    --sdt-number-ls: {{ section.settings.number_letter_spacing | divided_by: 100.0 }}em;
+    --sdt-label-color: {{ section.settings.label_color }};
+    --sdt-label-size: {{ section.settings.label_size }}px;
+    --sdt-label-lh: {{ section.settings.label_line_height }}px;
+    --sdt-label-max-width: {{ section.settings.label_max_width }}px;
+
+    --sdt-footer-gap: {{ section.settings.footer_gap }}px;
+    --sdt-button-bg: {{ section.settings.button_background }};
+    --sdt-button-color: {{ section.settings.button_color }};
+    --sdt-button-border: {{ section.settings.button_border }};
+    --sdt-button-bg-hover: {{ section.settings.button_background_hover }};
+    --sdt-button-color-hover: {{ section.settings.button_color_hover }};
+    --sdt-button-border-hover: {{ section.settings.button_border_hover }};
+    --sdt-button-size: {{ section.settings.button_size }}px;
+    --sdt-button-height: {{ section.settings.button_height }}px;
+    --sdt-button-max-width: {{ section.settings.button_max_width }}px;
+    --sdt-button-radius: {{ section.settings.button_radius }}px;
+    --sdt-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --sdt-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+    --sdt-disclaimer-max-width: {{ section.settings.disclaimer_max_width }}px;
+    --sdt-disclaimer-style: {% if section.settings.disclaimer_italic %}italic{% else %}normal{% endif %};
+  }
+{%- endstyle -%}
+
+<section class="sdt sdt--{{ section.id }}">
+  <div class="sdt__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="sdt__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="sdt__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="sdt__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="sdt__grid" role="list">
+        {%- for block in section.blocks -%}
+          <li
+            class="sdt-stat{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.number != blank -%}
+              <span class="sdt-stat__number">{{ block.settings.number | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span class="sdt-stat__label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank or section.settings.disclaimer != blank -%}
+      <div class="sdt__footer">
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="sdt__button"
+            {% if section.settings.button_link != blank %}
+              href="{{ section.settings.button_link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="sdt__disclaimer">{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Datos y estadísticas",
+  "tag": "div",
+  "class": "section-stats-data",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#17443D"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1064
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título, datos y botón en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título, datos y botón en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Datos reales de dueños reales"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Separación entre título y subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Subtítulo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Esto es lo que cuentan otros dueños después de 90 días de uso constante*"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "label": "Ancho máximo",
+      "min": 236,
+      "max": 1436,
+      "step": 12,
+      "unit": "px",
+      "default": 1016
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título y los números",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título y los números",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "header",
+      "content": "Cuadrícula"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas en escritorio",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columnas en tablet",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columnas en móvil",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Separación entre datos en escritorio",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_mobile",
+      "label": "Separación entre datos en móvil y tablet",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stat_gap",
+      "label": "Separación entre número y texto",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Números"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Color",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "select",
+      "id": "number_font_weight",
+      "label": "Grosor",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Tamaño en escritorio",
+      "min": 20,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "number_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 20,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "number_letter_spacing",
+      "label": "Espaciado entre letras",
+      "info": "En centésimas de em.",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "default": -2
+    },
+    {
+      "type": "header",
+      "content": "Texto de cada dato"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "label_max_width",
+      "label": "Ancho máximo",
+      "min": 100,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "PRUÉBALO AHORA"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Texto bajo el botón"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "disclaimer",
+      "label": "Texto",
+      "default": "*Según una encuesta a nuestros clientes. Indica aquí cuándo y cómo se recogieron los datos."
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color",
+      "default": "#F1FDF0"
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_max_width",
+      "label": "Ancho máximo",
+      "min": 171,
+      "max": 1371,
+      "step": 12,
+      "unit": "px",
+      "default": 771
+    },
+    {
+      "type": "checkbox",
+      "id": "disclaimer_italic",
+      "label": "Cursiva",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "footer_gap",
+      "label": "Separación entre botón y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Dato",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Número",
+          "default": "XX%"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Texto",
+          "default": "vio un impacto positivo en la movilidad de su perro"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Datos y estadísticas",
+      "blocks": [
+        { "type": "stat" },
+        { "type": "stat", "settings": { "label": "notó menos molestias" } },
+        { "type": "stat", "settings": { "label": "notó a su perro más feliz" } },
+        { "type": "stat", "settings": { "label": "nos recomendaría a amigos y familia" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
