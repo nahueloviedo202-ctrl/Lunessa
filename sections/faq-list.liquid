@@ -1,0 +1,556 @@
+{{ 'section-faq-list.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign heading_id = 'FaqList-Heading-' | append: section.id
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '700' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .faq-list-{{ section.id }} {
+    --faq-bg: {{ section.settings.background }};
+    --faq-heading-color: {{ section.settings.heading_color }};
+    --faq-color: {{ section.settings.text_color }};
+    --faq-question-color: {{ section.settings.question_color }};
+    --faq-border: {{ section.settings.border_color }};
+    --faq-toggle-bg: {{ section.settings.toggle_background }};
+    --faq-toggle-color: {{ section.settings.toggle_color }};
+    --faq-button-bg: {{ section.settings.button_background }};
+    --faq-button-color: {{ section.settings.button_text }};
+    --faq-button-bg-hover: {{ section.settings.button_background_hover }};
+    --faq-button-color-hover: {{ section.settings.button_text_hover }};
+    --faq-pt: {{ section.settings.padding_top }}px;
+    --faq-pb: {{ section.settings.padding_bottom }}px;
+    --faq-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --faq-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --faq-max-width: {{ section.settings.max_width }}px;
+    --faq-list-max-width: {{ section.settings.list_max_width }}px;
+    --faq-px: {{ section.settings.padding_x }}px;
+    --faq-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --faq-gap: {{ section.settings.stack_gap }}px;
+    --faq-item-gap: {{ section.settings.item_spacing }}px;
+    --faq-heading-ff: {{ heading_ff }};
+    --faq-heading-fs: {{ heading_fs }};
+    --faq-heading-fw: {{ section.settings.heading_font_weight }};
+    --faq-heading-size: {{ section.settings.heading_size }}px;
+    --faq-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --faq-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --faq-body-ff: {{ body_ff }};
+    --faq-body-fs: {{ body_fs }};
+    --faq-subheading-size: {{ section.settings.subheading_size }}px;
+    --faq-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --faq-question-size: {{ section.settings.question_size }}px;
+    --faq-answer-size: {{ section.settings.answer_size }}px;
+  }
+{%- endstyle -%}
+
+<div
+  class="faq-list faq-list-{{ section.id }}"
+  {% if section.settings.heading != blank %}
+    role="region" aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="faq-list__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="{{ heading_id }}" class="faq-list__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="faq-list__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq-list__items">
+        {%- for block in section.blocks -%}
+          <details
+            class="faq-list__item"
+            {% if block.settings.open %}
+              open
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <summary class="faq-list__summary">
+              <h3 class="faq-list__question">{{ block.settings.question }}</h3>
+              <span class="faq-list__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-list__answer">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        {% if section.settings.button_link != blank %}
+          href="{{ section.settings.button_link }}"
+        {% else %}
+          role="link" aria-disabled="true"
+        {% endif %}
+        class="faq-list__button"
+      >
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Preguntas destacadas",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Preguntas frecuentes"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "info": "Podés agregar un enlace, por ejemplo a tu página de preguntas frecuentes.",
+      "default": "Para ver todas las preguntas sobre productos, visitá nuestra página de preguntas frecuentes."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Ver todos"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Subtítulo y respuestas",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Preguntas",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Líneas divisorias",
+      "default": "#E3E3E3"
+    },
+    {
+      "type": "color",
+      "id": "toggle_background",
+      "label": "Botón +/−: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "toggle_color",
+      "label": "Botón +/−: signo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Botón: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Botón: texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Botón: fondo al pasar el mouse",
+      "default": "#C6FA41"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover",
+      "label": "Botón: texto al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de las preguntas",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de las respuestas",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "list_max_width",
+      "min": 400,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo de la lista",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado de cada pregunta",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre elementos",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Pregunta",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Dónde se fabrican sus productos?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "<p>Escribí acá la respuesta.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Abierta por defecto",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preguntas destacadas",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "¿Dónde se fabrican sus productos?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "¿Cuánto tarda en llegar mi pedido?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "¿Desde dónde se envían los productos?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "¿Puedo darle los suplementos a una perra preñada?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "¿Mi perro puede tomar de más?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,471 @@
+{{ 'section-cta-banner.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign heading_id = 'CtaBanner-Heading-' | append: section.id
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', '800' -%}
+    {%- if body_font_bold -%}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .cta-banner-{{ section.id }} {
+    --cta-bg: {{ section.settings.background }};
+    --cta-color: {{ section.settings.text_color }};
+    --cta-button-bg: {{ section.settings.button_background }};
+    --cta-button-color: {{ section.settings.button_text }};
+    --cta-button-bg-hover: {{ section.settings.button_background_hover }};
+    --cta-button-color-hover: {{ section.settings.button_text_hover }};
+    --cta-pt: {{ section.settings.padding_top }}px;
+    --cta-pb: {{ section.settings.padding_bottom }}px;
+    --cta-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --cta-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --cta-max-width: {{ section.settings.max_width }}px;
+    --cta-px: {{ section.settings.padding_x }}px;
+    --cta-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --cta-gap: {{ section.settings.stack_gap }}px;
+    --cta-heading-ff: {{ heading_ff }};
+    --cta-heading-fs: {{ heading_fs }};
+    --cta-heading-fw: {{ section.settings.heading_font_weight }};
+    --cta-heading-size: {{ section.settings.heading_size }}px;
+    --cta-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --cta-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --cta-heading-max: {{ section.settings.heading_max_width }}px;
+    --cta-body-ff: {{ body_ff }};
+    --cta-body-fs: {{ body_fs }};
+    --cta-text-size: {{ section.settings.text_size }}px;
+    --cta-text-size-mobile: {{ section.settings.text_size_mobile }}px;
+    --cta-text-max: {{ section.settings.text_max_width }}px;
+  }
+{%- endstyle -%}
+
+<div
+  class="cta-banner cta-banner-{{ section.id }} cta-banner--{{ section.settings.alignment }}"
+  {% if section.settings.heading != blank %}
+    role="region" aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="cta-banner__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="{{ heading_id }}" class="cta-banner__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="cta-banner__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cta-banner__actions">
+        {%- for block in section.blocks -%}
+          <a
+            {% if block.settings.link != blank %}
+              href="{{ block.settings.link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+            class="cta-banner__button cta-banner__button--{{ block.settings.style }}"
+            {{ block.shopify_attributes }}
+          >
+            {{- block.settings.label | escape -}}
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Llamado a la acción",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "¿No sabés por dónde empezar? Te ayudamos."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Cada perro es distinto. Contanos sobre el tuyo y te recomendamos la fórmula indicada. Te lleva menos de un minuto.</p>"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alineación",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "left",
+          "label": "Izquierda"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Textos",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Botón: color",
+      "info": "Fondo del botón relleno; borde y texto del botón con borde.",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Botón relleno: texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Botón: fondo al pasar el mouse",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover",
+      "label": "Botón: texto al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Título en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente de textos y botones",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada de textos",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del texto (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del texto (mobile)",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del título",
+      "default": 860
+    },
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del texto",
+      "default": 750
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre elementos",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Espaciado inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Botón",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Encontrar su fórmula"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Estilo",
+          "options": [
+            {
+              "value": "solid",
+              "label": "Relleno"
+            },
+            {
+              "value": "outline",
+              "label": "Con borde"
+            }
+          ],
+          "default": "solid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Llamado a la acción",
+      "blocks": [
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
