@@ -118,6 +118,7 @@
         "link_ingredientes",
         "link_faqs"
       ],
+      "disabled": true,
       "settings": {
         "logo_width": 116,
         "logo_width_mobile": 80,
