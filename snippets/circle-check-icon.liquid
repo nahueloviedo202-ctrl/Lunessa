@@ -1,0 +1,26 @@
+{%- comment -%}
+  Filled circle with a check mark.
+
+  Colors come from CSS custom properties so each section can theme it:
+  - --circle-check-fill  (default: #17443D)
+  - --circle-check-color (default: #FFFFFF)
+
+  Accepts:
+  - class: {String} Optional class for the <svg>.
+
+  Usage:
+  {% render 'circle-check-icon', class: 'my-icon' %}
+{%- endcomment -%}
+<svg
+  class="{{ class }}"
+  viewBox="0 0 24 24"
+  width="24"
+  height="24"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="24" height="24" rx="12" fill="var(--circle-check-fill, #17443D)"/>
+  <path d="M18 7.875L9.75 16.125L6 12.375" stroke="var(--circle-check-color, #FFFFFF)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
