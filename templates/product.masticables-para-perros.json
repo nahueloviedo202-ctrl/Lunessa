@@ -1265,6 +1265,7 @@
         "reel_t97UQn",
         "reel_BiqCWY"
       ],
+      "disabled": true,
       "name": "Carril de videos",
       "settings": {
         "background_color": "#d6d5c9",
