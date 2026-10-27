@@ -1,0 +1,1134 @@
+{{ 'section-ingredient-tiles.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign dose_font = section.settings.dose_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign ingredient_blocks = section.blocks | where: 'type', 'ingredient'
+  assign badge_blocks = section.blocks | where: 'type', 'badge'
+  assign badge_count = badge_blocks.size | at_least: 1
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_semibold = body_font | font_modify: 'weight', '600' -%}
+    {{ body_font_semibold | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+  {%- assign dose_font_weighted = dose_font | font_modify: 'weight', section.settings.dose_font_weight | default: dose_font -%}
+  {{ dose_font_weighted | font_face: font_display: 'swap' }}
+
+  .igr--{{ section.id }} {
+    --igr-bg: {{ section.settings.background_color }};
+    --igr-max-width: {{ section.settings.max_width }}px;
+    --igr-pt: {{ section.settings.padding_top }}px;
+    --igr-pb: {{ section.settings.padding_bottom }}px;
+    --igr-px: {{ section.settings.padding_x }}px;
+    --igr-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --igr-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --igr-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --igr-stack-gap: {{ section.settings.stack_gap }}px;
+    --igr-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+
+    --igr-heading-ff: {{ heading_ff }};
+    --igr-heading-fs: {{ heading_fs }};
+    --igr-heading-fw: {{ section.settings.heading_font_weight }};
+    --igr-heading-color: {{ section.settings.heading_color }};
+    --igr-heading-size: {{ section.settings.heading_size }}px;
+    --igr-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --igr-heading-lh: {{ section.settings.heading_line_height }}px;
+    --igr-heading-lh-mobile: {{ section.settings.heading_line_height_mobile }}px;
+    --igr-header-gap: {{ section.settings.header_gap }}px;
+    --igr-subheading-color: {{ section.settings.subheading_color }};
+    --igr-subheading-size: {{ section.settings.subheading_size }}px;
+    --igr-subheading-lh: {{ section.settings.subheading_line_height }}px;
+    --igr-subheading-max-width: {{ section.settings.subheading_max_width }}px;
+    --igr-body-ff: {{ body_ff }};
+    --igr-body-fs: {{ body_fs }};
+
+    --igr-columns: {{ section.settings.columns_desktop }};
+    --igr-columns-tablet: {{ section.settings.columns_tablet }};
+    --igr-columns-mobile: {{ section.settings.columns_mobile }};
+    --igr-column-gap: {{ section.settings.column_gap }}px;
+    --igr-row-gap: {{ section.settings.row_gap }}px;
+    --igr-column-gap-mobile: {{ section.settings.column_gap_mobile }}px;
+    --igr-row-gap-mobile: {{ section.settings.row_gap_mobile }}px;
+    --igr-tile-bg: {{ section.settings.tile_background }};
+    --igr-tile-min-height: {{ section.settings.tile_min_height }}px;
+    --igr-tile-radius: {{ section.settings.tile_radius }}px;
+    --igr-tile-pt: {{ section.settings.tile_padding_top }}px;
+    --igr-tile-pt-mobile: {{ section.settings.tile_padding_top_mobile }}px;
+    --igr-tile-pb: {{ section.settings.tile_padding_bottom }}px;
+    --igr-tile-px: {{ section.settings.tile_padding_x }}px;
+    --igr-tile-gap: {{ section.settings.tile_gap }}px;
+    --igr-scrim-opacity: {{ section.settings.scrim_opacity | divided_by: 100.0 }};
+
+    --igr-dose-ff: {{ dose_font.family }}, {{ dose_font.fallback_families }};
+    --igr-dose-fs: {{ dose_font.style }};
+    --igr-dose-fw: {{ section.settings.dose_font_weight }};
+    --igr-dose-bg: {{ section.settings.dose_background }};
+    --igr-dose-color: {{ section.settings.dose_color }};
+    --igr-dose-size: {{ section.settings.dose_size }}px;
+    --igr-dose-py: {{ section.settings.dose_padding_y }}px;
+    --igr-dose-px: {{ section.settings.dose_padding_x }}px;
+    --igr-dose-radius: {{ section.settings.dose_radius }}px;
+    --igr-caption-color: {{ section.settings.caption_color }};
+    --igr-caption-gap: {{ section.settings.caption_gap }}px;
+    --igr-name-size: {{ section.settings.name_size }}px;
+    --igr-name-lh: {{ section.settings.name_line_height }}px;
+    --igr-desc-size: {{ section.settings.desc_size }}px;
+    --igr-desc-lh: {{ section.settings.desc_line_height }}px;
+
+    --igr-footer-gap: {{ section.settings.footer_gap }}px;
+    --igr-footer-gap-mobile: {{ section.settings.footer_gap_mobile }}px;
+    --igr-note-color: {{ section.settings.note_color }};
+    --igr-note-size: {{ section.settings.note_size }}px;
+    --igr-note-style: {% if section.settings.note_italic %}italic{% else %}normal{% endif %};
+    --igr-badge-count: {{ badge_count }};
+    --igr-badge-gap: {{ section.settings.badge_gap }}px;
+    --igr-badge-gap-mobile: {{ section.settings.badge_gap_mobile }}px;
+    --igr-badge-size: {{ section.settings.badge_size }}px;
+    --igr-badge-size-mobile: {{ section.settings.badge_size_mobile }}px;
+    --igr-badge-icon-color: {{ section.settings.badge_icon_color }};
+    --igr-badge-label-color: {{ section.settings.badge_label_color }};
+    --igr-badge-label-size: {{ section.settings.badge_label_size }}px;
+    --igr-badge-label-width-mobile: {{ section.settings.badge_label_width_mobile }}px;
+
+    --igr-button-bg: {{ section.settings.button_background }};
+    --igr-button-color: {{ section.settings.button_color }};
+    --igr-button-border: {{ section.settings.button_border }};
+    --igr-button-bg-hover: {{ section.settings.button_background_hover }};
+    --igr-button-color-hover: {{ section.settings.button_color_hover }};
+    --igr-button-border-hover: {{ section.settings.button_border_hover }};
+    --igr-button-size: {{ section.settings.button_size }}px;
+    --igr-button-height: {{ section.settings.button_height }}px;
+    --igr-button-max-width: {{ section.settings.button_max_width }}px;
+    --igr-button-radius: {{ section.settings.button_radius }}px;
+  }
+{%- endstyle -%}
+
+<section class="igr igr--{{ section.id }}">
+  <div class="igr__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="igr__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="igr__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="igr__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if ingredient_blocks.size > 0 -%}
+      <ul class="igr__grid" role="list">
+        {%- for block in ingredient_blocks -%}
+          <li
+            class="igr-tile{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '240, 320, 480, 600',
+                  sizes: '(min-width: 1024px) 241px, calc((100vw - 42px) / 2)',
+                  alt: block.settings.image_alt,
+                  class: 'igr-tile__photo'
+              }}
+            {%- endif -%}
+            <div class="igr-tile__scrim" aria-hidden="true"></div>
+            <div class="igr-tile__body">
+              {%- if block.settings.dose != blank -%}
+                <p class="igr-tile__dose">{{ block.settings.dose | escape }}</p>
+              {%- endif -%}
+              <div class="igr-tile__caption">
+                {%- if block.settings.name != blank -%}
+                  <h3 class="igr-tile__name">{{ block.settings.name | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="igr-tile__desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.note != blank or badge_blocks.size > 0 or section.settings.button_label != blank -%}
+      <div class="igr__footer">
+        {%- if section.settings.note != blank -%}
+          <p class="igr__note">{{ section.settings.note }}</p>
+        {%- endif -%}
+
+        {%- if badge_blocks.size > 0 -%}
+          <ul class="igr__badges" role="list">
+            {%- for block in badge_blocks -%}
+              <li class="igr-badge" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 120
+                    | image_tag: loading: 'lazy', alt: '', class: 'igr-badge__mark'
+                  }}
+                {%- else -%}
+                  <span class="igr-badge__mark igr-badge__roundel" aria-hidden="true">
+                    {%- render 'stage-icon', icon: block.settings.icon, class: 'igr-badge__icon' -%}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <p class="igr-badge__label">{{ block.settings.label | escape }}</p>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="igr__button"
+            {% if section.settings.button_link != blank %}
+              href="{{ section.settings.button_link }}"
+            {% else %}
+              role="link" aria-disabled="true"
+            {% endif %}
+          >
+            {{- section.settings.button_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredientes con dosis",
+  "tag": "div",
+  "class": "section-ingredient-tiles",
+  "max_blocks": 24,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#17443D"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1064
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título, ingredientes y pie en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título, ingredientes y pie en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil y tablet"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "8 ingredientes en 1 fórmula potente"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Interlineado en escritorio",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil y tablet",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Interlineado en móvil y tablet",
+      "min": 12,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Separación entre título y subtítulo",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Subtítulo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "<strong>FÓRMULA CON INGREDIENTES ESTUDIADOS</strong>"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_height",
+      "label": "Interlineado",
+      "min": 12,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "label": "Ancho máximo",
+      "min": 236,
+      "max": 1436,
+      "step": 12,
+      "unit": "px",
+      "default": 1016
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada del título",
+      "default": "inter_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor del título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "inter_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "dose_font",
+      "label": "Fuente de la dosis",
+      "default": "inconsolata_n4"
+    },
+    {
+      "type": "select",
+      "id": "dose_font_weight",
+      "label": "Grosor de la dosis",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "header",
+      "content": "Cuadrícula"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columnas en escritorio",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columnas en tablet",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columnas en móvil",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Separación entre columnas en escritorio",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "px",
+      "default": 11.5
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Separación entre filas en escritorio",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Separación entre columnas en móvil y tablet",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "Separación entre filas en móvil y tablet",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "color",
+      "id": "tile_background",
+      "label": "Color de fondo sin imagen",
+      "default": "#2A5A52"
+    },
+    {
+      "type": "range",
+      "id": "tile_min_height",
+      "label": "Altura mínima",
+      "min": 100,
+      "max": 400,
+      "step": 3,
+      "unit": "px",
+      "default": 181
+    },
+    {
+      "type": "range",
+      "id": "tile_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_top",
+      "label": "Relleno superior en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_top_mobile",
+      "label": "Relleno superior en móvil y tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_bottom",
+      "label": "Relleno inferior",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "tile_padding_x",
+      "label": "Relleno lateral",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "tile_gap",
+      "label": "Separación mínima entre dosis y texto",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "scrim_opacity",
+      "label": "Oscurecido inferior de la imagen",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Dosis"
+    },
+    {
+      "type": "color",
+      "id": "dose_background",
+      "label": "Color de fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "dose_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "range",
+      "id": "dose_size",
+      "label": "Tamaño",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "dose_padding_y",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "dose_padding_x",
+      "label": "Relleno horizontal",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "dose_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Texto de las tarjetas"
+    },
+    {
+      "type": "color",
+      "id": "caption_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "caption_gap",
+      "label": "Separación entre nombre y descripción",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "label": "Tamaño del nombre",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "name_line_height",
+      "label": "Interlineado del nombre",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "label": "Tamaño de la descripción",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desc_line_height",
+      "label": "Interlineado de la descripción",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Pie"
+    },
+    {
+      "type": "range",
+      "id": "footer_gap",
+      "label": "Separación entre nota, sellos y botón en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "footer_gap_mobile",
+      "label": "Separación entre nota, sellos y botón en móvil y tablet",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "inline_richtext",
+      "id": "note",
+      "label": "Nota",
+      "default": "Dosis basadas en la fórmula para perros grandes"
+    },
+    {
+      "type": "color",
+      "id": "note_color",
+      "label": "Color de la nota",
+      "default": "#F1FDF0"
+    },
+    {
+      "type": "range",
+      "id": "note_size",
+      "label": "Tamaño de la nota",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "checkbox",
+      "id": "note_italic",
+      "label": "Nota en cursiva",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Sellos"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Tamaño del icono en escritorio",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "label": "Tamaño del icono en móvil y tablet",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Color de los iconos incluidos",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "badge_label_color",
+      "label": "Color del texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "badge_label_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "badge_label_width_mobile",
+      "label": "Ancho del texto en móvil y tablet",
+      "min": 64,
+      "max": 264,
+      "step": 2,
+      "unit": "px",
+      "default": 124
+    },
+    {
+      "type": "range",
+      "id": "badge_gap",
+      "label": "Separación entre sellos en escritorio",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "badge_gap_mobile",
+      "label": "Separación entre sellos en móvil y tablet",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto",
+      "default": "PRUÉBALO AHORA -->"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo",
+      "default": "#C5FA56"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Color del borde",
+      "default": "#212427"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Color de fondo al pasar el cursor",
+      "default": "#17443D"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Color del texto al pasar el cursor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border_hover",
+      "label": "Color del borde al pasar el cursor",
+      "default": "#123530"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Altura",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Ancho máximo",
+      "min": 143,
+      "max": 543,
+      "step": 4,
+      "unit": "px",
+      "default": 343
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingrediente",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Descripción de la imagen",
+          "info": "Para lectores de pantalla."
+        },
+        {
+          "type": "text",
+          "id": "dose",
+          "label": "Dosis",
+          "default": "100 mg"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Ingrediente"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Describe en una frase qué aporta este ingrediente."
+        }
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Sello",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del sello",
+          "info": "Opcional. Si está vacía se usa el icono elegido."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "check_circle", "label": "Check" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "paw", "label": "Huella" },
+            { "value": "bolt", "label": "Rayo" },
+            { "value": "trend_up", "label": "Tendencia" }
+          ],
+          "default": "check_circle"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Analizado por laboratorios externos"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredientes con dosis",
+      "blocks": [
+        { "type": "ingredient", "settings": { "dose": "2500 mg", "name": "Glucosamina HCl", "description": "La base del cartílago. Sin ella, las articulaciones se desgastan rápido." } },
+        { "type": "ingredient", "settings": { "dose": "200 mg", "name": "Mejillón de labio verde", "description": "Uno de los protectores articulares más potentes de la naturaleza." } },
+        { "type": "ingredient", "settings": { "dose": "300 mg", "name": "Sulfato de condroitina", "description": "Evita el desgaste de las articulaciones y mantiene los tejidos fuertes y flexibles." } },
+        { "type": "ingredient", "settings": { "dose": "32 mg", "name": "Omega-3", "description": "Ayuda a mantener las articulaciones flexibles." } },
+        { "type": "ingredient", "settings": { "dose": "800 mg", "name": "MSM", "description": "Favorece el flujo sanguíneo hacia las articulaciones." } },
+        { "type": "ingredient", "settings": { "dose": "20 mg", "name": "Yucca schidigera", "description": "Ayuda a combatir la rigidez para que tu perro no se frene antes de tiempo." } },
+        { "type": "ingredient", "settings": { "dose": "100 mg", "name": "Vitamina C", "description": "Mejora la absorción de los demás ingredientes." } },
+        { "type": "ingredient", "settings": { "dose": "42 mg", "name": "Ácido hialurónico", "description": "Lubrica las articulaciones desde dentro." } },
+        { "type": "badge", "settings": { "icon": "check_circle", "label": "Analizado por laboratorios externos" } },
+        { "type": "badge", "settings": { "icon": "shield", "label": "Sin OGM, hormonas ni antibióticos" } },
+        { "type": "badge", "settings": { "icon": "star", "label": "Fabricado en [país]" } },
+        { "type": "badge", "settings": { "icon": "heart", "label": "Elaborado en planta con certificación GMP" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
