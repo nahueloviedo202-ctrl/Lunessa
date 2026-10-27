@@ -11,69 +11,6 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "offer_bar_AgXdNM": {
-      "type": "offer-bar",
-      "blocks": {
-        "text_MGUa4J": {
-          "type": "text",
-          "settings": {
-            "text": "OFERTA DE OCTUBRE",
-            "color": "#ffffff",
-            "font_weight": "700",
-            "text_transform": "none",
-            "letter_spacing": 0,
-            "font_size": 15,
-            "font_size_tablet": 16,
-            "font_size_mobile": 15,
-            "line_height": 100,
-            "line_height_tablet": 180,
-            "line_height_mobile": 100,
-            "margin_top": 0,
-            "margin_top_tablet": 0,
-            "margin_top_mobile": 0
-          }
-        },
-        "text_jzgPjE": {
-          "type": "text",
-          "settings": {
-            "text": "4 Regalos Gratis + 90 Días de Garantia",
-            "color": "#ffffff",
-            "font_weight": "400",
-            "text_transform": "none",
-            "letter_spacing": 0,
-            "font_size": 12,
-            "font_size_tablet": 16,
-            "font_size_mobile": 12,
-            "line_height": 100,
-            "line_height_tablet": 180,
-            "line_height_mobile": 100,
-            "margin_top": 0,
-            "margin_top_tablet": 0,
-            "margin_top_mobile": 0
-          }
-        }
-      },
-      "block_order": [
-        "text_MGUa4J",
-        "text_jzgPjE"
-      ],
-      "name": "Barra de oferta",
-      "settings": {
-        "background_gradient": "linear-gradient(102deg, rgba(108, 0, 17, 1), rgba(227, 91, 19, 1) 100%)",
-        "background_color": "#6c0011",
-        "link": "",
-        "text_alignment": "center",
-        "max_width": 550,
-        "font_source": "custom",
-        "body_font": "inter_n4",
-        "padding_top": 10,
-        "padding_bottom": 10,
-        "padding_x": 0,
-        "padding_top_mobile": 10,
-        "padding_bottom_mobile": 10,
-        "padding_x_mobile": 0
-      }
-    },
     "header_navbar": {
       "type": "header-navbar",
       "blocks": {
@@ -155,6 +92,7 @@
         "promo_height": 297,
         "radius": 5,
         "icon_size": 21,
+        "cart_icon_size": 24,
         "max_width": 1440,
         "padding_x": 64,
         "padding_x_mobile": 16,
@@ -193,7 +131,6 @@
     }
   },
   "order": [
-    "offer_bar_AgXdNM",
     "header_navbar",
     "header"
   ]
