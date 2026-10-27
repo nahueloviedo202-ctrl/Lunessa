@@ -780,174 +780,89 @@
         "footer_gap": 12
       }
     },
-    "how_it_works_mpe3mG": {
-      "type": "how-it-works",
+    "stats_data_UhwfxB": {
+      "type": "stats-data",
       "blocks": {
-        "stage_7kBLy6": {
-          "type": "stage",
+        "stat_dAxH3b": {
+          "type": "stat",
           "settings": {
-            "icon": "bolt",
-            "label": "DÍA 7",
-            "title": "Primeras señales"
+            "number": "99%",
+            "label": "vio un impacto positivo en la movilidad de su perro"
           }
         },
-        "point_E467j6": {
-          "type": "point",
+        "stat_tDYN46": {
+          "type": "stat",
           "settings": {
-            "text": "El MSM favorece el flujo sanguíneo hacia las articulaciones rígidas"
+            "number": "99%",
+            "label": "notó menos molestias"
           }
         },
-        "point_ktx7yy": {
-          "type": "point",
+        "stat_ftapBb": {
+          "type": "stat",
           "settings": {
-            "text": "El ácido hialurónico empieza a lubricar para dar pasos más suaves"
+            "number": "97%",
+            "label": "notó a su perro más feliz"
           }
         },
-        "point_qzxY4J": {
-          "type": "point",
+        "stat_RgwGhQ": {
+          "type": "stat",
           "settings": {
-            "text": "La yuca empieza a aliviar la rigidez ocasional"
-          }
-        },
-        "point_dQYe9a": {
-          "type": "point",
-          "settings": {
-            "text": "Primeras señales de más energía y ganas de moverse"
-          }
-        },
-        "stage_Mdx89V": {
-          "type": "stage",
-          "settings": {
-            "icon": "trend_up",
-            "label": "DÍA 30",
-            "title": "Cambios visibles"
-          }
-        },
-        "point_YPhxyM": {
-          "type": "point",
-          "settings": {
-            "text": "La glucosamina y la condroitina refuerzan el cartílago y los tejidos conectivos"
-          }
-        },
-        "point_MLqKpL": {
-          "type": "point",
-          "settings": {
-            "text": "El mejillón de labio verde aporta omega-3 para la flexibilidad"
-          }
-        },
-        "point_bFbzPa": {
-          "type": "point",
-          "settings": {
-            "text": "La vitamina C ayuda a la absorción para que los resultados se noten más"
-          }
-        },
-        "point_yB3t6r": {
-          "type": "point",
-          "settings": {
-            "text": "Describe aquí un resultado real de tus clientes"
-          }
-        },
-        "stage_bFEf4R": {
-          "type": "stage",
-          "settings": {
-            "icon": "paw",
-            "label": "DÍA 90",
-            "title": "Impacto completo"
-          }
-        },
-        "point_TtwtNJ": {
-          "type": "point",
-          "settings": {
-            "text": "Todos los ingredientes trabajando juntos"
-          }
-        },
-        "point_tfhete": {
-          "type": "point",
-          "settings": {
-            "text": "Articulaciones protegidas, flexibilidad mantenida y menos rigidez"
-          }
-        },
-        "point_yhWUx7": {
-          "type": "point",
-          "settings": {
-            "text": "Recuperan la confianza para correr, saltar y jugar"
-          }
-        },
-        "point_fYVpkJ": {
-          "type": "point",
-          "settings": {
-            "text": "Describe aquí un resultado real de tus clientes"
+            "number": "95%",
+            "label": "nos recomendaría a amigos y familia"
           }
         }
       },
       "block_order": [
-        "stage_7kBLy6",
-        "point_E467j6",
-        "point_ktx7yy",
-        "point_qzxY4J",
-        "point_dQYe9a",
-        "stage_Mdx89V",
-        "point_YPhxyM",
-        "point_MLqKpL",
-        "point_bFbzPa",
-        "point_yB3t6r",
-        "stage_bFEf4R",
-        "point_TtwtNJ",
-        "point_tfhete",
-        "point_yhWUx7",
-        "point_fYVpkJ"
+        "stat_dAxH3b",
+        "stat_tDYN46",
+        "stat_ftapBb",
+        "stat_RgwGhQ"
       ],
-      "name": "Cómo funciona",
+      "name": "Datos y estadísticas",
       "settings": {
-        "background_color": "#FFFAF7",
+        "background_color": "#17443D",
         "max_width": 1064,
-        "stack_gap": 40,
-        "stack_gap_mobile": 40,
-        "text_max_width": 1016,
+        "stack_gap": 24,
+        "stack_gap_mobile": 24,
         "padding_top": 86,
         "padding_bottom": 86,
         "padding_x": 24,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
         "padding_x_mobile": 16,
-        "heading": "¿Cómo funciona?",
-        "heading_color": "#212427",
+        "heading": "Datos reales de dueños reales",
+        "heading_color": "#FFFFFF",
         "heading_size": 30,
         "heading_line_height": 38,
         "heading_size_mobile": 24,
         "heading_line_height_mobile": 32,
         "header_gap": 12,
-        "subheading": "Día a día, ayudamos a que tu perro se mantenga móvil, activo y con ganas de jugar.",
-        "subheading_color": "#212427",
+        "subheading": "Esto es lo que cuentan otros dueños después de 90 días de uso constante*",
+        "subheading_color": "#FFFFFF",
         "subheading_size": 16,
         "subheading_line_height": 24,
+        "subheading_max_width": 1016,
         "heading_font_source": "custom",
         "heading_font": "inter_n4",
         "heading_font_weight": "700",
         "body_font_source": "custom",
         "body_font": "inter_n4",
-        "columns_desktop": "3",
-        "columns_tablet": "1",
-        "stage_gap": 20,
-        "stage_gap_mobile": 20,
-        "stage_inner_gap": 16,
-        "head_gap": 12,
-        "icon_size": 36,
-        "icon_color": "#000000",
-        "label_color": "#212427",
-        "title_color": "#212427",
-        "title_gap": 12,
-        "title_size": 24,
-        "title_line_height": 32,
-        "title_size_mobile": 24,
-        "title_line_height_mobile": 32,
-        "bullet": "•",
-        "bullet_color": "#212427",
-        "point_color": "#212427",
-        "point_size": 16,
-        "point_line_height": 24,
-        "point_gap": 0,
-        "button_label": "PRUÉBALO AHORA -->",
+        "columns_desktop": "4",
+        "columns_tablet": "2",
+        "columns_mobile": "2",
+        "grid_gap": 40,
+        "grid_gap_mobile": 24,
+        "stat_gap": 8,
+        "number_color": "#C5FA56",
+        "number_font_weight": "700",
+        "number_size": 60,
+        "number_size_mobile": 60,
+        "number_letter_spacing": -2,
+        "label_color": "#FFFFFF",
+        "label_size": 16,
+        "label_line_height": 24,
+        "label_max_width": 200,
+        "button_label": "PRUÉBALO AHORA",
         "button_link": "",
         "button_background": "#C5FA56",
         "button_color": "#212427",
@@ -959,10 +874,11 @@
         "button_height": 48,
         "button_max_width": 343,
         "button_radius": 50,
-        "disclaimer": "*Según una encuesta a nuestros clientes. Los resultados reflejan opiniones de clientes y pueden variar.",
-        "disclaimer_color": "#57534E",
+        "disclaimer": "*Según una encuesta a nuestros clientes. Indica aquí cuándo y cómo se recogieron los datos.",
+        "disclaimer_color": "#F1FDF0",
         "disclaimer_size": 12,
-        "disclaimer_italic": true,
+        "disclaimer_max_width": 771,
+        "disclaimer_italic": false,
         "footer_gap": 12
       }
     }
@@ -974,6 +890,6 @@
     "related-products",
     "video_testimonials_grid_rFhUdH",
     "results_checklist_8Xbrnx",
-    "how_it_works_mpe3mG"
+    "stats_data_UhwfxB"
   ]
 }
