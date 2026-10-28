@@ -98,6 +98,65 @@
         "padding_x_mobile": 16
       }
     },
+    "multirow_Hawt8D": {
+      "type": "multirow",
+      "blocks": {
+        "row_PfUxe6": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/ingredients-turkey-tail-mushroom-tweezers_2o3qKL.webp",
+            "caption": "Leyenda",
+            "heading": "Fila",
+            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_LaWC7K": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/ingredients-measured-spoons-ingredients_Z2vE3lg.webp",
+            "caption": "Leyenda",
+            "heading": "Fila",
+            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_A6MJhK": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/ingredients-beaker-blended-ingredients_2qIaqr.webp",
+            "caption": "Leyenda",
+            "heading": "&nbsp;<strong>3.Las combinaciones correctas</strong>&nbsp;",
+            "text": "<p>Potenciamos los beneficios de cada ingrediente, para que trabajen mejor gracias a lo que tienen al lado. Es el verdadero trabajo en equipo.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_PfUxe6",
+        "row_LaWC7K",
+        "row_A6MJhK"
+      ],
+      "name": "t:sections.multirow.presets.name",
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "image_layout": "alternate-left",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "row_color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "science_datablock_Y6xn8x": {
       "type": "science-datablock",
       "blocks": {
@@ -458,6 +517,7 @@
   "order": [
     "main",
     "prose_split_hero_zMKebE",
+    "multirow_Hawt8D",
     "science_datablock_Y6xn8x",
     "media_text_split_kMdzzm",
     "mark_strip_qLkizj"
