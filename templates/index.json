@@ -284,7 +284,7 @@
         "button_label": "Comprar",
         "show_price": true,
         "show_rating": true,
-        "media_ratio": 74,
+        "media_ratio": 40,
         "media_ratio_mobile": 181,
         "radius": 5,
         "show_arrows": true,
