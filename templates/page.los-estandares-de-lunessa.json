@@ -132,6 +132,7 @@
         },
         "group_fzr43r": {
           "type": "group",
+          "disabled": true,
           "settings": {
             "title": "Polvo dental",
             "disclaimer": "<p>*Basado en una encuesta a clientes que usan este producto. Los resultados pueden variar.</p>"
@@ -139,6 +140,7 @@
         },
         "stat_7Kn3JW": {
           "type": "stat",
+          "disabled": true,
           "settings": {
             "value": 100,
             "label": "de mejora en el sangrado ocasional de encías en 8 semanas*"
@@ -146,6 +148,7 @@
         },
         "stat_RK7c6E": {
           "type": "stat",
+          "disabled": true,
           "settings": {
             "value": 91,
             "label": "de mejora en los marcadores de salud de encías en 8 semanas*"
@@ -153,6 +156,7 @@
         },
         "stat_WBrUmB": {
           "type": "stat",
+          "disabled": true,
           "settings": {
             "value": 83,
             "label": "de mejora en la irritación ocasional de encías en 8 semanas*"
@@ -234,11 +238,228 @@
         "body_font_source": "custom",
         "body_font": "assistant_n4"
       }
+    },
+    "media_text_split_kMdzzm": {
+      "type": "media-text-split",
+      "blocks": {
+        "accordion_VN9VQY": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Certificación de calidad",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_9Et4jK": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Nuestro estándar",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_JeMyDR": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Testeado por terceros",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_tqr3RP": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Ingrediente activo verificado",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_NqGd6g": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Integridad de ingredientes",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        },
+        "accordion_nHcDr8": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Probado por la comunidad",
+            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "show_icon": true
+          }
+        }
+      },
+      "block_order": [
+        "accordion_VN9VQY",
+        "accordion_9Et4jK",
+        "accordion_JeMyDR",
+        "accordion_tqr3RP",
+        "accordion_NqGd6g",
+        "accordion_nHcDr8"
+      ],
+      "name": "Certificaciones",
+      "settings": {
+        "heading": "Certificados con el estándar más alto",
+        "heading_position": "copy",
+        "footer_button_label": "Ver todos",
+        "footer_button_link": "",
+        "image": "shopify://shop_images/lifestyle-curly-black-dog-taking-chew-from-owner-on-porch-steps_Z1s51Jw.webp",
+        "media_position": "end",
+        "media_position_mobile": "start",
+        "media_ratio": 80,
+        "media_ratio_mobile": 80,
+        "media_radius": 0,
+        "sticky_media": true,
+        "media_width": 517,
+        "copy_width": 482,
+        "vertical_alignment": "start",
+        "column_gap": 64,
+        "column_gap_mobile": 32,
+        "copy_gap": 32,
+        "copy_gap_mobile": 24,
+        "background": "#ffffff",
+        "heading_color": "#075007",
+        "text_color": "#075007",
+        "button_color": "#075007",
+        "button_background_hover": "#C6FA41",
+        "button_color_hover": "#075007",
+        "accordion_background": "#FFFFFF",
+        "accordion_border": "#E3E3E3",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "feature_heading_size": 20,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "mark_strip_qLkizj": {
+      "type": "mark-strip",
+      "blocks": {
+        "item_7nKVC9": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/a5aa5400-8ce0-4fdb-8b47-955fa1b54cb8.webp",
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_YD77eF": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/b48b1b2b-8df4-4bd0-9b78-2c21cae77a4a.webp",
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_CBqi4m": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/garantia1.webp",
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_VpJTzW": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/cca0de6b-0bca-4382-95e6-e5af5e14fca3.webp",
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_YLMxBU": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/083e3874-2b46-4d03-b817-e82071eea057.webp",
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_7nKVC9",
+        "item_YD77eF",
+        "item_CBqi4m",
+        "item_VpJTzW",
+        "item_YLMxBU"
+      ],
+      "name": "Sellos de calidad",
+      "settings": {
+        "heading": "Los estándares detrás de cada suplemento",
+        "aria_label": "",
+        "layout": "wrap",
+        "direction": "left",
+        "duration": 32,
+        "duration_mobile": 32,
+        "repeat_count": 1,
+        "item_alignment": "between",
+        "pause_on_hover": true,
+        "background": "#075007",
+        "text_color": "#ffffff",
+        "focus_color": "#CDFC4B",
+        "tint_icons": false,
+        "font_source": "theme_body",
+        "font": "assistant_n4",
+        "title_size": 18,
+        "title_size_mobile": 16,
+        "title_weight": "500",
+        "caption_size": 12,
+        "letter_spacing": -22,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "heading_gap": 32,
+        "min_height": 0,
+        "icon_size": 38,
+        "icon_size_mobile": 38,
+        "icon_gap": 8,
+        "item_gap": 64,
+        "item_gap_mobile": 64,
+        "padding_vertical": 64,
+        "padding_vertical_mobile": 64,
+        "padding_x": 16
+      }
     }
   },
   "order": [
     "main",
     "prose_split_hero_zMKebE",
-    "science_datablock_Y6xn8x"
+    "science_datablock_Y6xn8x",
+    "media_text_split_kMdzzm",
+    "mark_strip_qLkizj"
   ]
 }
