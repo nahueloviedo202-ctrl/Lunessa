@@ -1088,8 +1088,8 @@
       "settings": {
         "heading": "Certificados con el estándar más alto",
         "heading_position": "copy",
-        "footer_button_label": "Ver todos",
-        "footer_button_link": "",
+        "footer_button_label": "Ver Producto",
+        "footer_button_link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
         "image": "shopify://shop_images/lifestyle-curly-black-dog-taking-chew-from-owner-on-porch-steps_Z1s51Jw.webp",
         "media_position": "end",
         "media_position_mobile": "start",
@@ -1434,8 +1434,8 @@
       "settings": {
         "heading": "Preguntas frecuentes",
         "subheading": "Para ver todas las preguntas sobre productos, visita nuestra página de preguntas frecuentes.",
-        "button_label": "Ver todos",
-        "button_link": "",
+        "button_label": "Ver Productos",
+        "button_link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
         "background": "#ffffff",
         "heading_color": "#075007",
         "text_color": "#2e2e2e",
