@@ -234,6 +234,7 @@
         },
         "product_DTGVja": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "product": "",
             "media_color": "#9dd1ff",
@@ -242,6 +243,7 @@
         },
         "product_cnicYQ": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "product": "",
             "media_color": "#a3fcff",
@@ -250,6 +252,7 @@
         },
         "product_EUkhcd": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "product": "",
             "media_color": "#f6a3ff",
@@ -258,6 +261,7 @@
         },
         "product_ygY6Mk": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "product": "",
             "media_color": "#c5a9ff",
@@ -1303,11 +1307,11 @@
         "heading": "¿No sabés por dónde empezar? Te ayudamos.",
         "text": "<p>Cada perro es distinto. Contanos sobre el tuyo y te recomendamos la fórmula indicada. Te lleva menos de un minuto.</p>",
         "alignment": "center",
-        "background": "#CDFC4B",
+        "background": "#cdfc4b",
         "text_color": "#075007",
         "button_background": "#075007",
-        "button_text": "#FFFFFF",
-        "button_background_hover": "#FFFFFF",
+        "button_text": "#ffffff",
+        "button_background_hover": "#ffffff",
         "button_text_hover": "#075007",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
@@ -1388,16 +1392,16 @@
         "subheading": "Para ver todas las preguntas sobre productos, visitá nuestra página de preguntas frecuentes.",
         "button_label": "Ver todos",
         "button_link": "",
-        "background": "#FFFFFF",
+        "background": "#ffffff",
         "heading_color": "#075007",
-        "text_color": "#2E2E2E",
+        "text_color": "#2e2e2e",
         "question_color": "#075007",
-        "border_color": "#E3E3E3",
+        "border_color": "#e3e3e3",
         "toggle_background": "#075007",
-        "toggle_color": "#FFFFFF",
+        "toggle_color": "#ffffff",
         "button_background": "#075007",
-        "button_text": "#FFFFFF",
-        "button_background_hover": "#C6FA41",
+        "button_text": "#ffffff",
+        "button_background_hover": "#c6fa41",
         "button_text_hover": "#075007",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",

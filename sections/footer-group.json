@@ -24,6 +24,7 @@
         },
         "link_list_nMpnQ4": {
           "type": "link_list",
+          "disabled": true,
           "settings": {
             "heading": "¿Cómo te ayudamos?",
             "menu": "footer",
@@ -32,6 +33,7 @@
         },
         "link_list_CkpDtb": {
           "type": "link_list",
+          "disabled": true,
           "settings": {
             "heading": "Productos",
             "menu": "footer",
@@ -57,11 +59,11 @@
         "disclaimer": "<p>Estas afirmaciones no fueron evaluadas por la autoridad sanitaria. Este producto no está destinado a diagnosticar, tratar, curar ni prevenir enfermedades.</p>",
         "legal_menu": "",
         "background": "#075007",
-        "text_color": "#FFFFFF",
-        "accent_color": "#CDFC4B",
+        "text_color": "#ffffff",
+        "accent_color": "#cdfc4b",
         "accent_text_color": "#075007",
-        "input_background": "#FFFFFF",
-        "input_text_color": "#2E2E2E",
+        "input_background": "#ffffff",
+        "input_text_color": "#2e2e2e",
         "body_font_source": "theme_body",
         "body_font": "assistant_n4",
         "heading_size": 18,
