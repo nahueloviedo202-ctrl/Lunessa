@@ -28,7 +28,7 @@
         "link_ciencia": {
           "type": "link",
           "settings": {
-            "label": "Los Estandares De Lunessa",
+            "label": "Los Estándares De Lunessa",
             "link": "shopify://pages/los-estandares-de-lunessa",
             "position": "left"
           }
