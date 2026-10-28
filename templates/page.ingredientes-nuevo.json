@@ -94,6 +94,7 @@
           "type": "ingredient",
           "settings": {
             "name": "Ácido hialurónico",
+            "image": "shopify://shop_images/ingredients-hyaluronic-gel-drop-cutout_Zq3iET.webp",
             "type": "active",
             "why": "Ayuda a mantener la lubricación natural de las articulaciones para que se muevan con comodidad.",
             "research": "",
@@ -104,6 +105,7 @@
           "type": "ingredient",
           "settings": {
             "name": "Condroitina",
+            "image": "shopify://shop_images/ingredients-eggshell-cracked-cutout_Z1llPJx.webp",
             "type": "active",
             "why": "Contribuye a mantener el cartílago sano y flexible.",
             "research": "",
@@ -114,6 +116,7 @@
           "type": "ingredient",
           "settings": {
             "name": "Glucosamina",
+            "image": "shopify://shop_images/ingredients-shrimp-whole-cutout_ZuTwpY.webp",
             "type": "active",
             "why": "Aporta los componentes que el cuerpo usa para mantener el cartílago.",
             "research": "",
@@ -124,6 +127,7 @@
           "type": "ingredient",
           "settings": {
             "name": "Hígado de cerdo",
+            "image": "shopify://shop_images/ingredients-pork-chop-raw-cutout_1yUgGm.webp",
             "type": "inactive",
             "why": "Le da sabor para que tu perro lo coma con ganas todos los días.",
             "research": "",
