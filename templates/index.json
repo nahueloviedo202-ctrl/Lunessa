@@ -333,7 +333,7 @@
       "name": "Franja de puntaje",
       "settings": {
         "heading": "Más reseñas de 5 estrellas que nadie. Así somos.",
-        "note": "*Según reseñas de 5 estrellas verificadas. Fuente: tu plataforma de reseñas.",
+        "note": "*Según reseñas de 5 estrellas verificadas. Fuente: Trustpilot.&nbsp;",
         "logo": "shopify://shop_images/badges-trustpilot-lockup.svg",
         "logo_link": "",
         "logo_width": 179,
@@ -458,7 +458,7 @@
       "name": "Comprar por necesidad",
       "settings": {
         "heading": "Comprar por necesidad",
-        "subheading": "Cada situación tiene un suplemento. Encontrá el indicado.",
+        "subheading": "&nbsp;Cada situación tiene un suplemento. <strong>Encuentra</strong> el indicado.&nbsp;",
         "columns_desktop": 4,
         "mobile_layout": "slider",
         "columns_mobile": "1",
