@@ -105,9 +105,9 @@
           "type": "row",
           "settings": {
             "image": "shopify://shop_images/ingredients-turkey-tail-mushroom-tweezers_2o3qKL.webp",
-            "caption": "Leyenda",
-            "heading": "Fila",
-            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "caption": "",
+            "heading": "&nbsp;<strong>1.Los ingredientes correctos</strong>&nbsp;",
+            "text": "<p>Elegimos ingredientes de calidad respaldados por la ciencia, porque en nuestras fórmulas, todos son protagonistas.</p>",
             "button_label": "",
             "button_link": ""
           }
