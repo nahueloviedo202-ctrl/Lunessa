@@ -1,0 +1,1137 @@
+{{ 'section-ingredient-glossary.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ingredient-glossary.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign letters_string = section.settings.letters | upcase | remove: ' ' | remove: ','
+  assign letters = letters_string | split: ''
+  assign search_id = 'IngredientGlossarySearch-' | append: section.id
+  assign filter_id = 'IngredientGlossaryFilter-' | append: section.id
+  # Index letter of every block (accents removed), '_' for blocks that are not rendered.
+  assign total = 0
+  assign initials_string = ''
+  for block in section.blocks
+    assign initial = '_'
+    if block.type == 'ingredient' and block.settings.name != blank
+      assign total = total | plus: 1
+      assign initial = block.settings.name | strip | slice: 0 | upcase
+      case initial
+        when 'Á', 'À', 'Ä', 'Â'
+          assign initial = 'A'
+        when 'É', 'È', 'Ë', 'Ê'
+          assign initial = 'E'
+        when 'Í', 'Ì', 'Ï', 'Î'
+          assign initial = 'I'
+        when 'Ó', 'Ò', 'Ö', 'Ô'
+          assign initial = 'O'
+        when 'Ú', 'Ù', 'Ü', 'Û'
+          assign initial = 'U'
+      endcase
+    endif
+    assign initials_string = initials_string | append: initial | append: '|'
+  endfor
+  assign initials = initials_string | split: '|'
+-%}
+
+{%- style -%}
+  {%- if section.settings.heading_font_source == 'custom' -%}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight -%}
+    {%- if heading_font_weighted -%}
+      {{ heading_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.body_font_source == 'custom' -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_weighted = body_font | font_modify: 'weight', section.settings.body_font_weight -%}
+    {%- if body_font_weighted -%}
+      {{ body_font_weighted | font_face: font_display: 'swap' }}
+    {%- endif -%}
+    {%- assign body_font_strong = body_font | font_modify: 'weight', section.settings.body_strong_weight -%}
+    {%- if body_font_strong -%}
+      {{ body_font_strong | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endif -%}
+
+  .igl-{{ section.id }} {
+    --igl-bg: {{ section.settings.background }};
+    --igl-heading-color: {{ section.settings.heading_color }};
+    --igl-text-color: {{ section.settings.text_color }};
+    --igl-group-letter-color: {{ section.settings.group_letter_color }};
+    --igl-card-bg: {{ section.settings.card_background }};
+    --igl-card-color: {{ section.settings.card_text }};
+    --igl-letter-bg: {{ section.settings.letter_background }};
+    --igl-letter-color: {{ section.settings.letter_text }};
+    --igl-letter-active-bg: {{ section.settings.letter_active_background }};
+    --igl-letter-active-color: {{ section.settings.letter_active_text }};
+    --igl-button-bg: {{ section.settings.button_background }};
+    --igl-button-color: {{ section.settings.button_text }};
+    --igl-button-bg-hover: {{ section.settings.button_background_hover }};
+    --igl-button-color-hover: {{ section.settings.button_text_hover }};
+    --igl-search-bg: {{ section.settings.search_background }};
+    --igl-search-border: {{ section.settings.search_border }};
+    --igl-search-color: {{ section.settings.search_text }};
+    --igl-search-icon: {{ section.settings.search_icon }};
+    --igl-filter-bg: {{ section.settings.filter_background }};
+    --igl-filter-color: {{ section.settings.filter_text }};
+    --igl-focus: {{ section.settings.focus_color }};
+    --igl-max-width: {{ section.settings.max_width }}px;
+    --igl-px: {{ section.settings.padding_x }}px;
+    --igl-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --igl-pt: {{ section.settings.padding_top }}px;
+    --igl-pb: {{ section.settings.padding_bottom }}px;
+    --igl-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --igl-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --igl-gap: {{ section.settings.block_gap }}px;
+    --igl-gap-mobile: {{ section.settings.block_gap_mobile }}px;
+    --igl-hero-width: {{ section.settings.hero_width }}px;
+    --igl-search-width: {{ section.settings.search_width }}px;
+    --igl-search-radius: {{ section.settings.search_radius }}px;
+    --igl-letter-radius: {{ section.settings.letter_radius }}px;
+    --igl-sticky-top: {% if section.settings.offset_sticky_header %}var(--header-height, 0px){% else %}0px{% endif %};
+    --igl-card-radius: {{ section.settings.card_radius }}px;
+    --igl-card-gap: {{ section.settings.card_gap }}px;
+    --igl-item-gap: {{ section.settings.item_gap }}px;
+    --igl-photo-size: {{ section.settings.photo_size }}px;
+    --igl-photo-size-mobile: {{ section.settings.photo_size_mobile }}px;
+    --igl-product-image: {{ section.settings.product_image_size }}px;
+    --igl-heading-ff: {{ heading_ff }};
+    --igl-heading-fs: {{ heading_fs }};
+    --igl-heading-fw: {{ section.settings.heading_font_weight }};
+    --igl-heading-size: {{ section.settings.heading_size }}px;
+    --igl-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --igl-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --igl-subheading-size: {{ section.settings.subheading_size }}px;
+    --igl-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --igl-group-letter-size: {{ section.settings.group_letter_size }}px;
+    --igl-name-size: {{ section.settings.card_name_size }}px;
+    --igl-term-size: {{ section.settings.term_size }}px;
+    --igl-body-ff: {{ body_ff }};
+    --igl-body-fs: {{ body_fs }};
+    --igl-body-fw: {{ section.settings.body_font_weight }};
+    --igl-body-strong-fw: {{ section.settings.body_strong_weight }};
+    --igl-body-size: {{ section.settings.body_size }}px;
+  }
+{%- endstyle -%}
+
+{%- capture groups_markup -%}
+  {%- assign available_letters = '' -%}
+  {%- for letter in letters -%}
+    {%- capture group_items -%}
+      {%- for block in section.blocks -%}
+        {%- if initials[forloop.index0] == letter -%}
+          {%- render 'ingredient-glossary-card', block: block -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if group_items != blank -%}
+      {%- assign available_letters = available_letters | append: letter | append: ',' -%}
+      <div
+        id="IngredientGlossary-{{ section.id }}-{{ forloop.index }}"
+        class="igl__group"
+        data-glossary-group="{{ forloop.index }}"
+      >
+        <h2 class="igl__group-letter">{{ letter }}</h2>
+        {{ group_items }}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Ingredients whose first character is not in the index go to a final "#" group. {%- endcomment -%}
+  {%- capture other_items -%}
+    {%- for block in section.blocks -%}
+      {%- assign initial = initials[forloop.index0] -%}
+      {%- if initial != '_' -%}
+        {%- unless letters contains initial -%}
+          {%- render 'ingredient-glossary-card', block: block -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if other_items != blank -%}
+    <div id="IngredientGlossary-{{ section.id }}-0" class="igl__group" data-glossary-group="0">
+      <h2 class="igl__group-letter">#</h2>
+      {{ other_items }}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- assign available = available_letters | split: ',' -%}
+
+<div class="igl igl-{{ section.id }}">
+  <div class="igl__container">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <header class="igl__hero">
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="igl__heading">
+            {{- section.settings.heading -}}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="igl__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <ingredient-glossary
+      class="igl__glossary"
+      data-status-template="{{ section.settings.status_text | escape }}"
+    >
+      {%- if section.settings.show_search -%}
+        <div class="igl__search" role="search">
+          <label for="{{ search_id }}" class="visually-hidden">{{ section.settings.search_label | escape }}</label>
+          <div class="igl__search-box">
+            <span class="igl__search-icon svg-wrapper" aria-hidden="true">
+              {{- 'icon-search.svg' | inline_asset_content -}}
+            </span>
+            <input
+              id="{{ search_id }}"
+              class="igl__search-input"
+              type="search"
+              enterkeyhint="search"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="{{ section.settings.search_placeholder | escape }}"
+              data-glossary-search
+            >
+            <button
+              type="button"
+              class="igl__search-clear"
+              aria-label="{{ section.settings.clear_label | escape }}"
+              data-glossary-clear
+            >
+              <span class="svg-wrapper" aria-hidden="true">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="igl__body">
+        {%- if section.settings.show_letters -%}
+          <nav
+            class="igl__letters{% if section.settings.sticky_letters %} igl__letters--sticky{% endif %}"
+            aria-label="{{ section.settings.letters_label | escape }}"
+          >
+            <ul class="igl__letter-list list-unstyled" role="list">
+              {%- for letter in letters -%}
+                <li>
+                  {%- if available contains letter -%}
+                    <a
+                      class="igl__letter"
+                      href="#IngredientGlossary-{{ section.id }}-{{ forloop.index }}"
+                      data-glossary-letter="{{ forloop.index }}"
+                    >
+                      {{- letter -}}
+                    </a>
+                  {%- else -%}
+                    <span class="igl__letter" data-disabled aria-hidden="true">{{ letter }}</span>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+
+        {%- if section.settings.show_filter -%}
+          <div class="igl__filter">
+            <label for="{{ filter_id }}" class="visually-hidden">{{ section.settings.filter_label | escape }}</label>
+            <div class="select igl__select">
+              <select id="{{ filter_id }}" class="select__select igl__select-input" data-glossary-filter>
+                <option value="all">{{ section.settings.filter_all_label | escape }}</option>
+                <option value="active">{{ section.settings.active_label | escape }}</option>
+                <option value="inactive">{{ section.settings.inactive_label | escape }}</option>
+              </select>
+              <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <p class="visually-hidden" role="status" aria-live="polite" data-glossary-status data-total="{{ total }}"></p>
+
+        <div class="igl__groups">
+          {{ groups_markup }}
+          <p class="igl__empty" data-glossary-empty {% if total > 0 %}hidden{% endif %}>
+            {{- section.settings.empty_text | escape -}}
+          </p>
+        </div>
+      </div>
+    </ingredient-glossary>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glosario de ingredientes",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 50,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Glosario de ingredientes"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Etiqueta del título",
+      "info": "Usá H1 solo si es el título principal de la página.",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Bajada",
+      "default": "Todos nuestros ingredientes de la A a la Z, para quienes quieren conocer cada detalle."
+    },
+    {
+      "type": "header",
+      "content": "Buscador y filtro"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Mostrar buscador",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Texto del buscador",
+      "default": "Buscar ingrediente"
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Nombre accesible del buscador",
+      "info": "Lo leen los lectores de pantalla.",
+      "default": "Buscar ingredientes"
+    },
+    {
+      "type": "text",
+      "id": "clear_label",
+      "label": "Nombre accesible del botón para borrar",
+      "default": "Borrar búsqueda"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter",
+      "label": "Mostrar filtro activo / inactivo",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "filter_label",
+      "label": "Nombre accesible del filtro",
+      "default": "Filtrar ingredientes"
+    },
+    {
+      "type": "text",
+      "id": "filter_all_label",
+      "label": "Opción \"Todos\" del filtro",
+      "default": "Todos los ingredientes"
+    },
+    {
+      "type": "text",
+      "id": "status_text",
+      "label": "Resultado de la búsqueda",
+      "info": "Lo leen los lectores de pantalla. [shown] = ingredientes visibles, [total] = cantidad total.",
+      "default": "[shown] de [total] ingredientes"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Mensaje sin resultados",
+      "default": "Ningún ingrediente coincide con tu búsqueda."
+    },
+    {
+      "type": "header",
+      "content": "Índice de letras"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_letters",
+      "label": "Mostrar índice",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "letters",
+      "label": "Letras del índice",
+      "info": "Los ingredientes se agrupan por la primera letra del nombre (sin tener en cuenta acentos). Los que no coinciden con ninguna letra van al final, en el grupo #.",
+      "default": "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+    },
+    {
+      "type": "text",
+      "id": "letters_label",
+      "label": "Nombre accesible del índice",
+      "default": "Ingredientes de la A a la Z"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_letters",
+      "label": "Índice fijo al hacer scroll",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "offset_sticky_header",
+      "label": "Dejar lugar para el header fijo",
+      "info": "Activalo si el header queda fijo arriba al hacer scroll.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Textos de las tarjetas"
+    },
+    {
+      "type": "text",
+      "id": "label_why",
+      "label": "Título: por qué lo usamos",
+      "default": "Por qué lo usamos"
+    },
+    {
+      "type": "text",
+      "id": "label_type",
+      "label": "Título: activo o inactivo",
+      "default": "Activo o inactivo"
+    },
+    {
+      "type": "text",
+      "id": "label_research",
+      "label": "Título: estudios",
+      "default": "Estudios"
+    },
+    {
+      "type": "text",
+      "id": "label_featured",
+      "label": "Título: productos",
+      "default": "Presente en:"
+    },
+    {
+      "type": "text",
+      "id": "active_label",
+      "label": "Nombre de \"Activo\"",
+      "default": "Activo"
+    },
+    {
+      "type": "text",
+      "id": "active_description",
+      "label": "Descripción de \"Activo\"",
+      "default": "es el ingrediente que aporta directamente los beneficios del suplemento."
+    },
+    {
+      "type": "text",
+      "id": "inactive_label",
+      "label": "Nombre de \"Inactivo\"",
+      "default": "Inactivo"
+    },
+    {
+      "type": "text",
+      "id": "inactive_description",
+      "label": "Descripción de \"Inactivo\"",
+      "default": "es un ingrediente que acompaña a la fórmula."
+    },
+    {
+      "type": "text",
+      "id": "button_more",
+      "label": "Botón para dar vuelta la tarjeta (mobile)",
+      "default": "Ver más"
+    },
+    {
+      "type": "text",
+      "id": "button_back",
+      "label": "Botón para volver (mobile)",
+      "default": "Volver"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Bajada",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "group_letter_color",
+      "label": "Letra de cada grupo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Fondo de las tarjetas",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "color",
+      "id": "card_text",
+      "label": "Texto de las tarjetas",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "letter_background",
+      "label": "Índice: fondo",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "letter_text",
+      "label": "Índice: texto",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "letter_active_background",
+      "label": "Índice: fondo de la letra actual",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "letter_active_text",
+      "label": "Índice: texto de la letra actual",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Botón: fondo",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Botón: texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_hover",
+      "label": "Botón: fondo al pasar el mouse",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover",
+      "label": "Botón: texto al pasar el mouse",
+      "default": "#075007"
+    },
+    {
+      "type": "color",
+      "id": "search_background",
+      "label": "Buscador: fondo",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "search_border",
+      "label": "Buscador: borde",
+      "default": "#E3E3E3"
+    },
+    {
+      "type": "color",
+      "id": "search_text",
+      "label": "Buscador: texto",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "search_icon",
+      "label": "Buscador: íconos y texto de ayuda",
+      "default": "#575757"
+    },
+    {
+      "type": "color",
+      "id": "filter_background",
+      "label": "Filtro: fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "filter_text",
+      "label": "Filtro: texto",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "focus_color",
+      "label": "Anillo de foco",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía de títulos"
+    },
+    {
+      "type": "paragraph",
+      "content": "Se usa en el título, la letra de cada grupo, el nombre de cada ingrediente y los subtítulos de las tarjetas."
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_heading"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso",
+      "options": [
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "900"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Mayúsculas",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 18,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título (mobile)",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "group_letter_size",
+      "min": 32,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño de la letra de cada grupo",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "card_name_size",
+      "min": 20,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño máximo del nombre del ingrediente",
+      "info": "Se achica solo si el nombre no entra en la tarjeta.",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "term_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de los subtítulos de la tarjeta",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Tipografía de textos"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente",
+      "options": [
+        {
+          "value": "theme_heading",
+          "label": "Títulos del theme"
+        },
+        {
+          "value": "theme_body",
+          "label": "Textos del theme"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizada"
+        }
+      ],
+      "default": "theme_body"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "body_font_weight",
+      "label": "Peso",
+      "options": [
+        {
+          "value": "300",
+          "label": "300"
+        },
+        {
+          "value": "400",
+          "label": "400"
+        },
+        {
+          "value": "500",
+          "label": "500"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "select",
+      "id": "body_strong_weight",
+      "label": "Peso de botones, letras y destacados",
+      "options": [
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        },
+        {
+          "value": "800",
+          "label": "800"
+        },
+        {
+          "value": "900",
+          "label": "900"
+        }
+      ],
+      "default": "800"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la bajada (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la bajada (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de los textos",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre frente y dorso (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "min": 8,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre ingredientes (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "photo_size",
+      "min": 160,
+      "max": 480,
+      "step": 5,
+      "unit": "px",
+      "label": "Tamaño máximo de la foto (desktop)",
+      "default": 290
+    },
+    {
+      "type": "range",
+      "id": "photo_size_mobile",
+      "min": 160,
+      "max": 480,
+      "step": 5,
+      "unit": "px",
+      "label": "Tamaño máximo de la foto (mobile)",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "product_image_size",
+      "min": 40,
+      "max": 140,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de la imagen de los productos",
+      "default": 69
+    },
+    {
+      "type": "header",
+      "content": "Medidas y espaciado"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "hero_width",
+      "min": 300,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del título y la bajada (desktop)",
+      "default": 660
+    },
+    {
+      "type": "range",
+      "id": "search_width",
+      "min": 300,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho máximo del buscador",
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "search_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio del buscador y el filtro",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "letter_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Radio de las letras del índice",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "block_gap",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre índice, filtro y grupos (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "block_gap_mobile",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre índice, filtro y grupos (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen lateral (desktop)",
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Margen lateral (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen superior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen inferior (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen superior (mobile)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Margen inferior (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingrediente",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "Ingrediente"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Foto",
+          "info": "Ideal: imagen cuadrada con fondo transparente."
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Tipo",
+          "options": [
+            {
+              "value": "active",
+              "label": "Activo"
+            },
+            {
+              "value": "inactive",
+              "label": "Inactivo"
+            }
+          ],
+          "default": "active"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "why",
+          "label": "Por qué lo usamos"
+        },
+        {
+          "type": "richtext",
+          "id": "research",
+          "label": "Estudios",
+          "info": "Opcional. Agregá un enlace por párrafo."
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Productos que lo contienen",
+          "limit": 6
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glosario de ingredientes",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Ácido hialurónico",
+            "type": "active",
+            "why": "Ayuda a mantener la lubricación natural de las articulaciones para que se muevan con comodidad."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Condroitina",
+            "type": "active",
+            "why": "Contribuye a mantener el cartílago sano y flexible."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Glucosamina",
+            "type": "active",
+            "why": "Aporta los componentes que el cuerpo usa para mantener el cartílago."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Hígado de cerdo",
+            "type": "inactive",
+            "why": "Le da sabor para que tu perro lo coma con ganas todos los días."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

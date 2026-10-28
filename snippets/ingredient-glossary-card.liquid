@@ -1,0 +1,144 @@
+{% doc %}
+  Renders one ingredient card of the ingredient glossary section: a front face
+  (name + photo) and a back face (details). On mobile the card flips between faces;
+  from 750px both faces are shown side by side.
+
+  @param {object} block - An `ingredient` block of the ingredient-glossary section.
+  @param {object} [section] - The ingredient-glossary section, supplied implicitly; used for labels and sizes.
+
+  @example
+  {% render 'ingredient-glossary-card', block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign name = block.settings.name | escape
+  assign image = block.settings.image
+  assign back_id = 'IngredientGlossaryBack-' | append: block.id
+  assign name_id = 'IngredientGlossaryName-' | append: block.id
+
+  if block.settings.type == 'active'
+    assign type_label = section.settings.active_label
+    assign type_description = section.settings.active_description
+  else
+    assign type_label = section.settings.inactive_label
+    assign type_description = section.settings.inactive_description
+  endif
+
+  assign photo_sizes = '(min-width: 750px) ' | append: section.settings.photo_size | append: 'px, ' | append: section.settings.photo_size_mobile | append: 'px'
+-%}
+
+<div
+  class="igl__item"
+  data-glossary-item
+  data-name="{{ name }}"
+  data-type="{{ block.settings.type }}"
+  {{ block.shopify_attributes }}
+>
+  <article class="igl-card" data-face="front" aria-labelledby="{{ name_id }}">
+    <div class="igl-card__viewport">
+      <div class="igl-card__face igl-card__face--front">
+        <h3 id="{{ name_id }}" class="igl-card__name">{{ name }}</h3>
+        <div class="igl-card__front-body">
+          <div class="igl-card__photo-wrap">
+            <div class="igl-card__photo">
+              {%- if image != blank -%}
+                {{
+                  image
+                  | image_url: width: 960
+                  | image_tag:
+                    class: 'igl-card__image',
+                    widths: '320, 480, 640, 960',
+                    sizes: photo_sizes,
+                    loading: 'lazy',
+                    alt: image.alt
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'igl-card__image placeholder-svg' }}
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="igl-card__toggle">
+            <button
+              type="button"
+              class="igl-card__button"
+              aria-expanded="false"
+              aria-controls="{{ back_id }}"
+              data-glossary-flip
+            >
+              {{- section.settings.button_more | escape -}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="{{ back_id }}" class="igl-card__face igl-card__face--back">
+        <p class="igl-card__name" aria-hidden="true">{{ name }}</p>
+        <dl class="igl-card__details">
+          {%- if block.settings.why != blank -%}
+            <div class="igl-card__detail">
+              <dt class="igl-card__term">{{ section.settings.label_why | escape }}</dt>
+              <dd class="igl-card__description">{{ block.settings.why }}</dd>
+            </div>
+          {%- endif -%}
+
+          <div class="igl-card__detail">
+            <dt class="igl-card__term">{{ section.settings.label_type | escape }}</dt>
+            <dd class="igl-card__description">
+              <strong>{{ type_label | escape }}</strong>
+              {%- if type_description != blank %} – {{ type_description | escape }}{% endif -%}
+            </dd>
+          </div>
+
+          {%- if block.settings.research != blank -%}
+            <div class="igl-card__detail igl-card__detail--research">
+              <dt class="igl-card__term">{{ section.settings.label_research | escape }}</dt>
+              <dd class="igl-card__description igl-card__research">{{ block.settings.research }}</dd>
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.products.size > 0 -%}
+            <div class="igl-card__detail igl-card__detail--products">
+              <dt class="igl-card__term">{{ section.settings.label_featured | escape }}</dt>
+              <dd class="igl-card__products">
+                <ul class="igl-card__product-list list-unstyled" role="list">
+                  {%- for product in block.settings.products -%}
+                    <li>
+                      <a href="{{ product.url }}" class="igl-card__product">
+                        <span class="igl-card__product-media">
+                          {%- if product.featured_image != blank -%}
+                            {{
+                              product.featured_image
+                              | image_url: width: 240
+                              | image_tag:
+                                class: 'igl-card__product-image',
+                                widths: '120, 240',
+                                sizes: '120px',
+                                loading: 'lazy',
+                                alt: ''
+                            }}
+                          {%- endif -%}
+                        </span>
+                        <span class="igl-card__product-title">{{ product.title | escape }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </dd>
+            </div>
+          {%- endif -%}
+        </dl>
+        <div class="igl-card__toggle">
+          <button
+            type="button"
+            class="igl-card__button"
+            aria-expanded="false"
+            aria-controls="{{ back_id }}"
+            data-glossary-flip
+          >
+            {{- section.settings.button_back | escape -}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
