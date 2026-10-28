@@ -153,6 +153,11 @@
   gap: var(--hn-gap-laptop);
 }
 
+/* Shopify injects an empty <shopify-store> next to <shopify-account>; as a flex item it doubles the gap. */
+.header-navbar__icons > shopify-store {
+  position: absolute;
+}
+
 .header-navbar .header__icon {
   color: inherit;
 }
