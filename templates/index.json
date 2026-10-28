@@ -1263,7 +1263,7 @@
         "text_miJAmY": {
           "type": "text",
           "settings": {
-            "text": "<p>¿Te sumás?</p>"
+            "text": "<p>¿Te sumas?<br/></p>"
           }
         },
         "button_QpXaRK": {
@@ -1348,8 +1348,8 @@
       ],
       "name": "Llamado a la acción",
       "settings": {
-        "heading": "¿No sabés por dónde empezar? Te ayudamos.",
-        "text": "<p>Cada perro es distinto. Contanos sobre el tuyo y te recomendamos la fórmula indicada. Te lleva menos de un minuto.</p>",
+        "heading": "¿No sabes por dónde empezar? Te ayudamos.",
+        "text": "<p>Cada perro es distinto. Cuéntanos sobre el tuyo y te recomendamos la fórmula indicada.</p>",
         "alignment": "center",
         "background": "#cdfc4b",
         "text_color": "#075007",
