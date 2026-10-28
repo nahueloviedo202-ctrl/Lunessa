@@ -1,0 +1,54 @@
+{% comment %}
+  Renders the "stat" blocks that follow a product group, stopping at the next "group" block.
+
+  Accepts:
+  - blocks: {Array} section.blocks
+  - offset: {Number} index of the first block to read
+  - value_suffix: {String} text appended to each value
+  - show_marker: {Boolean}
+  - scale_markup: {String} pre-rendered scale ticks
+  - animate: {Boolean} hook rows into Dawn's scroll-trigger
+
+  Usage:
+  {% render 'science-datablock-rows', blocks: section.blocks, offset: 1, value_suffix: '%', show_marker: true, scale_markup: scale_markup, animate: true %}
+{% endcomment %}
+
+{%- if blocks[offset].type == 'stat' -%}
+  <ul class="sdb-group__list" role="list">
+    {%- assign row_index = 0 -%}
+    {%- for block in blocks offset: offset -%}
+      {%- if block.type == 'group' -%}
+        {%- break -%}
+      {%- endif -%}
+      {%- liquid
+        assign value = block.settings.value
+        assign label_plain = block.settings.label | strip_html | escape
+        assign suffix = value_suffix | escape
+      -%}
+      <li
+        class="sdb-row{% if animate %} scroll-trigger{% endif %}"
+        style="--sdb-fill: {{ value }}%; --sdb-order: {{ row_index }};"
+        aria-label="{{ value }}{{ suffix }} {{ label_plain }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="sdb-row__text" aria-hidden="true">
+          <span class="sdb-row__value">{{ value }}{{ suffix }}</span>
+          {%- if block.settings.label != blank -%}
+            <span class="sdb-row__label">{{ block.settings.label }}</span>
+          {%- endif -%}
+        </div>
+        <div class="sdb-row__graph" aria-hidden="true">
+          <div class="sdb-row__track">
+            <div class="sdb-row__fill">
+              {%- if show_marker -%}
+                <span class="sdb-row__marker"></span>
+              {%- endif -%}
+            </div>
+          </div>
+          {{- scale_markup -}}
+        </div>
+      </li>
+      {%- assign row_index = row_index | plus: 1 -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

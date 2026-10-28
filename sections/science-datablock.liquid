@@ -1,0 +1,868 @@
+{{ 'section-science-datablock.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+
+  case section.settings.heading_font_source
+    when 'theme_heading'
+      assign heading_ff = 'var(--font-heading-family)'
+      assign heading_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign heading_ff = 'var(--font-body-family)'
+      assign heading_fs = 'var(--font-body-style)'
+    else
+      assign heading_ff = heading_font.family | append: ', ' | append: heading_font.fallback_families
+      assign heading_fs = heading_font.style
+  endcase
+
+  case section.settings.body_font_source
+    when 'theme_heading'
+      assign body_ff = 'var(--font-heading-family)'
+      assign body_fs = 'var(--font-heading-style)'
+    when 'theme_body'
+      assign body_ff = 'var(--font-body-family)'
+      assign body_fs = 'var(--font-body-style)'
+    else
+      assign body_ff = body_font.family | append: ', ' | append: body_font.fallback_families
+      assign body_fs = body_font.style
+  endcase
+
+  assign animate_bars = false
+  if settings.animations_reveal_on_scroll and section.settings.animate_bars
+    assign animate_bars = true
+  endif
+
+  case section.settings.scale_steps
+    when '3'
+      assign scale_step = 50
+    when '6'
+      assign scale_step = 20
+    else
+      assign scale_step = 25
+  endcase
+  assign scale_ticks = 100 | divided_by: scale_step
+-%}
+
+{%- style -%}
+  {% if section.settings.heading_font_source == 'custom' %}
+    {%- assign heading_font_weighted = heading_font | font_modify: 'weight', section.settings.heading_font_weight | default: heading_font -%}
+    {{ heading_font_weighted | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.body_font_source == 'custom' %}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {%- assign body_font_bold = body_font | font_modify: 'weight', 'bold' -%}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {%- assign body_font_italic = body_font | font_modify: 'style', 'italic' -%}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .sdb--{{ section.id }} {
+    --sdb-bg: {{ section.settings.background_color }};
+    --sdb-max-width: {{ section.settings.max_width }}px;
+    --sdb-pt: {{ section.settings.padding_top }}px;
+    --sdb-pb: {{ section.settings.padding_bottom }}px;
+    --sdb-px: {{ section.settings.padding_x }}px;
+    --sdb-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+    --sdb-pb-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --sdb-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --sdb-stack-gap: {{ section.settings.stack_gap }}px;
+    --sdb-stack-gap-mobile: {{ section.settings.stack_gap_mobile }}px;
+    --sdb-group-gap: {{ section.settings.group_gap }}px;
+    --sdb-group-gap-mobile: {{ section.settings.group_gap_mobile }}px;
+
+    --sdb-heading-ff: {{ heading_ff }};
+    --sdb-heading-fs: {{ heading_fs }};
+    --sdb-heading-fw: {{ section.settings.heading_font_weight }};
+    --sdb-heading-tt: {% if section.settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+    --sdb-heading-color: {{ section.settings.heading_color }};
+    --sdb-heading-size: {{ section.settings.heading_size }}px;
+    --sdb-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --sdb-body-ff: {{ body_ff }};
+    --sdb-body-fs: {{ body_fs }};
+
+    --sdb-group-inner-gap: {{ section.settings.group_inner_gap }}px;
+    --sdb-group-inner-gap-mobile: {{ section.settings.group_inner_gap_mobile }}px;
+    --sdb-title-color: {{ section.settings.title_color }};
+    --sdb-title-size: {{ section.settings.title_size }}px;
+    --sdb-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --sdb-image-width: {{ section.settings.image_width }}px;
+    --sdb-image-height: {{ section.settings.image_height }}px;
+    --sdb-image-width-mobile: {{ section.settings.image_width_mobile }}px;
+    --sdb-image-height-mobile: {{ section.settings.image_height_mobile }}px;
+    --sdb-image-radius: {{ section.settings.image_radius }}px;
+
+    --sdb-list-max-width: {{ section.settings.list_max_width }}px;
+    --sdb-row-gap: {{ section.settings.row_gap }}px;
+    --sdb-row-gap-mobile: {{ section.settings.row_gap_mobile }}px;
+    --sdb-text-width: {{ section.settings.text_width }}px;
+    --sdb-value-color: {{ section.settings.value_color }};
+    --sdb-value-size: {{ section.settings.value_size }}px;
+    --sdb-value-size-mobile: {{ section.settings.value_size_mobile }}px;
+    --sdb-label-color: {{ section.settings.label_color }};
+    --sdb-label-size: {{ section.settings.label_size }}px;
+    --sdb-label-size-mobile: {{ section.settings.label_size_mobile }}px;
+
+    --sdb-bar-height: {{ section.settings.bar_height }}px;
+    --sdb-bar-height-mobile: {{ section.settings.bar_height_mobile }}px;
+    --sdb-bar-radius: {{ section.settings.bar_radius }}px;
+    --sdb-track-color: {{ section.settings.track_color }};
+    --sdb-track-border: {{ section.settings.track_border_color }};
+    --sdb-fill-color: {{ section.settings.fill_color }};
+    --sdb-marker-color: {{ section.settings.marker_color }};
+    --sdb-marker-overhang: {{ section.settings.marker_overhang }}px;
+    --sdb-scale-color: {{ section.settings.scale_color }};
+    --sdb-scale-size: {{ section.settings.scale_size }}px;
+    --sdb-bar-duration: {{ section.settings.animation_duration }}ms;
+    --sdb-bar-stagger: {{ section.settings.animation_stagger }}ms;
+
+    --sdb-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --sdb-disclaimer-size: {{ section.settings.disclaimer_size }}px;
+    --sdb-disclaimer-max-width: {{ section.settings.disclaimer_max_width }}px;
+  }
+{%- endstyle -%}
+
+{%- capture scale_markup -%}
+  {%- if section.settings.show_scale -%}
+    <div class="sdb-row__scale">
+      {%- for i in (0..scale_ticks) -%}
+        <span>{{ i | times: scale_step }}{{ section.settings.value_suffix | escape }}</span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+<section
+  class="sdb sdb--{{ section.id }}"
+  {% if section.settings.heading != blank %}
+    aria-label="{{ section.settings.heading | strip_html | escape }}"
+  {% endif %}
+>
+  <div class="sdb__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sdb__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      {%- capture image_sizes -%}
+        (min-width: 750px) {{ section.settings.image_width }}px, {{ section.settings.image_width_mobile }}px
+      {%- endcapture -%}
+
+      <div class="sdb__groups">
+        {%- if section.blocks.first.type == 'stat' -%}
+          <div class="sdb-group">
+            {%- render 'science-datablock-rows',
+              blocks: section.blocks,
+              offset: 0,
+              value_suffix: section.settings.value_suffix,
+              show_marker: section.settings.show_marker,
+              scale_markup: scale_markup,
+              animate: animate_bars
+            -%}
+          </div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'group' -%}
+            <div class="sdb-group" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="sdb-group__title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.image != blank -%}
+                <div class="sdb-group__media">
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '160, 240, 320, 480, 640, 800',
+                      sizes: image_sizes,
+                      class: 'sdb-group__image'
+                  }}
+                </div>
+              {%- endif -%}
+              {%- render 'science-datablock-rows',
+                blocks: section.blocks,
+                offset: forloop.index,
+                value_suffix: section.settings.value_suffix,
+                show_marker: section.settings.show_marker,
+                scale_markup: scale_markup,
+                animate: animate_bars
+              -%}
+              {%- if block.settings.disclaimer != blank -%}
+                <div class="sdb-group__disclaimer rte">{{ block.settings.disclaimer }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Resultados con barras",
+  "tag": "div",
+  "class": "section-science-datablock",
+  "max_blocks": 30,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo",
+      "min": 600,
+      "max": 1400,
+      "step": 8,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "stack_gap",
+      "label": "Separación entre título y productos en escritorio",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "stack_gap_mobile",
+      "label": "Separación entre título y productos en móvil",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "group_gap",
+      "label": "Separación entre productos en escritorio",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "group_gap_mobile",
+      "label": "Separación entre productos en móvil",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en escritorio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 112
+    },
+    {
+      "type": "header",
+      "content": "Espaciado en móvil"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Espaciado lateral",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "La ciencia habla por sí sola"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#075007"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño en escritorio",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamaño en móvil",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Títulos y números en mayúsculas",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Producto"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del nombre",
+      "default": "#075007"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del nombre en escritorio",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Tamaño del nombre en móvil",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Ancho de imagen en escritorio",
+      "min": 40,
+      "max": 440,
+      "step": 4,
+      "unit": "px",
+      "default": 152
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Alto de imagen en escritorio",
+      "min": 43,
+      "max": 443,
+      "step": 4,
+      "unit": "px",
+      "default": 143
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "label": "Ancho de imagen en móvil",
+      "min": 40,
+      "max": 440,
+      "step": 4,
+      "unit": "px",
+      "default": 152
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "label": "Alto de imagen en móvil",
+      "min": 43,
+      "max": 443,
+      "step": 4,
+      "unit": "px",
+      "default": 143
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Radio de la imagen",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "group_inner_gap",
+      "label": "Separación interna en escritorio",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "group_inner_gap_mobile",
+      "label": "Separación interna en móvil",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Datos"
+    },
+    {
+      "type": "text",
+      "id": "value_suffix",
+      "label": "Sufijo del valor",
+      "default": "%"
+    },
+    {
+      "type": "range",
+      "id": "list_max_width",
+      "label": "Ancho máximo de la lista",
+      "min": 400,
+      "max": 1200,
+      "step": 8,
+      "unit": "px",
+      "default": 744
+    },
+    {
+      "type": "range",
+      "id": "text_width",
+      "label": "Ancho de la columna de texto en escritorio",
+      "min": 160,
+      "max": 560,
+      "step": 4,
+      "unit": "px",
+      "default": 344
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Separación entre datos en escritorio",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "Separación entre datos en móvil",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "value_color",
+      "label": "Color del valor",
+      "default": "#075007"
+    },
+    {
+      "type": "range",
+      "id": "value_size",
+      "label": "Tamaño del valor en escritorio",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "value_size_mobile",
+      "label": "Tamaño del valor en móvil",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color del texto",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Tamaño del texto en escritorio",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Tamaño del texto en móvil",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Barra"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "label": "Alto en escritorio",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "bar_height_mobile",
+      "label": "Alto en móvil",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "bar_radius",
+      "label": "Radio de las esquinas",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "color",
+      "id": "track_color",
+      "label": "Color del fondo de la barra",
+      "default": "#F4F4F4"
+    },
+    {
+      "type": "color",
+      "id": "track_border_color",
+      "label": "Color del borde de la barra",
+      "default": "#E3E3E3"
+    },
+    {
+      "type": "color",
+      "id": "fill_color",
+      "label": "Color del relleno",
+      "default": "#CDFC4B"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_marker",
+      "label": "Mostrar línea marcadora",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "marker_color",
+      "label": "Color de la línea marcadora",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "range",
+      "id": "marker_overhang",
+      "label": "Exceso de la línea marcadora",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scale",
+      "label": "Mostrar escala",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "scale_steps",
+      "label": "Divisiones de la escala",
+      "options": [
+        { "value": "3", "label": "0 / 50 / 100" },
+        { "value": "5", "label": "Cada 25" },
+        { "value": "6", "label": "Cada 20" }
+      ],
+      "default": "5"
+    },
+    {
+      "type": "color",
+      "id": "scale_color",
+      "label": "Color de la escala",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "range",
+      "id": "scale_size",
+      "label": "Tamaño de la escala",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Animación"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_bars",
+      "label": "Animar barras al hacer scroll",
+      "info": "Requiere activar \"Mostrar secciones al desplazarse\" en Configuración del tema > Animaciones.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Duración",
+      "min": 200,
+      "max": 3000,
+      "step": 100,
+      "unit": "ms",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "animation_stagger",
+      "label": "Retraso entre barras",
+      "min": 0,
+      "max": 500,
+      "step": 10,
+      "unit": "ms",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Nota al pie"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Color",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Tamaño",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_max_width",
+      "label": "Ancho máximo",
+      "min": 200,
+      "max": 1000,
+      "step": 8,
+      "unit": "px",
+      "default": 744
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Fuente de títulos y valores",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Fuente personalizada de títulos y valores",
+      "default": "archivo_narrow_n4"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Grosor de títulos y valores",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extranegrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "custom", "label": "Personalizada" },
+        { "value": "theme_heading", "label": "Títulos del tema" },
+        { "value": "theme_body", "label": "Cuerpo del tema" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Fuente personalizada del texto",
+      "default": "assistant_n4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Producto",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Los bloques \"Dato\" que siguen a este bloque se muestran debajo de este producto."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Nombre",
+          "default": "Nombre del producto"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "richtext",
+          "id": "disclaimer",
+          "label": "Nota al pie",
+          "default": "<p>*Basado en una encuesta a clientes que usan este producto. Los resultados pueden variar.</p>"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Dato",
+      "settings": [
+        {
+          "type": "range",
+          "id": "value",
+          "label": "Valor",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 99
+        },
+        {
+          "type": "inline_richtext",
+          "id": "label",
+          "label": "Texto",
+          "default": "notó una mejora en la movilidad*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Resultados con barras",
+      "blocks": [
+        { "type": "group", "settings": { "title": "Masticables para cadera y articulaciones" } },
+        { "type": "stat", "settings": { "value": 99, "label": "notó una mejora en la movilidad y menos molestias*" } },
+        { "type": "stat", "settings": { "value": 99, "label": "lo recomendaría a otros dueños de perros*" } },
+        { "type": "stat", "settings": { "value": 97, "label": "notó las articulaciones de su perro menos rígidas*" } },
+        { "type": "group", "settings": { "title": "Polvo dental" } },
+        { "type": "stat", "settings": { "value": 100, "label": "de mejora en el sangrado ocasional de encías en 8 semanas*" } },
+        { "type": "stat", "settings": { "value": 91, "label": "de mejora en los marcadores de salud de encías en 8 semanas*" } },
+        { "type": "stat", "settings": { "value": 83, "label": "de mejora en la irritación ocasional de encías en 8 semanas*" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

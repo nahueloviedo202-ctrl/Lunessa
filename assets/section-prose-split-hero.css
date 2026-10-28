@@ -1,0 +1,151 @@
+/* Prose split hero — every rule is scoped under .prose-split-hero */
+
+.prose-split-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--psh-gap-mobile);
+  padding-top: var(--psh-pt-mobile);
+  overflow: hidden;
+  background-color: var(--psh-bg-start);
+  background-image: linear-gradient(
+    180deg,
+    var(--psh-bg-start) var(--psh-bg-stop-start-mobile),
+    var(--psh-bg-end) var(--psh-bg-stop-end-mobile)
+  );
+}
+
+.prose-split-hero__copy {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: var(--psh-align-items);
+  gap: var(--psh-copy-gap-mobile);
+  width: 100%;
+  padding-inline: var(--psh-px-mobile);
+  text-align: var(--psh-text-align);
+}
+
+.prose-split-hero__heading {
+  box-sizing: border-box;
+  margin: 0;
+  color: var(--psh-heading-color);
+  font-family: var(--psh-heading-ff);
+  font-style: var(--psh-heading-fs);
+  font-weight: var(--psh-heading-fw);
+  font-size: var(--psh-heading-size-mobile);
+  line-height: var(--psh-heading-lh);
+  letter-spacing: var(--psh-heading-ls);
+  text-transform: var(--psh-heading-tt);
+  text-align: inherit;
+  text-box: trim-both cap alphabetic;
+  font-feature-settings: 'lnum' 1, 'pnum' 1;
+}
+
+.prose-split-hero__prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--psh-paragraph-gap-mobile);
+  width: 100%;
+  max-width: var(--psh-prose-width);
+}
+
+.prose-split-hero__paragraph {
+  box-sizing: border-box;
+  margin: 0;
+  color: var(--psh-text-color);
+  font-family: var(--psh-body-ff);
+  font-style: var(--psh-body-fs);
+  font-weight: var(--psh-body-fw);
+  font-size: var(--psh-body-size-mobile);
+  line-height: var(--psh-body-lh-mobile);
+  letter-spacing: var(--psh-body-ls);
+  text-align: inherit;
+}
+
+.prose-split-hero__paragraph a {
+  color: inherit;
+}
+
+.prose-split-hero__figure {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  width: calc(100% + 2 * var(--psh-bleed-mobile));
+  aspect-ratio: var(--psh-ratio-mobile);
+  margin: 0 0 calc(-1 * var(--psh-crop-bottom-mobile)) calc(-1 * var(--psh-bleed-mobile));
+  overflow: hidden;
+  border-radius: var(--psh-radius);
+}
+
+.prose-split-hero__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: var(--psh-focal-mobile);
+  transform: scale(var(--psh-zoom-mobile));
+  transform-origin: var(--psh-focal-mobile);
+}
+
+.prose-split-hero__figure .placeholder-svg {
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+@media screen and (min-width: 750px) {
+  .prose-split-hero {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: var(--psh-gap);
+    padding-top: var(--psh-pt);
+    padding-inline-start: clamp(
+      var(--psh-pl),
+      100% - (var(--psh-copy-width) + var(--psh-gap) + var(--psh-media-width)),
+      var(--psh-pl-max)
+    );
+    background-image: linear-gradient(
+      180deg,
+      var(--psh-bg-start) var(--psh-bg-stop-start),
+      var(--psh-bg-end) var(--psh-bg-stop-end)
+    );
+  }
+
+  .prose-split-hero__copy {
+    flex: 1 1 var(--psh-copy-width);
+    width: auto;
+    min-width: 0;
+    min-height: var(--psh-copy-min-height);
+    gap: var(--psh-copy-gap);
+    padding-inline: 0;
+  }
+
+  .prose-split-hero__heading {
+    font-size: var(--psh-heading-size);
+  }
+
+  .prose-split-hero__prose {
+    gap: var(--psh-paragraph-gap);
+  }
+
+  .prose-split-hero__paragraph {
+    font-size: var(--psh-body-size);
+    line-height: var(--psh-body-lh);
+  }
+
+  .prose-split-hero__figure {
+    flex: 0 1 var(--psh-media-width);
+    align-self: flex-end;
+    width: auto;
+    aspect-ratio: var(--psh-ratio);
+    margin: 0;
+  }
+
+  .prose-split-hero__image {
+    object-position: var(--psh-focal);
+    transform: scale(var(--psh-zoom));
+    transform-origin: var(--psh-focal);
+  }
+}
