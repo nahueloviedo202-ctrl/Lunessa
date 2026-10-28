@@ -345,7 +345,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Probado por la comunidad",
-            "text": "<p>Miles de dueños ya probaron la fórmula con sus perros y comparten resultados reales, no solo promesas de laboratorio.<br/></p>",
+            "text": "<p>Miles de dueños ya probaron la fórmula con sus perros y comparten resultados reales, no solo promesas de laboratorio.</p>",
             "show_icon": true
           }
         }
@@ -362,8 +362,8 @@
       "settings": {
         "heading": "Certificados con el estándar más alto",
         "heading_position": "copy",
-        "footer_button_label": "Ver todos",
-        "footer_button_link": "",
+        "footer_button_label": "Ver Producto",
+        "footer_button_link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
         "image": "shopify://shop_images/lifestyle-curly-black-dog-taking-chew-from-owner-on-porch-steps_Z1s51Jw.webp",
         "media_position": "end",
         "media_position_mobile": "start",
