@@ -44,7 +44,7 @@
         "link_faqs": {
           "type": "link",
           "settings": {
-            "label": "Sobre Nosotros",
+            "label": "Nosotros",
             "link": "/pages/faqs",
             "position": "right"
           }
