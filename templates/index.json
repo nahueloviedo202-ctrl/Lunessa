@@ -775,9 +775,9 @@
           "type": "vet",
           "settings": {
             "image": "shopify://shop_images/people-dr-joren-whitley_1E66e9.webp",
-            "name": "Dr. Javier Torres",
+            "name": "Dr. Rodrigo Medina",
             "credential": "Médico Veterinario | Medicina interna",
-            "bio": "<p>Especialista en salud articular canina, con experiencia tratando perros de razas grandes y mayores.</p>"
+            "bio": "<p>Más de 12 años de experiencia clínica, enfocado en ayudar a perros con necesidades nutricionales específicas a vivir mejor.</p>"
           }
         },
         "vet_harWmr": {
