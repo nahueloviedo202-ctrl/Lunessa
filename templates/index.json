@@ -1031,7 +1031,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Certificación de calidad",
-            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "text": "<p>Cada lote pasa por controles estrictos antes de salir de fábrica, garantizando que lo que dice la etiqueta es exactamente lo que contiene el frasco.</p>",
             "show_icon": true
           }
         },
@@ -1039,7 +1039,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Nuestro estándar",
-            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "text": "<p>No nos conformamos con el mínimo legal: formulamos con las dosis y combinaciones que realmente marcan una diferencia, no solo las que “cumplen” en el papel.</p><p></p>",
             "show_icon": true
           }
         },
@@ -1047,7 +1047,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Testeado por terceros",
-            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "text": "<p>Un laboratorio externo e independiente analiza cada lote para confirmar pureza y concentración, sin depender solo de nuestra palabra.</p>",
             "show_icon": true
           }
         },
@@ -1055,7 +1055,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Ingrediente activo verificado",
-            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "text": "<p>Confirmamos que cada ingrediente activo está presente en la cantidad exacta que promete la etiqueta, lote por lote.</p>",
             "show_icon": true
           }
         },
@@ -1063,7 +1063,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Integridad de ingredientes",
-            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "text": "<p>Usamos materias primas trazables y de origen verificado, sin rellenos ni sustitutos de menor calidad.</p>",
             "show_icon": true
           }
         },
@@ -1071,7 +1071,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Probado por la comunidad",
-            "text": "<p>Contá en qué consiste y por qué importa.</p>",
+            "text": "<p>Miles de dueños ya probaron la fórmula con sus perros y comparten resultados reales, no solo promesas de laboratorio.</p>",
             "show_icon": true
           }
         }
