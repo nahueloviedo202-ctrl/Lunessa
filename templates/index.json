@@ -784,9 +784,9 @@
           "type": "vet",
           "settings": {
             "image": "shopify://shop_images/people-dr-erin-miscioscia_Z1FHIt2.webp",
-            "name": "Dra. Nombre Apellido",
+            "name": "Dra. Paulina Sánchez",
             "credential": "Médica Veterinaria | Nutrición canina",
-            "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
+            "bio": "<p>Especialista en medicina preventiva, dedicada a ayudar a que cada perro llegue a su mejor versión a través de la nutrición.</p>"
           }
         }
       },
