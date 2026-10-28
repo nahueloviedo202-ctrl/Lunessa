@@ -53,7 +53,7 @@
           "type": "button",
           "settings": {
             "label": "Comprar ahora",
-            "link": "",
+            "link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
             "style": "secondary",
             "width": 280,
             "padding_x": 60
