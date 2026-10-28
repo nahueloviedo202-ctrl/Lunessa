@@ -28,7 +28,7 @@
         "link_ciencia": {
           "type": "link",
           "settings": {
-            "label": "Ciencia",
+            "label": "Los Estandares De Lunessa",
             "link": "/pages/ciencia-por-detras",
             "position": "left"
           }
@@ -44,7 +44,7 @@
         "link_faqs": {
           "type": "link",
           "settings": {
-            "label": "Preguntas frecuentes",
+            "label": "Sobre Nosotros",
             "link": "/pages/faqs",
             "position": "right"
           }
