@@ -43,7 +43,7 @@
           "type": "link_list",
           "settings": {
             "heading": "Productos",
-            "menu": "productos",
+            "menu": "procutos-perros",
             "first_on_desktop": true
           }
         }
