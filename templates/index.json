@@ -748,18 +748,18 @@
           "type": "vet",
           "settings": {
             "image": "shopify://shop_images/people-dr-tiffany-ruiz-da-silva_Z1SanWr.webp",
-            "name": "Dra. Nombre Apellido",
+            "name": "Dra. Valeria Hernández",
             "credential": "Médica Veterinaria | Nutrición canina",
-            "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
+            "bio": "<p>Egresada de la UNAM, con más de 10 años ayudando a perros a mantenerse activos y saludables a través de la nutrición.</p>"
           }
         },
         "vet_QrkKpc": {
           "type": "vet",
           "settings": {
             "image": "shopify://shop_images/people-dr-shadi-ireifej_ZLGg2b.webp",
-            "name": "Dra. Nombre Apellido",
-            "credential": "Médica Veterinaria | Nutrición canina",
-            "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
+            "name": "Dr. Javier Torres",
+            "credential": "Médico Veterinario | Medicina interna",
+            "bio": "<p>Especialista en salud articular canina, con experiencia tratando perros de razas grandes y mayores.</p>"
           }
         },
         "vet_9Vwb94": {
