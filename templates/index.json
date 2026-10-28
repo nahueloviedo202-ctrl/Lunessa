@@ -891,8 +891,8 @@
       "settings": {
         "heading": "Perros reales. Resultados reales.",
         "subheading": "Ese momento en que <strong>notas</strong> que tu perro volvió a ser el de siempre&nbsp;",
-        "button_label": "Ver todos",
-        "button_link": "",
+        "button_label": "Ver producto",
+        "button_link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
         "columns_desktop": "3",
         "card_min_height": 400,
         "overlay_opacity": 35,
