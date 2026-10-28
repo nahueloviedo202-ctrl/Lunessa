@@ -108,6 +108,7 @@
 }
 
 .mark-strip--wrap .mark-strip__run {
+  flex-shrink: 1;
   flex-wrap: wrap;
   justify-content: center;
   gap: 24px;
