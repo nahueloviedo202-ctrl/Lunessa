@@ -379,7 +379,7 @@
           "settings": {
             "title": "Articulaciones y movilidad",
             "link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
-            "media_color": "#FFFFFF",
+            "media_color": "#ffffff",
             "image": "shopify://shop_images/lifestyle-chocolate-labrador-scratching_ZKbXUL.webp",
             "zoom": 185
           }
@@ -399,7 +399,7 @@
           "settings": {
             "title": "Alergias y picazón",
             "link": "",
-            "media_color": "#FFFFFF",
+            "media_color": "#ffffff",
             "image": "shopify://shop_images/lifestyle-brindle-bulldog-scratching_ZMWzmK.webp",
             "zoom": 155
           }
@@ -419,7 +419,7 @@
           "settings": {
             "title": "Piel y pelaje",
             "link": "",
-            "media_color": "#FFFFFF",
+            "media_color": "#ffffff",
             "image": "shopify://shop_images/lifestyle-long-coated-dog-standing_ZO1q7o.webp",
             "zoom": 165
           }
@@ -1137,6 +1137,7 @@
         "item_Up3rbc": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/083e3874-2b46-4d03-b817-e82071eea057.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -1147,6 +1148,7 @@
         "item_E3fiDL": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/garantia1.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -1157,6 +1159,7 @@
         "item_zMq8Gm": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/083e3874-2b46-4d03-b817-e82071eea057.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -1167,6 +1170,7 @@
         "item_PWBXPc": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/cca0de6b-0bca-4382-95e6-e5af5e14fca3.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -1177,16 +1181,7 @@
         "item_zqKjX3": {
           "type": "item",
           "settings": {
-            "logo_height": 140,
-            "icon": "none",
-            "title": "",
-            "caption": "",
-            "link": ""
-          }
-        },
-        "item_e4yxhz": {
-          "type": "item",
-          "settings": {
+            "image": "shopify://shop_images/a5aa5400-8ce0-4fdb-8b47-955fa1b54cb8.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -1200,8 +1195,7 @@
         "item_E3fiDL",
         "item_zMq8Gm",
         "item_PWBXPc",
-        "item_zqKjX3",
-        "item_e4yxhz"
+        "item_zqKjX3"
       ],
       "name": "Sellos de calidad",
       "settings": {
