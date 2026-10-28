@@ -18,14 +18,14 @@
           "type": "link_list",
           "settings": {
             "heading": "Como podemos ayudar",
-            "menu": "footer",
+            "menu": "como-podemos-ayudar",
             "first_on_desktop": false
           }
         },
         "link_list_nnLh9h": {
           "type": "link_list",
           "settings": {
-            "heading": "Nosotros",
+            "heading": "Lunessa",
             "menu": "footer",
             "first_on_desktop": false
           }
