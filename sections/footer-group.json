@@ -30,15 +30,6 @@
             "first_on_desktop": false
           }
         },
-        "link_list_nMpnQ4": {
-          "type": "link_list",
-          "disabled": true,
-          "settings": {
-            "heading": "¿Cómo te ayudamos?",
-            "menu": "footer",
-            "first_on_desktop": false
-          }
-        },
         "link_list_CkpDtb": {
           "type": "link_list",
           "settings": {
@@ -51,7 +42,6 @@
       "block_order": [
         "link_list_nnLh9h",
         "link_list_qLAjkg",
-        "link_list_nMpnQ4",
         "link_list_CkpDtb"
       ],
       "name": "Footer completo",
