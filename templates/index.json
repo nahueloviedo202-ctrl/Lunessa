@@ -379,8 +379,9 @@
           "settings": {
             "title": "Articulaciones y movilidad",
             "link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
-            "media_color": "#cdfc4b",
-            "zoom": 100
+            "media_color": "#FFFFFF",
+            "image": "shopify://shop_images/lifestyle-chocolate-labrador-scratching_ZKbXUL.webp",
+            "zoom": 185
           }
         },
         "category_bQT3FU": {
@@ -389,7 +390,8 @@
             "title": "Dientes y encías",
             "link": "",
             "media_color": "#9dd1ff",
-            "zoom": 100
+            "image": "shopify://shop_images/lifestyle-black-dog-open-mouth_33GR3.webp",
+            "zoom": 160
           }
         },
         "category_Fb7rjc": {
@@ -397,8 +399,9 @@
           "settings": {
             "title": "Alergias y picazón",
             "link": "",
-            "media_color": "#a3fcff",
-            "zoom": 100
+            "media_color": "#FFFFFF",
+            "image": "shopify://shop_images/lifestyle-brindle-bulldog-scratching_ZMWzmK.webp",
+            "zoom": 155
           }
         },
         "category_Ndxkp7": {
@@ -407,6 +410,7 @@
             "title": "Digestión",
             "link": "",
             "media_color": "#f6a3ff",
+            "image": "shopify://shop_images/lifestyle-spaniel-belly-in-grass_Z2tcGFv.webp",
             "zoom": 100
           }
         },
@@ -415,8 +419,9 @@
           "settings": {
             "title": "Piel y pelaje",
             "link": "",
-            "media_color": "#f9b22d",
-            "zoom": 100
+            "media_color": "#FFFFFF",
+            "image": "shopify://shop_images/lifestyle-long-coated-dog-standing_ZO1q7o.webp",
+            "zoom": 165
           }
         },
         "category_YMafdT": {
@@ -425,7 +430,8 @@
             "title": "Estrés y ansiedad",
             "link": "",
             "media_color": "#c5a9ff",
-            "zoom": 100
+            "image": "shopify://shop_images/lifestyle-dachshund-black-and-tan-in-brown-collar_Z27ygxw.webp",
+            "zoom": 150
           }
         },
         "category_EzRWCe": {
@@ -434,6 +440,7 @@
             "title": "Vitalidad y bienestar",
             "link": "",
             "media_color": "#fffc49",
+            "image": "shopify://shop_images/lifestyle-labradoodle-panting_Z2vq21T.webp",
             "zoom": 100
           }
         }
