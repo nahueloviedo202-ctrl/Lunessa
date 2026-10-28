@@ -697,6 +697,7 @@
         "heading_position": "above",
         "footer_button_label": "",
         "footer_button_link": "",
+        "image": "shopify://shop_images/ingredients-turkey-tail-mushroom-tweezers_2o3qKL.webp",
         "media_position": "start",
         "media_position_mobile": "start",
         "media_ratio": 84,
@@ -745,6 +746,7 @@
         "vet_K7WHL3": {
           "type": "vet",
           "settings": {
+            "image": "shopify://shop_images/people-dr-tiffany-ruiz-da-silva_Z1SanWr.webp",
             "name": "Dra. Nombre Apellido",
             "credential": "Médica Veterinaria | Nutrición canina",
             "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
@@ -753,6 +755,7 @@
         "vet_QrkKpc": {
           "type": "vet",
           "settings": {
+            "image": "shopify://shop_images/people-dr-shadi-ireifej_ZLGg2b.webp",
             "name": "Dra. Nombre Apellido",
             "credential": "Médica Veterinaria | Nutrición canina",
             "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
@@ -761,6 +764,7 @@
         "vet_9Vwb94": {
           "type": "vet",
           "settings": {
+            "image": "shopify://shop_images/people-dr-jennifer-repac_Z25o8Pj.webp",
             "name": "Dra. Nombre Apellido",
             "credential": "Médica Veterinaria | Nutrición canina",
             "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
@@ -769,6 +773,7 @@
         "vet_kYwmkh": {
           "type": "vet",
           "settings": {
+            "image": "shopify://shop_images/people-dr-joren-whitley_1E66e9.webp",
             "name": "Dra. Nombre Apellido",
             "credential": "Médica Veterinaria | Nutrición canina",
             "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
@@ -777,6 +782,7 @@
         "vet_harWmr": {
           "type": "vet",
           "settings": {
+            "image": "shopify://shop_images/people-dr-erin-miscioscia_Z1FHIt2.webp",
             "name": "Dra. Nombre Apellido",
             "credential": "Médica Veterinaria | Nutrición canina",
             "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
@@ -841,6 +847,7 @@
         "review_tUMxf8": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/reviews-beagle-lying-on-tiled-floor-dimmed_ZBoAPR.webp",
             "badge": "Masticables para articulaciones",
             "pet_name": "Nombre",
             "pet_age": "7 años",
@@ -852,6 +859,7 @@
         "review_kT7rWP": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/reviews-corgi-standing-on-table-indoors-dimmed_1vybtX.webp",
             "badge": "Masticables para articulaciones",
             "pet_name": "Nombre",
             "pet_age": "7 años",
@@ -863,6 +871,7 @@
         "review_AMwgzA": {
           "type": "review",
           "settings": {
+            "image": "shopify://shop_images/reviews-yorkshire-terrier-on-cowhide-rug-dimmed_1IcNIB.webp",
             "badge": "Masticables para articulaciones",
             "pet_name": "Nombre",
             "pet_age": "7 años",
