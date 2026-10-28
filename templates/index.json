@@ -1386,7 +1386,7 @@
           "type": "question",
           "settings": {
             "question": "¿Dónde se fabrican sus productos?",
-            "answer": "<p>Escribí acá la respuesta.</p>",
+            "answer": "<p>Nuestros productos se fabrican en México, en una planta con certificación GMP y bajo estrictos controles de calidad.</p>",
             "open": false
           }
         },
@@ -1394,7 +1394,7 @@
           "type": "question",
           "settings": {
             "question": "¿Cuánto tarda en llegar mi pedido?",
-            "answer": "<p>Escribí acá la respuesta.</p>",
+            "answer": "<p>Tu pedido llega entre 3 y 5 días hábiles después de confirmada la compra.</p><p></p>",
             "open": false
           }
         },
@@ -1402,7 +1402,7 @@
           "type": "question",
           "settings": {
             "question": "¿Desde dónde se envían los productos?",
-            "answer": "<p>Escribí acá la respuesta.</p>",
+            "answer": "<p>Los productos se envían desde nuestro centro de distribución en México.</p><p></p>",
             "open": false
           }
         },
@@ -1410,7 +1410,7 @@
           "type": "question",
           "settings": {
             "question": "¿Puedo darle los suplementos a una perra preñada?",
-            "answer": "<p>Escribí acá la respuesta.</p>",
+            "answer": "<p>Si tu perra está preñada o en lactancia, te recomendamos consultar primero con su veterinario antes de darle el suplemento.</p><p></p>",
             "open": false
           }
         },
@@ -1418,7 +1418,7 @@
           "type": "question",
           "settings": {
             "question": "¿Mi perro puede tomar de más?",
-            "answer": "<p>Escribí acá la respuesta.</p>",
+            "answer": "<p>No se recomienda exceder la dosis indicada en el empaque. Si tu perro llegó a tomar más de la cuenta, contacta a tu veterinario.</p>",
             "open": false
           }
         }
@@ -1433,7 +1433,7 @@
       "name": "Preguntas destacadas",
       "settings": {
         "heading": "Preguntas frecuentes",
-        "subheading": "Para ver todas las preguntas sobre productos, visitá nuestra página de preguntas frecuentes.",
+        "subheading": "Para ver todas las preguntas sobre productos, visita nuestra página de preguntas frecuentes.",
         "button_label": "Ver todos",
         "button_link": "",
         "background": "#ffffff",
