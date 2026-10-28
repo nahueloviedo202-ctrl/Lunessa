@@ -502,6 +502,29 @@
         "item_JkTNhR": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/press-amazon.svg",
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_zBjTUh": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/press-i-heart-dogs.svg",
+            "logo_height": 36,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_meELQr": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/press-petful.svg",
             "logo_height": 36,
             "icon": "none",
             "title": "",
@@ -512,6 +535,7 @@
         "item_mmYJeY": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/press-forbes_S1OaK.webp",
             "logo_height": 36,
             "icon": "none",
             "title": "",
@@ -522,6 +546,7 @@
         "item_GcyL3P": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/press-paw-nation.svg",
             "logo_height": 36,
             "icon": "none",
             "title": "",
@@ -532,6 +557,7 @@
         "item_66etnd": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/press-petsmart.svg",
             "logo_height": 36,
             "icon": "none",
             "title": "",
@@ -542,6 +568,7 @@
         "item_yqP4RP": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/press-pets-magazine.svg",
             "logo_height": 36,
             "icon": "none",
             "title": "",
@@ -552,6 +579,7 @@
         "item_FJFfyV": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/press-yahoo_1IuXKJ.webp",
             "logo_height": 36,
             "icon": "none",
             "title": "",
@@ -562,6 +590,8 @@
       },
       "block_order": [
         "item_JkTNhR",
+        "item_zBjTUh",
+        "item_meELQr",
         "item_mmYJeY",
         "item_GcyL3P",
         "item_66etnd",
