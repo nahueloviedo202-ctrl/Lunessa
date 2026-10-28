@@ -1,8 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "ingredients_intro": {
       "type": "ingredients-intro",
-      "settings": {},
       "blocks": {
         "badge_01": {
           "type": "badge",
@@ -38,350 +46,187 @@
         "badge_02",
         "badge_03",
         "badge_04"
-      ]
-    },
-    "ingredients_filter": {
-      "type": "ingredients-filter-grid",
-      "settings": {},
-      "blocks": {
-        "filter_01": {
-          "type": "filter",
-          "settings": {
-            "label": "DHT"
-          }
-        },
-        "filter_02": {
-          "type": "filter",
-          "settings": {
-            "label": "Vitaminas"
-          }
-        },
-        "ingredient_03": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Extracto de Palma Enana",
-            "description": "Es el ingrediente central del Triple Bloqueo DHT. Actúa sobre la hormona que ataca tu raíz, ayudando a frenar la caída desde el origen del problema, no solo desde fuera.",
-            "tag": "Protección Folicular",
-            "categories": "DHT"
-          }
-        },
-        "ingredient_04": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Extracto de Semilla de Calabaza",
-            "description": "Complementa la Palma Enana dentro del Triple Bloqueo DHT. Ayuda a cuidar tu folículo capilar y sostiene el efecto del extracto principal a lo largo del día.",
-            "tag": "Fortalece",
-            "categories": "DHT"
-          }
-        },
-        "ingredient_05": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Beta-Sitosterol",
-            "description": "Junto a la Palma Enana, es la combinación con respaldo del estudio Prager et al. (2002) sobre el bloqueo de DHT. Refuerza el efecto principal desde la raíz.",
-            "tag": "Sinergia Clave",
-            "categories": "DHT"
-          }
-        },
-        "ingredient_06": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Vitamina A",
-            "description": "Ayuda a renovar las células de tu cuero cabelludo, manteniendo un entorno saludable para que la raíz siga produciendo pelo fuerte.",
-            "tag": "Renovación",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_07": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Vitamina C",
-            "description": "Antioxidante que protege la fibra capilar del daño diario y ayuda a tu cuerpo a absorber mejor otros nutrientes de la fórmula.",
-            "tag": "Antioxidante",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_08": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Vitamina B6",
-            "description": "Apoya la producción natural de queratina, la proteína que forma la estructura de tu pelo.",
-            "tag": "Queratina",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_09": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Vitamina B12",
-            "description": "Ayuda a oxigenar tu raíz capilar, para que el pelo nuevo nazca con más fuerza desde el folículo.",
-            "tag": "Oxigenación",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_10": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Biotina",
-            "description": "Apoya el crecimiento natural de tu pelo, tu piel y tus uñas — por eso muchas notan también las uñas más fuertes.",
-            "tag": "Crecimiento",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_11": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Vitamina B5",
-            "description": "Hidrata tu cuero cabelludo desde dentro y ayuda a mantener su elasticidad día a día.",
-            "tag": "Hidratación",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_12": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Vitamina E",
-            "description": "Antioxidante que protege tu cuero cabelludo del estrés oxidativo diario, cuidando el entorno donde crece tu pelo.",
-            "tag": "Protección",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_13": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Zinc",
-            "description": "Ayuda a reparar tu folículo capilar y regula la producción de grasa en el cuero cabelludo.",
-            "tag": "Reparación",
-            "categories": "Vitaminas"
-          }
-        },
-        "ingredient_14": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Selenio",
-            "description": "Protege las células de tu cuero cabelludo frente al daño externo, día tras día.",
-            "tag": "Protección Celular",
-            "categories": "Vitaminas"
-          }
-        }
-      },
-      "block_order": [
-        "filter_01",
-        "filter_02",
-        "ingredient_03",
-        "ingredient_04",
-        "ingredient_05",
-        "ingredient_06",
-        "ingredient_07",
-        "ingredient_08",
-        "ingredient_09",
-        "ingredient_10",
-        "ingredient_11",
-        "ingredient_12",
-        "ingredient_13",
-        "ingredient_14"
-      ]
-    },
-    "nutrition_facts": {
-      "type": "nutrition-facts",
-      "settings": {},
-      "blocks": {
-        "group_01": {
-          "type": "group",
-          "settings": {
-            "title": "Complejo Bloqueador de DHT"
-          }
-        },
-        "row_02": {
-          "type": "row",
-          "settings": {
-            "name": "Extracto de Palma Enana",
-            "amount": "200 mg",
-            "percent": "*"
-          }
-        },
-        "row_03": {
-          "type": "row",
-          "settings": {
-            "name": "Extracto de Semilla de Calabaza",
-            "amount": "100 mg",
-            "percent": "*"
-          }
-        },
-        "row_04": {
-          "type": "row",
-          "settings": {
-            "name": "Beta-Sitosterol",
-            "amount": "50 mg",
-            "percent": "*"
-          }
-        },
-        "group_05": {
-          "type": "group",
-          "settings": {
-            "title": "Nutrientes Activos"
-          }
-        },
-        "row_06": {
-          "type": "row",
-          "settings": {
-            "name": "Vitamina A (Palmitato de retinilo)",
-            "amount": "800 µg RE",
-            "percent": "89%"
-          }
-        },
-        "row_07": {
-          "type": "row",
-          "settings": {
-            "name": "Vitamina C (Ácido ascórbico)",
-            "amount": "80 mg",
-            "percent": "89%"
-          }
-        },
-        "row_08": {
-          "type": "row",
-          "settings": {
-            "name": "Vitamina B6 (Clorhidrato de piridoxina)",
-            "amount": "1.4 mg",
-            "percent": "82%"
-          }
-        },
-        "row_09": {
-          "type": "row",
-          "settings": {
-            "name": "Vitamina B12 (Cianocobalamina)",
-            "amount": "2.5 µg",
-            "percent": "104%"
-          }
-        },
-        "row_10": {
-          "type": "row",
-          "settings": {
-            "name": "Biotina",
-            "amount": "5000 mcg",
-            "percent": "10000%"
-          }
-        },
-        "row_11": {
-          "type": "row",
-          "settings": {
-            "name": "Ácido pantoténico (Vitamina B5)",
-            "amount": "6 mg",
-            "percent": "120%"
-          }
-        },
-        "row_12": {
-          "type": "row",
-          "settings": {
-            "name": "Vitamina E (Acetato de DL-Alfa-Tocoferilo)",
-            "amount": "12 mg",
-            "percent": "80%"
-          }
-        },
-        "row_13": {
-          "type": "row",
-          "settings": {
-            "name": "Zinc (Citrato de zinc)",
-            "amount": "10 mg",
-            "percent": "91%"
-          }
-        },
-        "row_14": {
-          "type": "row",
-          "settings": {
-            "name": "Selenio",
-            "amount": "55 µg",
-            "percent": "100%"
-          }
-        },
-        "row_15": {
-          "type": "row",
-          "settings": {
-            "name": "Azúcares totales",
-            "amount": "0 g",
-            "percent": "*"
-          }
-        },
-        "row_16": {
-          "type": "row",
-          "settings": {
-            "name": "Sodio",
-            "amount": "5 mg",
-            "percent": "*"
-          }
-        }
-      },
-      "block_order": [
-        "group_01",
-        "row_02",
-        "row_03",
-        "row_04",
-        "group_05",
-        "row_06",
-        "row_07",
-        "row_08",
-        "row_09",
-        "row_10",
-        "row_11",
-        "row_12",
-        "row_13",
-        "row_14",
-        "row_15",
-        "row_16"
-      ]
-    },
-    "formula_benefits": {
-      "type": "formula-benefits",
-      "settings": {},
-      "blocks": {
-        "benefit_01": {
-          "type": "benefit",
-          "settings": {
-            "title": "Formulada Científicamente",
-            "text": "Dosis reales, no las mínimas que usa la mayoría de gominolas para ahorrar costes."
-          }
-        },
-        "benefit_02": {
-          "type": "benefit",
-          "settings": {
-            "title": "Ataca la Causa Real",
-            "text": "El Triple Bloqueo DHT frena la hormona que ataca tu raíz — no solo tapa el síntoma."
-          }
-        },
-        "benefit_03": {
-          "type": "benefit",
-          "settings": {
-            "title": "Mayor Absorción",
-            "text": "Comprobado: absorbe mejor que una cápsula al masticarla, no al disolverse."
-          }
-        },
-        "benefit_04": {
-          "type": "benefit",
-          "settings": {
-            "title": "Tu Ciclo Capilar",
-            "text": "Tu pelo tarda 90 días en mostrar un cambio real — por eso nuestra garantía dura lo mismo."
-          }
-        }
-      },
-      "block_order": [
-        "benefit_01",
-        "benefit_02",
-        "benefit_03",
-        "benefit_04"
-      ]
-    },
-    "ingredients_cta": {
-      "type": "ingredients-cta",
+      ],
+      "disabled": true,
       "settings": {
-        "button_link": "shopify://products/lunessa-formula-capilar-completa"
+        "eyebrow": "Fórmula Transparente",
+        "heading": "Cada Ingrediente Tiene <em>Su Porqué</em>",
+        "heading_tag": "h1",
+        "text": "12 nutrientes + Triple Bloqueo DHT. Descubre qué hace cada uno por tu pelo, sin letra pequeña.",
+        "max_width": 720,
+        "background": "#fef5f1",
+        "eyebrow_size": 13,
+        "eyebrow_color": "#b12141",
+        "eyebrow_background": "#fbe0e4",
+        "eyebrow_radius": 40,
+        "heading_size": 30,
+        "heading_size_mobile": 24,
+        "heading_color": "#6b1626",
+        "accent_color": "#d9738a",
+        "text_size": 16,
+        "text_color": "#5c3540",
+        "badges_margin_top": 50,
+        "badge_gap": 22,
+        "badge_size": 96,
+        "badge_size_mobile": 80,
+        "badge_font_size": 11,
+        "badge_font_size_mobile": 10,
+        "badge_icon_size": 26,
+        "badge_gradient_start": "#7a1c30",
+        "badge_gradient_end": "#b12141",
+        "badge_gradient_angle": 145,
+        "badge_text_color": "#ffffff",
+        "padding_top": 56,
+        "padding_bottom": 50,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 50,
+        "padding_horizontal": 20,
+        "heading_font_custom": true,
+        "heading_font": "lora_n7",
+        "body_font_custom": false,
+        "body_font": "inter_n4"
+      }
+    },
+    "ingredient_glossary_8JaiGH": {
+      "type": "ingredient-glossary",
+      "blocks": {
+        "ingredient_Cq3wBG": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Ácido hialurónico",
+            "type": "active",
+            "why": "Ayuda a mantener la lubricación natural de las articulaciones para que se muevan con comodidad.",
+            "research": "",
+            "products": []
+          }
+        },
+        "ingredient_rMq7WC": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Condroitina",
+            "type": "active",
+            "why": "Contribuye a mantener el cartílago sano y flexible.",
+            "research": "",
+            "products": []
+          }
+        },
+        "ingredient_89aeRN": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Glucosamina",
+            "type": "active",
+            "why": "Aporta los componentes que el cuerpo usa para mantener el cartílago.",
+            "research": "",
+            "products": []
+          }
+        },
+        "ingredient_rHHjCq": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Hígado de cerdo",
+            "type": "inactive",
+            "why": "Le da sabor para que tu perro lo coma con ganas todos los días.",
+            "research": "",
+            "products": []
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_Cq3wBG",
+        "ingredient_rMq7WC",
+        "ingredient_89aeRN",
+        "ingredient_rHHjCq"
+      ],
+      "name": "Glosario de ingredientes",
+      "settings": {
+        "heading": "Glosario de ingredientes",
+        "heading_tag": "h2",
+        "subheading": "Todos nuestros ingredientes de la A a la Z, para quienes quieren conocer cada detalle.",
+        "show_search": true,
+        "search_placeholder": "Buscar ingrediente",
+        "search_label": "Buscar ingredientes",
+        "clear_label": "Borrar búsqueda",
+        "show_filter": true,
+        "filter_label": "Filtrar ingredientes",
+        "filter_all_label": "Todos los ingredientes",
+        "status_text": "[shown] de [total] ingredientes",
+        "empty_text": "Ningún ingrediente coincide con tu búsqueda.",
+        "show_letters": true,
+        "letters": "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+        "letters_label": "Ingredientes de la A a la Z",
+        "sticky_letters": true,
+        "offset_sticky_header": true,
+        "label_why": "Por qué lo usamos",
+        "label_type": "Activo o inactivo",
+        "label_research": "Estudios",
+        "label_featured": "Presente en:",
+        "active_label": "Activo",
+        "active_description": "es el ingrediente que aporta directamente los beneficios del suplemento.",
+        "inactive_label": "Inactivo",
+        "inactive_description": "es un ingrediente que acompaña a la fórmula.",
+        "button_more": "Ver más",
+        "button_back": "Volver",
+        "background": "#FFFFFF",
+        "heading_color": "#075007",
+        "text_color": "#075007",
+        "group_letter_color": "#075007",
+        "card_background": "#CDFC4B",
+        "card_text": "#075007",
+        "letter_background": "#F4F4F4",
+        "letter_text": "#000000",
+        "letter_active_background": "#075007",
+        "letter_active_text": "#FFFFFF",
+        "button_background": "#075007",
+        "button_text": "#FFFFFF",
+        "button_background_hover": "#FFFFFF",
+        "button_text_hover": "#075007",
+        "search_background": "#F4F4F4",
+        "search_border": "#E3E3E3",
+        "search_text": "#2E2E2E",
+        "search_icon": "#575757",
+        "filter_background": "#FFFFFF",
+        "filter_text": "#2E2E2E",
+        "focus_color": "#CDFC4B",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_uppercase": true,
+        "heading_size": 60,
+        "heading_size_mobile": 36,
+        "group_letter_size": 96,
+        "card_name_size": 44,
+        "term_size": 16,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "body_font_weight": "500",
+        "body_strong_weight": "800",
+        "subheading_size": 18,
+        "subheading_size_mobile": 16,
+        "body_size": 16,
+        "card_radius": 10,
+        "card_gap": 24,
+        "item_gap": 64,
+        "photo_size": 290,
+        "photo_size_mobile": 320,
+        "product_image_size": 69,
+        "max_width": 1200,
+        "hero_width": 660,
+        "search_width": 640,
+        "search_radius": 5,
+        "letter_radius": 3,
+        "block_gap": 64,
+        "block_gap_mobile": 32,
+        "padding_x": 112,
+        "padding_x_mobile": 16,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
       }
     }
   },
   "order": [
     "ingredients_intro",
-    "ingredients_filter",
-    "nutrition_facts",
-    "formula_benefits",
-    "ingredients_cta"
+    "ingredient_glossary_8JaiGH"
   ]
 }
