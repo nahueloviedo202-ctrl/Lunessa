@@ -21,6 +21,7 @@
             "position": "left",
             "menu": "productos",
             "columns": 2,
+            "promo_image": "shopify://shop_images/8d4c5ae7-a391-4735-8f72-5d6b4a05b79c.webp",
             "promo_link": ""
           }
         },
