@@ -258,6 +258,11 @@
 }
 
 /* Mega menu panel */
+/* Dawn's base.css makes `header-menu > details` relative; the panel must anchor to .header-navbar__bar instead. */
+.header-navbar__menu > details {
+  position: static;
+}
+
 .header-navbar__panel {
   position: absolute;
   top: calc(100% - 4px);
