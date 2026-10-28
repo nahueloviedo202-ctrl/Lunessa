@@ -14,6 +14,14 @@
     "footer_split_RnWgWY": {
       "type": "footer-split",
       "blocks": {
+        "link_list_qLAjkg": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Como podemos ayudar",
+            "menu": "footer",
+            "first_on_desktop": false
+          }
+        },
         "link_list_nnLh9h": {
           "type": "link_list",
           "settings": {
@@ -42,6 +50,7 @@
         }
       },
       "block_order": [
+        "link_list_qLAjkg",
         "link_list_nnLh9h",
         "link_list_nMpnQ4",
         "link_list_CkpDtb"
