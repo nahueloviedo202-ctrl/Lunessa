@@ -680,7 +680,7 @@
           "type": "button",
           "settings": {
             "label": "Ver ingredientes",
-            "link": "",
+            "link": "shopify://pages/los-estandares-de-lunessa",
             "style": "outline"
           }
         }
