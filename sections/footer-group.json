@@ -18,7 +18,7 @@
           "type": "link_list",
           "settings": {
             "heading": "Lunessa",
-            "menu": "footer",
+            "menu": "footer-menu-lunessa-nuevo",
             "first_on_desktop": false
           }
         },
