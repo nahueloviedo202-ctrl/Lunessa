@@ -19,7 +19,7 @@
           "settings": {
             "label": "Tienda",
             "position": "left",
-            "menu": "",
+            "menu": "productos",
             "columns": 2,
             "promo_link": ""
           }
