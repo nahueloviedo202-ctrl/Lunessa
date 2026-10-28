@@ -302,6 +302,7 @@
 .header-navbar__columns {
   display: grid;
   grid-template-columns: repeat(var(--hn-columns, 2), minmax(0, 1fr));
+  row-gap: var(--hn-panel-column-gap);
   align-items: start;
   flex: 1 1 auto;
   min-width: 0;
