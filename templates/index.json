@@ -1346,6 +1346,7 @@
       "block_order": [
         "button_UdYnBr"
       ],
+      "disabled": true,
       "name": "Llamado a la acción",
       "settings": {
         "heading": "¿No sabes por dónde empezar? Te ayudamos.",
@@ -1434,7 +1435,7 @@
       "settings": {
         "heading": "Preguntas frecuentes",
         "subheading": "Para ver todas las preguntas sobre productos, visita nuestra página de preguntas frecuentes.",
-        "button_label": "Ver Productos",
+        "button_label": "Ver Producto",
         "button_link": "shopify://products/lunessa-masticables-para-cadera-y-articulaciones",
         "background": "#ffffff",
         "heading_color": "#075007",
