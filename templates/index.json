@@ -775,9 +775,9 @@
           "type": "vet",
           "settings": {
             "image": "shopify://shop_images/people-dr-joren-whitley_1E66e9.webp",
-            "name": "Dra. Nombre Apellido",
-            "credential": "Médica Veterinaria | Nutrición canina",
-            "bio": "<p>Contá en pocas líneas su formación y experiencia.</p>"
+            "name": "Dr. Javier Torres",
+            "credential": "Médico Veterinario | Medicina interna",
+            "bio": "<p>Especialista en salud articular canina, con experiencia tratando perros de razas grandes y mayores.</p>"
           }
         },
         "vet_harWmr": {
