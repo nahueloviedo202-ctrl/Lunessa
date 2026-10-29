@@ -30,7 +30,7 @@
             "line_height": 82,
             "letter_spacing": 0,
             "uppercase": true,
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "max_width": 600
           }
         }
@@ -41,6 +41,7 @@
       "name": "Hero de página",
       "settings": {
         "image": "shopify://shop_images/lifestyle-border-collie-leaping-with-ball-wide_29TT3Q.webp",
+        "image_mobile": "shopify://shop_images/lifestyle-border-collie-leaping-with-ball-portrait_4tFmz.webp",
         "video_description": "",
         "autoplay": true,
         "media_position": "center",
@@ -72,12 +73,12 @@
         "button_letter_spacing": 2,
         "button_uppercase": true,
         "button_border_width": 1.5,
-        "primary_background": "#CDFC4B",
+        "primary_background": "#cdfc4b",
         "primary_text": "#075007",
-        "primary_background_hover": "#FFFFFF",
+        "primary_background_hover": "#ffffff",
         "primary_text_hover": "#075007",
-        "secondary_color": "#CDFC4B",
-        "secondary_color_hover": "#FFFFFF"
+        "secondary_color": "#cdfc4b",
+        "secondary_color_hover": "#ffffff"
       }
     },
     "multirow_QG7cfR": {
@@ -206,14 +207,14 @@
         "column_gap_mobile": 32,
         "copy_gap": 24,
         "copy_gap_mobile": 24,
-        "background": "#F4F4F4",
+        "background": "#f4f4f4",
         "heading_color": "#075007",
         "text_color": "#075007",
         "button_color": "#075007",
-        "button_background_hover": "#C6FA41",
+        "button_background_hover": "#c6fa41",
         "button_color_hover": "#075007",
-        "accordion_background": "#FFFFFF",
-        "accordion_border": "#E3E3E3",
+        "accordion_background": "#ffffff",
+        "accordion_border": "#e3e3e3",
         "heading_font_source": "theme_heading",
         "heading_font": "assistant_n4",
         "heading_font_weight": "900",
@@ -312,9 +313,9 @@
         "repeat_count": 1,
         "item_alignment": "between",
         "pause_on_hover": true,
-        "background": "#F4F4F4",
+        "background": "#f4f4f4",
         "text_color": "#075007",
-        "focus_color": "#CDFC4B",
+        "focus_color": "#cdfc4b",
         "tint_icons": false,
         "font_source": "theme_body",
         "font": "assistant_n4",
