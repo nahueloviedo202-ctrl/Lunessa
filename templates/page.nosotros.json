@@ -136,11 +136,220 @@
         "padding_top": 60,
         "padding_bottom": 60
       }
+    },
+    "media_text_split_gJDejz": {
+      "type": "media-text-split",
+      "blocks": {
+        "lead_7HkjNX": {
+          "type": "lead",
+          "settings": {
+            "text": "Cada producto cumple el mismo estándar antes de llegar a tu perro."
+          }
+        },
+        "feature_FxbCKj": {
+          "type": "feature",
+          "settings": {
+            "heading": "1. Los ingredientes correctos.",
+            "text": "<p>Cada ingrediente está respaldado por la ciencia. Si está en la fórmula, es porque funciona.</p>"
+          }
+        },
+        "feature_PVcz3J": {
+          "type": "feature",
+          "settings": {
+            "heading": "2. Las concentraciones correctas.",
+            "text": "<p>Las dosis mínimas no hacen nada. Formulamos en niveles que marcan una diferencia real.</p>"
+          }
+        },
+        "feature_xfXbwq": {
+          "type": "feature",
+          "settings": {
+            "heading": "3. Las combinaciones correctas.",
+            "text": "<p>Algunos ingredientes funcionan mejor juntos. Cada parte de la fórmula cumple su función.</p>"
+          }
+        },
+        "button_NLRKWp": {
+          "type": "button",
+          "settings": {
+            "label": "Ver ingredientes",
+            "link": "shopify://pages/ingredientes-nuevo",
+            "style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "lead_7HkjNX",
+        "feature_FxbCKj",
+        "feature_PVcz3J",
+        "feature_xfXbwq",
+        "button_NLRKWp"
+      ],
+      "name": "Imagen y texto dividido",
+      "settings": {
+        "heading": "Nuestro estándar",
+        "heading_position": "above",
+        "footer_button_label": "",
+        "footer_button_link": "",
+        "image": "shopify://shop_images/ingredients-turkey-tail-mushroom-tweezers_2o3qKL.webp",
+        "media_position": "start",
+        "media_position_mobile": "start",
+        "media_ratio": 84,
+        "media_ratio_mobile": 84,
+        "media_radius": 0,
+        "sticky_media": false,
+        "media_width": 512,
+        "copy_width": 512,
+        "vertical_alignment": "center",
+        "column_gap": 64,
+        "column_gap_mobile": 32,
+        "copy_gap": 24,
+        "copy_gap_mobile": 24,
+        "background": "#F4F4F4",
+        "heading_color": "#075007",
+        "text_color": "#075007",
+        "button_color": "#075007",
+        "button_background_hover": "#C6FA41",
+        "button_color_hover": "#075007",
+        "accordion_background": "#FFFFFF",
+        "accordion_border": "#E3E3E3",
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 36,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "feature_heading_size": 20,
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "max_width": 1200,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "stack_gap": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "mark_strip_ynPRnV": {
+      "type": "mark-strip",
+      "blocks": {
+        "item_UprEDE": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_wTnP6R": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_trEgBi": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_LLy7rL": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_zLHba6": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        },
+        "item_pYwy94": {
+          "type": "item",
+          "settings": {
+            "logo_height": 140,
+            "icon": "none",
+            "title": "",
+            "caption": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_UprEDE",
+        "item_wTnP6R",
+        "item_trEgBi",
+        "item_LLy7rL",
+        "item_zLHba6",
+        "item_pYwy94"
+      ],
+      "name": "Sellos de calidad",
+      "settings": {
+        "heading": "Los estándares detrás de cada suplemento",
+        "aria_label": "",
+        "layout": "wrap",
+        "direction": "left",
+        "duration": 32,
+        "duration_mobile": 32,
+        "repeat_count": 1,
+        "item_alignment": "between",
+        "pause_on_hover": true,
+        "background": "#075007",
+        "text_color": "#ffffff",
+        "focus_color": "#CDFC4B",
+        "tint_icons": false,
+        "font_source": "theme_body",
+        "font": "assistant_n4",
+        "title_size": 18,
+        "title_size_mobile": 16,
+        "title_weight": "500",
+        "caption_size": 12,
+        "letter_spacing": -22,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "heading_size": 40,
+        "heading_size_mobile": 28,
+        "heading_uppercase": true,
+        "heading_gap": 32,
+        "min_height": 0,
+        "icon_size": 38,
+        "icon_size_mobile": 38,
+        "icon_gap": 8,
+        "item_gap": 64,
+        "item_gap_mobile": 64,
+        "padding_vertical": 64,
+        "padding_vertical_mobile": 64,
+        "padding_x": 16
+      }
     }
   },
   "order": [
     "main",
     "page_hero_4NBzV7",
-    "multirow_QG7cfR"
+    "multirow_QG7cfR",
+    "media_text_split_gJDejz",
+    "mark_strip_ynPRnV"
   ]
 }
