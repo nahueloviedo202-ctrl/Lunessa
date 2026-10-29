@@ -11,13 +11,136 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "page_hero_4NBzV7": {
+      "type": "page-hero",
+      "blocks": {
+        "heading_RngEhH": {
+          "type": "heading",
+          "settings": {
+            "heading": "NOSOTROS",
+            "tag": "h1",
+            "font_size": 60,
+            "font_size_mobile": 36,
+            "line_height": 82,
+            "letter_spacing": 0,
+            "uppercase": true,
+            "color": "#FFFFFF",
+            "max_width": 600
+          }
+        }
+      },
+      "block_order": [
+        "heading_RngEhH"
+      ],
+      "name": "Hero de página",
+      "settings": {
+        "image": "shopify://shop_images/lifestyle-border-collie-leaping-with-ball-wide_29TT3Q.webp",
+        "video_description": "",
+        "autoplay": true,
+        "media_position": "center",
+        "background": "#000000",
+        "scrim": "none",
+        "scrim_color": "#000000",
+        "scrim_opacity": 60,
+        "content_alignment": "center",
+        "vertical_position": "center",
+        "vertical_position_mobile": "center",
+        "min_height": 720,
+        "min_height_mobile": 720,
+        "max_width": 1200,
+        "content_gap": 24,
+        "padding_x": 64,
+        "padding_x_mobile": 16,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64,
+        "heading_font_source": "theme_heading",
+        "heading_font": "assistant_n4",
+        "heading_font_weight": "900",
+        "body_font_source": "theme_body",
+        "body_font": "assistant_n4",
+        "button_height": 42,
+        "button_radius": 5,
+        "button_font_size": 16,
+        "button_letter_spacing": 2,
+        "button_uppercase": true,
+        "button_border_width": 1.5,
+        "primary_background": "#CDFC4B",
+        "primary_text": "#075007",
+        "primary_background_hover": "#FFFFFF",
+        "primary_text_hover": "#075007",
+        "secondary_color": "#CDFC4B",
+        "secondary_color_hover": "#FFFFFF"
+      }
+    },
+    "multirow_QG7cfR": {
+      "type": "multirow",
+      "blocks": {
+        "row_ndVVRn": {
+          "type": "row",
+          "settings": {
+            "caption": "Leyenda",
+            "heading": "Fila",
+            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "button_label": "Etiqueta de botón",
+            "button_link": ""
+          }
+        },
+        "row_dEmn3W": {
+          "type": "row",
+          "settings": {
+            "caption": "Leyenda",
+            "heading": "Fila",
+            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "button_label": "Etiqueta de botón",
+            "button_link": ""
+          }
+        },
+        "row_CGWaAg": {
+          "type": "row",
+          "settings": {
+            "caption": "Leyenda",
+            "heading": "Fila",
+            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "button_label": "Etiqueta de botón",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_ndVVRn",
+        "row_dEmn3W",
+        "row_CGWaAg"
+      ],
+      "custom_css": [],
+      "name": "t:sections.multirow.presets.name",
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "image_layout": "align-left",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "row_color_scheme": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "page_hero_4NBzV7",
+    "multirow_QG7cfR"
   ]
 }
