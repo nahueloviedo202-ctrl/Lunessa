@@ -238,6 +238,7 @@
         "item_UprEDE": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/a5aa5400-8ce0-4fdb-8b47-955fa1b54cb8.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -248,6 +249,7 @@
         "item_wTnP6R": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/b48b1b2b-8df4-4bd0-9b78-2c21cae77a4a.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -258,6 +260,7 @@
         "item_trEgBi": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/garantia1.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -268,6 +271,7 @@
         "item_LLy7rL": {
           "type": "item",
           "settings": {
+            "image": "shopify://shop_images/cca0de6b-0bca-4382-95e6-e5af5e14fca3.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -278,16 +282,7 @@
         "item_zLHba6": {
           "type": "item",
           "settings": {
-            "logo_height": 140,
-            "icon": "none",
-            "title": "",
-            "caption": "",
-            "link": ""
-          }
-        },
-        "item_pYwy94": {
-          "type": "item",
-          "settings": {
+            "image": "shopify://shop_images/083e3874-2b46-4d03-b817-e82071eea057.webp",
             "logo_height": 140,
             "icon": "none",
             "title": "",
@@ -301,8 +296,7 @@
         "item_wTnP6R",
         "item_trEgBi",
         "item_LLy7rL",
-        "item_zLHba6",
-        "item_pYwy94"
+        "item_zLHba6"
       ],
       "name": "Sellos de calidad",
       "settings": {
