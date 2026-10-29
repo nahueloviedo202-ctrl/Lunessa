@@ -89,27 +89,29 @@
             "caption": "Leyenda",
             "heading": "Fila",
             "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
-            "button_label": "Etiqueta de botón",
+            "button_label": "",
             "button_link": ""
           }
         },
         "row_dEmn3W": {
           "type": "row",
           "settings": {
+            "image": "shopify://shop_images/lifestyle-dog-among-tack-portrait_2qDsig.webp",
             "caption": "Leyenda",
             "heading": "Fila",
             "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
-            "button_label": "Etiqueta de botón",
+            "button_label": "",
             "button_link": ""
           }
         },
         "row_CGWaAg": {
           "type": "row",
           "settings": {
+            "image": "shopify://shop_images/lifestyle-border-collies-running-in-meadow_Z2cjeU2.webp",
             "caption": "Leyenda",
             "heading": "Fila",
             "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
-            "button_label": "Etiqueta de botón",
+            "button_label": "",
             "button_link": ""
           }
         }
