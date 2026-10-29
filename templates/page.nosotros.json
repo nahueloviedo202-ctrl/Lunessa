@@ -98,9 +98,9 @@
           "type": "row",
           "settings": {
             "image": "shopify://shop_images/lifestyle-dog-among-tack-portrait_2qDsig.webp",
-            "caption": "Leyenda",
-            "heading": "Fila",
-            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "caption": "",
+            "heading": "",
+            "text": "<p>Entonces, esto es lo que creemos: tu mascota no es el problema. Ya es perfecta.</p><p>Las verdaderas señales de salud no están en un análisis de sangre. Están en las patas llenas de lodo. En el reportar la pelota que nunca se cansa. En los calcetines robados y paseados como trofeo.</p><p>Traviesa, revoltosa, cariñosa: cada versión de ella es tu mascota al máximo.</p>",
             "button_label": "",
             "button_link": ""
           }
@@ -109,9 +109,9 @@
           "type": "row",
           "settings": {
             "image": "shopify://shop_images/lifestyle-border-collies-running-in-meadow_Z2cjeU2.webp",
-            "caption": "Leyenda",
-            "heading": "Fila",
-            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "caption": "",
+            "heading": "",
+            "text": "<p>Hacemos suplementos por una sola razón: desatar al perro que llevan dentro. Devolverles sus días más salvajes, más ruidosos, más plenos.</p><p>Demasiado, pero de la mejor forma. Eso es lo que saca Lunessa.</p><p>¿Te sumas?</p>",
             "button_label": "",
             "button_link": ""
           }
