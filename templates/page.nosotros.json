@@ -86,9 +86,10 @@
         "row_ndVVRn": {
           "type": "row",
           "settings": {
-            "caption": "Leyenda",
-            "heading": "Fila",
-            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
+            "image": "shopify://shop_images/personas.webp",
+            "caption": "",
+            "heading": "",
+            "text": "<p>Toda marca de suplementos para mascotas empieza en el mismo lugar: tu mascota está mal. Tratan a tu perro como paciente. Como un problema que hay que arreglar. Nosotros no.</p><p>Nuestros fundadores, Santiago y José, crearon Lunessa porque estaban cansados de ver a los perros que querían tratados como un problema por resolver. Simplemente no era suficiente.</p>",
             "button_label": "",
             "button_link": ""
           }
