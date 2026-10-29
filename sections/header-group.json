@@ -45,7 +45,7 @@
           "type": "link",
           "settings": {
             "label": "Nosotros",
-            "link": "/pages/faqs",
+            "link": "shopify://pages/nosotros",
             "position": "right"
           }
         }

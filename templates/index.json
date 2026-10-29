@@ -1270,7 +1270,7 @@
           "type": "button",
           "settings": {
             "label": "Leer nuestro manifiesto",
-            "link": "",
+            "link": "shopify://pages/nosotros",
             "style": "outline"
           }
         }
