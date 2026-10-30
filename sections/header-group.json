@@ -56,6 +56,7 @@
         "link_ingredientes",
         "link_faqs"
       ],
+      "disabled": true,
       "settings": {
         "logo": "shopify://shop_images/4d508c30-45fb-43aa-b182-59f481e87210.webp",
         "logo_width": 140,
@@ -128,10 +129,36 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "announcement_bar_bdRfJe": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_z6bi9i": {
+          "type": "announcement",
+          "settings": {
+            "text": "Envio gratis  🚚",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_z6bi9i"
+      ],
+      "name": "t:sections.announcement-bar.presets.name",
+      "settings": {
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "color_scheme": "",
+        "show_line_separator": true,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
     }
   },
   "order": [
     "header_navbar",
-    "header"
+    "header",
+    "announcement_bar_bdRfJe"
   ]
 }
