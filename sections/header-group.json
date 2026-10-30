@@ -135,6 +135,7 @@
       "blocks": {
         "announcement_z6bi9i": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "Envio gratis  🚚",
             "link": ""
