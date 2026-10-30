@@ -155,11 +155,75 @@
         "enable_country_selector": false,
         "enable_language_selector": false
       }
+    },
+    "offer_bar_3NrhrR": {
+      "type": "offer-bar",
+      "blocks": {
+        "text_cbRg8j": {
+          "type": "text",
+          "settings": {
+            "text": "OFERTA DE OCTUBRE",
+            "color": "#FFFFFF",
+            "font_weight": "700",
+            "text_transform": "none",
+            "letter_spacing": 0,
+            "font_size": 15,
+            "font_size_tablet": 16,
+            "font_size_mobile": 15,
+            "line_height": 100,
+            "line_height_tablet": 180,
+            "line_height_mobile": 100,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        },
+        "text_pMEyWT": {
+          "type": "text",
+          "settings": {
+            "text": "4 Regalos Gratis + 90 Días de Garantia",
+            "color": "#FFFFFF",
+            "font_weight": "400",
+            "text_transform": "none",
+            "letter_spacing": 0,
+            "font_size": 12,
+            "font_size_tablet": 16,
+            "font_size_mobile": 12,
+            "line_height": 100,
+            "line_height_tablet": 180,
+            "line_height_mobile": 100,
+            "margin_top": 0,
+            "margin_top_tablet": 0,
+            "margin_top_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_cbRg8j",
+        "text_pMEyWT"
+      ],
+      "name": "Barra de oferta",
+      "settings": {
+        "background_gradient": "linear-gradient(102deg, rgba(51, 180, 72, 1), rgba(20, 49, 6, 1) 100%)",
+        "background_color": "#6C0011",
+        "link": "",
+        "text_alignment": "center",
+        "max_width": 550,
+        "font_source": "custom",
+        "body_font": "inter_n4",
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_x": 0,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "padding_x_mobile": 0
+      }
     }
   },
   "order": [
     "header_navbar",
     "header",
-    "announcement_bar_bdRfJe"
+    "announcement_bar_bdRfJe",
+    "offer_bar_3NrhrR"
   ]
 }
