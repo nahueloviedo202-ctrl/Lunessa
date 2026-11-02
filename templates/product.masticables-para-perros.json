@@ -120,7 +120,7 @@
           "settings": {
             "text": "¡Se están agotando! Quedan pocas piezas",
             "sold_out_text": "Agotado temporalmente",
-            "dot_color": "#6C0000",
+            "dot_color": "#6c0000",
             "sold_out_dot_color": "#b42318",
             "text_color": "#212427",
             "text_size": 14,
@@ -1712,7 +1712,7 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
         "padding_x_mobile": 16,
-        "image": "shopify://shop_images/8d4c5ae7-a391-4735-8f72-5d6b4a05b79c.webp",
+        "image": "shopify://shop_images/Create_premium_background_colors_85b67625_2K.jpg",
         "image_position": "left",
         "image_first_mobile": true,
         "image_max_width": 488,
