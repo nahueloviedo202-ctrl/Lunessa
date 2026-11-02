@@ -1890,6 +1890,236 @@
       ]
     },
     {
+      "type": "price",
+      "name": "Precio",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Texto antes del precio"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Texto después del precio"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_compare",
+          "label": "Mostrar el precio comparado tachado",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "saving_text",
+          "label": "Etiqueta de ahorro",
+          "info": "Solo se muestra si hay precio comparado. Usa [descuento] para el porcentaje calculado. Déjala vacía para ocultarla.",
+          "default": "Ahorra [descuento]"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Color de precio",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "price_size",
+          "min": 14,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de precio",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "price_size_mobile",
+          "min": 14,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de precio (móvil)",
+          "default": 24
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Grosor del precio",
+          "options": [
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medio" },
+            { "value": "600", "label": "Seminegrita" },
+            { "value": "700", "label": "Negrita" }
+          ],
+          "default": "700"
+        },
+        {
+          "type": "color",
+          "id": "compare_color",
+          "label": "Color de precio tachado y textos",
+          "default": "#6B7280"
+        },
+        {
+          "type": "range",
+          "id": "compare_size",
+          "min": 10,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño de precio tachado y textos",
+          "default": 16
+        },
+        {
+          "type": "color",
+          "id": "saving_background",
+          "label": "Fondo de la etiqueta de ahorro",
+          "default": "#FBA691"
+        },
+        {
+          "type": "color",
+          "id": "saving_text_color",
+          "label": "Texto de la etiqueta de ahorro",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alineación",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "right", "label": "Derecha" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "variant_picker",
+      "name": "Selector de variantes",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "picker_type",
+          "label": "Estilo",
+          "options": [
+            { "value": "button", "label": "Botones" },
+            { "value": "dropdown", "label": "Desplegable" }
+          ],
+          "default": "button"
+        },
+        {
+          "type": "select",
+          "id": "swatch_shape",
+          "label": "Muestras de color",
+          "info": "Se usan en las opciones que tengan muestras configuradas en Shopify.",
+          "options": [
+            { "value": "circle", "label": "Círculo" },
+            { "value": "square", "label": "Cuadrado" },
+            { "value": "none", "label": "Ninguna" }
+          ],
+          "default": "circle"
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Color del nombre de la opción",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "active_background",
+          "label": "Fondo del botón seleccionado",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "active_text_color",
+          "label": "Texto del botón seleccionado",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "radius",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Radio de los botones",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
       "type": "buy_buttons",
       "name": "Botón de compra",
       "limit": 1,

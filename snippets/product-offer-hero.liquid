@@ -19,13 +19,17 @@
   assign variant = product.selected_or_first_available_variant
   assign product_form_id = 'product-form-' | append: section.id
   assign grouped_types = 'badge,highlight,benefit,offer,trust,faq,before_after,choice' | split: ','
-  assign extra_types = 'step,choice,stock,guarantee' | split: ','
+  assign extra_types = 'step,choice,stock,guarantee,price,variant_picker' | split: ','
 
   assign first_offer_id = ''
   assign selected_offer_id = ''
   assign load_extras_css = false
+  assign has_variant_picker = false
   assign step_count = 0
   for b in section.blocks
+    if b.type == 'variant_picker' and product.has_only_default_variant == false
+      assign has_variant_picker = true
+    endif
     if extra_types contains b.type
       assign load_extras_css = true
     elsif b.type == 'title' and b.settings.accent_color != blank
@@ -57,6 +61,14 @@
 
 {%- if load_extras_css -%}
   {{ 'component-product-offer-steps.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- if has_variant_picker -%}
+  {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-offer-variants.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 {%- style -%}
@@ -204,6 +216,15 @@
 
 <section class="poh poh--{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
   <div class="poh__container page-width">
+    {%- if has_variant_picker -%}
+      <product-info
+        id="MainProduct-{{ section.id }}"
+        data-section="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-update-url="true"
+        data-url="{{ product.url }}"
+      >
+    {%- endif -%}
     <div class="poh__grid">
       {%- comment -%} Gallery column {%- endcomment -%}
       <div class="poh__media">
@@ -420,6 +441,64 @@
                 {%- endif -%}
               </{{ block.settings.heading_tag }}>
 
+            {%- when 'price' -%}
+              {%- liquid
+                assign price_amount = variant.price | default: 0
+                assign price_compare = variant.compare_at_price | default: 0
+                assign price_on_sale = false
+                if price_compare > price_amount
+                  assign price_on_sale = true
+                endif
+                assign price_saved = 0
+                if price_on_sale
+                  assign price_saved = price_compare | minus: price_amount | times: 100.0 | divided_by: price_compare | round
+                endif
+                assign price_saved_label = price_saved | append: '%'
+                assign price_saving_text = block.settings.saving_text | replace: '[descuento]', price_saved_label
+              -%}
+              <div
+                class="poh-price poh-price--{{ block.settings.alignment }} poh-visibility--{{ visibility }}"
+                style="--poh-price-color: {{ block.settings.price_color }}; --poh-price-size: {{ block.settings.price_size }}px; --poh-price-size-mobile: {{ block.settings.price_size_mobile }}px; --poh-price-weight: {{ block.settings.font_weight }}; --poh-price-compare-color: {{ block.settings.compare_color }}; --poh-price-compare-size: {{ block.settings.compare_size }}px; --poh-price-saving-bg: {{ block.settings.saving_background }}; --poh-price-saving-color: {{ block.settings.saving_text_color }}; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                <div id="price-{{ section.id }}" class="poh-price__content">
+                  {%- if block.settings.prefix != blank -%}
+                    <span class="poh-price__affix">{{ block.settings.prefix | escape }}</span>
+                  {%- endif -%}
+                  <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                  <span class="poh-price__amount">{{ price_amount | money }}</span>
+                  {%- if block.settings.show_compare and price_on_sale -%}
+                    <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                    <s class="poh-price__compare">{{ price_compare | money }}</s>
+                  {%- endif -%}
+                  {%- if price_on_sale and block.settings.saving_text != blank -%}
+                    <span class="poh-price__saving">{{ price_saving_text | escape }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.suffix != blank -%}
+                    <span class="poh-price__affix">{{ block.settings.suffix | escape }}</span>
+                  {%- endif -%}
+                  {%- if variant.unit_price_measurement -%}
+                    {%- render 'unit-price', price: variant.unit_price, measurement: variant.unit_price_measurement -%}
+                  {%- endif -%}
+                </div>
+              </div>
+
+            {%- when 'variant_picker' -%}
+              {%- if has_variant_picker or request.design_mode -%}
+                <div
+                  class="poh-variants poh-visibility--{{ visibility }}"
+                  style="--poh-variant-label-color: {{ block.settings.label_color }}; --poh-variant-active-bg: {{ block.settings.active_background }}; --poh-variant-active-color: {{ block.settings.active_text_color }}; --poh-variant-radius: {{ block.settings.radius }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                >
+                  {%- if has_variant_picker -%}
+                    {%- render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id -%}
+                  {%- else -%}
+                    <p class="poh-variants__empty" {{ block.shopify_attributes }}>
+                      Este producto no tiene variantes. El selector aparecerá cuando las agregues en Productos.
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
             {%- when 'text' -%}
               <div
                 class="poh-text rte poh-visibility--{{ visibility }}"
@@ -592,13 +671,13 @@
                     {%- endif -%}
                     <span class="poh-offer__main">
                       <span class="poh-offer__radio" aria-hidden="true"></span>
-                      <span class="poh-offer__info">
+                      <span class="poh-offer__info" data-poh-sync="offer-info-{{ item.id }}">
                         <span class="poh-offer__title">{{ item.settings.title | escape }}</span>
                         {%- if offer_subtitle != blank -%}
                           <span class="poh-offer__subtitle">{{ offer_subtitle | escape }}</span>
                         {%- endif -%}
                       </span>
-                      <span class="poh-offer__prices">
+                      <span class="poh-offer__prices" data-poh-sync="offer-prices-{{ item.id }}">
                         <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
                         <span class="poh-offer__price">{{ offer_total | money }}</span>
                         {%- if compare_total > offer_total -%}
@@ -705,16 +784,18 @@
                   assign stock_dot = block.settings.sold_out_dot_color
                 endif
               -%}
-              {%- if stock_text != blank -%}
-                <p
-                  class="poh-stock poh-stock--{{ block.settings.alignment }} poh-visibility--{{ visibility }}"
-                  style="--poh-stock-dot: {{ stock_dot }}; --poh-stock-color: {{ block.settings.text_color }}; --poh-stock-size: {{ block.settings.text_size }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
-                  {{ block.shopify_attributes }}
-                >
-                  <span class="poh-stock__dot" aria-hidden="true"></span>
-                  <span>{{ stock_text | escape }}</span>
-                </p>
-              {%- endif -%}
+              <div class="poh-sync-contents" data-poh-sync="stock-{{ block.id }}">
+                {%- if stock_text != blank -%}
+                  <p
+                    class="poh-stock poh-stock--{{ block.settings.alignment }} poh-visibility--{{ visibility }}"
+                    style="--poh-stock-dot: {{ stock_dot }}; --poh-stock-color: {{ block.settings.text_color }}; --poh-stock-size: {{ block.settings.text_size }}px; --poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="poh-stock__dot" aria-hidden="true"></span>
+                    <span>{{ stock_text | escape }}</span>
+                  </p>
+                {%- endif -%}
+              </div>
 
             {%- when 'guarantee' -%}
               <div
@@ -773,6 +854,7 @@
                         <input type="hidden" name="quantity" value="1">
                       {%- endif -%}
                       <button
+                        id="ProductSubmitButton-{{ section.id }}"
                         type="submit"
                         name="add"
                         class="poh-buy__button"
@@ -780,7 +862,7 @@
                           disabled
                         {% endif %}
                       >
-                        <span class="poh-buy__label">
+                        <span class="poh-buy__label" data-poh-sync="buy-label">
                           {%- if variant.available -%}
                             {{ buy_label }}
                             {%- if block.settings.show_price -%}
@@ -1037,5 +1119,8 @@
         {%- endfor -%}
       </div>
     </div>
+    {%- if has_variant_picker -%}
+      </product-info>
+    {%- endif -%}
   </div>
 </section>

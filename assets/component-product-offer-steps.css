@@ -3,6 +3,10 @@
 
 /* Title accent */
 
+.poh product-info {
+  display: block;
+}
+
 .poh .poh-title--accent em {
   color: var(--poh-title-accent);
   font-style: normal;
@@ -167,9 +171,120 @@
   opacity: 0.6;
 }
 
+/* Price */
+
+.poh .poh-price {
+  margin: 0 0 var(--poh-block-mb-mobile);
+}
+
+.poh .poh-price__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  letter-spacing: normal;
+}
+
+.poh .poh-price--center .poh-price__content {
+  justify-content: center;
+}
+
+.poh .poh-price--right .poh-price__content {
+  justify-content: flex-end;
+}
+
+.poh .poh-price__amount {
+  color: var(--poh-price-color);
+  font-size: var(--poh-price-size-mobile);
+  font-weight: var(--poh-price-weight);
+  line-height: 1.2;
+}
+
+.poh .poh-price__compare,
+.poh .poh-price__affix {
+  color: var(--poh-price-compare-color);
+  font-size: var(--poh-price-compare-size);
+}
+
+.poh .poh-price__saving {
+  align-self: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--poh-price-saving-bg);
+  color: var(--poh-price-saving-color);
+  font-size: var(--poh-price-compare-size);
+  font-weight: 600;
+}
+
+.poh .poh-price .unit-price {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+/* Variant picker */
+
+.poh .poh-variants {
+  margin: 0 0 var(--poh-block-mb-mobile);
+}
+
+.poh .poh-variants .product-form__input {
+  max-width: 44rem;
+  min-width: fit-content;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  border: none;
+}
+
+.poh .poh-variants .product-form__input:last-of-type {
+  margin-bottom: 0;
+}
+
+.poh .poh-variants .form__label {
+  padding-left: 0;
+  color: var(--poh-variant-label-color);
+}
+
+.poh .poh-variants .select {
+  max-width: 100%;
+}
+
+.poh .poh-variants .select .svg-wrapper {
+  right: 1.5rem;
+}
+
+.poh .poh-variants .product-form__input--pill input[type='radio'] + label,
+.poh .poh-variants .product-form__input--pill input[type='radio'] + label:before {
+  border-radius: var(--poh-variant-radius);
+}
+
+.poh .poh-variants .product-form__input--pill input[type='radio']:checked:not(.disabled) + label {
+  background: var(--poh-variant-active-bg);
+  color: var(--poh-variant-active-color);
+}
+
+.poh .poh-variants__empty {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed currentColor;
+  font-size: 13px;
+}
+
+.poh .poh-sync-contents {
+  display: contents;
+}
+
 /* Tablet & desktop */
 
 @media screen and (min-width: 750px) {
+  .poh .poh-price,
+  .poh .poh-variants {
+    margin-bottom: var(--poh-block-mb);
+  }
+
+  .poh .poh-price__amount {
+    font-size: var(--poh-price-size);
+  }
+
   .poh .poh-step {
     margin-bottom: var(--poh-block-mb);
     font-size: var(--poh-step-size);
