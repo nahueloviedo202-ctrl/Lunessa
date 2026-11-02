@@ -68,7 +68,7 @@
       ],
       "name": "Hero de página",
       "settings": {
-        "video": "shopify://files/videos/aec2fcc4cf5544b3ac01e17f2c075236.HD-720p-3.0Mbps-96566666.mp4",
+        "image": "shopify://shop_images/lifestyle-border-collie-leaping-with-ball-portrait_4tFmz.webp",
         "video_description": "",
         "autoplay": true,
         "media_position": "center",
