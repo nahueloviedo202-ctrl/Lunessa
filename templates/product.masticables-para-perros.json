@@ -704,48 +704,12 @@
             "text": "<p><strong>\"Porque ellos también merecen calidad de vida ❤️\"</strong></p><p>No hay nada más bonito que ver a tu perrito disfrutar de sus momentos favoritos. Por eso me interesa tanto cuidar sus articulaciones y prestar atención a su movilidad. Lunessa me pareció una opción muy interesante.</p><p></p>",
             "name": "— Daniela R."
           }
-        },
-        "slide_FXz6Nc": {
-          "type": "slide",
-          "settings": {
-            "stars_count": 5,
-            "text": "<p>Add customer reviews and testimonials to highlight the positive experiences they’ve had with your store.</p>",
-            "name": "Name"
-          }
-        },
-        "slide_P3eyzy": {
-          "type": "slide",
-          "settings": {
-            "stars_count": 5,
-            "text": "<p>Add customer reviews and testimonials to highlight the positive experiences they’ve had with your store.</p>",
-            "name": "Name"
-          }
-        },
-        "slide_yGbmiW": {
-          "type": "slide",
-          "settings": {
-            "stars_count": 5,
-            "text": "<p>Add customer reviews and testimonials to highlight the positive experiences they’ve had with your store.</p>",
-            "name": "Name"
-          }
-        },
-        "slide_KjAUgH": {
-          "type": "slide",
-          "settings": {
-            "stars_count": 5,
-            "text": "<p>Add customer reviews and testimonials to highlight the positive experiences they’ve had with your store.</p>",
-            "name": "Name"
-          }
         }
       },
       "block_order": [
         "slide_c8PaUK",
         "slide_Q64BQR",
-        "slide_PyLfya",
-        "slide_FXz6Nc",
-        "slide_P3eyzy",
-        "slide_yGbmiW",
-        "slide_KjAUgH"
+        "slide_PyLfya"
       ],
       "name": "SS - Testimonials #53",
       "settings": {
