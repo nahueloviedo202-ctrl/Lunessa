@@ -1090,28 +1090,28 @@
           "type": "stat",
           "settings": {
             "number": "99%",
-            "label": "vio un impacto positivo en la movilidad de su perro"
+            "label": "Vio un impacto positivo en la movilidad de su perro"
           }
         },
         "stat_tDYN46": {
           "type": "stat",
           "settings": {
             "number": "99%",
-            "label": "notó menos molestias"
+            "label": "Notó menos molestias"
           }
         },
         "stat_ftapBb": {
           "type": "stat",
           "settings": {
             "number": "97%",
-            "label": "notó a su perro más feliz"
+            "label": "Notó a su perro más feliz"
           }
         },
         "stat_RgwGhQ": {
           "type": "stat",
           "settings": {
             "number": "95%",
-            "label": "nos recomendaría a amigos y familia"
+            "label": "Nos recomendaría a amigos y familia"
           }
         }
       },
