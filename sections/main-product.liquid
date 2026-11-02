@@ -1890,6 +1890,51 @@
       ]
     },
     {
+      "type": "custom_liquid",
+      "name": "Liquid personalizado",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Liquid personalizado",
+          "info": "Agrega código Liquid o HTML, por ejemplo fragmentos de apps."
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "spacing_bottom_mobile",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Margen inferior (móvil)",
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Visibilidad",
+          "options": [
+            { "value": "all", "label": "Todos los dispositivos" },
+            { "value": "desktop", "label": "Solo escritorio" },
+            { "value": "tablet_desktop", "label": "Tablet y escritorio" },
+            { "value": "mobile_tablet", "label": "Móvil y tablet" },
+            { "value": "mobile", "label": "Solo móvil" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
       "type": "price",
       "name": "Precio",
       "limit": 1,

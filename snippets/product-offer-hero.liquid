@@ -19,7 +19,7 @@
   assign variant = product.selected_or_first_available_variant
   assign product_form_id = 'product-form-' | append: section.id
   assign grouped_types = 'badge,highlight,benefit,offer,trust,faq,before_after,choice' | split: ','
-  assign extra_types = 'step,choice,stock,guarantee,price,variant_picker' | split: ','
+  assign extra_types = 'step,choice,stock,guarantee,price,variant_picker,custom_liquid' | split: ','
 
   assign first_offer_id = ''
   assign selected_offer_id = ''
@@ -440,6 +440,15 @@
                   {{ product.title | default: 'Product title' | escape }}
                 {%- endif -%}
               </{{ block.settings.heading_tag }}>
+
+            {%- when 'custom_liquid' -%}
+              <div
+                class="poh-custom poh-visibility--{{ visibility }}"
+                style="--poh-block-mb: {{ block.settings.spacing_bottom }}px; --poh-block-mb-mobile: {{ block.settings.spacing_bottom_mobile }}px;"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.custom_liquid }}
+              </div>
 
             {%- when 'price' -%}
               {%- liquid

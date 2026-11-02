@@ -171,6 +171,12 @@
   opacity: 0.6;
 }
 
+/* Custom Liquid */
+
+.poh .poh-custom {
+  margin: 0 0 var(--poh-block-mb-mobile);
+}
+
 /* Price */
 
 .poh .poh-price {
@@ -276,6 +282,7 @@
 /* Tablet & desktop */
 
 @media screen and (min-width: 750px) {
+  .poh .poh-custom,
   .poh .poh-price,
   .poh .poh-variants {
     margin-bottom: var(--poh-block-mb);
