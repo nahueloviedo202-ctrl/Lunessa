@@ -63,20 +63,6 @@
             "visibility": "all"
           }
         },
-        "text_6TX7q6": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.description }}",
-            "text_size": 16,
-            "text_size_mobile": 16,
-            "text_color": "#212427",
-            "spacing_top": 0,
-            "spacing_top_mobile": 26,
-            "spacing_bottom": 20,
-            "spacing_bottom_mobile": 20,
-            "visibility": "all"
-          }
-        },
         "stack_social_proof_GTfAmk": {
           "type": "shopify://apps/stack/blocks/social_proof/13a1a2f3-60d5-4f44-b4c5-fb67347c536d",
           "settings": {
@@ -91,13 +77,28 @@
             "social_proof_border_radius": 5
           }
         },
+        "text_6TX7q6": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.description }}",
+            "text_size": 16,
+            "text_size_mobile": 16,
+            "text_color": "#212427",
+            "spacing_top": 0,
+            "spacing_top_mobile": 26,
+            "spacing_bottom": 20,
+            "spacing_bottom_mobile": 20,
+            "visibility": "all"
+          }
+        },
         "buy_buttons_QeAxBD": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
-            "label": "COMPRAR AHORA",
+            "label": "Añadir al carrito",
             "sold_out_label": "Agotado",
             "show_dynamic_checkout": false,
-            "show_price": true,
+            "show_price": false,
             "custom_style": true,
             "border_color": "#17443d",
             "font_weight": "700",
@@ -107,11 +108,20 @@
             "sold_out_background": "#b7b7b7",
             "radius": 100,
             "text_size": 15,
-            "text_size_mobile": 15,
+            "text_size_mobile": 18,
             "padding_vertical": 17,
             "padding_vertical_mobile": 17,
             "spacing_bottom": 20,
             "spacing_bottom_mobile": 20,
+            "visibility": "all"
+          }
+        },
+        "custom_liquid_GfztyD": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- assign lu_variant = product.selected_or_first_available_variant -%}\n{%- assign lu_price = lu_variant.price -%}\n{%- assign lu_compare = lu_variant.compare_at_price -%}\n{%- assign lu_form_id = 'lu-buy-' | append: product.id -%}\n{%- assign lu_has_sale = false -%}\n{%- if lu_compare and lu_compare > lu_price -%}\n  {%- assign lu_has_sale = true -%}\n  {%- assign lu_savings = lu_compare | minus: lu_price -%}\n  {%- assign lu_percent = lu_savings | times: 100.0 | divided_by: lu_compare | round -%}\n{%- endif -%}\n\n<div class=\"lu-buy\">\n\n  <div class=\"lu-buy__offer\" {% unless lu_has_sale %}hidden{% endunless %}>\n    <span class=\"lu-buy__dot\"></span>\n    <span>OFERTA POR TIEMPO LIMITADO · <span class=\"lu-buy__percent\">{{ lu_percent }}</span>% DE DESCUENTO</span>\n  </div>\n\n  {% form 'product', product, id: lu_form_id, class: 'lu-buy__form' %}\n    <input type=\"hidden\" name=\"id\" value=\"{{ lu_variant.id }}\">\n    <input type=\"hidden\" name=\"quantity\" value=\"1\">\n\n    <button\n      type=\"submit\"\n      name=\"add\"\n      class=\"lu-buy__btn\"\n      {% unless lu_variant.available %}disabled{% endunless %}\n    >\n      <span class=\"lu-buy__main\">\n        <svg class=\"lu-buy__icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\">\n          <path d=\"M5 8h14l1 13H4L5 8Z\"/>\n          <path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/>\n        </svg>\n        <span class=\"lu-buy__label\">\n          {%- if lu_variant.available -%}AGREGAR AL CARRITO{%- else -%}AGOTADO{%- endif -%}\n        </span>\n        <span class=\"lu-buy__sep\" aria-hidden=\"true\"></span>\n        <span class=\"lu-buy__price\">{{ lu_price | money }}</span>\n      </span>\n\n      <span class=\"lu-buy__sub\">\n        <s class=\"lu-buy__compare\" {% unless lu_has_sale %}hidden{% endunless %}>{{ lu_compare | money }}</s>\n        <span class=\"lu-buy__save\">\n          {%- if lu_has_sale -%}\n            AHORRAS {{ lu_savings | money }} HOY\n          {%- else -%}\n            TU PERRO TE LO AGRADECERÁ\n          {%- endif -%}\n        </span>\n      </span>\n    </button>\n  {% endform %}\n\n  <ul class=\"lu-buy__trust\">\n    <li>\n      <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7h11v9H3z\"/><path d=\"M14 10h4l3 3v3h-7z\"/><circle cx=\"7\" cy=\"18\" r=\"1.6\"/><circle cx=\"17\" cy=\"18\" r=\"1.6\"/></svg>\n      Envío gratis\n    </li>\n    <li>\n      <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3Z\"/><path d=\"m9 12 2 2 4-4\"/></svg>\n      Garantía de 90 días\n    </li>\n    <li>\n      <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"5\" y=\"11\" width=\"14\" height=\"10\" rx=\"2\"/><path d=\"M8 11V8a4 4 0 0 1 8 0v3\"/></svg>\n      Pago seguro\n    </li>\n  </ul>\n\n</div>\n\n<script>\n  (() => {\n    const FORM_ID = {{ lu_form_id | json }};\n    if (window['__luBuy_' + FORM_ID]) return;\n    window['__luBuy_' + FORM_ID] = true;\n\n    const variants = {{ product.variants | json }};\n    const moneyFormat = {{ shop.money_format | json }};\n\n    function formatMoney(cents) {\n      const key = (moneyFormat.match(/\\{\\{\\s*(\\w+)\\s*\\}\\}/) || [])[1] || 'amount';\n      const fix = (dec, th, dp) => {\n        let [i, d] = (cents / 100).toFixed(dec).split('.');\n        i = i.replace(/\\B(?=(\\d{3})+(?!\\d))/g, th);\n        return d ? i + dp + d : i;\n      };\n      const value = {\n        amount_no_decimals: () => fix(0, ',', '.'),\n        amount_with_comma_separator: () => fix(2, '.', ','),\n        amount_no_decimals_with_comma_separator: () => fix(0, '.', ',')\n      }[key];\n      return moneyFormat.replace(/\\{\\{\\s*\\w+\\s*\\}\\}/, value ? value() : fix(2, ',', '.'));\n    }\n\n    function findVariant() {\n      const picker = document.querySelector('variant-selects, variant-radios, variant-picker');\n      if (picker) {\n        const selected = [...picker.querySelectorAll('input[type=\"radio\"]:checked, select')].map(el => el.value);\n        const match = variants.find(v => v.options.every((opt, i) => opt === selected[i]));\n        if (match) return match;\n      }\n      const nativeId = document.querySelector('.product-variant-id, form[data-type=\"add-to-cart-form\"] input[name=\"id\"]');\n      if (nativeId) return variants.find(v => String(v.id) === String(nativeId.value));\n      return null;\n    }\n\n    function sync() {\n      const form = document.getElementById(FORM_ID);\n      const v = findVariant();\n      if (!form || !v) return;\n      const wrap = form.closest('.lu-buy');\n      const onSale = v.compare_at_price && v.compare_at_price > v.price;\n\n      form.querySelector('input[name=\"id\"]').value = v.id;\n      form.querySelector('.lu-buy__btn').disabled = !v.available;\n      form.querySelector('.lu-buy__label').textContent = v.available ? 'AGREGAR AL CARRITO' : 'AGOTADO';\n      form.querySelector('.lu-buy__price').textContent = formatMoney(v.price);\n\n      const compare = form.querySelector('.lu-buy__compare');\n      compare.hidden = !onSale;\n      if (onSale) compare.textContent = formatMoney(v.compare_at_price);\n\n      form.querySelector('.lu-buy__save').textContent = onSale\n        ? 'AHORRAS ' + formatMoney(v.compare_at_price - v.price) + ' HOY'\n        : 'TU PERRO TE LO AGRADECERÁ';\n\n      const offer = wrap.querySelector('.lu-buy__offer');\n      offer.hidden = !onSale;\n      if (onSale) {\n        wrap.querySelector('.lu-buy__percent').textContent =\n          Math.round((v.compare_at_price - v.price) * 100 / v.compare_at_price);\n      }\n    }\n\n    document.addEventListener('change', e => {\n      if (e.target.closest('variant-selects, variant-radios, variant-picker')) sync();\n    });\n    document.addEventListener('submit', e => {\n      if (e.target.id === FORM_ID) sync();\n    }, true);\n    sync();\n  })();\n</script>\n\n<style>\n  .lu-buy {\n    --lu-green: #17443D;\n    --lu-green-dark: #0E2F2A;\n    --lu-lime: #8DC63F;\n    --lu-mint: #EEF6E6;\n    width: 100%;\n    margin: 20px 0;\n    font-family: inherit;\n    box-sizing: border-box;\n  }\n\n  .lu-buy * { box-sizing: border-box; }\n  .lu-buy [hidden] { display: none !important; }\n\n  .lu-buy__offer {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 8px;\n    width: fit-content;\n    margin: 0 auto 12px;\n    padding: 6px 14px;\n    border-radius: 100px;\n    background: var(--lu-mint);\n    color: var(--lu-green);\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 1.2px;\n    line-height: 1.4;\n    text-align: center;\n  }\n\n  .lu-buy__dot {\n    width: 7px;\n    height: 7px;\n    flex-shrink: 0;\n    border-radius: 50%;\n    background: var(--lu-lime);\n    animation: lu-pulse 1.8s infinite;\n  }\n\n  @keyframes lu-pulse {\n    0%   { box-shadow: 0 0 0 0 rgba(141, 198, 63, 0.6); }\n    70%  { box-shadow: 0 0 0 7px rgba(141, 198, 63, 0); }\n    100% { box-shadow: 0 0 0 0 rgba(141, 198, 63, 0); }\n  }\n\n  .lu-buy__form { width: 100%; margin: 0; }\n\n  .lu-buy__btn {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    gap: 4px;\n    width: 100%;\n    min-height: 68px;\n    padding: 12px 22px;\n    border: 0;\n    border-radius: 100px;\n    background: var(--lu-green);\n    color: #ffffff;\n    cursor: pointer;\n    font-family: inherit;\n    text-align: center;\n    box-shadow: 0 6px 18px rgba(23, 68, 61, 0.22);\n    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;\n  }\n\n  .lu-buy__main {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: wrap;\n    gap: 6px 10px;\n    font-size: 16px;\n    font-weight: 700;\n    letter-spacing: 1px;\n    line-height: 1.3;\n  }\n\n  .lu-buy__icon { flex-shrink: 0; }\n\n  .lu-buy__sep {\n    width: 1px;\n    height: 16px;\n    background: rgba(255, 255, 255, 0.45);\n  }\n\n  .lu-buy__sub {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 8px;\n    font-size: 11px;\n    font-weight: 600;\n    letter-spacing: 1px;\n    line-height: 1.4;\n  }\n\n  .lu-buy__compare { color: rgba(255, 255, 255, 0.6); font-weight: 500; }\n  .lu-buy__save { color: var(--lu-lime); }\n\n  .lu-buy__btn:hover:not(:disabled) {\n    background: var(--lu-green-dark);\n    box-shadow: 0 8px 22px rgba(23, 68, 61, 0.3);\n  }\n\n  .lu-buy__btn:active:not(:disabled) { transform: scale(0.985); }\n\n  .lu-buy__btn:focus-visible {\n    outline: 2px solid var(--lu-lime);\n    outline-offset: 3px;\n  }\n\n  .lu-buy__btn:disabled {\n    opacity: 0.55;\n    cursor: not-allowed;\n    box-shadow: none;\n  }\n\n  .lu-buy__trust {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: wrap;\n    gap: 8px 18px;\n    margin: 14px 0 0;\n    padding: 0;\n    list-style: none;\n    color: #4A5A56;\n    font-size: 12.5px;\n    letter-spacing: 0.2px;\n  }\n\n  .lu-buy__trust li { display: flex; align-items: center; gap: 6px; }\n  .lu-buy__trust svg { color: var(--lu-green); flex-shrink: 0; }\n\n  @media (max-width: 480px) {\n    .lu-buy__btn { min-height: 64px; padding: 11px 16px; }\n    .lu-buy__main { font-size: 15px; letter-spacing: 0.6px; }\n    .lu-buy__offer { font-size: 10px; letter-spacing: 0.8px; }\n    .lu-buy__trust { gap: 6px 12px; font-size: 12px; }\n  }\n\n  @media (prefers-reduced-motion: reduce) {\n    .lu-buy__btn { transition: none; }\n    .lu-buy__dot { animation: none; }\n  }\n</style>",
+            "spacing_bottom": 16,
+            "spacing_bottom_mobile": 12,
             "visibility": "all"
           }
         },
@@ -401,9 +411,10 @@
         "rating_ib6Um9",
         "title_Mm9FwJ",
         "price_ntBpkb",
-        "text_6TX7q6",
         "stack_social_proof_GTfAmk",
+        "text_6TX7q6",
         "buy_buttons_QeAxBD",
+        "custom_liquid_GfztyD",
         "stock_480f8y",
         "guarantee_nfg876",
         "badge_AfcDHz",
