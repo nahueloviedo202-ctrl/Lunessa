@@ -172,9 +172,9 @@
         "stock_480f8y": {
           "type": "stock",
           "settings": {
-            "text": "En stock, listo para enviar",
+            "text": "¡Se están agotando! Quedan pocas piezas",
             "sold_out_text": "Agotado temporalmente",
-            "dot_color": "#006c5b",
+            "dot_color": "#6C0000",
             "sold_out_dot_color": "#b42318",
             "text_color": "#212427",
             "text_size": 14,
