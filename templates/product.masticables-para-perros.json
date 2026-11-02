@@ -12,6 +12,21 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "rating_ib6Um9": {
+          "type": "rating",
+          "settings": {
+            "stars": 5,
+            "star_color": "#17443d",
+            "star_size": 17,
+            "text": "2.432 Reseñas Verificadas",
+            "text_color": "#212427",
+            "text_size": 14,
+            "text_size_mobile": 12,
+            "spacing_bottom": 0,
+            "spacing_bottom_mobile": 0,
+            "visibility": "all"
+          }
+        },
         "title_Mm9FwJ": {
           "type": "title",
           "settings": {
@@ -27,18 +42,24 @@
             "visibility": "all"
           }
         },
-        "rating_ib6Um9": {
-          "type": "rating",
+        "price_ntBpkb": {
+          "type": "price",
           "settings": {
-            "stars": 5,
-            "star_color": "#17443d",
-            "star_size": 17,
-            "text": "2.432 Reseñas",
-            "text_color": "#212427",
-            "text_size": 14,
-            "text_size_mobile": 12,
-            "spacing_bottom": 0,
-            "spacing_bottom_mobile": 0,
+            "prefix": "",
+            "suffix": "",
+            "show_compare": true,
+            "saving_text": "Ahorra [descuento]",
+            "price_color": "#000000",
+            "price_size": 28,
+            "price_size_mobile": 24,
+            "font_weight": "700",
+            "compare_color": "#6b7280",
+            "compare_size": 16,
+            "saving_background": "#33B448",
+            "saving_text_color": "#ffffff",
+            "alignment": "left",
+            "spacing_bottom": 16,
+            "spacing_bottom_mobile": 12,
             "visibility": "all"
           }
         },
@@ -108,6 +129,19 @@
           "disabled": true,
           "settings": {
             "label": "Más de 55 kg",
+            "selected": false
+          }
+        },
+        "offer_TYrkJ6": {
+          "type": "offer",
+          "disabled": true,
+          "settings": {
+            "quantity": 1,
+            "title": "Compra 1",
+            "subtitle": "",
+            "tag": "",
+            "discount_type": "none",
+            "discount_value": 0,
             "selected": false
           }
         },
@@ -418,8 +452,9 @@
         }
       },
       "block_order": [
-        "title_Mm9FwJ",
         "rating_ib6Um9",
+        "title_Mm9FwJ",
+        "price_ntBpkb",
         "text_6TX7q6",
         "step_1lgshl",
         "choice_ripxil",
@@ -427,6 +462,7 @@
         "choice_ye2d2n",
         "choice_3zrgk5",
         "choice_8j4aov",
+        "offer_TYrkJ6",
         "buy_buttons_QeAxBD",
         "stock_480f8y",
         "guarantee_nfg876",
