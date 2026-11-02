@@ -675,121 +675,6 @@
         "padding_bottom": 28
       }
     },
-    "ss_testimonials_53_hPK48y": {
-      "type": "ss-testimonials-53",
-      "blocks": {
-        "slide_c8PaUK": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/f4_chica.png",
-            "stars_count": 5,
-            "text": "<p><strong>\"Volvió a disfrutar sus paseos ❤️\"</strong></p><p>Mi perrito ya tiene sus añitos y me partía el corazón verlo con menos ganas de salir a pasear. Buscaba algo que pudiera apoyar el cuidado de sus articulaciones y conocí Lunessa. Me encanta poder dedicarle un poquito más de atención a su bienestar.</p>",
-            "name": "— María Fernanda R."
-          }
-        },
-        "slide_Q64BQR": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/f3_senor.png",
-            "stars_count": 5,
-            "text": "<p><strong>\"Los años pasan, pero quiero seguir consintiéndolo\"</strong></p><p>Mi compañero lleva muchos años a mi lado y se merece todos los cuidados del mundo. Me interesó Lunessa por su enfoque en las caderas y articulaciones. ¡Siempre quiero lo mejor para él!</p>",
-            "name": "Santiago Hernández"
-          }
-        },
-        "slide_PyLfya": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/DEEO.jpg",
-            "stars_count": 5,
-            "text": "<p><strong>\"Porque ellos también merecen calidad de vida ❤️\"</strong></p><p>No hay nada más bonito que ver a tu perrito disfrutar de sus momentos favoritos. Por eso me interesa tanto cuidar sus articulaciones y prestar atención a su movilidad. Lunessa me pareció una opción muy interesante.</p><p></p>",
-            "name": "— Daniela R."
-          }
-        }
-      },
-      "block_order": [
-        "slide_c8PaUK",
-        "slide_Q64BQR",
-        "slide_PyLfya"
-      ],
-      "name": "SS - Testimonials #53",
-      "settings": {
-        "cards_per_row": 4.2,
-        "cards_per_row_mobile": 1.2,
-        "cards_gap": 0,
-        "cards_gap_mobile": 0,
-        "image_ratio": "2/3",
-        "image_ratio_mobile": "2/3",
-        "card_border_thickness": 0,
-        "card_radius": 0,
-        "content_align": "left",
-        "content_align_mobile": "left",
-        "card_advanced": false,
-        "card_padding_horizontal": 20,
-        "card_padding_horizontal_mobile": 20,
-        "card_padding_vertical": 30,
-        "card_padding_vertical_mobile": 30,
-        "stars_size": 15,
-        "stars_size_mobile": 15,
-        "stars_gap": 2,
-        "text_custom": false,
-        "text_font": "josefin_sans_n4",
-        "text_size": 14,
-        "text_size_mobile": 14,
-        "text_advanced": false,
-        "text_height": 150,
-        "text_mt": 15,
-        "text_mt_mobile": 15,
-        "verified_icon": "1",
-        "name_icon_size": 18,
-        "name_icon_size_mobile": 18,
-        "name_text_custom": false,
-        "name_text_font": "josefin_sans_n4",
-        "name_text_size": 14,
-        "name_text_size_mobile": 14,
-        "name_advanced": false,
-        "name_text_height": 130,
-        "name_mt": 15,
-        "name_mt_mobile": 15,
-        "arrow_show_desktop": true,
-        "arrow_show_mobile": false,
-        "arrow_size": 48,
-        "arrow_size_mobile": 48,
-        "arrow_icon_size": 10,
-        "arrow_icon_size_mobile": 10,
-        "arrow_radius": 100,
-        "arrow_border_thickness": 0,
-        "arrow_hover_effect": "color",
-        "arrow_color": "#ffffff",
-        "arrow_hover_color": "#121212",
-        "arrow_bg_color": "#121212",
-        "arrow_bg_hover_color": "#f3f3f3",
-        "arrow_border_color": "#121212",
-        "arrow_border_hover_color": "#121212",
-        "text_color": "#ffffff",
-        "name_icon_color": "#ffffff",
-        "name_text_color": "#ffffff",
-        "card_border_color": "#121212",
-        "stars_color": "#ffffff",
-        "stars_bg_color": "#00B67A",
-        "stars_bg_half_color": "#dddddd",
-        "background_style": "solid",
-        "background_color": "#ffffff",
-        "background_gradient": "linear-gradient(180deg, #ffffff 0%, #f3f3f3 100%)",
-        "border_color": "#121212",
-        "margin_top": 0,
-        "margin_bottom": 0,
-        "margin_horizontal": 0,
-        "margin_horizontal_mobile": 0,
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "padding_horizontal": 0,
-        "padding_horizontal_mobile": 0,
-        "width": "page",
-        "content_width": 1200,
-        "border_thickness": 0,
-        "section_radius": 0
-      }
-    },
     "video_testimonials_grid_rFhUdH": {
       "type": "video-testimonials-grid",
       "blocks": {
@@ -1641,6 +1526,121 @@
         "button_radius": 50
       }
     },
+    "ss_testimonials_53_hPK48y": {
+      "type": "ss-testimonials-53",
+      "blocks": {
+        "slide_c8PaUK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/f4_chica.png",
+            "stars_count": 5,
+            "text": "<p><strong>\"Volvió a disfrutar sus paseos ❤️\"</strong></p><p>Mi perrito ya tiene sus añitos y me partía el corazón verlo con menos ganas de salir a pasear. Buscaba algo que pudiera apoyar el cuidado de sus articulaciones y conocí Lunessa. Me encanta poder dedicarle un poquito más de atención a su bienestar.</p>",
+            "name": "— María Fernanda R."
+          }
+        },
+        "slide_Q64BQR": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/f3_senor.png",
+            "stars_count": 5,
+            "text": "<p><strong>\"Los años pasan, pero quiero seguir consintiéndolo\"</strong></p><p>Mi compañero lleva muchos años a mi lado y se merece todos los cuidados del mundo. Me interesó Lunessa por su enfoque en las caderas y articulaciones. ¡Siempre quiero lo mejor para él!</p>",
+            "name": "Santiago Hernández"
+          }
+        },
+        "slide_PyLfya": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/DEEO.jpg",
+            "stars_count": 5,
+            "text": "<p><strong>\"Porque ellos también merecen calidad de vida ❤️\"</strong></p><p>No hay nada más bonito que ver a tu perrito disfrutar de sus momentos favoritos. Por eso me interesa tanto cuidar sus articulaciones y prestar atención a su movilidad. Lunessa me pareció una opción muy interesante.</p><p></p>",
+            "name": "— Daniela R."
+          }
+        }
+      },
+      "block_order": [
+        "slide_c8PaUK",
+        "slide_Q64BQR",
+        "slide_PyLfya"
+      ],
+      "name": "SS - Testimonials #53",
+      "settings": {
+        "cards_per_row": 4.2,
+        "cards_per_row_mobile": 1.2,
+        "cards_gap": 0,
+        "cards_gap_mobile": 0,
+        "image_ratio": "2/3",
+        "image_ratio_mobile": "2/3",
+        "card_border_thickness": 0,
+        "card_radius": 0,
+        "content_align": "left",
+        "content_align_mobile": "left",
+        "card_advanced": false,
+        "card_padding_horizontal": 20,
+        "card_padding_horizontal_mobile": 20,
+        "card_padding_vertical": 30,
+        "card_padding_vertical_mobile": 30,
+        "stars_size": 15,
+        "stars_size_mobile": 15,
+        "stars_gap": 2,
+        "text_custom": false,
+        "text_font": "josefin_sans_n4",
+        "text_size": 14,
+        "text_size_mobile": 14,
+        "text_advanced": false,
+        "text_height": 150,
+        "text_mt": 15,
+        "text_mt_mobile": 15,
+        "verified_icon": "1",
+        "name_icon_size": 18,
+        "name_icon_size_mobile": 18,
+        "name_text_custom": false,
+        "name_text_font": "josefin_sans_n4",
+        "name_text_size": 14,
+        "name_text_size_mobile": 14,
+        "name_advanced": false,
+        "name_text_height": 130,
+        "name_mt": 15,
+        "name_mt_mobile": 15,
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": false,
+        "arrow_size": 48,
+        "arrow_size_mobile": 48,
+        "arrow_icon_size": 10,
+        "arrow_icon_size_mobile": 10,
+        "arrow_radius": 100,
+        "arrow_border_thickness": 0,
+        "arrow_hover_effect": "color",
+        "arrow_color": "#ffffff",
+        "arrow_hover_color": "#121212",
+        "arrow_bg_color": "#121212",
+        "arrow_bg_hover_color": "#f3f3f3",
+        "arrow_border_color": "#121212",
+        "arrow_border_hover_color": "#121212",
+        "text_color": "#ffffff",
+        "name_icon_color": "#ffffff",
+        "name_text_color": "#ffffff",
+        "card_border_color": "#121212",
+        "stars_color": "#ffffff",
+        "stars_bg_color": "#00B67A",
+        "stars_bg_half_color": "#dddddd",
+        "background_style": "solid",
+        "background_color": "#ffffff",
+        "background_gradient": "linear-gradient(180deg, #ffffff 0%, #f3f3f3 100%)",
+        "border_color": "#121212",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_horizontal": 0,
+        "padding_horizontal_mobile": 0,
+        "width": "page",
+        "content_width": 1200,
+        "border_thickness": 0,
+        "section_radius": 0
+      }
+    },
     "quality_standards_H7kzXP": {
       "type": "quality-standards",
       "blocks": {
@@ -1890,13 +1890,13 @@
     "marquee_bar_mz4PWC",
     "disclosures",
     "related-products",
-    "ss_testimonials_53_hPK48y",
     "video_testimonials_grid_rFhUdH",
     "results_checklist_8Xbrnx",
     "how_it_works_FQKHhQ",
     "stats_data_UhwfxB",
     "video_reels_bVU4VK",
     "ingredient_tiles_HM663M",
+    "ss_testimonials_53_hPK48y",
     "quality_standards_H7kzXP",
     "image_accordion_bgTB63"
   ]
