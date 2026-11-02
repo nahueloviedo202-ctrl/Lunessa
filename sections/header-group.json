@@ -123,8 +123,8 @@
         "show_line_separator": true,
         "color_scheme": "scheme-5",
         "menu_color_scheme": "scheme-6",
-        "enable_country_selector": true,
-        "enable_language_selector": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
         "margin_bottom": 0,
         "padding_top": 20,
         "padding_bottom": 20
@@ -163,7 +163,7 @@
           "type": "text",
           "settings": {
             "text": "ENVIO GRATIS",
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "font_weight": "700",
             "text_transform": "none",
             "letter_spacing": 0,
@@ -182,7 +182,7 @@
           "type": "text",
           "settings": {
             "text": "90 Días de Garantia de devolución",
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "font_weight": "400",
             "text_transform": "none",
             "letter_spacing": 0,
@@ -205,7 +205,7 @@
       "name": "Barra de oferta",
       "settings": {
         "background_gradient": "linear-gradient(102deg, rgba(51, 180, 72, 1), rgba(20, 49, 6, 1) 100%)",
-        "background_color": "#6C0011",
+        "background_color": "#6c0011",
         "link": "",
         "text_alignment": "center",
         "max_width": 550,
