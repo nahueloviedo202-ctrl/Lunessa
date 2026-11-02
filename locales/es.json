@@ -187,9 +187,9 @@
         "price_at_each_html": "a {{ price }} por unidad"
       },
       "product_variants": "Variantes de producto",
-      "taxes_included": "Impuestos incluidos.",
+      "taxes_included": "",
       "duties_included": "Aranceles incluidos.",
-      "duties_and_taxes_included": "Aranceles e impuestos incluidos."
+      "duties_and_taxes_included": ""
     },
     "modal": {
       "label": "Galería multimedia"
@@ -319,14 +319,14 @@
       },
       "estimated_total": "Total estimado",
       "new_estimated_total": "Nuevo total estimado",
-      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "Aranceles e impuestos incluidos. Descuentos y <a href=\"{{ link }}\">envío</a> calculados en la pantalla de pago.",
-      "duties_and_taxes_included_shipping_at_checkout_without_policy": "Aranceles e impuestos incluidos. Descuentos y envío calculados en la pantalla de pago.",
-      "taxes_included_shipping_at_checkout_with_policy_html": "Impuestos incluidos. Descuentos y <a href=\"{{ link }}\">envío</a> calculados en la pantalla de pago.",
-      "taxes_included_shipping_at_checkout_without_policy": "Impuestos incluidos. Descuentos y envío calculados en la pantalla de pago.",
-      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "Aranceles incluidos. Impuestos, descuentos y <a href=\"{{ link }}\">envío</a> calculados en la pantalla de pago.",
-      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Aranceles incluidos. Impuestos, descuentos y envío calculados en la pantalla de pago.",
-      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "Impuestos, descuentos y <a href=\"{{ link }}\">envío</a> calculados en la pantalla de pago.",
-      "taxes_at_checkout_shipping_at_checkout_without_policy": "Impuestos, descuentos y envío calculados en la pantalla de pago."
+      "duties_and_taxes_included_shipping_at_checkout_with_policy_html": "",
+      "duties_and_taxes_included_shipping_at_checkout_without_policy": "",
+      "taxes_included_shipping_at_checkout_with_policy_html": "",
+      "taxes_included_shipping_at_checkout_without_policy": "",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html": "",
+      "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "",
+      "taxes_at_checkout_shipping_at_checkout_with_policy_html": "",
+      "taxes_at_checkout_shipping_at_checkout_without_policy": ""
     },
     "footer": {
       "payment": "Formas de pago"
