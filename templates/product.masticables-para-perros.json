@@ -77,72 +77,18 @@
             "visibility": "all"
           }
         },
-        "step_1lgshl": {
-          "type": "step",
-          "disabled": true,
+        "stack_social_proof_GTfAmk": {
+          "type": "shopify://apps/stack/blocks/social_proof/13a1a2f3-60d5-4f44-b4c5-fb67347c536d",
           "settings": {
-            "text": "Elige el peso de tu perro:",
-            "show_number": true,
-            "text_color": "#212427",
-            "font_weight": "600",
-            "text_size": 16,
-            "text_size_mobile": 14,
-            "spacing_bottom": 16,
-            "spacing_bottom_mobile": 16,
-            "visibility": "all"
-          }
-        },
-        "choice_ripxil": {
-          "type": "choice",
-          "disabled": true,
-          "settings": {
-            "label": "0-16 kg",
-            "selected": false
-          }
-        },
-        "choice_zu0fot": {
-          "type": "choice",
-          "disabled": true,
-          "settings": {
-            "label": "16-30 kg",
-            "selected": false
-          }
-        },
-        "choice_ye2d2n": {
-          "type": "choice",
-          "disabled": true,
-          "settings": {
-            "label": "30-45 kg",
-            "selected": false
-          }
-        },
-        "choice_3zrgk5": {
-          "type": "choice",
-          "disabled": true,
-          "settings": {
-            "label": "45-55 kg",
-            "selected": false
-          }
-        },
-        "choice_8j4aov": {
-          "type": "choice",
-          "disabled": true,
-          "settings": {
-            "label": "Más de 55 kg",
-            "selected": false
-          }
-        },
-        "offer_TYrkJ6": {
-          "type": "offer",
-          "disabled": true,
-          "settings": {
-            "quantity": 1,
-            "title": "Compra 1",
-            "subtitle": "",
-            "tag": "",
-            "discount_type": "none",
-            "discount_value": 0,
-            "selected": false
+            "image_width_social": 23,
+            "ppl_social_proof": "<p><strong>Elena, Emiliano</strong></p>",
+            "enable_insta_checkmark": true,
+            "text_social_proof": "<p>les gusta este producto</p>",
+            "social_proof_font_size": 11,
+            "social_proof_color": "#000",
+            "social_proof_bg": "",
+            "social_proof_padding": 5,
+            "social_proof_border_radius": 5
           }
         },
         "buy_buttons_QeAxBD": {
@@ -456,13 +402,7 @@
         "title_Mm9FwJ",
         "price_ntBpkb",
         "text_6TX7q6",
-        "step_1lgshl",
-        "choice_ripxil",
-        "choice_zu0fot",
-        "choice_ye2d2n",
-        "choice_3zrgk5",
-        "choice_8j4aov",
-        "offer_TYrkJ6",
+        "stack_social_proof_GTfAmk",
         "buy_buttons_QeAxBD",
         "stock_480f8y",
         "guarantee_nfg876",
