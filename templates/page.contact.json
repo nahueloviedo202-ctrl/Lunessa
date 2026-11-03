@@ -17,6 +17,37 @@
         "padding_bottom": 36
       }
     },
+    "rich_text_ENjjcU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_gRMktB": {
+          "type": "heading",
+          "settings": {
+            "heading": "CONTACTO",
+            "heading_size": "h1"
+          }
+        },
+        "text_jtgQm6": {
+          "type": "text",
+          "settings": {
+            "text": "<p>📥 <strong>contact@shop-lunessa.com</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_gRMktB",
+        "text_jtgQm6"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "form": {
       "type": "contact-form",
       "settings": {
@@ -30,6 +61,7 @@
   },
   "order": [
     "main",
+    "rich_text_ENjjcU",
     "form"
   ]
 }
